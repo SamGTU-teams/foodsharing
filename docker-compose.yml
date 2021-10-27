@@ -6,6 +6,12 @@ services:
     ports:
       - "15672:15672"
       - "5672:5672"
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   postgres:
     image: postgres:10
@@ -16,6 +22,12 @@ services:
       POSTGRES_DB: foodsharing
       POSTGRES_USER: $DATABASE_USER
       POSTGRES_PASSWORD: $DATABASE_PASSWORD
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   config:
     image: rassafel/foodsharing-config
@@ -25,6 +37,12 @@ services:
       DATABASE_PASSWORD: $DATABASE_PASSWORD
     ports:
       - "8888:8888"
+    healthcheck:
+      test: curl -sS http://localhost:8888/actuator/health || echo 1
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   parser:
     image: rassafel/foodsharing-parser
@@ -33,9 +51,12 @@ services:
       PARSER_TOKEN: $PARSER_TOKEN
       PARSER_APP_ID: $PARSER_APP_ID
     depends_on:
-      - config
-      - postgres
-      - rabbitmq
+      config:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
 
   analyzer:
     image: rassafel/foodsharing-analyzer
@@ -43,9 +64,12 @@ services:
     ports:
       - 8010:8010
     depends_on:
-      - config
-      - postgres
-      - rabbitmq
+      config:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
 
   ibot:
     image: rassafel/foodsharing-ibot
@@ -53,9 +77,12 @@ services:
     ports:
       - 8020:8020
     depends_on:
-      - config
-      - postgres
-      - rabbitmq
+      config:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
 
   tg-bot:
     image: rassafel/foodsharing-tg-bot
@@ -65,9 +92,12 @@ services:
     environment:
       TELEGRAM_TOKEN: N/A
     depends_on:
-      - config
-      - postgres
-      - rabbitmq
+      config:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
 
   vk-bot:
     image: rassafel/foodsharing-vk-bot
@@ -78,6 +108,9 @@ services:
       VKONTAKTE_TOKEN: N/A
       VKONTAKTE_GROUP_ID: N/A
     depends_on:
-      - config
-      - postgres
-      - rabbitmq
+      config:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
