@@ -20,7 +20,7 @@ services:
   config:
     image: N/A
     restart: always
-    environment:
+    enviroment:
       DATABASE_USER: $DATABASE_USER
       DATABASE_PASSWORD: $DATABASE_PASSWORD
     ports:
@@ -28,6 +28,7 @@ services:
 
   parser:
     image: rassafel/foodsharing-parser
+    restart: on-failure
     environment:
       PARSER_TOKEN: $PARSER_TOKEN
       PARSER_APP_ID: $PARSER_APP_ID
