@@ -18,7 +18,7 @@ services:
       POSTGRES_PASSWORD: $DATABASE_PASSWORD
 
   config:
-    image: N/A
+    image: rassafel/foodsharing-config
     restart: always
     environment:
       DATABASE_USER: $DATABASE_USER
