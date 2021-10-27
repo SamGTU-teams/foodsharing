@@ -13,12 +13,12 @@ services:
     ports:
       - 5432:5432
     environment:
-      POSTGRES_DB: food-sharing
+      POSTGRES_DB: foodsharing
       POSTGRES_USER: $DATABASE_USER
       POSTGRES_PASSWORD: $DATABASE_PASSWORD
 
   config:
-    image: rassafel/food-sharing-config
+    image: N/A
     restart: always
     enviroment:
       DATABASE_USER: $DATABASE_USER
@@ -27,7 +27,7 @@ services:
       - "8888:8888"
 
   parser:
-    image: rassafel/food-sharing-parser
+    image: rassafel/foodsharing-parser
     environment:
       PARSER_TOKEN: $PARSER_TOKEN
       PARSER_APP_ID: $PARSER_APP_ID
@@ -37,7 +37,7 @@ services:
       - rabbitmq
 
   analyzer:
-    image: rassafel/food-sharing-analyzer
+    image: rassafel/foodsharing-analyzer
     ports:
       - 8010:8010
     depends_on:
