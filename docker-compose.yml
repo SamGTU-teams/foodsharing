@@ -47,30 +47,30 @@ services:
       - postgres
       - rabbitmq
 
-  ibot:
-    image: N/A
-    ports:
-      - 8020:8020
-    depends_on:
-      - config
-      - postgres
-      - rabbitmq
+  # ibot:
+  #   image: N/A
+  #   ports:
+  #     - 8020:8020
+  #   depends_on:
+  #     - config
+  #     - postgres
+  #     - rabbitmq
 
-  tg-bot:
-    image: N/A
-    environment:
-      TELEGRAM_TOKEN: N/A
-    depends_on:
-      - config
-      - postgres
-      - rabbitmq
+  # tg-bot:
+  #   image: N/A
+  #   environment:
+  #     TELEGRAM_TOKEN: N/A
+  #   depends_on:
+  #     - config
+  #     - postgres
+  #     - rabbitmq
 
-  vk-bot:
-    image: N/A
-    environment:
-      VKONTAKTE_TOKEN: N/A
-      VKONTAKTE_GROUP_ID: N/A
-    depends_on:
-      - config
-      - postgres
-      - rabbitmq
+  # vk-bot:
+  #   image: N/A
+  #   environment:
+  #     VKONTAKTE_TOKEN: N/A
+  #     VKONTAKTE_GROUP_ID: N/A
+  #   depends_on:
+  #     - config
+  #     - postgres
+  #     - rabbitmq
