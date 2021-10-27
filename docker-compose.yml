@@ -1,0 +1,74 @@
+version: '3'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: always
+    ports:
+      - 15672:15672
+      - 5672:5672
+
+  postgres:
+    image: postgres:12
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: food-sharing
+      POSTGRES_USER: $DATABASE_USER
+      POSTGRES_PASSWORD: $DATABASE_PASSWORD
+
+  config:
+    image: rassafel/food-sharing-config
+    restart: always
+    enviroment:
+      DATABASE_USER: $DATABASE_USER
+      DATABASE_PASSWORD: $DATABASE_PASSWORD
+    ports:
+      - "8888:8888"
+
+  parser:
+    image: rassafel/food-sharing-parser
+    environment:
+      PARSER_TOKEN: $PARSER_TOKEN
+      PARSER_APP_ID: $PARSER_APP_ID
+    depends_on:
+      - config
+      - postgres
+      - rabbitmq
+
+  analyzer:
+    image: rassafel/food-sharing-analyzer
+    ports:
+      - 8010:8010
+    depends_on:
+      - config
+      - postgres
+      - rabbitmq
+
+  ibot:
+    image: N/A
+    ports:
+      - 8020:8020
+    depends_on:
+      - config
+      - postgres
+      - rabbitmq
+
+  tg-bot:
+    image: N/A
+    environment:
+      TELEGRAM_TOKEN: N/A
+    depends_on:
+      - config
+      - postgres
+      - rabbitmq
+
+  vk-bot:
+    image: N/A
+    environment:
+      VKONTAKTE_TOKEN: N/A
+      VKONTAKTE_GROUP_ID: N/A
+    depends_on:
+      - config
+      - postgres
+      - rabbitmq

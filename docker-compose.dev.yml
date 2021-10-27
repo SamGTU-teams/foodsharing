@@ -1,0 +1,31 @@
+version: '3'
+services:
+  config:
+    build:
+      context: ./config-service
+      dockerfile: Dockerfile
+
+  parser:
+    build:
+      context: ./parser
+      dockerfile: Dockerfile
+
+  analyzer:
+    build:
+      context: ./analyzer
+      dockerfile: Dockerfile
+
+  ibot:
+    build:
+      context: ./ibot
+      dockerfile: Dockerfile
+
+  tg-bot:
+    build:
+      context: ./tg-bot
+      dockerfile: Dockerfile
+
+  vk-bot:
+    build:
+      context: ./vk-bot
+      dockerfile: Dockerfile
