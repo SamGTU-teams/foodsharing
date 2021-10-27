@@ -1,5 +1,5 @@
-. ./env.sh
+. ./build.sh
 
-. ./mvnw install
+. ./env.sh
 
 docker-compose
