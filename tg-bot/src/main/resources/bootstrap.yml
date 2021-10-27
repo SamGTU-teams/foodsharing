@@ -1,0 +1,9 @@
+server:
+  port: 8030
+spring:
+  cloud:
+    config:
+      uri: http://config:8888
+      fail-fast: true
+  application:
+    name: tg-bot
