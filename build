@@ -1,0 +1,9 @@
+#!/bin/sh
+
+echo 'Start maven build'
+sh ./mvnw install -DskipTests
+echo 'Finish maven build'
+
+echo 'Start python build'
+. ./py_build
+echo 'Finish python build'

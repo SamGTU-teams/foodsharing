@@ -1,0 +1,12 @@
+#!/bin/sh
+
+echo 'Start building'
+. ./build
+echo 'Finish building'
+
+echo 'Start load environment variables'
+. ./env
+echo 'Finish load environment variables'
+
+echo 'Docker build and run'
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build

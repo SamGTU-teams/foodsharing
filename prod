@@ -1,0 +1,12 @@
+#!/bin/sh
+
+echo 'Start building'
+. ./build
+echo 'Finish building'
+
+echo 'Start load environment variables'
+. ./env
+echo 'Finish load environment variables'
+
+echo 'Docker run'
+docker-compose
