@@ -1,5 +1,11 @@
 version: "3"
 services:
+  rabbitmq:
+    image: rabbitmq:3-alpine
+
+  postgres:
+    image: postgres:10-alpine
+
   config:
     build:
       context: ./config-service
