@@ -47,30 +47,37 @@ services:
       - postgres
       - rabbitmq
 
-  # ibot:
-  #   image: N/A
-  #   ports:
-  #     - 8020:8020
-  #   depends_on:
-  #     - config
-  #     - postgres
-  #     - rabbitmq
+  ibot:
+    image: rassafel/foodsharing-ibot
+    restart: on-failure
+    ports:
+      - 8020:8020
+    depends_on:
+      - config
+      - postgres
+      - rabbitmq
 
-  # tg-bot:
-  #   image: N/A
-  #   environment:
-  #     TELEGRAM_TOKEN: N/A
-  #   depends_on:
-  #     - config
-  #     - postgres
-  #     - rabbitmq
+  tg-bot:
+    image: rassafel/foodsharing-tg-bot
+    restart: on-failure
+    ports:
+      - 8030:8030
+    environment:
+      TELEGRAM_TOKEN: N/A
+    depends_on:
+      - config
+      - postgres
+      - rabbitmq
 
-  # vk-bot:
-  #   image: N/A
-  #   environment:
-  #     VKONTAKTE_TOKEN: N/A
-  #     VKONTAKTE_GROUP_ID: N/A
-  #   depends_on:
-  #     - config
-  #     - postgres
-  #     - rabbitmq
+  vk-bot:
+    image: rassafel/foodsharing-vk-bot
+    restart: on-failure
+    ports:
+      - 8040:8040
+    environment:
+      VKONTAKTE_TOKEN: N/A
+      VKONTAKTE_GROUP_ID: N/A
+    depends_on:
+      - config
+      - postgres
+      - rabbitmq
