@@ -1,17 +1,17 @@
-version: '3'
+version: "3"
 services:
   rabbitmq:
     image: rabbitmq:3-management
     restart: always
     ports:
-      - 15672:15672
-      - 5672:5672
+      - "15672:15672"
+      - "5672:5672"
 
   postgres:
     image: postgres:12
     restart: always
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
       POSTGRES_DB: foodsharing
       POSTGRES_USER: $DATABASE_USER
