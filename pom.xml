@@ -33,9 +33,9 @@
 
     <modules>
         <module>config-service</module>
-        <!-- <module>ibot</module>
+        <module>ibot</module>
 		<module>tg-bot</module>
-		<module>vk-bot</module> -->
+		<module>vk-bot</module>
     </modules>
 
     <build>
