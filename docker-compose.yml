@@ -20,7 +20,7 @@ services:
   config:
     image: N/A
     restart: always
-    enviroment:
+    environment:
       DATABASE_USER: $DATABASE_USER
       DATABASE_PASSWORD: $DATABASE_PASSWORD
     ports:
