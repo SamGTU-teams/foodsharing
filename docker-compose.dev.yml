@@ -9,11 +9,13 @@ services:
     build:
       context: ./parser
       dockerfile: Dockerfile
+    restart: "no"
 
   analyzer:
     build:
       context: ./analyzer
       dockerfile: Dockerfile
+    restart: "no"
 
   ibot:
     build:
