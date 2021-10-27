@@ -1,0 +1,9 @@
+server:
+  port: 8020
+spring:
+  cloud:
+    config:
+      uri: http://config:8888
+      fail-fast: true
+  application:
+    name: ibot
