@@ -23,17 +23,17 @@ services:
       dockerfile: Dockerfile
     restart: "no"
 
-  ibot:
-    build:
-      context: ./ibot
-      dockerfile: Dockerfile
+  # ibot:
+  #   build:
+  #     context: ./ibot
+  #     dockerfile: Dockerfile
 
-  tg-bot:
-    build:
-      context: ./tg-bot
-      dockerfile: Dockerfile
+  # tg-bot:
+  #   build:
+  #     context: ./tg-bot
+  #     dockerfile: Dockerfile
 
-  vk-bot:
-    build:
-      context: ./vk-bot
-      dockerfile: Dockerfile
+  # vk-bot:
+  #   build:
+  #     context: ./vk-bot
+  #     dockerfile: Dockerfile
