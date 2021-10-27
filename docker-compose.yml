@@ -20,7 +20,7 @@ services:
   config:
     image: rassafel/foodsharing-config
     restart: always
-    environment:
+    enviroment:
       DATABASE_USER: $DATABASE_USER
       DATABASE_PASSWORD: $DATABASE_PASSWORD
     ports:
