@@ -13,7 +13,7 @@ services:
 
   parser:
     build:
-      context: ./parser
+      context: ./vk-parser
       dockerfile: Dockerfile
     restart: "no"
 
