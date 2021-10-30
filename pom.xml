@@ -45,6 +45,7 @@
 		<module>tg-bot</module>
 		<module>vk-bot</module>
         <module>analyzer</module>
+        <module>platform</module>
     </modules>
 
     <build>
