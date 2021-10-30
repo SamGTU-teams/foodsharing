@@ -19,7 +19,7 @@ services:
 
   analyzer:
     build:
-      context: ./analyzer
+      context: ./analyzer/impl
       dockerfile: Dockerfile
     restart: "no"
 

@@ -43,6 +43,7 @@
         <module>ibot</module>
 		<module>tg-bot</module>
 		<module>vk-bot</module>
+        <module>analyzer</module>
     </modules>
 
     <build>
