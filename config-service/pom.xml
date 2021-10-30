@@ -8,9 +8,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>ru.rassafel</groupId>
     <artifactId>foodsharing-config-service</artifactId>
-    <version>1.0-SNAPSHOT</version>
 
     <properties>
         <java.version>1.8</java.version>
@@ -33,9 +31,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <finalName>config</finalName>
-                </configuration>
             </plugin>
         </plugins>
     </build>
