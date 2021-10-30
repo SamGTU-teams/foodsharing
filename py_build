@@ -1,7 +1,6 @@
 #!/bin/sh
 
 MODULES="analyzer"
-MODULES="$MODULES parser"
 
 GENERATED="generated"
 
