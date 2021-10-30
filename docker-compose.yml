@@ -47,6 +47,8 @@ services:
   parser:
     image: rassafel/foodsharing-parser
     restart: on-failure
+    ports:
+      - 8000:8000
     environment:
       PARSER_TOKEN: $PARSER_TOKEN
       PARSER_APP_ID: $PARSER_APP_ID
