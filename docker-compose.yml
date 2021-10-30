@@ -35,7 +35,7 @@ services:
       start_period: 30s
 
   config:
-    image: rassafel/foodsharing-config
+    image: foodsharing-config
     restart: always
     environment:
       DATABASE_USER: $DATABASE_USER
@@ -50,7 +50,7 @@ services:
       start_period: 30s
 
   parser:
-    image: rassafel/foodsharing-parser
+    image: foodsharing-vk-parser
     restart: on-failure
     ports:
       - 8000:8000
@@ -72,7 +72,7 @@ services:
       start_period: 30s
 
   analyzer:
-    image: rassafel/foodsharing-analyzer
+    image: foodsharing-analyzer
     restart: on-failure
     ports:
       - 8010:8010
@@ -91,7 +91,7 @@ services:
 #      start_period: 30s
 
   ibot:
-    image: rassafel/foodsharing-ibot
+    image: foodsharing-ibot
     restart: on-failure
     ports:
       - 8020:8020
@@ -110,7 +110,7 @@ services:
       start_period: 30s
 
   tg-bot:
-    image: rassafel/foodsharing-tg-bot
+    image: foodsharing-tg-bot
     restart: on-failure
     ports:
       - 8030:8030
@@ -131,7 +131,7 @@ services:
       start_period: 30s
 
   vk-bot:
-    image: rassafel/foodsharing-vk-bot
+    image: foodsharing-vk-bot
     restart: on-failure
     ports:
       - 8040:8040
