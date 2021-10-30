@@ -1,5 +1,5 @@
 #!/bin/sh
 
 echo 'Start maven build'
-sh ./mvnw install -DskipTests
+sh ./mvnw clean install -DskipTests
 echo 'Finish maven build'
