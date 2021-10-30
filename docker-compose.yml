@@ -64,6 +64,12 @@ services:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
+    healthcheck:
+      test: curl -sS http://localhost:8000/actuator/health || echo 1
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   analyzer:
     image: rassafel/foodsharing-analyzer
@@ -77,6 +83,12 @@ services:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
+    healthcheck:
+      test: curl -sS http://localhost:8010/actuator/health || echo 1
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   ibot:
     image: rassafel/foodsharing-ibot
@@ -90,6 +102,12 @@ services:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
+    healthcheck:
+      test: curl -sS http://localhost:8020/actuator/health || echo 1
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   tg-bot:
     image: rassafel/foodsharing-tg-bot
@@ -105,6 +123,12 @@ services:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
+    healthcheck:
+      test: curl -sS http://localhost:8030/actuator/health || echo 1
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   vk-bot:
     image: rassafel/foodsharing-vk-bot
@@ -121,3 +145,9 @@ services:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
+    healthcheck:
+      test: curl -sS http://localhost:8040/actuator/health || echo 1
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
