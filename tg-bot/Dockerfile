@@ -1,8 +1,8 @@
 FROM openjdk:8-alpine
 
-ADD ./target/tg-bot.jar /app/
-CMD ["java", "-Xmx200m", "-jar", "/app/tg-bot.jar"]
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
 
-HEALTHCHECK --interval=30s --timeout=30s CMD curl -f http://localhost:8030/actuator/health || exit 1
+CMD ["java", "-Xmx200m", "-jar", "/app.jar"]
 
 EXPOSE 8030
