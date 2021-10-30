@@ -13,7 +13,7 @@ services:
 
   parser:
     build:
-      context: ./vk-parser
+      context: ./parsers/vk-parser
       dockerfile: Dockerfile
     restart: "no"
 
@@ -25,18 +25,18 @@ services:
 
   ibot:
     build:
-      context: ./ibot
+      context: ./ibot/impl
       dockerfile: Dockerfile
     restart: "no"
 
   tg-bot:
     build:
-      context: ./tg-bot
+      context: ./bots/tg-bot
       dockerfile: Dockerfile
     restart: "no"
 
   vk-bot:
     build:
-      context: ./vk-bot
+      context: ./bots/vk-bot
       dockerfile: Dockerfile
     restart: "no"
