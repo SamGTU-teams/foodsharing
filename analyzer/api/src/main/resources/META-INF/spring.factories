@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=ru.rassafel.analyzer.configuration.AnalyzerAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=ru.rassafel.foodsharing.analyzer.configuration.AnalyzerAutoConfiguration
