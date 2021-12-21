@@ -9,4 +9,4 @@ echo 'Start load environment variables'
 echo 'Finish load environment variables'
 
 echo 'Docker run'
-docker-compose
+docker-compose up --build "$@"
