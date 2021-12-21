@@ -1,4 +1,4 @@
-version: "3"
+version: "3.4"
 services:
   rabbitmq:
     image: rabbitmq:3-management
@@ -35,7 +35,7 @@ services:
       start_period: 30s
 
   config:
-    image: foodsharing-config
+    image: rassafel/foodsharing-config
     restart: always
     environment:
       DATABASE_USER: $DATABASE_USER
@@ -50,7 +50,7 @@ services:
       start_period: 30s
 
   parser:
-    image: foodsharing-vk-parser
+    image: rassafel/foodsharing-vk-parser
     restart: on-failure
     ports:
       - 8000:8000
@@ -72,7 +72,7 @@ services:
       start_period: 30s
 
   analyzer:
-    image: foodsharing-analyzer
+    image: rassafel/foodsharing-analyzer
     restart: on-failure
     ports:
       - 8010:8010
@@ -91,7 +91,7 @@ services:
 #      start_period: 30s
 
   ibot:
-    image: foodsharing-ibot
+    image: rassafel/foodsharing-ibot
     restart: on-failure
     ports:
       - 8020:8020
@@ -110,7 +110,7 @@ services:
       start_period: 30s
 
   tg-bot:
-    image: foodsharing-tg-bot
+    image: rassafel/foodsharing-tg-bot
     restart: on-failure
     ports:
       - 8030:8030
@@ -131,7 +131,7 @@ services:
       start_period: 30s
 
   vk-bot:
-    image: foodsharing-vk-bot
+    image: rassafel/foodsharing-vk-bot
     restart: on-failure
     ports:
       - 8040:8040
