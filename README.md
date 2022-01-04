@@ -8,8 +8,11 @@
 - RabbitMQ
 
 ## Run application
+
 ### In development mode
+
 run shell script `dev`
 
 ### In production mode
+
 run shell script `prod`
