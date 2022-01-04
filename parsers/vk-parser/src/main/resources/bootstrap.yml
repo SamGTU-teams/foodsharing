@@ -3,7 +3,7 @@ server:
 spring:
   cloud:
     config:
-      uri: http://localhost:8888
+      uri: http://config:8888
       fail-fast: true
   application:
     name: vk-parser
