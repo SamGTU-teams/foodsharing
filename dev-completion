@@ -1,0 +1,2 @@
+#!/bin/sh
+complete -W "parser analyzer ibot tg-bot vk-bot" ./dev
