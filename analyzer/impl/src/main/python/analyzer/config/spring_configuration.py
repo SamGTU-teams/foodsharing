@@ -1,11 +1,14 @@
-import yaml
+import logging
 import os
 
+import yaml
 from spring_config import ClientConfigurationBuilder
 from spring_config.client import SpringConfigClient
 
+log = logging.getLogger(__name__)
 config = {}
 
+log.info("Fetching config from bootstrap.")
 with open(f"{os.path.dirname(__file__)}/../../resources/bootstrap.yml",
           "r") as stream:
     try:
@@ -15,6 +18,8 @@ with open(f"{os.path.dirname(__file__)}/../../resources/bootstrap.yml",
 
 _spring = config["spring"]
 
+log.info(f"Fetching config from server at: "
+         f"{_spring['cloud']['config']['uri']}")
 _client_configuration = ClientConfigurationBuilder() \
     .app_name(_spring["application"]["name"]) \
     .address(_spring["cloud"]["config"]["uri"]) \
