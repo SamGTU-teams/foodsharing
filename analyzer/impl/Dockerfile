@@ -7,7 +7,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD [ "python", "./echo-mq.py" ]
+CMD [ "python", "./src/main/python/manage.py" ]
 
 # HEALTHCHECK --interval=30s --timeout=30s CMD curl -f http://localhost:8010/actuator/health || exit 1
 
