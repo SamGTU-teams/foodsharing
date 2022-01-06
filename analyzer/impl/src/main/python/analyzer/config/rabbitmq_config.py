@@ -3,45 +3,40 @@ import logging
 import pika
 from pika.exchange_type import ExchangeType
 
-from .spring_configuration import config
-
 log = logging.getLogger(__name__)
 
-rabbitmq_config = config["rabbitmq"]
 
-_credentials = pika.PlainCredentials(rabbitmq_config["username"],
-                                     rabbitmq_config["password"])
+def create_connection(username, password, host, port):
+    credentials = pika.PlainCredentials(username,
+                                        password)
 
-_connection_parameters = pika.ConnectionParameters(host=rabbitmq_config["host"],
-                                                   port=rabbitmq_config["port"],
-                                                   credentials=_credentials)
+    connection_parameters = pika.ConnectionParameters(
+        host=host,
+        port=port,
+        credentials=credentials)
 
-log.info(f"Attempting to connect to: ["
-         f"{rabbitmq_config['host']}:"
-         f"{rabbitmq_config['port']}]")
-connection = pika.BlockingConnection(_connection_parameters)
-channel = connection.channel()
+    log.info(f"Attempting to connect to: [%s:%s]", host, port)
+    connection = pika.BlockingConnection(connection_parameters)
+    return connection
 
-# Consumer declaration
-consumer_config = rabbitmq_config["consumer"]
 
-log.info("Attempt to declare consumer exchange.")
-channel.exchange_declare(exchange=consumer_config["exchange"],
-                         exchange_type=ExchangeType.fanout,
-                         durable=True)
+def consumer_declaration(channel, exchange, queue):
+    log.info("Attempt to declare consumer exchange.")
+    channel.exchange_declare(exchange=exchange,
+                             exchange_type=ExchangeType.fanout,
+                             durable=True)
 
-log.info("Attempt to declare queue.")
-channel.queue_declare(queue=consumer_config["queue"],
-                      durable=True)
+    log.info("Attempt to declare queue.")
+    channel.queue_declare(queue=queue,
+                          durable=True)
 
-log.info("Attempt to bind queue.")
-channel.queue_bind(queue=consumer_config["queue"],
-                   exchange=consumer_config["exchange"])
+    log.info("Attempt to bind queue.")
+    channel.queue_bind(queue=queue,
+                       exchange=exchange)
 
-# Producer declaration
-producer_config = rabbitmq_config["producer"]
 
-log.info("Attempt to declare producer exchange.")
-channel.exchange_declare(exchange=producer_config["exchange"],
-                         exchange_type=ExchangeType.fanout,
-                         durable=True)
+def producer_declaration(channel, exchange):
+    log.info("Attempt to declare producer exchange.")
+    channel.exchange_declare(exchange=exchange,
+                             exchange_type=ExchangeType.fanout,
+                             durable=True)
