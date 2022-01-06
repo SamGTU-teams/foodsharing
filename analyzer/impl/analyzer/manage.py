@@ -1,11 +1,14 @@
 import logging
 
+from config.logger_configuration import load_logging
 from config.rabbitmq_configuration import create_connection, \
     consumer_declaration, producer_declaration
 from config.spring_configuration import load_profiles, fetch_bootstrap, \
     fetch_service
 from message.listener.raw_post_listener import get_listener
 from message.producer.post_producer import get_publisher
+
+load_logging()
 
 log = logging.getLogger(__name__)
 
