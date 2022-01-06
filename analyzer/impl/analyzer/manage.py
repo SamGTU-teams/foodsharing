@@ -1,6 +1,6 @@
 import logging
 
-from config.rabbitmq_config import create_connection, \
+from config.rabbitmq_configuration import create_connection, \
     consumer_declaration, producer_declaration
 from config.spring_configuration import load_profiles, fetch_bootstrap, \
     fetch_service
