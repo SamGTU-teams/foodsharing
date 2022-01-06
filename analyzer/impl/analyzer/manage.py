@@ -10,7 +10,6 @@ from message.producer.post_producer import get_publisher
 log = logging.getLogger(__name__)
 
 profiles = load_profiles()
-print(profiles)
 
 bootstrap = fetch_bootstrap(bootstrap_path="resources/bootstrap.yml",
                             profiles=profiles)
