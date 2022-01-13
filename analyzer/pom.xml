@@ -16,14 +16,4 @@
     <modules>
         <module>api</module>
     </modules>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>ru.rassafel</groupId>
-                <artifactId>foodsharing-analyzer-api</artifactId>
-                <version>${project.parent.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 </project>

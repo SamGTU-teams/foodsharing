@@ -25,12 +25,6 @@
                 <artifactId>foodsharing-ibot-api</artifactId>
                 <version>${project.parent.version}</version>
             </dependency>
-
-            <dependency>
-                <groupId>ru.rassafel</groupId>
-                <artifactId>foodsharing-ibot-impl</artifactId>
-                <version>${project.parent.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>

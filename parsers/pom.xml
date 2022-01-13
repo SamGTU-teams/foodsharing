@@ -16,14 +16,4 @@
     <modules>
         <module>vk-parser</module>
     </modules>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>ru.rassafel</groupId>
-                <artifactId>foodsharing-vk-parser</artifactId>
-                <version>${project.parent.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 </project>
