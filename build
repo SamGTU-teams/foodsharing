@@ -1,5 +1,5 @@
 #!/bin/sh
 
 echo 'Start maven build'
-sh ./mvnw clean package -DskipTests
+sh ./mvnw package -DskipTests
 echo 'Finish maven build'
