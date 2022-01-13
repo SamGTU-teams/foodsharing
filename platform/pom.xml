@@ -17,4 +17,14 @@
         <module>common</module>
         <module>common-db</module>
     </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>ru.rassafel</groupId>
+                <artifactId>foodsharing-common</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
