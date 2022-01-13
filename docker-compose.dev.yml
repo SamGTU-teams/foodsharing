@@ -4,7 +4,7 @@ services:
     image: rabbitmq:3-alpine
 
   postgres:
-    image: postgres:10-alpine
+    image: postgis/postgis:10-3.2-alpine
 
   config:
     build:
