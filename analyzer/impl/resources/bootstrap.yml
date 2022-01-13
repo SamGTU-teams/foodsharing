@@ -6,6 +6,7 @@ spring:
       uri: http://localhost:8888
   application:
     name: analyzer
+  liquibase.change-log: classpath:db/changelog/changelog-master.xml
 ---
 spring:
   config:

@@ -7,6 +7,10 @@ spring:
       fail-fast: true
   application:
     name: ibot
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate.ddl-auto: validate
+  liquibase.change-log: classpath:db/changelog/changelog-master.xml
 ---
 spring:
   config:
