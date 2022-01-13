@@ -24,7 +24,7 @@ services:
     # volumes:
     #   - "./storage/postgres/data:/var/lib/postgresql/data"
     environment:
-      POSTGRES_DB: foodsharing
+      POSTGRES_DB: $DATABASE_NAME
       POSTGRES_USER: $DATABASE_USER
       POSTGRES_PASSWORD: $DATABASE_PASSWORD
     healthcheck:
