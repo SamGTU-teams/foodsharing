@@ -14,24 +14,9 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>ibot</module>
         <module>bot-starter</module>
         <module>tg-bot</module>
         <module>vk-bot</module>
     </modules>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>ru.rassafel</groupId>
-                <artifactId>foodsharing-bot-starter</artifactId>
-                <version>${project.parent.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>ru.rassafel</groupId>
-                <artifactId>foodsharing-analyzer-api</artifactId>
-                <version>${project.parent.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 </project>

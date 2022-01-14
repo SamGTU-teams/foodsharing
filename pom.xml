@@ -44,7 +44,6 @@
         <module>analyzer</module>
         <module>bots</module>
         <module>config-service</module>
-        <module>ibot</module>
         <module>parsers</module>
         <module>platform</module>
     </modules>

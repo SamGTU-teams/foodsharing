@@ -60,6 +60,12 @@
             <artifactId>spring-rabbit-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>ru.rassafel</groupId>
+            <artifactId>foodsharing-common-db</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
