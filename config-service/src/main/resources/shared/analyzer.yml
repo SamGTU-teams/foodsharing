@@ -1,10 +1,17 @@
 rabbitmq:
   host: localhost
   port: 5672
-  username: guest
-  password: guest
+  username: ${RABBITMQ_DEFAULT_USER}
+  password: ${RABBITMQ_DEFAULT_PASS}
   consumer:
     exchange: post-raw-exchange
     queue: post.raw.analyzer
   producer:
     exchange: post-ready-exchange
+
+datasource:
+  host: localhost
+  port: 5432
+  name: ${DATABASE_NAME}
+  username: ${DATABASE_USER}
+  password: ${DATABASE_PASSWORD}

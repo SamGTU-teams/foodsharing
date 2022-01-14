@@ -1,3 +1,5 @@
 spring:
   rabbitmq:
     host: rabbitmq
+  datasource:
+    url: jdbc:postgresql://postgres:5432/${DATABASE_NAME}

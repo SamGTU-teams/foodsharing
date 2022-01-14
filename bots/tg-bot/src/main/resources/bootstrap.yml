@@ -7,9 +7,6 @@ spring:
       fail-fast: true
   application:
     name: tg-bot
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    hibernate.ddl-auto: validate
 ---
 spring:
   config:
