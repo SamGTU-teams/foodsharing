@@ -49,6 +49,11 @@
         </dependency>
 
         <dependency>
+            <groupId>ru.rassafel</groupId>
+            <artifactId>foodsharing-common-db</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
