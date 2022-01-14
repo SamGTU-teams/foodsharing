@@ -7,8 +7,11 @@ services:
       - "15672:15672"
       - "5672:5672"
     volumes:
-      - "./storage/rabbitmq/data:/var/lib/rabbitmq"
-      - "./storage/rabbitmq/myrabbit.conf:/etc/rabbitmq/rabbitmq.config"
+      - ./storage/rabbitmq/data:/var/lib/rabbitmq
+      - ./storage/rabbitmq/myrabbit.conf:/etc/rabbitmq/rabbitmq.config
+    environment:
+      RABBITMQ_DEFAULT_USER: $RABBITMQ_DEFAULT_USER
+      RABBITMQ_DEFAULT_PASS: $RABBITMQ_DEFAULT_PASS
     healthcheck:
       test: rabbitmq-diagnostics -q ping
       interval: 30s
@@ -39,8 +42,22 @@ services:
     image: rassafel/foodsharing-config
     restart: always
     environment:
+      DATABASE_NAME: $DATABASE_NAME
       DATABASE_USER: $DATABASE_USER
       DATABASE_PASSWORD: $DATABASE_PASSWORD
+
+      RABBITMQ_DEFAULT_USER: $RABBITMQ_DEFAULT_USER
+      RABBITMQ_DEFAULT_PASS: $RABBITMQ_DEFAULT_PASS
+
+      VK_PARSER_TOKEN: $VK_PARSER_TOKEN
+      VK_PARSER_APP_ID: $VK_PARSER_APP_ID
+
+      VK_BOT_GROUP_ID: $VK_BOT_GROUP_ID
+      VK_BOT_ACCESS_TOKEN: $VK_BOT_ACCESS_TOKEN
+
+      TG_BOT_WEB_HOOK_PATH: $TG_BOT_WEB_HOOK_PATH
+      TG_BOT_USERNAME: $TG_BOT_USERNAME
+      TG_BOT_TOKEN: $TG_BOT_TOKEN
     ports:
       - "8888:8888"
 
