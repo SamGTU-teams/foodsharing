@@ -6,9 +6,9 @@ services:
     ports:
       - "15672:15672"
       - "5672:5672"
-    # volumes:
-    #   - "./storage/rabbitmq/data:/var/lib/rabbitmq"
-    #   - "./storage/rabbitmq/myrabbit.conf:/etc/rabbitmq/rabbitmq.config"
+    volumes:
+      - "./storage/rabbitmq/data:/var/lib/rabbitmq"
+      - "./storage/rabbitmq/myrabbit.conf:/etc/rabbitmq/rabbitmq.config"
     healthcheck:
       test: rabbitmq-diagnostics -q ping
       interval: 30s
@@ -21,8 +21,9 @@ services:
     restart: always
     ports:
       - "5432:5432"
-    # volumes:
-    #   - "./storage/postgres/data:/var/lib/postgresql/data"
+    volumes:
+      - ./storage/postgres/initdb:/docker-entrypoint-initdb.d
+      - ./storage/postgres/data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: $DATABASE_NAME
       POSTGRES_USER: $DATABASE_USER
