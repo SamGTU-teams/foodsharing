@@ -1,11 +1,28 @@
 server:
-  port: 8010
+  port: ${SERVER_PORT}
 spring:
   cloud:
     config:
       uri: http://localhost:8888
   application:
     name: analyzer
+rabbitmq:
+  host: localhost
+  port: 5672
+  username: ${RABBITMQ_USER}
+  password: ${RABBITMQ_PASS}
+  consumer:
+    exchange: post-raw-exchange
+    queue: post.raw.analyzer
+  producer:
+    exchange: post-ready-exchange
+
+datasource:
+  host: localhost
+  port: 5432
+  name: ${DATABASE_NAME}
+  username: ${DATABASE_USER}
+  password: ${DATABASE_PASS}
 ---
 spring:
   config:
@@ -14,3 +31,7 @@ spring:
   cloud:
     config:
       uri: http://config:8888
+datasource:
+  host: postgres
+rabbitmq:
+  host: rabbitmq
