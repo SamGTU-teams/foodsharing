@@ -43,7 +43,7 @@ services:
     ports:
       - "8888:8888"
     volumes:
-      - ./config-service/src/main/resources/shared:/application/shared
+      - ./config-service/src/main/resources/shared:/app/shared
 
   parser:
     image: rassafel/foodsharing-vk-parser
