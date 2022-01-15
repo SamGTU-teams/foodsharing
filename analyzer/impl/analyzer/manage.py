@@ -40,8 +40,10 @@ publisher = get_publisher(config['rabbitmq.producer.exchange'])
 
 listener = get_listener(publisher)
 
+log.info("Binding consumer to queue: %s.", config['rabbitmq.consumer.queue'])
 channel.basic_consume(queue=config['rabbitmq.consumer.queue'],
                       on_message_callback=listener,
                       auto_ack=True)
 
+log.info("Start consuming.")
 channel.start_consuming()
