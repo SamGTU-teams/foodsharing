@@ -65,9 +65,6 @@ services:
     restart: on-failure
     ports:
       - 8000:8000
-    environment:
-      PARSER_TOKEN: $PARSER_TOKEN
-      PARSER_APP_ID: $PARSER_APP_ID
     depends_on:
       config:
         condition: service_healthy
@@ -107,8 +104,6 @@ services:
     restart: on-failure
     ports:
       - 8030:8030
-    environment:
-      TELEGRAM_TOKEN: N/A
     depends_on:
       config:
         condition: service_healthy
@@ -122,9 +117,6 @@ services:
     restart: on-failure
     ports:
       - 8040:8040
-    environment:
-      VKONTAKTE_TOKEN: N/A
-      VKONTAKTE_GROUP_ID: N/A
     depends_on:
       config:
         condition: service_healthy
