@@ -2,4 +2,3 @@ pika>=1.2.0
 spring-config-client>=0.2
 PyYAML>=5.3.1
 pyhocon>=0.3.59
-envyaml>=1.10
