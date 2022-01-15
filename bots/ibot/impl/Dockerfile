@@ -1,16 +1,27 @@
 FROM openjdk:8-alpine
 
+WORKDIR /app
+
+ENV spring_profiles_active=docker \
+    RABBITMQ_USER=guest \
+    RABBITMQ_PASS=guest \
+    DATABASE_NAME=postgres \
+    DATABASE_USER=postgres \
+    DATABASE_PASS=postgres \
+    SERVER_PORT=8020
+
 ARG JAR_FILE=target/*.jar
+
+RUN apk --no-cache add curl
+
 COPY ${JAR_FILE} app.jar
 
-ENV spring_profiles_active=docker
-
-CMD ["java", "-Xmx200m", "-jar", "/app.jar"]
+CMD ["java", "-Xmx200m", "-jar", "app.jar"]
 
 HEALTHCHECK --interval=30s \
             --timeout=5s \
             --retries=5 \
             --start-period=30s \
-            CMD curl -f http://localhost:8020/actuator/health || exit 1
+            CMD curl -f http://localhost:${SERVER_PORT}/actuator/health || exit 1
 
-EXPOSE 8020
+EXPOSE ${SERVER_PORT}

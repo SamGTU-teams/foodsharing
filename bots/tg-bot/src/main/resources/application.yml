@@ -1,0 +1,33 @@
+server:
+  port: ${SERVER_PORT:8030}
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: ${RABBITMQ_USER}
+    password: ${RABBITMQ_PASS}
+    exchange: post-ready-exchange
+    queue: post.ready.tg
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/${DATABASE_NAME}
+    driverClassName: org.postgresql.Driver
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASS}
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate.ddl-auto: validate
+
+  cloud:
+    config:
+      uri: http://localhost:8888
+      fail-fast: true
+
+  application:
+    name: tg-bot
+
+tg:
+  bot:
+    webHookPath: ${TG_BOT_WEB_HOOK_PATH}
+    username: ${TG_BOT_USERNAME}
+    token: ${TG_BOT_TOKEN}
