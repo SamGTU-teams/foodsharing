@@ -1,5 +1,6 @@
 import logging
 import os
+import subprocess
 from typing import List
 
 import yaml
@@ -23,6 +24,8 @@ def fetch_bootstrap(bootstrap_path: str,
 
     log.info("Fetching config from bootstrap.")
     with open(bootstrap_path, "r") as stream:
+        stream = subprocess.check_output(f"cat << EOF{stream.read()}\nEOF",
+                                         shell=True)[:-3].strip()
         try:
             loaded = yaml.safe_load_all(stream)
             configs = list(map(lambda l: ConfigFactory.from_dict(l), loaded))
