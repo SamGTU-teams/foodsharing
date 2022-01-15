@@ -40,6 +40,11 @@
 
         <dependency>
             <groupId>ru.rassafel</groupId>
+            <artifactId>foodsharing-analyzer-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.rassafel</groupId>
             <artifactId>foodsharing-ibot-api</artifactId>
         </dependency>
 
