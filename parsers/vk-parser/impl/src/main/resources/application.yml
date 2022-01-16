@@ -6,7 +6,7 @@ spring:
     port: 5672
     username: ${RABBITMQ_USER}
     password: ${RABBITMQ_PASS}
-    exchange: post-raw-exchange
+    exchangeName: post-raw-exchange
 
   datasource:
     url: jdbc:postgresql://localhost:5432/${DATABASE_NAME}
