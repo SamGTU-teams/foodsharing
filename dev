@@ -1,11 +1,14 @@
 #!/bin/sh
 
 echo 'Start building'
-. ./build
+./build
+if [ $? -ne 0 ]; then
+    exit $?
+fi
 echo 'Finish building'
 
 echo 'Start load environment variables'
-. ./env
+./env
 echo 'Finish load environment variables'
 
 echo 'Docker build and run'
