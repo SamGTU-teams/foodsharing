@@ -24,13 +24,14 @@
         </dependency>
 
         <dependency>
-            <groupId>ma.glasnost.orika</groupId>
-            <artifactId>orika-core</artifactId>
+            <groupId>ru.rassafel</groupId>
+            <artifactId>foodsharing-common</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>ru.rassafel</groupId>
-            <artifactId>foodsharing-common</artifactId>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
