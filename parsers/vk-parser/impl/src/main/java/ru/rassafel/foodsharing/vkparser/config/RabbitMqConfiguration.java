@@ -6,7 +6,7 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,26 +15,25 @@ import org.springframework.context.annotation.Configuration;
  */
 @EnableRabbit
 @Configuration
-public class RabbitConfiguration {
-    @Value("${spring.rabbitmq.exchange}")
-    private String exchangeName;
-
+@EnableConfigurationProperties(RabbitMqProperties.class)
+public class RabbitMqConfiguration {
     @Bean
-    public FanoutExchange fanoutExchange() {
-        return new FanoutExchange(exchangeName);
+    FanoutExchange fanoutExchange(RabbitMqProperties properties) {
+        return new FanoutExchange(properties.getExchangeName());
     }
 
     @Bean
-    public MessageConverter jsonMessageConverter() {
+    MessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();
     }
 
     @Bean
-    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory,
-                                         MessageConverter jsonMessageConverter) {
+    RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory,
+                                  MessageConverter jsonMessageConverter,
+                                  RabbitMqProperties properties) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(jsonMessageConverter);
-        rabbitTemplate.setExchange(exchangeName);
+        rabbitTemplate.setExchange(properties.getExchangeName());
         return rabbitTemplate;
     }
 }
