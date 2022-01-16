@@ -50,37 +50,37 @@
 
 
             <dependency>
-                <groupId>ru.rassafel</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>foodsharing-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>ru.rassafel</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>foodsharing-common-db</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>ru.rassafel</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>foodsharing-parser-vk-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>ru.rassafel</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>foodsharing-analyzer-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>ru.rassafel</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>foodsharing-ibot-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>ru.rassafel</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>foodsharing-bot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>

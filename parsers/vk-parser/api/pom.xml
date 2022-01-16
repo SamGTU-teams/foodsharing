@@ -19,7 +19,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>ru.rassafel</groupId>
+            <groupId>${project.parent.groupId}</groupId>
             <artifactId>foodsharing-common</artifactId>
         </dependency>
         <dependency>

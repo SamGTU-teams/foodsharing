@@ -29,12 +29,12 @@
         </dependency>
 
         <dependency>
-            <groupId>ru.rassafel</groupId>
+            <groupId>${project.parent.groupId}</groupId>
             <artifactId>foodsharing-bot-starter</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>ru.rassafel</groupId>
+            <groupId>${project.parent.groupId}</groupId>
             <artifactId>foodsharing-common-db</artifactId>
         </dependency>
 

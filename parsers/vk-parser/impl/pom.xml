@@ -63,12 +63,12 @@
 
 
         <dependency>
-            <groupId>ru.rassafel</groupId>
+            <groupId>${project.parent.groupId}</groupId>
             <artifactId>foodsharing-parser-vk-api</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>ru.rassafel</groupId>
+            <groupId>${project.parent.groupId}</groupId>
             <artifactId>foodsharing-common-db</artifactId>
         </dependency>
     </dependencies>
