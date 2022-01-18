@@ -4,7 +4,7 @@ import lombok.Data;
 import ru.rassafel.foodsharing.common.model.GeoPoint;
 import ru.rassafel.foodsharing.common.model.dto.RegionDto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -14,7 +14,7 @@ import java.util.List;
 public class RawPostDto {
     private String url;
 
-    private Date date;
+    private LocalDateTime date;
 
     private String text;
 
