@@ -10,12 +10,12 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>foodsharing-bot-starter</artifactId>
+    <artifactId>foodsharing-bot-message-starter</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>foodsharing-ibot-api</artifactId>
+            <artifactId>foodsharing-analyzer-api</artifactId>
         </dependency>
 
         <dependency>
