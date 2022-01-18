@@ -11,6 +11,7 @@ log = logging.getLogger(__name__)
 def get_listener(publish: Callable[[BlockingChannel, Any], None]
                  ) -> Callable[[BlockingChannel, Any, Any, Any], None]:
     log.info("Initializing RabbitMQ consumer")
+
     def listen(channel: BlockingChannel,
                method: Basic.Deliver,
                properties: BasicProperties,

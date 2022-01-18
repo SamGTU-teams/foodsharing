@@ -20,7 +20,8 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <project.reporting.outputEncoding>UTF-8
+        </project.reporting.outputEncoding>
         <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
         <vk.sdk.version>1.0.11</vk.sdk.version>
         <orika.version>1.5.1</orika.version>
