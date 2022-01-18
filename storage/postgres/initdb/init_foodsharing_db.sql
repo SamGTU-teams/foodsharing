@@ -2,7 +2,7 @@
 CREATE SCHEMA IF NOT EXISTS public;
 
 CREATE TABLE public.product (
-  id VARCHAR(63) NOT NULL,
+  id BIGINT NOT NULL,
   name VARCHAR(63) NOT NULL,
   CONSTRAINT pk_product PRIMARY KEY (id)
 );
@@ -61,7 +61,7 @@ CREATE TABLE ibot.food_post_regions (
 
 CREATE TABLE ibot.food_post_products (
     food_post_id BIGINT NOT NULL,
-    product_id VARCHAR(63) NOT NULL,
+    product_id BIGINT NOT NULL,
     CONSTRAINT pk_food_post_products PRIMARY KEY (food_post_id, product_id)
 );
 
@@ -95,7 +95,7 @@ CREATE TABLE vk_bot.place (
 
 CREATE TABLE vk_bot.user_products (
     user_id BIGINT NOT NULL,
-    product_id VARCHAR(63) NOT NULL,
+    product_id BIGINT NOT NULL,
     CONSTRAINT pk_user_products PRIMARY KEY (user_id, product_id)
 );
 
@@ -130,7 +130,7 @@ CREATE TABLE tg_bot.place (
 
 CREATE TABLE tg_bot.user_products (
     user_id BIGINT NOT NULL,
-    product_id VARCHAR(63) NOT NULL,
+    product_id BIGINT NOT NULL,
     CONSTRAINT pk_user_products PRIMARY KEY (user_id, product_id)
 );
 
