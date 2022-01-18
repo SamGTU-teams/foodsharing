@@ -4,7 +4,14 @@ CREATE SCHEMA IF NOT EXISTS public;
 CREATE TABLE public.product (
   id BIGINT NOT NULL,
   name VARCHAR(63) NOT NULL,
+   category_id BIGINT,
   CONSTRAINT pk_product PRIMARY KEY (id)
+);
+
+CREATE TABLE public.category (
+  id BIGINT NOT NULL,
+   name VARCHAR(63) NOT NULL,
+   CONSTRAINT pk_category PRIMARY KEY (id)
 );
 
 CREATE TABLE public.region (
@@ -16,6 +23,10 @@ CREATE TABLE public.region (
 );
 
 ALTER TABLE public.product ADD CONSTRAINT uq_product_name UNIQUE (name);
+
+ALTER TABLE public.category ADD CONSTRAINT uq_category_name UNIQUE (name);
+
+ALTER TABLE public.product ADD CONSTRAINT fk_product_on_category FOREIGN KEY (category_id) REFERENCES public.category (id);
 
 ALTER TABLE public.region ADD CONSTRAINT uq_region_name UNIQUE (name);
 
