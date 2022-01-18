@@ -1,8 +1,25 @@
 spring:
-  cloud:
-    config:
-      uri: http://localhost:8888
-      fail-fast: true
-
   application:
     name: vk-bot
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER_URL:http://localhost:8888/}
+      fail-fast: true
+      enabled: true
+  profiles:
+    active: ${SPR_PROFILE:default}
+
+server:
+  port: ${SERVER_PORT:8040}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,refresh
+
+vk:
+  bot:
+    groupId: ${VK_BOT_GROUP_ID}
+    accessToken: ${VK_BOT_ACCESS_TOKEN}
+

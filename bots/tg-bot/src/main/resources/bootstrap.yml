@@ -1,8 +1,25 @@
 spring:
-  cloud:
-    config:
-      uri: http://localhost:8888
-      fail-fast: true
-
   application:
     name: tg-bot
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER_URL:http://localhost:8888/}
+      fail-fast: true
+      enabled: true
+  profiles:
+    active: ${SPR_PROFILE:default}
+
+server:
+  port: ${SERVER_PORT:8030}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,refresh
+
+tg:
+  bot:
+    webHookPath: ${TG_BOT_WEB_HOOK_PATH}
+    username: ${TG_BOT_USERNAME}
+    token: ${TG_BOT_TOKEN}

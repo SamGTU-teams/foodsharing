@@ -1,0 +1,6 @@
+spring:
+  rabbitmq:
+    exchangeName: post-raw-exchange
+vk:
+  parser:
+    duration: 10m

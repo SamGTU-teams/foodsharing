@@ -23,25 +23,26 @@ remote_config = fetch_service(uri=bootstrap['spring.cloud.config.uri'],
 
 config = bootstrap.merge_configs(bootstrap, remote_config)
 
-connection = create_connection(host=config['rabbitmq.host'],
-                               port=config['rabbitmq.port'],
-                               username=config['rabbitmq.username'],
-                               password=config['rabbitmq.password'])
+connection = create_connection(host=config['spring.rabbitmq.host'],
+                               port=config['spring.rabbitmq.port'],
+                               username=config['spring.rabbitmq.username'],
+                               password=config['spring.rabbitmq.password'])
 channel = connection.channel()
 
 consumer_declaration(channel=channel,
-                     exchange=config['rabbitmq.consumer.exchange'],
-                     queue=config['rabbitmq.consumer.queue'])
+                     exchange=config['spring.rabbitmq.consumer.exchange'],
+                     queue=config['spring.rabbitmq.consumer.queue'])
 
 producer_declaration(channel=channel,
-                     exchange=config['rabbitmq.producer.exchange'])
+                     exchange=config['spring.rabbitmq.producer.exchange'])
 
-publisher = get_publisher(config['rabbitmq.producer.exchange'])
+publisher = get_publisher(config['spring.rabbitmq.producer.exchange'])
 
 listener = get_listener(publisher)
 
-log.info("Binding consumer to queue: %s.", config['rabbitmq.consumer.queue'])
-channel.basic_consume(queue=config['rabbitmq.consumer.queue'],
+log.info("Binding consumer to queue: %s.",
+         config['spring.rabbitmq.consumer.queue'])
+channel.basic_consume(queue=config['spring.rabbitmq.consumer.queue'],
                       on_message_callback=listener,
                       auto_ack=True)
 

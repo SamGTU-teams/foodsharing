@@ -2,12 +2,8 @@ FROM adoptopenjdk/openjdk11:alpine-jre
 
 WORKDIR /app
 
-ENV spring_profiles_active=docker \
-    RABBITMQ_USER=guest \
-    RABBITMQ_PASS=guest \
-    DATABASE_NAME=postgres \
-    DATABASE_USER=postgres \
-    DATABASE_PASS=postgres \
+ENV SPR_PROFILE=docker \
+    CONFIG_SERVER_URL=http://config:8888/ \
     TG_BOT_WEB_HOOK_PATH=TEST \
     TG_BOT_USERNAME=TEST \
     TG_BOT_TOKEN=TEST \

@@ -2,12 +2,8 @@ FROM python:3-alpine
 
 WORKDIR /app
 
-ENV spring_profiles_active=docker \
-    RABBITMQ_USER=guest \
-    RABBITMQ_PASS=guest \
-    DATABASE_NAME=postgres \
-    DATABASE_USER=postgres \
-    DATABASE_PASS=postgres \
+ENV SPR_PROFILE=docker \
+    CONFIG_SERVER_URL=http://config:8888/ \
     SERVER_PORT=8010
 
 COPY requirements.txt ./

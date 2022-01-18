@@ -2,12 +2,8 @@ FROM adoptopenjdk/openjdk11:alpine-jre
 
 WORKDIR /app
 
-ENV spring_profiles_active=docker \
-    RABBITMQ_USER=guest \
-    RABBITMQ_PASS=guest \
-    DATABASE_NAME=postgres \
-    DATABASE_USER=postgres \
-    DATABASE_PASS=postgres \
+ENV SPR_PROFILE=docker \
+    CONFIG_SERVER_URL=http://config:8888/ \
     SERVER_PORT=8020
 
 ARG JAR_FILE=target/*.jar

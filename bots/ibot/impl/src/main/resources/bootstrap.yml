@@ -1,8 +1,19 @@
 spring:
-  cloud:
-    config:
-      uri: http://localhost:8888
-      fail-fast: true
-
   application:
     name: ibot
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER_URL:http://localhost:8888/}
+      fail-fast: true
+      enabled: true
+  profiles:
+    active: ${SPR_PROFILE:default}
+
+server:
+  port: ${SERVER_PORT:8020}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,refresh
