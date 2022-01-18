@@ -90,7 +90,13 @@
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>foodsharing-bot-starter</artifactId>
+                <artifactId>foodsharing-bot-session-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>foodsharing-bot-message-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
