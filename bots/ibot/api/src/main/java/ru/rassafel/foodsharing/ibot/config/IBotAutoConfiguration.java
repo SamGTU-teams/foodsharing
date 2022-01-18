@@ -1,4 +1,4 @@
-package ru.rassafel.foodsharing.ibot.configuration;
+package ru.rassafel.foodsharing.ibot.config;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;

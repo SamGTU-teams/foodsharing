@@ -1,4 +1,4 @@
-package ru.rassafel.foodsharing.analyzer.configuration;
+package ru.rassafel.foodsharing.analyzer.config;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
