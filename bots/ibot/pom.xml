@@ -13,16 +13,6 @@
     <artifactId>foodsharing-ibot</artifactId>
     <packaging>pom</packaging>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>${project.parent.groupId}</groupId>
-                <artifactId>foodsharing-ibot-api</artifactId>
-                <version>${project.parent.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <modules>
         <module>api</module>
         <module>impl</module>
