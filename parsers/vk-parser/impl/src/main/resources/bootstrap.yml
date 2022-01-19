@@ -17,8 +17,3 @@ management:
     web:
       exposure:
         include: health,info,refresh
-
-vk:
-  parser:
-    token: ${VK_PARSER_TOKEN}
-    appId: ${VK_PARSER_APP_ID}

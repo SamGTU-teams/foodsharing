@@ -17,9 +17,3 @@ management:
     web:
       exposure:
         include: health,info,refresh
-
-vk:
-  bot:
-    groupId: ${VK_BOT_GROUP_ID}
-    accessToken: ${VK_BOT_ACCESS_TOKEN}
-
