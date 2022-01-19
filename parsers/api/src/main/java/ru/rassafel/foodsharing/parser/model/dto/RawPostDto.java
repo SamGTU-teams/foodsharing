@@ -1,4 +1,4 @@
-package ru.rassafel.foodsharing.vkparser.model.dto;
+package ru.rassafel.foodsharing.parser.model.dto;
 
 import lombok.Data;
 import ru.rassafel.foodsharing.common.model.GeoPoint;

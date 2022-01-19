@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>foodsharing-parser-vk</artifactId>
+        <artifactId>foodsharing-parsers</artifactId>
         <groupId>ru.rassafel</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>foodsharing-parser-vk-api</artifactId>
+    <artifactId>foodsharing-parser-api</artifactId>
 
     <dependencies>
         <dependency>
