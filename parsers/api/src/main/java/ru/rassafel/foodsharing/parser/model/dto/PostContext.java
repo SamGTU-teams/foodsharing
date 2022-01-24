@@ -4,21 +4,16 @@ import lombok.Data;
 import ru.rassafel.foodsharing.common.model.GeoPoint;
 import ru.rassafel.foodsharing.common.model.dto.RegionDto;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author rassafel
  */
 @Data
-public class RawPostDto {
-    private String url;
+public class PostContext {
+    private List<String> attachments;
 
-    private LocalDateTime date;
+    private GeoPoint point;
 
-    private String text;
-
-    private PostContext context;
+    private List<RegionDto> regions;
 }
