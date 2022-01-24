@@ -6,6 +6,6 @@ import ru.rassafel.foodsharing.ibot.controller.IBotController;
 /**
  * @author rassafel
  */
-@FeignClient(name = "IBotService", url = "${feign.ibot.url}")
+@FeignClient(name = "ibot", url = "${feign.ibot.url}")
 public interface IBotControllerFeign extends IBotController {
 }
