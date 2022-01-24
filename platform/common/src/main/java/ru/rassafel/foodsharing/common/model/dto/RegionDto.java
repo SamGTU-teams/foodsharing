@@ -8,7 +8,7 @@ import ru.rassafel.foodsharing.common.model.GeoPoint;
  */
 @Data
 public class RegionDto {
-    private String id;
+    private Long id;
 
     private String name;
 
