@@ -9,7 +9,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "spring.rabbitmq")
+@ConfigurationProperties(prefix = RabbitMqProperties.PREFIX)
 public class RabbitMqProperties {
-    private String exchangeName = "default-application-exchange";
+    public static final String PREFIX = "spring.rabbitmq";
+
+    private String exchangeName;
 }
