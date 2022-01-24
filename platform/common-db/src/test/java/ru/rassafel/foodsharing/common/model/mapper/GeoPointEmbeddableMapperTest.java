@@ -1,53 +1,69 @@
 package ru.rassafel.foodsharing.common.model.mapper;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import ru.rassafel.foodsharing.common.model.GeoPoint;
 import ru.rassafel.foodsharing.common.model.GeoPointEmbeddable;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author rassafel
  */
+@SpringBootTest(classes = GeoPointEmbeddableMapperImpl.class)
 class GeoPointEmbeddableMapperTest {
-    GeoPointEmbeddableMapper mapper = GeoPointEmbeddableMapper.INSTANCE;
+    @Autowired
+    GeoPointEmbeddableMapper mapper;
+
+    GeoPointEmbeddable sourceEntity;
+
+    GeoPoint expectedDto;
+
+    GeoPoint sourceDto;
+
+    GeoPointEmbeddable expectedEntity;
+
+    @BeforeEach
+    void initValues() {
+        sourceEntity = new GeoPointEmbeddable();
+        sourceEntity.setLat(1f);
+        sourceEntity.setLon(1f);
+
+        expectedDto = new GeoPoint();
+        expectedDto.setLat(1f);
+        expectedDto.setLon(1f);
+
+        sourceDto = new GeoPoint();
+        sourceDto.setLat(1f);
+        sourceDto.setLon(1f);
+
+        expectedEntity = new GeoPointEmbeddable();
+        expectedEntity.setLat(1f);
+        expectedEntity.setLon(1f);
+    }
 
     @Test
     void entityToDto() {
-        GeoPointEmbeddable source = new GeoPointEmbeddable();
-        source.setLat(1f);
-        source.setLon(1f);
 
-        GeoPoint expected = new GeoPoint();
-        expected.setLat(1f);
-        expected.setLon(1f);
-
-        GeoPoint actual = mapper.entityToDto(source);
+        GeoPoint actual = mapper.entityToDto(sourceEntity);
 
         assertThat(actual)
             .isNotNull()
-            .isNotSameAs(source)
-            .isNotSameAs(expected)
-            .isEqualToComparingFieldByField(expected);
+            .isNotSameAs(sourceEntity)
+            .isNotSameAs(expectedDto)
+            .isEqualToComparingFieldByField(expectedDto);
     }
 
     @Test
     void dtoToEntity() {
-        GeoPoint source = new GeoPoint();
-        source.setLat(1f);
-        source.setLon(1f);
-
-        GeoPointEmbeddable expected = new GeoPointEmbeddable();
-        expected.setLat(1f);
-        expected.setLon(1f);
-
-        GeoPointEmbeddable actual = mapper.dtoToEntity(source);
+        GeoPointEmbeddable actual = mapper.dtoToEntity(sourceDto);
 
         assertThat(actual)
             .isNotNull()
-            .isNotSameAs(source)
-            .isNotSameAs(expected)
-            .isEqualToComparingFieldByField(expected);
+            .isNotSameAs(sourceDto)
+            .isNotSameAs(expectedEntity)
+            .isEqualToComparingFieldByField(expectedEntity);
     }
 }

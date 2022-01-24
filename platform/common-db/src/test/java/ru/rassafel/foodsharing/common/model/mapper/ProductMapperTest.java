@@ -1,56 +1,70 @@
 package ru.rassafel.foodsharing.common.model.mapper;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import ru.rassafel.foodsharing.common.model.dto.ProductDto;
-import ru.rassafel.foodsharing.common.model.entity.Category;
 import ru.rassafel.foodsharing.common.model.entity.Product;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author rassafel
  */
+@SpringBootTest(classes = ProductMapperImpl.class)
 class ProductMapperTest {
-    ProductMapper mapper = ProductMapper.INSTANCE;
+    @Autowired
+    ProductMapper mapper;
+
+    ProductDto sourceDto;
+
+    Product expectedEntity;
+
+    Product sourceEntity;
+
+    ProductDto expectedDto;
+
+    @BeforeEach
+    void initValues() {
+        sourceDto = new ProductDto();
+        sourceDto.setId(1L);
+        sourceDto.setName("Test product");
+
+        expectedEntity = new Product();
+        expectedEntity.setId(1L);
+        expectedEntity.setName("Test product");
+        expectedEntity.setCategory(null);
+
+        sourceEntity = new Product();
+        sourceEntity.setId(1L);
+        sourceEntity.setName("Test product");
+        sourceEntity.setCategory(null);
+
+        expectedDto = new ProductDto();
+        expectedDto.setId(1L);
+        expectedDto.setName("Test product");
+    }
 
     @Test
     void dtoToEntity() {
-        ProductDto source = new ProductDto();
-        source.setId(1L);
-        source.setName("Test product");
-
-        Product expected = new Product();
-        expected.setId(1L);
-        expected.setName("Test product");
-        expected.setCategory(null);
-
-        Product actual = mapper.dtoToEntity(source);
+        Product actual = mapper.dtoToEntity(sourceDto);
 
         assertThat(actual)
             .isNotNull()
-            .isNotSameAs(source)
-            .isNotSameAs(expected)
-            .isEqualToComparingFieldByField(expected);
+            .isNotSameAs(sourceDto)
+            .isNotSameAs(expectedEntity)
+            .isEqualToComparingFieldByField(expectedEntity);
     }
 
     @Test
     void entityToDto() {
-        Product source = new Product();
-        source.setId(1L);
-        source.setName("Test product");
-        source.setCategory(null);
-
-        ProductDto expected = new ProductDto();
-        expected.setId(1L);
-        expected.setName("Test product");
-
-        ProductDto actual = mapper.entityToDto(source);
+        ProductDto actual = mapper.entityToDto(sourceEntity);
 
         assertThat(actual)
             .isNotNull()
-            .isNotSameAs(source)
-            .isNotSameAs(expected)
-            .isEqualToComparingFieldByField(expected);
+            .isNotSameAs(sourceEntity)
+            .isNotSameAs(expectedDto)
+            .isEqualToComparingFieldByField(expectedDto);
     }
 }
