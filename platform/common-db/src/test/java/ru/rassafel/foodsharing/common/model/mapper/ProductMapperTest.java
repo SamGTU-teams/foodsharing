@@ -2,8 +2,6 @@ package ru.rassafel.foodsharing.common.model.mapper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import ru.rassafel.foodsharing.common.model.dto.ProductDto;
 import ru.rassafel.foodsharing.common.model.entity.Product;
 
@@ -12,9 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author rassafel
  */
-@SpringBootTest(classes = ProductMapperImpl.class)
 class ProductMapperTest {
-    @Autowired
     ProductMapper mapper;
 
     ProductDto sourceDto;

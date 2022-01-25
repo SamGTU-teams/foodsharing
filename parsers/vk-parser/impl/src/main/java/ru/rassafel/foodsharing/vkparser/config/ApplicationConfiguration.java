@@ -6,6 +6,9 @@ import com.vk.api.sdk.httpclient.HttpTransportClient;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import ru.rassafel.foodsharing.vkparser.model.mapper.GeoMapper;
+import ru.rassafel.foodsharing.vkparser.model.mapper.RawPostMapper;
+import ru.rassafel.foodsharing.vkparser.model.mapper.VkGroupMapper;
 
 /**
  * @author rassafel
@@ -21,5 +24,20 @@ public class ApplicationConfiguration {
         return new VkApiClient(instance,
             new GsonBuilder().disableHtmlEscaping().create(),
             properties.getRetryAttemptsInternalServerErrorCount());
+    }
+
+    @Bean
+    GeoMapper geoMapper() {
+        return GeoMapper.INSTANCE;
+    }
+
+    @Bean
+    RawPostMapper rawPostMapper() {
+        return RawPostMapper.INSTANCE;
+    }
+
+    @Bean
+    VkGroupMapper vkGroupMapper() {
+        return VkGroupMapper.INSTANCE;
     }
 }

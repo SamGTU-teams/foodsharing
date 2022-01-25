@@ -2,8 +2,6 @@ package ru.rassafel.foodsharing.common.model.mapper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import ru.rassafel.foodsharing.common.model.dto.CategoryDto;
 import ru.rassafel.foodsharing.common.model.entity.Category;
 import ru.rassafel.foodsharing.common.model.entity.Product;
@@ -15,10 +13,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author rassafel
  */
-@SpringBootTest(classes = CategoryMapperImpl.class)
 class CategoryMapperTest {
-    @Autowired
-    CategoryMapper mapper;
+    CategoryMapper mapper = CategoryMapper.INSTANCE;
 
     Category sourceEntity;
 

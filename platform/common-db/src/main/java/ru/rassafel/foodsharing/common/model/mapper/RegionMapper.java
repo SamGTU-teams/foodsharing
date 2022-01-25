@@ -12,7 +12,7 @@ import java.util.Set;
  * @author rassafel
  */
 
-@Mapper(componentModel = "spring", uses = {GeoPointEmbeddableMapper.class})
+@Mapper(uses = {GeoPointEmbeddableMapper.class})
 public interface RegionMapper {
     RegionMapper INSTANCE = Mappers.getMapper(RegionMapper.class);
 

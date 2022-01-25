@@ -9,7 +9,7 @@ import ru.rassafel.foodsharing.vkparser.model.vk.group.WithoutAccessGroup;
 /**
  * @author rassafel
  */
-@Mapper(componentModel = "spring")
+@Mapper
 public interface VkGroupMapper {
     VkGroupMapper INSTANCE = Mappers.getMapper(VkGroupMapper.class);
 

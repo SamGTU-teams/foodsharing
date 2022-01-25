@@ -2,8 +2,6 @@ package ru.rassafel.foodsharing.vkparser.model.mapper;
 
 import com.vk.api.sdk.objects.wall.Geo;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import ru.rassafel.foodsharing.common.model.GeoPoint;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -11,10 +9,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author rassafel
  */
-@SpringBootTest(classes = GeoMapperImpl.class)
 class GeoMapperTest {
-    @Autowired
-    GeoMapper mapper;
+    GeoMapper mapper = GeoMapper.INSTANCE;
 
     @Test
     void apiToDto() {

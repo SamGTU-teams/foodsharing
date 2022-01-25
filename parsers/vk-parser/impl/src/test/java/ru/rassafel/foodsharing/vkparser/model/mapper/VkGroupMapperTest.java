@@ -1,8 +1,6 @@
 package ru.rassafel.foodsharing.vkparser.model.mapper;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import ru.rassafel.foodsharing.vkparser.model.entity.VkGroup;
 import ru.rassafel.foodsharing.vkparser.model.vk.group.FullAccessGroup;
 import ru.rassafel.foodsharing.vkparser.model.vk.group.WithoutAccessGroup;
@@ -12,10 +10,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author rassafel
  */
-@SpringBootTest(classes = VkGroupMapperImpl.class)
 class VkGroupMapperTest {
-    @Autowired
-    VkGroupMapper mapper;
+    VkGroupMapper mapper = VkGroupMapper.INSTANCE;
 
     @Test
     void mapFullAccess() {

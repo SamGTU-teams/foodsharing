@@ -2,8 +2,6 @@ package ru.rassafel.foodsharing.common.model.mapper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import ru.rassafel.foodsharing.common.model.GeoPoint;
 import ru.rassafel.foodsharing.common.model.GeoPointEmbeddable;
 
@@ -12,9 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author rassafel
  */
-@SpringBootTest(classes = GeoPointEmbeddableMapperImpl.class)
 class GeoPointEmbeddableMapperTest {
-    @Autowired
     GeoPointEmbeddableMapper mapper;
 
     GeoPointEmbeddable sourceEntity;

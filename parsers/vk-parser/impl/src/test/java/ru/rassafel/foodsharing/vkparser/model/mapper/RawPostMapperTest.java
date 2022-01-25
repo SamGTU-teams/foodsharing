@@ -34,15 +34,12 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author rassafel
  */
 @SpringBootTest(classes = {
-    RawPostMapperImpl.class,
-    GeoMapperImpl.class,
     EventDeserializer.class,
     WallpostAttachmentTypeDeserializer.class,
     PhotoSizesTypeDeserializer.class
 })
 class RawPostMapperTest {
-    @Autowired
-    RawPostMapper mapper;
+    RawPostMapper mapper = RawPostMapper.INSTANCE;
 
     @Autowired
     List<EnumDeserializer<?>> deserializers;

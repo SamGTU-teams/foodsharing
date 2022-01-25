@@ -8,7 +8,7 @@ import ru.rassafel.foodsharing.common.model.GeoPointEmbeddable;
 /**
  * @author rassafel
  */
-@Mapper(componentModel = "spring")
+@Mapper
 public interface GeoPointEmbeddableMapper {
     GeoPointEmbeddableMapper INSTANCE = Mappers.getMapper(GeoPointEmbeddableMapper.class);
 

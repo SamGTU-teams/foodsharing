@@ -10,7 +10,7 @@ import java.util.Arrays;
 /**
  * @author rassafel
  */
-@Mapper(componentModel = "spring")
+@Mapper
 public abstract class GeoMapper {
     public static final GeoMapper INSTANCE = Mappers.getMapper(GeoMapper.class);
 

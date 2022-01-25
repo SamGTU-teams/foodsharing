@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 /**
  * @author rassafel
  */
-@Mapper(componentModel = "spring", uses = {GeoMapper.class})
+@Mapper(uses = {GeoMapper.class})
 public abstract class RawPostMapper {
     public static final RawPostMapper INSTANCE = Mappers.getMapper(RawPostMapper.class);
 

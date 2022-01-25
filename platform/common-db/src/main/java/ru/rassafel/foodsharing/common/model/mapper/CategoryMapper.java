@@ -8,7 +8,7 @@ import ru.rassafel.foodsharing.common.model.entity.Category;
 /**
  * @author rassafel
  */
-@Mapper(componentModel = "spring")
+@Mapper
 public interface CategoryMapper {
     CategoryMapper INSTANCE = Mappers.getMapper(CategoryMapper.class);
 
