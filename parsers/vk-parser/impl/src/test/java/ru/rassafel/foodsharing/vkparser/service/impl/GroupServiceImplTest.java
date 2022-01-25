@@ -1,14 +1,18 @@
 package ru.rassafel.foodsharing.vkparser.service.impl;
 
+import com.vk.api.sdk.actions.Groups;
 import com.vk.api.sdk.client.VkApiClient;
-import org.junit.Ignore;
+import com.vk.api.sdk.client.actors.GroupActor;
+import com.vk.api.sdk.exceptions.ApiException;
+import com.vk.api.sdk.exceptions.ClientException;
+import com.vk.api.sdk.objects.base.responses.OkResponse;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.Answers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -21,6 +25,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.AdditionalMatchers.or;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -44,21 +49,6 @@ class GroupServiceImplTest {
 
     VkGroup fromDb;
 
-    private static Stream<Arguments> registerWithoutAccessMatchValues() {
-        return Stream.<Arguments>builder()
-            .add(Arguments.of(null, null))
-            .add(Arguments.of("Test secret", "Test secret"))
-            .build();
-    }
-
-    private static Stream<Arguments> registerWithoutAccessNotMatchValues() {
-        return Stream.<Arguments>builder()
-            .add(Arguments.of("Test secret", null))
-            .add(Arguments.of(null, "Test secret"))
-            .add(Arguments.of("Test secret", "Not match secret"))
-            .build();
-    }
-
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -74,7 +64,6 @@ class GroupServiceImplTest {
         fromDb.setGroupId(1);
     }
 
-    @Disabled
     @ParameterizedTest
     @NullSource
     @ValueSource(strings = {"Test secret"})
@@ -95,8 +84,8 @@ class GroupServiceImplTest {
 
     @Disabled
     @ParameterizedTest
-    @MethodSource("registerWithoutAccessMatchValues")
-    void registerExistGroupWithAccess(String dbSecret, String acceptedSecret) {
+    @MethodSource("ru.rassafel.foodsharing.vkparser.service.impl.SecretMatches#registerWithoutAccessMatchValues")
+    void registerExistGroupWithAccess(String dbSecret, String acceptedSecret) throws ClientException, ApiException {
         fromDb.setAccessToken("Old token");
         fromDb.setSecretKey(dbSecret);
 
@@ -115,7 +104,7 @@ class GroupServiceImplTest {
     }
 
     @ParameterizedTest
-    @MethodSource("registerWithoutAccessNotMatchValues")
+    @MethodSource("ru.rassafel.foodsharing.vkparser.service.impl.SecretMatches#registerWithoutAccessNotMatchValues")
     void registerExistGroupWithAccessSecretNotMatch(String dbSecret, String acceptedSecret) {
         fromDb.setAccessToken("Old token");
         fromDb.setSecretKey(dbSecret);
@@ -161,7 +150,7 @@ class GroupServiceImplTest {
     }
 
     @ParameterizedTest
-    @MethodSource("registerWithoutAccessMatchValues")
+    @MethodSource("ru.rassafel.foodsharing.vkparser.service.impl.SecretMatches#registerWithoutAccessMatchValues")
     void registerExistGroupWithoutAccess(String dbSecret, String acceptedSecret) {
         fromDb.setConfirmationCode("Old code");
         fromDb.setSecretKey(dbSecret);
@@ -186,7 +175,7 @@ class GroupServiceImplTest {
     }
 
     @ParameterizedTest
-    @MethodSource("registerWithoutAccessNotMatchValues")
+    @MethodSource("ru.rassafel.foodsharing.vkparser.service.impl.SecretMatches#registerWithoutAccessNotMatchValues")
     void registerExistGroupWithoutAccessSecretNotMatch(String dbSecret, String acceptedSecret) {
         fromDb.setConfirmationCode("Old code");
         fromDb.setSecretKey(dbSecret);
