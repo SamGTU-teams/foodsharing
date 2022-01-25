@@ -51,5 +51,5 @@ public abstract class RawPostMapper {
         @Mapping(source = "text", target = "text"),
         @Mapping(source = "date", target = "date", ignore = true)
     })
-    public abstract RawPostDto apiToDto(Wallpost source);
+    public abstract RawPostDto map(Wallpost source);
 }

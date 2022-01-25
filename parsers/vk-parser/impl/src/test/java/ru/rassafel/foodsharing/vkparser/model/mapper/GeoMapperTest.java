@@ -25,7 +25,7 @@ class GeoMapperTest {
         expected.setLat(51.123d);
         expected.setLon(15.321d);
 
-        GeoPoint actual = mapper.apiToDto(source);
+        GeoPoint actual = mapper.map(source);
 
         assertThat(actual)
             .isNotNull()

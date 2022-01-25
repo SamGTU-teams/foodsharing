@@ -14,7 +14,7 @@ import java.util.Arrays;
 public abstract class GeoMapper {
     public static final GeoMapper INSTANCE = Mappers.getMapper(GeoMapper.class);
 
-    public GeoPoint apiToDto(Geo source) {
+    public GeoPoint map(Geo source) {
         GeoPoint point = new GeoPoint();
         double[] coordinates = Arrays.stream(source.getCoordinates().split("\\s+"))
             .mapToDouble(Double::parseDouble)

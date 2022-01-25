@@ -101,7 +101,7 @@ class RawPostMapperTest {
         expected.setContext(context);
         expected.setUrl("https://vk.com/club208377052?w=wall-208377052_2");
 
-        RawPostDto actual = mapper.apiToDto(source);
+        RawPostDto actual = mapper.map(source);
 
         assertThat(actual)
             .isNotNull()
@@ -254,7 +254,7 @@ class RawPostMapperTest {
         expected.setContext(context);
         expected.setUrl("https://vk.com/club208377052?w=wall-208377052_2");
 
-        RawPostDto actual = mapper.apiToDto(source);
+        RawPostDto actual = mapper.map(source);
 
         assertThat(actual)
             .isNotNull()
