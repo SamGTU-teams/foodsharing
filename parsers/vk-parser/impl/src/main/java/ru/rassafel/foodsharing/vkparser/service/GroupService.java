@@ -6,7 +6,7 @@ import ru.rassafel.foodsharing.vkparser.model.entity.VkGroup;
  * @author rassafel
  */
 public interface GroupService {
-    void registerWithAccess(VkGroup group);
+    VkGroup registerWithAccess(VkGroup group);
 
-    void registerWithoutAccess(VkGroup group);
+    VkGroup registerWithoutAccess(VkGroup group);
 }
