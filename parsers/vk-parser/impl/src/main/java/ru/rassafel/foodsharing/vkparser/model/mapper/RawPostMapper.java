@@ -1,6 +1,7 @@
 package ru.rassafel.foodsharing.vkparser.model.mapper;
 
 import com.vk.api.sdk.objects.photos.Photo;
+import com.vk.api.sdk.objects.wall.WallpostAttachment;
 import com.vk.api.sdk.objects.wall.WallpostAttachmentType;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -11,6 +12,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.Objects.nonNull;
 
 /**
  * @author rassafel
@@ -28,16 +31,19 @@ public abstract class RawPostMapper {
         String groupUrl = String.format("https://vk.com/club%d", absOwnerId);
         String wallpostParam = String.format("wall-%d_%d", absOwnerId, source.getId());
 
-        List<String> attachments = source.getAttachments()
-            .stream()
-            .filter(attachment -> WallpostAttachmentType.PHOTO.equals(attachment.getType()))
-            .map(attachment -> {
-                Photo photo = attachment.getPhoto();
-                return String.format("%s?z=photo-%d_%d%%2F%s",
-                    groupUrl, absOwnerId, photo.getId(), wallpostParam);
-            })
-            .collect(Collectors.toList());
-
+        List<WallpostAttachment> sourceAttachments = source.getAttachments();
+        List<String> attachments = null;
+        if (nonNull(sourceAttachments)) {
+            attachments = sourceAttachments
+                .stream()
+                .filter(attachment -> WallpostAttachmentType.PHOTO.equals(attachment.getType()))
+                .map(attachment -> {
+                    Photo photo = attachment.getPhoto();
+                    return String.format("%s?z=photo-%d_%d%%2F%s",
+                        groupUrl, absOwnerId, photo.getId(), wallpostParam);
+                })
+                .collect(Collectors.toList());
+        }
         target.getContext().setAttachments(attachments);
 
         target.setUrl(String.format("%s?w=%s", groupUrl, wallpostParam));
