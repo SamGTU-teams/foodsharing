@@ -13,8 +13,9 @@ import ru.rassafel.foodsharing.vkparser.model.entity.VkGroup;
 import ru.rassafel.foodsharing.vkparser.repository.GroupRepository;
 import ru.rassafel.foodsharing.vkparser.service.GroupService;
 
-import java.util.Objects;
 import java.util.Optional;
+
+import static ru.rassafel.foodsharing.vkparser.util.GroupUtil.throwIfSecretKeyNotMatch;
 
 /**
  * @author rassafel
@@ -92,7 +93,7 @@ public class GroupServiceImpl implements GroupService {
         if (optionalGroup.isPresent()) {
             log.info("Group with id = {} exists in DB.", group.getGroupId());
             VkGroup vkGroup = optionalGroup.get();
-            throwIfSecretKeyNotMatch(group, vkGroup);
+            throwIfSecretKeyNotMatch(group, vkGroup.getSecretKey());
             vkGroup.setServerId(null);
             vkGroup.setAccessToken(group.getAccessToken());
             vkGroup.setConfirmationCode(group.getConfirmationCode());
@@ -102,13 +103,5 @@ public class GroupServiceImpl implements GroupService {
             log.info("Group with id = {} does not exists in DB.", group.getGroupId());
         }
         return group;
-    }
-
-    void throwIfSecretKeyNotMatch(VkGroup accepted, VkGroup registered) {
-        if (!Objects.equals(accepted.getSecretKey(), registered.getSecretKey())) {
-            log.warn("Registration for group with id {} declined: Secret key do not match.", accepted.getGroupId());
-//            ToDo: Create exception class.
-            throw new RuntimeException("Secret key do not match.");
-        }
     }
 }
