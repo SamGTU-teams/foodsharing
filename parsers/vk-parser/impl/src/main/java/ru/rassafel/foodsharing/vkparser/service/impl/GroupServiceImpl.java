@@ -26,6 +26,7 @@ public class GroupServiceImpl implements GroupService {
     private final ApplicationProperties properties;
 
     @Override
+    // ToDo: remove SneakyThrows
     @SneakyThrows
     public VkGroup registerWithAccess(VkGroup group) {
         Integer groupId = group.getGroupId();
@@ -70,9 +71,10 @@ public class GroupServiceImpl implements GroupService {
         if (optionalGroup.isPresent()) {
             VkGroup vkGroup = optionalGroup.get();
             throwIfSecretKeyNotMatch(group, vkGroup);
+            vkGroup.setServerId(null);
+            vkGroup.setAccessToken(group.getAccessToken());
             vkGroup.setConfirmationCode(group.getConfirmationCode());
             vkGroup.setRegions(group.getRegions());
-            vkGroup.setServerId(null);
             group = vkGroup;
         }
         return group;
