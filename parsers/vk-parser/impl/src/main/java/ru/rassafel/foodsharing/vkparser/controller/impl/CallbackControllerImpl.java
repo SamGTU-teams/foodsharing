@@ -26,9 +26,13 @@ public class CallbackControllerImpl implements CallbackController {
             return ResponseEntity.ok(conformation);
         }
         if (Events.WALL_POST_NEW.equals(message.getType())) {
-            service.wallpostNew(message.getGroupId(), message.getWallpost(), message.getSecret());
-            return ResponseEntity.ok().build();
+            try {
+                service.wallpostNew(message.getGroupId(), message.getWallpost(), message.getSecret());
+            } catch (Exception ex) {
+                return ResponseEntity.badRequest().body(ex.getMessage());
+            }
+            return ResponseEntity.ok("ok");
         }
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok("ok");
     }
 }
