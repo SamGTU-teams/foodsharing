@@ -15,7 +15,7 @@ import javax.validation.Valid;
  */
 @RequestMapping(GroupController.MAPPING)
 public interface GroupController {
-    String MAPPING = "register";
+    String MAPPING = "/register";
 
     @PostMapping
     ResponseEntity<?> registerWithAccess(@Valid @RequestBody FullAccessGroup request);
