@@ -25,7 +25,11 @@ public class GroupControllerImpl implements GroupController {
     public ResponseEntity<?> registerWithAccess(FullAccessGroup groupDto) {
         log.info("Registration request with access received for group with id = {}", groupDto.getGroupId());
         VkGroup group = mapper.map(groupDto);
-        service.registerWithAccess(group);
+        try {
+            service.registerWithAccess(group);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
         return ResponseEntity.ok().build();
     }
 
