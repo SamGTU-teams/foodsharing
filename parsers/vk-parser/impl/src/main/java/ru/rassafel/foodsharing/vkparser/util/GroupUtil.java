@@ -16,8 +16,8 @@ public class GroupUtil {
 
     public static void throwIfSecretKeyNotMatch(VkGroup accepted, String registeredSecret) {
         if (!Objects.equals(accepted.getSecretKey(), registeredSecret)) {
-            log.warn("Registration for group with id {} declined: Secret key do not match.", accepted.getGroupId());
-//            ToDo: Create exception class.
+            log.warn("Secret key do not match with registered key for group with id = {}", accepted.getGroupId());
+//          ToDo: Create exception class.
             throw new RuntimeException("Secret key do not match.");
         }
     }
