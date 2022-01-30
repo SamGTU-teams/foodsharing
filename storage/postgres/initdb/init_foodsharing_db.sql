@@ -35,13 +35,16 @@ ALTER TABLE public.region ADD CONSTRAINT uq_region_name UNIQUE (name);
 CREATE SCHEMA IF NOT EXISTS vk_parser;
 
 CREATE TABLE vk_parser.group (
-  id BIGINT NOT NULL,
-  last_post BIGINT NOT NULL,
-  CONSTRAINT pk_group PRIMARY KEY (id)
+    id INTEGER NOT NULL,
+    server_id INTEGER,
+    access_token VARCHAR(255),
+    secret_key VARCHAR(255),
+    confirmation_code VARCHAR(255) NOT NULL,
+    CONSTRAINT pk_group PRIMARY KEY (id)
 );
 
 CREATE TABLE vk_parser.group_regions (
-    group_id BIGINT NOT NULL,
+    group_id INTEGER NOT NULL,
     region_id BIGINT NOT NULL,
     CONSTRAINT pk_group_regions PRIMARY KEY (group_id, region_id)
 );
