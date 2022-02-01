@@ -11,31 +11,27 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author rassafel
  */
 class GeoPointEmbeddableMapperTest {
-    GeoPointEmbeddableMapper mapper;
+    GeoPointEmbeddableMapper mapper = GeoPointEmbeddableMapper.INSTANCE;
 
-    GeoPointEmbeddable sourceEntity;
+    GeoPointEmbeddable sourceEntity = new GeoPointEmbeddable();
 
-    GeoPoint expectedDto;
+    GeoPoint expectedDto = new GeoPoint();
 
-    GeoPoint sourceDto;
+    GeoPoint sourceDto = new GeoPoint();
 
-    GeoPointEmbeddable expectedEntity;
+    GeoPointEmbeddable expectedEntity = new GeoPointEmbeddable();
 
     @BeforeEach
     void initValues() {
-        sourceEntity = new GeoPointEmbeddable();
         sourceEntity.setLat(1f);
         sourceEntity.setLon(1f);
 
-        expectedDto = new GeoPoint();
         expectedDto.setLat(1f);
         expectedDto.setLon(1f);
 
-        sourceDto = new GeoPoint();
         sourceDto.setLat(1f);
         sourceDto.setLon(1f);
 
-        expectedEntity = new GeoPointEmbeddable();
         expectedEntity.setLat(1f);
         expectedEntity.setLon(1f);
     }

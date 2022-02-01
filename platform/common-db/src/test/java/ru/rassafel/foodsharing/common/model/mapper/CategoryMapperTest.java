@@ -16,37 +16,32 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CategoryMapperTest {
     CategoryMapper mapper = CategoryMapper.INSTANCE;
 
-    Category sourceEntity;
+    Category sourceEntity = new Category();
 
-    Product sourceEntityProduct;
+    Product sourceEntityProduct = new Product();
 
-    CategoryDto expectedDto;
+    CategoryDto expectedDto = new CategoryDto();
 
-    CategoryDto sourceDto;
+    CategoryDto sourceDto = new CategoryDto();
 
-    Category expectedEntity;
+    Category expectedEntity = new Category();
 
     @BeforeEach
     void initValues() {
-        sourceEntity = new Category();
         sourceEntity.setId(1L);
         sourceEntity.setName("Test category");
+        sourceEntity.setProducts(Set.of(sourceEntityProduct));
 
-        sourceEntityProduct = new Product();
         sourceEntityProduct.setCategory(sourceEntity);
         sourceEntityProduct.setId(2L);
         sourceEntityProduct.setName("Test sourceEntityProduct");
-        sourceEntity.setProducts(Set.of(sourceEntityProduct));
 
-        expectedDto = new CategoryDto();
         expectedDto.setId(1L);
         expectedDto.setName("Test category");
 
-        sourceDto = new CategoryDto();
         sourceDto.setId(1L);
         sourceDto.setName("Test category");
 
-        expectedEntity = new Category();
         expectedEntity.setId(1L);
         expectedEntity.setName("Test category");
         expectedEntity.setProducts(null);

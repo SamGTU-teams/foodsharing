@@ -16,59 +16,53 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author rassafel
  */
 class RegionMapperTest {
-    RegionMapper mapper;
+    RegionMapper mapper = RegionMapper.INSTANCE;
 
-    RegionDto sourceDto;
+    RegionDto sourceDto = new RegionDto();
 
-    GeoPoint sourcePointDto;
+    GeoPoint sourcePointDto = new GeoPoint();
 
-    Region expectedEntity;
+    Region expectedEntity = new Region();
 
-    GeoPointEmbeddable expectedEntityPoint;
+    GeoPointEmbeddable expectedEntityPoint = new GeoPointEmbeddable();
 
-    Region sourceEntity;
+    Region sourceEntity = new Region();
 
-    GeoPointEmbeddable sourceEntityPoint;
+    GeoPointEmbeddable sourceEntityPoint = new GeoPointEmbeddable();
 
-    RegionDto expectedDto;
+    RegionDto expectedDto = new RegionDto();
 
-    GeoPoint expectedDtoPoint;
+    GeoPoint expectedDtoPoint = new GeoPoint();
 
     @BeforeEach
     void initValues() {
-        sourceDto = new RegionDto();
         sourceDto.setId(1L);
         sourceDto.setName("Test region");
-
-        sourcePointDto = new GeoPoint();
-        sourcePointDto.setLat(1f);
-        sourcePointDto.setLon(1f);
         sourceDto.setPoint(sourcePointDto);
 
-        expectedEntity = new Region();
+        sourcePointDto.setLat(1f);
+        sourcePointDto.setLon(1f);
+
         expectedEntity.setId(1L);
         expectedEntity.setName("Test region");
-        expectedEntityPoint = new GeoPointEmbeddable();
-        expectedEntityPoint.setLat(1f);
-        expectedEntityPoint.setLon(1f);
         expectedEntity.setPoint(expectedEntityPoint);
 
-        sourceEntity = new Region();
+        expectedEntityPoint.setLat(1f);
+        expectedEntityPoint.setLon(1f);
+
         sourceEntity.setId(1L);
         sourceEntity.setName("Test region");
-        sourceEntityPoint = new GeoPointEmbeddable();
-        sourceEntityPoint.setLat(1f);
-        sourceEntityPoint.setLon(1f);
         sourceEntity.setPoint(sourceEntityPoint);
 
-        expectedDto = new RegionDto();
+        sourceEntityPoint.setLat(1f);
+        sourceEntityPoint.setLon(1f);
+
         expectedDto.setId(1L);
         expectedDto.setName("Test region");
+        expectedDto.setPoint(expectedDtoPoint);
 
-        expectedDtoPoint = new GeoPoint();
         expectedDtoPoint.setLat(1f);
         expectedDtoPoint.setLon(1f);
-        expectedDto.setPoint(expectedDtoPoint);
     }
 
     @Test
