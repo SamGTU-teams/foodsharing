@@ -51,7 +51,6 @@ services:
     ports:
       - "8000:8000"
     environment:
-      CONFIG_SERVER_URL: http://config:8888/
       VK_PARSER_TOKEN: $VK_PARSER_TOKEN
       VK_PARSER_APP_ID: $VK_PARSER_APP_ID
     depends_on:
@@ -67,8 +66,6 @@ services:
     restart: on-failure
     ports:
       - "8010:8010"
-    environment:
-      CONFIG_SERVER_URL: http://config:8888/
     depends_on:
       config:
         condition: service_healthy
@@ -82,8 +79,6 @@ services:
     restart: on-failure
     ports:
       - "8020:8020"
-    environment:
-      CONFIG_SERVER_URL: http://config:8888/
     depends_on:
       config:
         condition: service_healthy
@@ -98,7 +93,6 @@ services:
     ports:
       - "8030:8030"
     environment:
-      CONFIG_SERVER_URL: http://config:8888/
       TG_BOT_WEB_HOOK_PATH: $TG_BOT_WEB_HOOK_PATH
       TG_BOT_USERNAME: $TG_BOT_USERNAME
       TG_BOT_TOKEN: $TG_BOT_TOKEN
@@ -116,7 +110,6 @@ services:
     ports:
       - "8040:8040"
     environment:
-      CONFIG_SERVER_URL: http://config:8888/
       VK_BOT_GROUP_ID: $VK_BOT_GROUP_ID
       VK_BOT_ACCESS_TOKEN: $VK_BOT_ACCESS_TOKEN
     depends_on:
