@@ -13,7 +13,7 @@ import java.util.List;
  */
 @RequestMapping(IBotController.MAPPING)
 public interface IBotController {
-    String MAPPING = "posts";
+    String MAPPING = "/posts";
 
     @PostMapping
     List<FoodPostDto> findNearbyPosts(@RequestBody RequestFoodPostDto requestFoodPost);
