@@ -1,4 +1,4 @@
 spring:
-  cloud:
-    config:
-      enabled: false
+  application.name: tg-bot
+  cloud.config.enabled: false
+embedded.postgresql.enabled: false

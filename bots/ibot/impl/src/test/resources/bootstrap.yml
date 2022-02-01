@@ -1,4 +1,4 @@
 spring:
-  cloud:
-    config:
-      enabled: false
+  application.name: ibot
+  cloud.config.enabled: false
+embedded.postgresql.enabled: false

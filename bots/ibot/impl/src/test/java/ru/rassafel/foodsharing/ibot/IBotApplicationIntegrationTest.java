@@ -2,9 +2,11 @@ package ru.rassafel.foodsharing.ibot;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
-class IBotApplicationTests {
+@ActiveProfiles("integration-test")
+class IBotApplicationIntegrationTest {
     @Test
     void contextLoads() {
     }
