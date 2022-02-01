@@ -35,8 +35,10 @@ public class VkGroup {
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(schema = "vk_parser", name = "group_regions",
-        joinColumns = @JoinColumn(name = "group_id", nullable = false),
-        inverseJoinColumns = @JoinColumn(name = "region_id", nullable = false))
+        joinColumns = @JoinColumn(name = "group_id", nullable = false,
+            foreignKey = @ForeignKey(name = "FK_VK_PARSER_GROUP_REGIONS_GROUP_ID")),
+        inverseJoinColumns = @JoinColumn(name = "region_id", nullable = false,
+            foreignKey = @ForeignKey(name = "FK_VK_PARSER_GROUP_REGIONS_REGION_ID")))
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Region> regions;

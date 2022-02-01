@@ -10,7 +10,7 @@ import java.util.Set;
  */
 @Entity
 @Table(schema = "public", name = "category",
-    uniqueConstraints = @UniqueConstraint(name = "uq_category_name", columnNames = "name"))
+    uniqueConstraints = @UniqueConstraint(name = "UQ_CATEGORY_NAME", columnNames = "name"))
 @Getter
 @Setter
 @RequiredArgsConstructor
@@ -29,5 +29,4 @@ public class Category {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<Product> products;
-
 }

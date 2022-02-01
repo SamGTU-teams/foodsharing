@@ -10,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(schema = "public", name = "region",
-    uniqueConstraints = @UniqueConstraint(name = "uq_region_name", columnNames = "name"))
+    uniqueConstraints = @UniqueConstraint(name = "UQ_REGION_NAME", columnNames = "name"))
 @Getter
 @Setter
 @RequiredArgsConstructor

@@ -9,7 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(schema = "public", name = "product",
-    uniqueConstraints = @UniqueConstraint(name = "uq_product_name", columnNames = "name"))
+    uniqueConstraints = @UniqueConstraint(name = "UQ_PRODUCT_NAME", columnNames = "name"))
 @Getter
 @Setter
 @RequiredArgsConstructor
@@ -26,7 +26,7 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "category_id",
-        foreignKey = @ForeignKey(name = "fk_product_category_category"))
+        foreignKey = @ForeignKey(name = "FK_PRODUCT_CATEGORY_ID"))
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Category category;
