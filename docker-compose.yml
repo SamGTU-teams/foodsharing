@@ -28,6 +28,7 @@ services:
       - ./storage/postgres/data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: foodsharing
+      PGUSER: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     healthcheck:
