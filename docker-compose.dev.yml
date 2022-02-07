@@ -1,5 +1,11 @@
-version: '3'
+version: "3.4"
 services:
+  rabbitmq:
+    image: rabbitmq:3-alpine
+
+  postgres:
+    image: postgis/postgis:10-3.2-alpine
+
   config:
     build:
       context: ./config-service
@@ -7,25 +13,30 @@ services:
 
   parser:
     build:
-      context: ./parser
+      context: ./parsers/vk-parser/webhook-impl
       dockerfile: Dockerfile
+    restart: "no"
 
   analyzer:
     build:
-      context: ./analyzer
+      context: ./analyzer/impl
       dockerfile: Dockerfile
+    restart: "no"
 
   ibot:
     build:
-      context: ./ibot
+      context: ./bots/ibot/impl
       dockerfile: Dockerfile
+    restart: "no"
 
   tg-bot:
     build:
-      context: ./tg-bot
+      context: ./bots/tg-bot
       dockerfile: Dockerfile
+    restart: "no"
 
   vk-bot:
     build:
-      context: ./vk-bot
+      context: ./bots/vk-bot
       dockerfile: Dockerfile
+    restart: "no"

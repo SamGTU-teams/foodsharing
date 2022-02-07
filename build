@@ -1,0 +1,10 @@
+#!/bin/sh
+
+echo 'Start maven build'
+./mvnw package -DskipTests
+
+ret=$?
+
+echo 'Finish maven build'
+
+exit $ret

@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: vk-parser
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER_URL:http://localhost:8888/}
+      fail-fast: true
+      enabled: true
+  profiles:
+    active: ${SPR_PROFILE:default}
+
+server:
+  port: ${SERVER_PORT:8000}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,refresh

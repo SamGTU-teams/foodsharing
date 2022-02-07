@@ -1,0 +1,4 @@
+spring:
+  application.name: vk-bot
+  cloud.config.enabled: false
+embedded.postgresql.enabled: false

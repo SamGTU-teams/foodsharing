@@ -1,0 +1,12 @@
+server:
+  port: ${SERVER_PORT}
+spring:
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/shared
+        health:
+          enabled: true
+  profiles:
+    active: ${SPR_PROFILE:native}

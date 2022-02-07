@@ -1,0 +1,4 @@
+spring:
+  rabbitmq:
+    exchangeName: post-ready-exchange
+    queueName: post.ready.main

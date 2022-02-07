@@ -1,0 +1,4 @@
+spring:
+  application.name: tg-bot
+  cloud.config.enabled: false
+embedded.postgresql.enabled: false

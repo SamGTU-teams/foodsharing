@@ -1,0 +1,8 @@
+spring:
+  rabbitmq:
+    exchangeName: post-raw-exchange
+
+vk:
+  bot:
+    groupId: ${VK_BOT_GROUP_ID}
+    accessToken: ${VK_BOT_ACCESS_TOKEN}

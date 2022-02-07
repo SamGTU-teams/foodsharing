@@ -1,74 +1,122 @@
-version: '3'
+version: "3.4"
 services:
   rabbitmq:
     image: rabbitmq:3-management
     restart: always
     ports:
-      - 15672:15672
-      - 5672:5672
+      - "15672:15672"
+      - "5672:5672"
+    volumes:
+      - ./storage/rabbitmq/data:/var/lib/rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   postgres:
-    image: postgres:12
+    image: postgis/postgis:10-3.2
     restart: always
     ports:
-      - 5432:5432
+      - "5432:5432"
+    volumes:
+      - ./storage/postgres/initdb:/docker-entrypoint-initdb.d
+      - ./storage/postgres/data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: foodsharing
-      POSTGRES_USER: $DATABASE_USER
-      POSTGRES_PASSWORD: $DATABASE_PASSWORD
+      PGUSER: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: pg_isready
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   config:
-    image: N/A
+    image: rassafel/foodsharing-config
     restart: always
-    enviroment:
-      DATABASE_USER: $DATABASE_USER
-      DATABASE_PASSWORD: $DATABASE_PASSWORD
     ports:
       - "8888:8888"
+    volumes:
+      - ./config-service/src/main/resources/shared:/app/shared
 
   parser:
-    image: rassafel/foodsharing-parser
+    image: rassafel/foodsharing-vk-parser
+    restart: on-failure
+    ports:
+      - "8000:8000"
     environment:
-      PARSER_TOKEN: $PARSER_TOKEN
-      PARSER_APP_ID: $PARSER_APP_ID
+      VK_PARSER_TOKEN: $VK_PARSER_TOKEN
+      VK_PARSER_APP_ID: $VK_PARSER_APP_ID
     depends_on:
-      - config
-      - postgres
-      - rabbitmq
+      config:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
 
   analyzer:
     image: rassafel/foodsharing-analyzer
+    restart: on-failure
     ports:
-      - 8010:8010
+      - "8010:8010"
     depends_on:
-      - config
-      - postgres
-      - rabbitmq
+      config:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
 
   ibot:
-    image: N/A
+    image: rassafel/foodsharing-ibot
+    restart: on-failure
     ports:
-      - 8020:8020
+      - "8020:8020"
     depends_on:
-      - config
-      - postgres
-      - rabbitmq
+      config:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
 
   tg-bot:
-    image: N/A
+    image: rassafel/foodsharing-tg-bot
+    restart: on-failure
+    ports:
+      - "8030:8030"
     environment:
-      TELEGRAM_TOKEN: N/A
+      TG_BOT_WEB_HOOK_PATH: $TG_BOT_WEB_HOOK_PATH
+      TG_BOT_USERNAME: $TG_BOT_USERNAME
+      TG_BOT_TOKEN: $TG_BOT_TOKEN
     depends_on:
-      - config
-      - postgres
-      - rabbitmq
+      config:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
 
   vk-bot:
-    image: N/A
+    image: rassafel/foodsharing-vk-bot
+    restart: on-failure
+    ports:
+      - "8040:8040"
     environment:
-      VKONTAKTE_TOKEN: N/A
-      VKONTAKTE_GROUP_ID: N/A
+      VK_BOT_GROUP_ID: $VK_BOT_GROUP_ID
+      VK_BOT_ACCESS_TOKEN: $VK_BOT_ACCESS_TOKEN
     depends_on:
-      - config
-      - postgres
-      - rabbitmq
+      config:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
