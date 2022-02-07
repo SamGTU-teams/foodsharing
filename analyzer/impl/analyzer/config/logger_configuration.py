@@ -8,8 +8,8 @@ def load_logging() -> None:
 
         'formatters': {
             'console': {
-                'format': '%(asctime)s.%(msecs)03d %(levelname)5s   --- ['
-                          '%(threadName)15s] %(name)-40s : %(message)s',
+                'format': '%(asctime)s.%(msecs)03d %(levelname)5s %(process)d '
+                          '--- [%(threadName)15s] %(name)-40s: %(message)s',
                 'datefmt': '%Y-%m-%d,%H:%M:%S'
             },
         },
