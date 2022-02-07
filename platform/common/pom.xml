@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>foodsharing-platform</artifactId>
-        <groupId>ru.rassafel</groupId>
+        <groupId>ru.rassafel.foodsharing</groupId>
+        <artifactId>platform-pom</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>foodsharing-common</artifactId>
+    <artifactId>common</artifactId>
 </project>

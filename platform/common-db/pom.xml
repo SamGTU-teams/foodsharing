@@ -5,17 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>foodsharing-platform</artifactId>
-        <groupId>ru.rassafel</groupId>
+        <groupId>ru.rassafel.foodsharing</groupId>
+        <artifactId>platform-pom</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>foodsharing-common-db</artifactId>
+    <artifactId>common-db</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>foodsharing-common</artifactId>
+            <artifactId>common</artifactId>
         </dependency>
 
         <dependency>
@@ -31,24 +31,6 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-spatial</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.amqp</groupId>
-            <artifactId>spring-rabbit-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <dependency>

@@ -10,8 +10,8 @@
         <relativePath/>
     </parent>
 
-    <groupId>ru.rassafel</groupId>
-    <artifactId>foodsharing</artifactId>
+    <groupId>ru.rassafel.foodsharing</groupId>
+    <artifactId>parent-pom</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
@@ -82,43 +82,43 @@
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>foodsharing-common</artifactId>
+                <artifactId>common</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>foodsharing-common-db</artifactId>
+                <artifactId>common-db</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>foodsharing-parser-api</artifactId>
+                <artifactId>parser-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>foodsharing-analyzer-api</artifactId>
+                <artifactId>analyzer-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>foodsharing-ibot-api</artifactId>
+                <artifactId>ibot-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>foodsharing-bot-session-starter</artifactId>
+                <artifactId>bot-session-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>foodsharing-bot-message-starter</artifactId>
+                <artifactId>bot-message-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
@@ -129,6 +129,31 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-rabbit-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.playtika.testcontainers</groupId>
+            <artifactId>embedded-postgresql</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

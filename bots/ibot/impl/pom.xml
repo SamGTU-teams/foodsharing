@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>foodsharing-ibot</artifactId>
-        <groupId>ru.rassafel</groupId>
+        <groupId>ru.rassafel.foodsharing</groupId>
+        <artifactId>ibot-pom</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>foodsharing-ibot-impl</artifactId>
+    <artifactId>ibot-impl</artifactId>
 
     <dependencies>
         <dependency>
@@ -25,42 +25,17 @@
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>foodsharing-bot-message-starter</artifactId>
+            <artifactId>bot-message-starter</artifactId>
         </dependency>
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>foodsharing-common-db</artifactId>
+            <artifactId>common-db</artifactId>
         </dependency>
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>foodsharing-ibot-api</artifactId>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.amqp</groupId>
-            <artifactId>spring-rabbit-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.playtika.testcontainers</groupId>
-            <artifactId>embedded-postgresql</artifactId>
-            <scope>test</scope>
+            <artifactId>ibot-api</artifactId>
         </dependency>
     </dependencies>
 

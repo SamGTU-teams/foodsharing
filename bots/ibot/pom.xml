@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>ru.rassafel</groupId>
-        <artifactId>foodsharing-bots</artifactId>
+        <groupId>ru.rassafel.foodsharing</groupId>
+        <artifactId>bots-pom</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>foodsharing-ibot</artifactId>
+    <artifactId>ibot-pom</artifactId>
     <packaging>pom</packaging>
 
     <modules>
