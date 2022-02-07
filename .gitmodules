@@ -1,0 +1,3 @@
+[submodule "vk-wallpost-generator"]
+	path = vk-wallpost-generator
+	url = https://github.com/rassafel/foodsharing-vk-wallpost-generator
