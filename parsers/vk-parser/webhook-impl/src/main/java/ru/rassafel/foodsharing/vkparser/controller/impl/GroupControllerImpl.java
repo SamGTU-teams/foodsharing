@@ -23,7 +23,7 @@ public class GroupControllerImpl implements GroupController {
 
     @Override
     public ResponseEntity<?> registerWithAccess(FullAccessGroup groupDto) {
-        log.info("Registration request with access received for group with id = {}", groupDto.getGroupId());
+        log.debug("Registration request with access received for group with id = {}", groupDto.getGroupId());
         VkGroup group = mapper.map(groupDto);
         try {
             service.registerWithAccess(group);
@@ -35,7 +35,7 @@ public class GroupControllerImpl implements GroupController {
 
     @Override
     public ResponseEntity<?> registerWithoutAccess(WithoutAccessGroup groupDto) {
-        log.info("Registration request without access received for group with id = {}", groupDto.getGroupId());
+        log.debug("Registration request without access received for group with id = {}", groupDto.getGroupId());
         VkGroup group = mapper.map(groupDto);
         service.registerWithoutAccess(group);
         return ResponseEntity.ok().build();

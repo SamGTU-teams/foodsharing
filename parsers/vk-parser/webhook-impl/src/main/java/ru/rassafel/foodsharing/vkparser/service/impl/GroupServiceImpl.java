@@ -39,7 +39,7 @@ public class GroupServiceImpl implements GroupService {
 
         String confirmationCode;
         try {
-            log.info("Try to get confirmation code for group with id = {}.", groupId);
+            log.debug("Try to get confirmation code for group with id = {}.", groupId);
             confirmationCode = api.groups()
                 .getCallbackConfirmationCode(actor, groupId)
                 .execute()
@@ -52,7 +52,7 @@ public class GroupServiceImpl implements GroupService {
 
         Integer serverId;
         try {
-            log.info("Try to add callback server for group with id = {}.", groupId);
+            log.debug("Try to add callback server for group with id = {}.", groupId);
             serverId = api.groups()
                 .addCallbackServer(actor, groupId, properties.getUrl(), properties.getServerTitle())
                 .secretKey(group.getSecretKey())
@@ -65,7 +65,7 @@ public class GroupServiceImpl implements GroupService {
         group.setServerId(serverId);
 
         try {
-            log.info("Try to edit configuration for group with id = {} and server id = {}.", groupId, serverId);
+            log.debug("Try to edit configuration for group with id = {} and server id = {}.", groupId, serverId);
             api.groups()
                 .setCallbackSettings(actor, groupId)
                 .apiVersion(api.getVersion())
@@ -88,10 +88,10 @@ public class GroupServiceImpl implements GroupService {
     }
 
     private VkGroup findGroup(VkGroup group) {
-        log.info("Find group with id = {} in DB.", group.getGroupId());
+        log.debug("Find group with id = {} in DB.", group.getGroupId());
         Optional<VkGroup> optionalGroup = repository.findById(group.getGroupId());
         if (optionalGroup.isPresent()) {
-            log.info("Group with id = {} exists in DB.", group.getGroupId());
+            log.debug("Group with id = {} exists in DB.", group.getGroupId());
             VkGroup vkGroup = optionalGroup.get();
             throwIfSecretKeyNotMatch(group, vkGroup.getSecretKey());
             vkGroup.setServerId(null);
@@ -100,7 +100,7 @@ public class GroupServiceImpl implements GroupService {
             vkGroup.setRegions(group.getRegions());
             group = vkGroup;
         } else {
-            log.info("Group with id = {} does not exists in DB.", group.getGroupId());
+            log.debug("Group with id = {} does not exists in DB.", group.getGroupId());
         }
         return group;
     }
