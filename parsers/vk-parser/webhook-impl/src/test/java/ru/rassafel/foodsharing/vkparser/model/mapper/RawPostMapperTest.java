@@ -23,6 +23,7 @@ import ru.rassafel.foodsharing.vkparser.model.vk.deserializer.WallpostAttachment
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -74,25 +75,7 @@ class RawPostMapperTest {
                 .setCountry("Россия")
                 .setCity("Самара")));
 
-        RawPostDto expected = new RawPostDto();
-        expected.setText("Яблоки мск улица арбат раздаю всем нуждающимся");
-        expected.setDate(LocalDateTime.ofEpochSecond(1642700507, 0, ZoneOffset.UTC));
-        GeoPoint point = new GeoPoint();
-        point.setLat(53.20642269124d);
-        point.setLon(50.198534691559d);
-        PostContext context = new PostContext();
-        context.setPoint(point);
-        context.setAttachments(List.of("https://vk.com/club208377052?z=photo-208377052_457239018%2Fwall-208377052_2"));
-
-        expected.setContext(context);
-        expected.setUrl("https://vk.com/club208377052?w=wall-208377052_2");
-
-        RawPostDto actual = mapper.map(source);
-
-        assertThat(actual)
-            .isNotNull()
-            .isNotSameAs(expected)
-            .isEqualTo(expected);
+        testMapper(source);
     }
 
     @SneakyThrows
@@ -110,24 +93,40 @@ class RawPostMapperTest {
 
         Wallpost source = objectMapper.readValue(json, CallbackMessage.class).getWallpost();
 
+        testMapper(source);
+    }
+
+    private RawPostDto newRawPost(String text, long epochSecond, double lat,
+                                  double lon, String url,
+                                  String... attachments) {
         RawPostDto expected = new RawPostDto();
-        expected.setText("Яблоки мск улица арбат раздаю всем нуждающимся");
-        expected.setDate(LocalDateTime.ofEpochSecond(1642700507, 0, ZoneOffset.UTC));
+        expected.setText(text);
+        expected.setDate(LocalDateTime.ofEpochSecond(epochSecond, 0, ZoneOffset.UTC));
         GeoPoint point = new GeoPoint();
-        point.setLat(53.20642269124d);
-        point.setLon(50.198534691559d);
+        point.setLat(lat);
+        point.setLon(lon);
         PostContext context = new PostContext();
         context.setPoint(point);
-        context.setAttachments(List.of("https://vk.com/club208377052?z=photo-208377052_457239018%2Fwall-208377052_2"));
+        context.setAttachments(Arrays.asList(attachments));
 
         expected.setContext(context);
-        expected.setUrl("https://vk.com/club208377052?w=wall-208377052_2");
+        expected.setUrl(url);
+        return expected;
+    }
 
+    private void testMapper(Wallpost source, RawPostDto expected) {
         RawPostDto actual = mapper.map(source);
 
         assertThat(actual)
             .isNotNull()
             .isNotSameAs(expected)
             .isEqualTo(expected);
+    }
+
+    private void testMapper(Wallpost source) {
+        RawPostDto expected = newRawPost("Яблоки мск улица арбат раздаю всем нуждающимся",
+            1642700507, 53.20642269124d, 50.198534691559d,
+            "https://vk.com/wall-208377052_2", "https://vk.com/photo-208377052_457239018");
+        testMapper(source, expected);
     }
 }

@@ -13,8 +13,6 @@ import java.time.ZoneOffset;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.util.Objects.nonNull;
-
 /**
  * @author rassafel
  */
@@ -22,40 +20,44 @@ import static java.util.Objects.nonNull;
 public abstract class RawPostMapper {
     public static final RawPostMapper INSTANCE = Mappers.getMapper(RawPostMapper.class);
 
+    /**
+     *  Example: https://vk.com/wall-109125816_677938
+     */
+    public static final String WALLPOST_PATTERN = "https://vk.com/wall-%d_%d";
+
+    /**
+     *  Example: https://vk.com/photo-109125816_457359241
+     */
+    public static final String PHOTO_PATTERN = "https://vk.com/photo-%d_%d";
+
     @AfterMapping
     protected void afterMapApiToDto(Wallpost source, @MappingTarget RawPostDto target) {
-//        https://vk.com/club109125816?w=wall-109125816_677938
-//        https://vk.com/club109125816?z=photo-109125816_457359241%2Fwall-109125816_677938
         int absOwnerId = Math.abs(source.getOwnerId());
 
-        String groupUrl = String.format("https://vk.com/club%d", absOwnerId);
-        String wallpostParam = String.format("wall-%d_%d", absOwnerId, source.getId());
+        String wallpostUrl = String.format(WALLPOST_PATTERN, absOwnerId, source.getId());
+        target.setUrl(wallpostUrl);
 
-        List<WallpostAttachment> sourceAttachments = source.getAttachments();
-        List<String> attachments = null;
-        if (nonNull(sourceAttachments)) {
-            attachments = sourceAttachments
-                .stream()
-                .filter(attachment -> WallpostAttachmentType.PHOTO.equals(attachment.getType()))
-                .map(attachment -> {
-                    Photo photo = attachment.getPhoto();
-                    return String.format("%s?z=photo-%d_%d%%2F%s",
-                        groupUrl, absOwnerId, photo.getId(), wallpostParam);
-                })
-                .collect(Collectors.toList());
-        }
+        List<String> attachments = source
+            .getAttachments()
+            .stream()
+            .filter(attachment -> WallpostAttachmentType.PHOTO.equals(attachment.getType()))
+            .map(WallpostAttachment::getPhoto)
+            .map(Photo::getId)
+            .map(id -> String.format(PHOTO_PATTERN, absOwnerId, id))
+            .collect(Collectors.toList());
         target.getContext().setAttachments(attachments);
 
-        target.setUrl(String.format("%s?w=%s", groupUrl, wallpostParam));
-
-        target.setDate(LocalDateTime.ofEpochSecond(source.getDate().longValue(),
-            0, ZoneOffset.UTC));
+        LocalDateTime date = LocalDateTime.ofEpochSecond(source.getDate().longValue(),
+            0, ZoneOffset.UTC);
+        target.setDate(date);
     }
 
     @Mappings({
         @Mapping(source = "geo", target = "context.point"),
         @Mapping(source = "text", target = "text"),
-        @Mapping(source = "date", target = "date", ignore = true)
+        @Mapping(source = "date", target = "date", ignore = true),
+        @Mapping(target = "url", source = "url", ignore = true),
+        @Mapping(target = "context", source = "context", ignore = true),
     })
     public abstract RawPostDto map(Wallpost source);
 }
