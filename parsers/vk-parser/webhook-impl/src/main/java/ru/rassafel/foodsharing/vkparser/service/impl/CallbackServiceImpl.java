@@ -50,14 +50,14 @@ public class CallbackServiceImpl implements CallbackService {
     }
 
     private VkGroup findGroup(Integer groupId) {
-        log.info("Find group with id = {} in DB.", groupId);
+        log.debug("Find group with id = {} in DB.", groupId);
         VkGroup group;
         Optional<VkGroup> optionalGroup = repository.findById(groupId);
         if (optionalGroup.isPresent()) {
-            log.info("Group with id = {} exists in DB.", groupId);
+            log.debug("Group with id = {} exists in DB.", groupId);
             group = optionalGroup.get();
         } else {
-            log.info("Group with id = {} does not exists in DB.", groupId);
+            log.warn("Group with id = {} does not exists in DB.", groupId);
 //          ToDo: Create exception class.
             throw new RuntimeException("Group not registered.");
         }

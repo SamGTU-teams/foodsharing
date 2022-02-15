@@ -20,7 +20,7 @@ public class CallbackControllerImpl implements CallbackController {
 
     @Override
     public ResponseEntity<?> acceptUpdate(CallbackMessage message) {
-        log.info("Accepted message with type: {}", message.getType().name());
+        log.debug("Accepted message with type: {}", message.getType().name());
         if (Events.CONFIRMATION.equals(message.getType())) {
             String conformation = service.confirmation(message.getGroupId());
             return ResponseEntity.ok(conformation);

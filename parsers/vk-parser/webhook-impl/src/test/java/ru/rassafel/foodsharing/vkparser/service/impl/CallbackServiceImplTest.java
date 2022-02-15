@@ -1,6 +1,7 @@
 package ru.rassafel.foodsharing.vkparser.service.impl;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -48,96 +49,102 @@ class CallbackServiceImplTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    @ParameterizedTest
-    @MethodSource("ru.rassafel.foodsharing.vkparser.service.impl.SecretMatches#registerWithoutAccessMatchValues")
-    void wallpostNewGroupExist(String dbSecret, String acceptedSecret) {
-        VkGroup fromDb = new VkGroup();
-        fromDb.setSecretKey(dbSecret);
+    @Nested
+    class WallpostCases {
+        @ParameterizedTest
+        @MethodSource("ru.rassafel.foodsharing.vkparser.service.impl.SecretMatches#registerWithoutAccessMatchValues")
+        void wallpostNewGroupExist(String dbSecret, String acceptedSecret) {
+            VkGroup fromDb = new VkGroup();
+            fromDb.setSecretKey(dbSecret);
 
-        Wallpost sourceWallpost = new Wallpost();
-        sourceWallpost.setText("Test text");
-        sourceWallpost.setDate(0);
-        sourceWallpost.setId(2);
-        sourceWallpost.setOwnerId(1);
+            Wallpost sourceWallpost = new Wallpost();
+            sourceWallpost.setText("Test text");
+            sourceWallpost.setDate(0);
+            sourceWallpost.setId(2);
+            sourceWallpost.setOwnerId(1);
 
-        RawPostDto expected = new RawPostDto();
-        expected.setText("Test text");
-        expected.setDate(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC));
-        expected.setUrl("https://vk.com/club1?w=wall-1_2");
-        expected.setContext(new PostContext());
+            RawPostDto expected = new RawPostDto();
+            expected.setText("Test text");
+            expected.setDate(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC));
+            expected.setUrl("https://vk.com/club1?w=wall-1_2");
+            expected.setContext(new PostContext());
 
-        when(repository.findById(any()))
-            .thenReturn(Optional.of(fromDb));
+            when(repository.findById(any()))
+                .thenReturn(Optional.of(fromDb));
 
-        RawPostDto actual = service.wallpostNew(1, sourceWallpost, acceptedSecret);
+            RawPostDto actual = service.wallpostNew(1, sourceWallpost, acceptedSecret);
 
-        ArgumentCaptor<RawPostDto> wallpostCapture = ArgumentCaptor.forClass(RawPostDto.class);
-        verify(template).convertAndSend(wallpostCapture.capture());
-        RawPostDto captured = wallpostCapture.getValue();
+            ArgumentCaptor<RawPostDto> wallpostCapture = ArgumentCaptor.forClass(RawPostDto.class);
+            verify(template).convertAndSend(wallpostCapture.capture());
+            RawPostDto captured = wallpostCapture.getValue();
 
-        assertThat(captured)
-            .isNotNull()
-            .isNotSameAs(sourceWallpost)
-            .isNotSameAs(expected)
-            .isSameAs(actual)
-            .isEqualToComparingFieldByField(expected);
+            assertThat(captured)
+                .isNotNull()
+                .isNotSameAs(sourceWallpost)
+                .isNotSameAs(expected)
+                .isSameAs(actual)
+                .isEqualToComparingFieldByField(expected);
+        }
+
+        @Test
+        void wallpostNewGroupNotExist() {
+            when(repository.findById(any()))
+                .thenReturn(Optional.empty());
+
+            assertThatThrownBy(() -> service.confirmation(1))
+                .isNotNull()
+                .isInstanceOf(RuntimeException.class)
+                .hasMessageContaining("Group not registered.");
+        }
+
+
+        @ParameterizedTest
+        @MethodSource("ru.rassafel.foodsharing.vkparser.service.impl.SecretMatches#registerWithoutAccessNotMatchValues")
+        void wallpostNewSecretNotMatch(String dbSecret, String acceptedSecret) {
+            VkGroup fromDb = new VkGroup();
+            fromDb.setSecretKey(dbSecret);
+
+            Wallpost wallpost = new Wallpost();
+
+            when(repository.findById(any()))
+                .thenReturn(Optional.of(fromDb));
+
+            assertThatThrownBy(() -> service.wallpostNew(1, wallpost, acceptedSecret))
+                .isNotNull()
+                .isInstanceOf(RuntimeException.class)
+                .hasMessageContaining("Secret key do not match");
+        }
     }
 
-    @Test
-    void wallpostNewGroupNotExist() {
-        when(repository.findById(any()))
-            .thenReturn(Optional.empty());
+    @Nested
+    class ConfirmationCases {
+        @Test
+        void confirmationGroupExist() {
+            VkGroup fromDb = new VkGroup();
+            fromDb.setConfirmationCode("Test code");
 
-        assertThatThrownBy(() -> service.confirmation(1))
-            .isNotNull()
-            .isInstanceOf(RuntimeException.class)
-            .hasMessageContaining("Group not registered.");
-    }
+            String expected = "Test code";
 
+            when(repository.findById(any()))
+                .thenReturn(Optional.of(fromDb));
 
-    @ParameterizedTest
-    @MethodSource("ru.rassafel.foodsharing.vkparser.service.impl.SecretMatches#registerWithoutAccessNotMatchValues")
-    void wallpostNewSecretNotMatch(String dbSecret, String acceptedSecret) {
-        VkGroup fromDb = new VkGroup();
-        fromDb.setSecretKey(dbSecret);
+            String actual = service.confirmation(1);
 
-        Wallpost wallpost = new Wallpost();
+            assertThat(actual)
+                .isNotNull()
+                .isNotBlank()
+                .isEqualTo(expected);
+        }
 
-        when(repository.findById(any()))
-            .thenReturn(Optional.of(fromDb));
+        @Test
+        void confirmationGroupNotExist() {
+            when(repository.findById(any()))
+                .thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> service.wallpostNew(1, wallpost, acceptedSecret))
-            .isNotNull()
-            .isInstanceOf(RuntimeException.class)
-            .hasMessageContaining("Secret key do not match");
-    }
-
-    @Test
-    void confirmationGroupExist() {
-        VkGroup fromDb = new VkGroup();
-        fromDb.setConfirmationCode("Test code");
-
-        String expected = "Test code";
-
-        when(repository.findById(any()))
-            .thenReturn(Optional.of(fromDb));
-
-        String actual = service.confirmation(1);
-
-        assertThat(actual)
-            .isNotNull()
-            .isNotBlank()
-            .isEqualTo(expected);
-    }
-
-    @Test
-    void confirmationGroupNotExist() {
-        when(repository.findById(any()))
-            .thenReturn(Optional.empty());
-
-        assertThatThrownBy(() -> service.confirmation(1))
-            .isNotNull()
-            .isInstanceOf(RuntimeException.class)
-            .hasMessageContaining("Group not registered.");
+            assertThatThrownBy(() -> service.confirmation(1))
+                .isNotNull()
+                .isInstanceOf(RuntimeException.class)
+                .hasMessageContaining("Group not registered.");
+        }
     }
 }
