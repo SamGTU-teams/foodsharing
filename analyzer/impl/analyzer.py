@@ -37,3 +37,10 @@ dictConfig({
         }
     }
 })
+
+from app import app, models
+
+
+@app.shell_context_processor
+def make_shell_context():
+    return {'db': db, 'Product': models.Product, 'Category': models.Category}
