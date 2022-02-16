@@ -7,7 +7,7 @@ ENV SPR_PROFILE=docker \
     SERVER_PORT=8010
 
 COPY requirements.txt ./
-COPY ./analyzer ./analyzer
+COPY ./old_analyzer ./analyzer
 COPY ./resources ./resources
 
 RUN apk --no-cache add curl && \
