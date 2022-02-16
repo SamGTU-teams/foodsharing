@@ -3,10 +3,4 @@ spring:
     name: analyzer
   cloud:
     config:
-      uri: ${CONFIG_SERVER_URL:http://localhost:8888/}
-  profiles:
-    active: ${SPR_PROFILE:default}
-
-server:
-  port: ${SERVER_PORT:8010}
-
+      uri: http://localhost:8888/

@@ -1,4 +1,4 @@
 spring:
   cloud:
     config:
-      uri: ${CONFIG_SERVER_URL:http://config:8888/}
+      uri: http://config:8888/
