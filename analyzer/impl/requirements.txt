@@ -12,11 +12,13 @@ Jinja2==3.0.3
 MarkupSafe==2.0.1
 pika==1.2.0
 psycopg2-binary==2.9.3
+py-healthcheck==1.10.1
 pyhocon==0.3.59
 pyparsing==2.4.7
 python-dotenv==0.19.2
 PyYAML==6.0
 requests==2.27.1
+six==1.16.0
 spring-config-client==0.2
 SQLAlchemy==1.4.31
 urllib3==1.26.8
