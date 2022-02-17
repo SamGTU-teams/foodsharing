@@ -1,18 +1,18 @@
 from flask import jsonify
-from app import app
+from app.api import bp
 from app.models import Product
 import logging
 
 log = logging.getLogger(__name__)
 
 
-@app.route('/')
-@app.route('/index')
+@bp.route('/')
+@bp.route('/index')
 def index():
     return "Hello, World!"
 
 
-@app.route('/products', methods=["GET"])
+@bp.route('/products', methods=["GET"])
 def get_products():
     data = Product.query.all()
     log.debug("DB result: %s", data)
