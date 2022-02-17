@@ -38,9 +38,7 @@ dictConfig({
     }
 })
 
-from app import app, models
 
+from app import create_app
 
-@app.shell_context_processor
-def make_shell_context():
-    return {'db': db, 'Product': models.Product, 'Category': models.Category}
+app = create_app()

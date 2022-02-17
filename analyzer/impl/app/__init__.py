@@ -6,13 +6,25 @@ import logging
 
 log = logging.getLogger(__name__)
 
-app = Flask(__name__)
+db = SQLAlchemy()
 
-app.config.from_object(Config)
 
-db = SQLAlchemy(app)
+def create_app(config_class=Config):
+    app = Flask(__name__)
+    app.config.from_object(config_class)
 
-from app import models, routes
+    db.init_app(app)
 
-if __name__ == "__main__":
-    app.run()
+    app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_URL']]) \
+        if app.config['ELASTICSEARCH_URL'] else None
+
+    from app.api import bp as api_bp
+    app.register_blueprint(api_bp, url_prefix="/api")
+
+    from app.health import bp as health_bp
+    app.register_blueprint(health_bp, url_prefix="/actuator")
+
+    return app
+
+
+from app import models
