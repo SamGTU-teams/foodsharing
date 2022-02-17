@@ -55,6 +55,8 @@ class Config(object):
                                       "post-ready-exchange")
     }
 
+    ELASTICSEARCH_URL = config.get_string("elastic.url", None)
+
     SQLALCHEMY_DATABASE_URI = f"{DATASOURCE_DRIVER}://{DATASOURCE_USER}:{DATASOURCE_PASS}" + \
                               f"@{DATASOURCE_HOST}:{DATASOURCE_PORT}/{DATASOURCE_NAME}"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
