@@ -39,18 +39,21 @@ class Config(object):
     DATASOURCE_DRIVER = config.get_string("spring.datasource.driver",
                                           "postgresql")
 
-    RABBITMQ_HOST = config.get_string("spring.rabbitmq.host", "localhost")
-    RABBITMQ_PORT = config.get_int("spring.datasource.port", 5432)
-    RABBITMQ_PASS = config.get_string("spring.rabbitmq.host", "guest")
-    RABBITMQ_USER = config.get_string("spring.rabbitmq.host", "guest")
+    MQ_HOST = config.get_string("spring.rabbitmq.host", "localhost")
+    MQ_PORT = config.get_int("spring.datasource.port", 5432)
+    MQ_PASS = config.get_string("spring.rabbitmq.host", "guest")
+    MQ_USER = config.get_string("spring.rabbitmq.host", "guest")
+    MQ_VHOST = config.get_string("spring.rabbitmq.vhost", "")
+    MQ_URL = f"amqp://{MQ_USER}:{MQ_PASS}@{MQ_HOST}:" \
+             f"{MQ_PORT}/{MQ_VHOST}"
 
-    RABBITMQ_CONSUMER = {
+    MQ_CONSUMER = {
         "EXCHANGE": config.get_string("spring.rabbitmq.consumer.exchange",
                                       "post-raw-exchange"),
         "QUEQUE": config.get_string("spring.rabbitmq.consumer.exchange",
                                     "post.raw.analyzer")
     }
-    RABBITMQ_PRODUCER = {
+    MQ_PRODUCER = {
         "EXCHANGE": config.get_string("spring.rabbitmq.producer.exchange",
                                       "post-ready-exchange")
     }
