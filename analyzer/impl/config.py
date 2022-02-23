@@ -45,19 +45,23 @@ class Config(object):
     MQ_PASS = config.get_string("spring.rabbitmq.host", "guest")
     MQ_USER = config.get_string("spring.rabbitmq.host", "guest")
     MQ_VHOST = config.get_string("spring.rabbitmq.vhost", "")
-    MQ_URL = f"amqp://{MQ_USER}:{MQ_PASS}@{MQ_HOST}:" \
-             f"{MQ_PORT}/{MQ_VHOST}"
 
     MQ_CONSUMER = {
         "EXCHANGE": config.get_string("spring.rabbitmq.consumer.exchange",
                                       "post-raw-exchange"),
-        "QUEQUE": config.get_string("spring.rabbitmq.consumer.exchange",
-                                    "post.raw.analyzer")
+        "QUEUE": config.get_string("spring.rabbitmq.consumer.queue",
+                                    "post.raw.analyzer"),
+        "TYPE": config.get_string("spring.rabbitmq.consumer.type", "fanout")
     }
     MQ_PRODUCER = {
         "EXCHANGE": config.get_string("spring.rabbitmq.producer.exchange",
-                                      "post-ready-exchange")
+                                      "post-ready-exchange"),
+        "TYPE": config.get_string("spring.rabbitmq.producer.type", "fanout")
     }
+
+    MQ_URL = f"amqp://{MQ_USER}:{MQ_PASS}@{MQ_HOST}:" \
+             f"{MQ_PORT}/{MQ_VHOST}"
+    MQ_EXCHANGE = MQ_PRODUCER["EXCHANGE"]
 
     ELASTICSEARCH_URL = config.get_string("elastic.url", None)
 
