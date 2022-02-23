@@ -20,7 +20,8 @@ configuration = fetch_config(
 
 config = bootstrap.merge_configs(bootstrap, configuration)
 
-log.debug("Full configuration: \n %s", json.dumps(config, indent=2))
+if logging.DEBUG >= logging.root.level:
+    log.debug("Full configuration: \n %s", json.dumps(config, indent=2))
 
 
 class Config(object):

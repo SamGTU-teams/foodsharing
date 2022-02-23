@@ -51,7 +51,7 @@ def load_yml(path: str):
             config = ConfigFactory.from_dict(loaded)
             log.debug("Finish loading: %s", path)
         except yaml.YAMLError as exc:
-            log.warning(exc_info=True)
+            log.warning(exc, exc_info=True)
             config = ConfigFactory.from_dict({})
     return config
 
