@@ -5,7 +5,7 @@ import com.vk.api.sdk.objects.wall.WallpostAttachment;
 import com.vk.api.sdk.objects.wall.WallpostAttachmentType;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
-import ru.rassafel.foodsharing.parser.model.dto.RawPostDto;
+import ru.rassafel.foodsharing.parser.model.RawPost;
 import ru.rassafel.foodsharing.vkparser.model.vk.Wallpost;
 
 import java.time.LocalDateTime;
@@ -31,7 +31,7 @@ public abstract class RawPostMapper {
     public static final String PHOTO_PATTERN = "https://vk.com/photo-%d_%d";
 
     @AfterMapping
-    protected void afterMapApiToDto(Wallpost source, @MappingTarget RawPostDto target) {
+    protected void afterMapApiToDto(Wallpost source, @MappingTarget RawPost target) {
         int absOwnerId = Math.abs(source.getOwnerId());
 
         String wallpostUrl = String.format(WALLPOST_PATTERN, absOwnerId, source.getId());
@@ -59,5 +59,5 @@ public abstract class RawPostMapper {
         @Mapping(target = "url", source = "url", ignore = true),
         @Mapping(target = "context", source = "context", ignore = true),
     })
-    public abstract RawPostDto map(Wallpost source);
+    public abstract RawPost map(Wallpost source);
 }

@@ -12,8 +12,8 @@ import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import ru.rassafel.foodsharing.common.model.GeoPoint;
-import ru.rassafel.foodsharing.parser.model.dto.PostContext;
-import ru.rassafel.foodsharing.parser.model.dto.RawPostDto;
+import ru.rassafel.foodsharing.parser.model.PostContext;
+import ru.rassafel.foodsharing.parser.model.RawPost;
 import ru.rassafel.foodsharing.vkparser.model.vk.CallbackMessage;
 import ru.rassafel.foodsharing.vkparser.model.vk.Wallpost;
 import ru.rassafel.foodsharing.vkparser.model.vk.deserializer.EventDeserializer;
@@ -96,10 +96,10 @@ class RawPostMapperTest {
         testMapper(source);
     }
 
-    private RawPostDto newRawPost(String text, long epochSecond, double lat,
-                                  double lon, String url,
-                                  String... attachments) {
-        RawPostDto expected = new RawPostDto();
+    private RawPost newRawPost(String text, long epochSecond, double lat,
+                               double lon, String url,
+                               String... attachments) {
+        RawPost expected = new RawPost();
         expected.setText(text);
         expected.setDate(LocalDateTime.ofEpochSecond(epochSecond, 0, ZoneOffset.UTC));
         GeoPoint point = new GeoPoint();
@@ -114,8 +114,8 @@ class RawPostMapperTest {
         return expected;
     }
 
-    private void testMapper(Wallpost source, RawPostDto expected) {
-        RawPostDto actual = mapper.map(source);
+    private void testMapper(Wallpost source, RawPost expected) {
+        RawPost actual = mapper.map(source);
 
         assertThat(actual)
             .isNotNull()
@@ -124,7 +124,7 @@ class RawPostMapperTest {
     }
 
     private void testMapper(Wallpost source) {
-        RawPostDto expected = newRawPost("Яблоки мск улица арбат раздаю всем нуждающимся",
+        RawPost expected = newRawPost("Яблоки мск улица арбат раздаю всем нуждающимся",
             1642700507, 53.20642269124d, 50.198534691559d,
             "https://vk.com/wall-208377052_2", "https://vk.com/photo-208377052_457239018");
         testMapper(source, expected);

@@ -1,4 +1,4 @@
-package ru.rassafel.foodsharing.parser.model.dto;
+package ru.rassafel.foodsharing.parser.model;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
  * @author rassafel
  */
 @Data
-public class RawPostDto {
+public class RawPost {
     private String url;
 
     private LocalDateTime date;
