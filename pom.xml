@@ -25,6 +25,7 @@
 
         <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
         <vk.sdk.version>1.0.11</vk.sdk.version>
+        <lucene.version>8.11.1</lucene.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <lombok.mapstruct.binding.version>0.2.0
         </lombok.mapstruct.binding.version>
@@ -94,6 +95,19 @@
                 <artifactId>embedded-postgresql</artifactId>
                 <version>${testcontainers.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucene-analyzers-common</artifactId>
+                <version>${lucene.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucene-queryparser</artifactId>
+                <version>${lucene.version}</version>
+            </dependency>
+
 
 
             <dependency>
