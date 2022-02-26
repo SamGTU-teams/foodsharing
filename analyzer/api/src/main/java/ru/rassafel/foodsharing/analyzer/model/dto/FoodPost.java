@@ -12,7 +12,7 @@ import java.util.List;
  * @author rassafel
  */
 @Data
-public class FoodPostDto {
+public class FoodPost {
     private String url;
 
     private LocalDateTime date;
