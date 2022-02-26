@@ -25,6 +25,11 @@
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
+            <artifactId>parser-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
             <artifactId>analyzer-api</artifactId>
         </dependency>
 
