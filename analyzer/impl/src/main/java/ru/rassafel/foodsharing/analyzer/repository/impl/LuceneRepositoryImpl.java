@@ -12,8 +12,8 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.search.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
-import ru.rassafel.foodsharing.analyzer.repository.LuceneRepository;
 import ru.rassafel.foodsharing.analyzer.model.LuceneObject;
+import ru.rassafel.foodsharing.analyzer.repository.LuceneRepository;
 
 import java.io.IOException;
 import java.util.ArrayList;
