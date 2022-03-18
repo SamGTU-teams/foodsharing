@@ -1,11 +1,11 @@
 package ru.rassafel.foodsharing.analyzer.controller.feign;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import ru.rassafel.foodsharing.analyzer.controller.AnalyzerController;
+import ru.rassafel.foodsharing.analyzer.controller.ProductsAnalyzerController;
 
 /**
  * @author rassafel
  */
 @FeignClient(name = "AnalyzerService", url = "${feign.analyzer.url}")
-public interface AnalyzerControllerFeign extends AnalyzerController {
+public interface ProductsAnalyzerControllerFeign extends ProductsAnalyzerController {
 }
