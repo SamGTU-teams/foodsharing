@@ -10,8 +10,8 @@ import java.util.List;
 /**
  * @author rassafel
  */
-@RequestMapping(ProductsAnalyzerController.MAPPING)
-public interface ProductsAnalyzerController {
+@RequestMapping(ProductAnalyzerController.MAPPING)
+public interface ProductAnalyzerController {
     String MAPPING = "/products";
 
     @PostMapping
