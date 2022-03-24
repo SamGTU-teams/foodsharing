@@ -12,7 +12,7 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.search.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
-import ru.rassafel.foodsharing.analyzer.model.LuceneObject;
+import ru.rassafel.foodsharing.analyzer.model.LuceneIndexedString;
 import ru.rassafel.foodsharing.analyzer.repository.LuceneRepository;
 
 import java.io.IOException;
@@ -29,21 +29,20 @@ import java.util.stream.Collectors;
 @Repository
 public class LuceneRepositoryImpl implements LuceneRepository {
     public static final String FIELD_BODY = "body";
-    public static final String FIELD_ID = "id";
     private final SearcherManager searcherManager;
     private final IndexWriter writer;
     @Value("${lucene.numberPerPage}")
     private final int numberPerPage;
 
     @Override
-    public LuceneObject create(String text) {
+    public LuceneIndexedString create(String text) {
         String hash = DigestUtils.md5Hex(text).toUpperCase();
-        LuceneObject object = new LuceneObject(hash, text);
+        LuceneIndexedString object = new LuceneIndexedString(hash, text);
         create(object);
         return object;
     }
 
-    private void create(LuceneObject... objects) {
+    private void create(LuceneIndexedString... objects) {
         List<Document> docs = Arrays.stream(objects).map(this::map)
             .collect(Collectors.toUnmodifiableList());
         try {
@@ -66,7 +65,7 @@ public class LuceneRepositoryImpl implements LuceneRepository {
     }
 
     @Override
-    public List<LuceneObject> search(Query query, int number) {
+    public List<LuceneIndexedString> search(Query query, int number) {
         try {
             searcherManager.maybeRefresh();
             IndexSearcher searcher = searcherManager.acquire();
@@ -79,39 +78,39 @@ public class LuceneRepositoryImpl implements LuceneRepository {
     }
 
     @Override
-    public List<LuceneObject> search(Query query) {
+    public List<LuceneIndexedString> search(Query query) {
         return search(query, numberPerPage);
     }
 
     @Override
-    public List<LuceneObject> findAll() {
+    public List<LuceneIndexedString> findAll() {
         MatchAllDocsQuery query = new MatchAllDocsQuery();
         return search(query);
     }
 
     @Override
-    public List<LuceneObject> findAll(int count) {
+    public List<LuceneIndexedString> findAll(int count) {
         MatchAllDocsQuery query = new MatchAllDocsQuery();
         return search(query, count);
     }
 
-    List<LuceneObject> map(IndexSearcher searcher, TopDocs topDocs) throws IOException {
-        List<LuceneObject> result = new ArrayList<>(topDocs.scoreDocs.length);
+    List<LuceneIndexedString> map(IndexSearcher searcher, TopDocs topDocs) throws IOException {
+        List<LuceneIndexedString> result = new ArrayList<>(topDocs.scoreDocs.length);
         for (ScoreDoc scoreDoc : topDocs.scoreDocs) {
             Document doc = searcher.doc(scoreDoc.doc);
-            LuceneObject object = map(doc);
+            LuceneIndexedString object = map(doc);
             result.add(object);
         }
         return result;
     }
 
-    LuceneObject map(Document doc) {
+    LuceneIndexedString map(Document doc) {
         String id = doc.getField(FIELD_ID).stringValue();
         String body = doc.getField(FIELD_BODY).stringValue();
-        return new LuceneObject(id, body);
+        return new LuceneIndexedString(id, body);
     }
 
-    Document map(LuceneObject object) {
+    Document map(LuceneIndexedString object) {
         Document doc = new Document();
         doc.add(new StringField(FIELD_ID, object.getId(), Field.Store.YES));
         doc.add(new TextField(FIELD_BODY, object.getBody(), Field.Store.YES));

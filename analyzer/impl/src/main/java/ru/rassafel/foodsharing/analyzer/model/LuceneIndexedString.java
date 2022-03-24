@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Data
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class LuceneObject implements Serializable {
+public class LuceneIndexedString implements Serializable {
     private String id;
     private String body;
 }
