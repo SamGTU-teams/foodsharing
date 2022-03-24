@@ -24,23 +24,8 @@ public class RabbitMqConfiguration {
     }
 
     @Bean
-    FanoutExchange consumerExchange(RabbitMqProperties properties) {
-        return new FanoutExchange(properties.getConsumer().getExchange());
-    }
-
-    @Bean
     FanoutExchange producerExchange(RabbitMqProperties properties) {
         return new FanoutExchange(properties.getProducer().getExchange());
-    }
-
-    @Bean
-    Queue consumerQueue(RabbitMqProperties properties) {
-        return new Queue(properties.getConsumer().getQueue());
-    }
-
-    @Bean
-    Binding consumerBinding(Queue consumerQueue, FanoutExchange consumerExchange) {
-        return BindingBuilder.bind(consumerQueue).to(consumerExchange);
     }
 
     @Bean
