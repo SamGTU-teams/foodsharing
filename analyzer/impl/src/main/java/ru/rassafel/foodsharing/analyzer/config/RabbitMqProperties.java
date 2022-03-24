@@ -7,10 +7,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 /**
  * @author rassafel
  */
-@ConfigurationProperties(prefix = "spring.rabbitmq")
+@ConfigurationProperties(prefix = RabbitMqProperties.PREFIX)
 @Getter
 @Setter
 public class RabbitMqProperties {
+    public static final String PREFIX = "spring.rabbitmq";
+
     private Consumer consumer;
     private Producer producer;
 
