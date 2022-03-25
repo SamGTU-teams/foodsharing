@@ -1,6 +1,7 @@
 package ru.rassafel.foodsharing.analyzer.repository;
 
 import org.apache.lucene.search.Query;
+import org.springframework.data.repository.NoRepositoryBean;
 import ru.rassafel.foodsharing.analyzer.model.LuceneIndexedString;
 
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 /**
  * @author rassafel
  */
+@NoRepositoryBean
 public interface LuceneRepository {
     LuceneIndexedString create(String body);
 
