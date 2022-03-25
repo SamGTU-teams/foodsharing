@@ -10,7 +10,7 @@ import java.util.List;
  * @author rassafel
  */
 public interface ProductLuceneAnalyzerService extends ProductAnalyzerService {
-    List<Product> parseProducts(RawPost post, LuceneIndexedString... strings);
+    List<Product> parseProducts(RawPost post, LuceneIndexedString... indexedStrings);
 
-    List<Product> parseProducts(LuceneIndexedString... strings);
+    List<Product> parseProducts(LuceneIndexedString... indexedStrings);
 }
