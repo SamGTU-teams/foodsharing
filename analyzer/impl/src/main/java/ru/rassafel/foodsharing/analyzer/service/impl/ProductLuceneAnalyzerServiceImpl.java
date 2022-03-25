@@ -4,7 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.lucene.search.FuzzyQuery;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.rassafel.foodsharing.analyzer.model.LuceneIndexedString;
 import ru.rassafel.foodsharing.analyzer.repository.LuceneRepository;
@@ -46,6 +49,23 @@ public class ProductLuceneAnalyzerServiceImpl implements ProductLuceneAnalyzerSe
     @Override
     public List<Product> parseProducts(LuceneIndexedString... indexedStrings) {
         return List.of();
+    }
+
+    BooleanQuery findByIdQuery(LuceneIndexedString... indexedStrings) {
+        BooleanQuery.Builder findByIdBuilder = new BooleanQuery.Builder();
+        Arrays.stream(indexedStrings)
+            .map(s -> new Term(LuceneRepository.FIELD_ID, s.getId()))
+            .map(TermQuery::new)
+            .forEach(t -> findByIdBuilder.add(t, BooleanClause.Occur.SHOULD));
+        return findByIdBuilder.build();
+    }
+
+    FuzzyQuery fizzyQuery(String text) {
+        return new FuzzyQuery(new Term(LuceneRepository.FIELD_BODY, text),
+            params.getMaxEdits(),
+            params.getPrefixLength(),
+            params.getMaxExpansions(),
+            params.isTranspositions());
     }
 
     @Data
