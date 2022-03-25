@@ -11,6 +11,9 @@ import java.util.List;
  */
 @NoRepositoryBean
 public interface LuceneRepository {
+    String FIELD_ID = "id";
+    String FIELD_BODY = "body";
+
     LuceneIndexedString create(String body);
 
     void delete(String id);

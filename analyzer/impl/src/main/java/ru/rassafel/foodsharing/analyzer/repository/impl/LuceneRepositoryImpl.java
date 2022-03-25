@@ -28,7 +28,6 @@ import java.util.stream.Collectors;
 @Slf4j
 @Repository
 public class LuceneRepositoryImpl implements LuceneRepository {
-    public static final String FIELD_BODY = "body";
     private final SearcherManager searcherManager;
     private final IndexWriter writer;
     @Value("${lucene.numberPerPage}")
