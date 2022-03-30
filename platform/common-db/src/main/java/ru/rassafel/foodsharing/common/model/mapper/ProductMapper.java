@@ -16,7 +16,7 @@ import java.util.Set;
 public interface ProductMapper {
     ProductMapper INSTANCE = Mappers.getMapper(ProductMapper.class);
 
-    @Mapping(target = "category", source = "", ignore = true)
+    @Mapping(target = "category", ignore = true)
     Product dtoToEntity(ProductDto dto);
 
     ProductDto entityToDto(Product entity);

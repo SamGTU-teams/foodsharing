@@ -13,7 +13,7 @@ import ru.rassafel.foodsharing.common.model.entity.Category;
 public interface CategoryMapper {
     CategoryMapper INSTANCE = Mappers.getMapper(CategoryMapper.class);
 
-    @Mapping(target = "products", source = "", ignore = true)
+    @Mapping(target = "products", ignore = true)
     Category dtoToEntity(CategoryDto dto);
 
     CategoryDto entityToDto(Category entity);
