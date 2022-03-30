@@ -14,6 +14,4 @@ public class LuceneProperties {
     public static final String PREFIX = "lucene";
 
     private String path = "/lucene/indexDir";
-
-    private int numberPerPage = 100;
 }

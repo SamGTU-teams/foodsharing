@@ -10,16 +10,17 @@ import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.*;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Repository;
 import ru.rassafel.foodsharing.analyzer.model.LuceneIndexedString;
 import ru.rassafel.foodsharing.analyzer.repository.LuceneRepository;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static lombok.Lombok.sneakyThrow;
 
 /**
  * @author rassafel
@@ -30,8 +31,6 @@ import java.util.stream.Collectors;
 public class LuceneRepositoryImpl implements LuceneRepository {
     private final SearcherManager searcherManager;
     private final IndexWriter writer;
-    @Value("${lucene.numberPerPage}")
-    private final int numberPerPage;
 
     @Override
     public LuceneIndexedString add(String text) {
@@ -64,7 +63,7 @@ public class LuceneRepositoryImpl implements LuceneRepository {
     }
 
     @Override
-    public List<LuceneIndexedString> search(Query query, int number) {
+    public List<Pair<LuceneIndexedString, Float>> search(Query query, int number) {
         try {
             searcherManager.maybeRefresh();
             IndexSearcher searcher = searcherManager.acquire();
@@ -77,30 +76,27 @@ public class LuceneRepositoryImpl implements LuceneRepository {
     }
 
     @Override
-    public List<LuceneIndexedString> search(Query query) {
-        return search(query, numberPerPage);
-    }
-
-    @Override
-    public List<LuceneIndexedString> findAll() {
-        MatchAllDocsQuery query = new MatchAllDocsQuery();
-        return search(query);
-    }
-
-    @Override
     public List<LuceneIndexedString> findAll(int count) {
         MatchAllDocsQuery query = new MatchAllDocsQuery();
-        return search(query, count);
+        return search(query, count)
+            .stream()
+            .map(Pair::getFirst)
+            .collect(Collectors.toList());
     }
 
-    List<LuceneIndexedString> map(IndexSearcher searcher, TopDocs topDocs) throws IOException {
-        List<LuceneIndexedString> result = new ArrayList<>(topDocs.scoreDocs.length);
-        for (ScoreDoc scoreDoc : topDocs.scoreDocs) {
-            Document doc = searcher.doc(scoreDoc.doc);
-            LuceneIndexedString object = map(doc);
-            result.add(object);
-        }
-        return result;
+    List<Pair<LuceneIndexedString, Float>> map(IndexSearcher searcher, TopDocs topDocs) throws IOException {
+        return Arrays.stream(topDocs.scoreDocs)
+            .map(scoreDoc -> {
+                try {
+                    Document doc = searcher.doc(scoreDoc.doc);
+                    LuceneIndexedString string = map(doc);
+                    return Pair.of(string, scoreDoc.score);
+                } catch (IOException e) {
+                    log.warn("Lucene search ", e);
+                    throw sneakyThrow(e);
+                }
+            })
+            .collect(Collectors.toList());
     }
 
     LuceneIndexedString map(Document doc) {
