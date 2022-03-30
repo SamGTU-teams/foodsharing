@@ -40,7 +40,7 @@ public class LuceneRepositoryImpl implements LuceneRepository {
         return object;
     }
 
-    private void add(LuceneIndexedString... objects) {
+    public void add(LuceneIndexedString... objects) {
         List<Document> docs = Arrays.stream(objects).map(this::map)
             .collect(Collectors.toUnmodifiableList());
         try {
