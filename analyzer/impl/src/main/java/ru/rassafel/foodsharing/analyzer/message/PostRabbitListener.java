@@ -7,14 +7,20 @@ import org.springframework.amqp.rabbit.annotation.*;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
+import ru.rassafel.foodsharing.analyzer.exception.GeoPointParseException;
+import ru.rassafel.foodsharing.analyzer.exception.ProductParseException;
 import ru.rassafel.foodsharing.analyzer.model.LuceneIndexedString;
 import ru.rassafel.foodsharing.analyzer.model.dto.FoodPost;
 import ru.rassafel.foodsharing.analyzer.repository.LuceneRepository;
 import ru.rassafel.foodsharing.analyzer.service.GeoLuceneAnalyzerService;
 import ru.rassafel.foodsharing.analyzer.service.ProductLuceneAnalyzerService;
+import ru.rassafel.foodsharing.common.model.GeoPoint;
+import ru.rassafel.foodsharing.common.model.dto.ProductDto;
 import ru.rassafel.foodsharing.common.model.mapper.ProductMapper;
 import ru.rassafel.foodsharing.parser.model.RawPost;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -43,22 +49,32 @@ public class PostRabbitListener {
         FoodPost result = new FoodPost();
 
         LuceneIndexedString postText = luceneRepository.add(rawPost.getText());
+        try {
+            List<ProductDto> products = productsAnalyzer.parseProducts(rawPost, postText)
+                .map(Pair::getFirst)
+                .map(mapper::entityToDto)
+                .collect(Collectors.toList());
+            if (products.isEmpty()) {
+                log.debug("Post does not contains products: {}", rawPost);
+                throw new ProductParseException("Post does not contains products");
+            }
+            result.setProducts(products);
 
-        result.setProducts(productsAnalyzer.parseProducts(rawPost, postText)
-            .map(Pair::getFirst)
-            .map(mapper::entityToDto)
-            .collect(Collectors.toList()));
+            Optional<GeoPoint> geoPoint = geoAnalyzer.parseGeoPoint(rawPost, postText);
+            if(geoPoint.isEmpty()) {
+                log.debug("Post does not contains geopoint: {}", rawPost);
+                throw new GeoPointParseException("Post does not contains geopoint");
+            }
+            result.setPoint(geoPoint.get());
 
-        geoAnalyzer.parseGeoPoint(rawPost, postText)
-            .ifPresent(result::setPoint);
+            result.setText(rawPost.getText());
+            result.setUrl(rawPost.getUrl());
+            result.setAttachments(rawPost.getContext().getAttachments());
+            result.setDate(rawPost.getDate());
 
-        result.setText(rawPost.getText());
-        result.setUrl(rawPost.getUrl());
-        result.setAttachments(rawPost.getContext().getAttachments());
-        result.setDate(rawPost.getDate());
-
-        template.convertAndSend(result);
-
-        luceneRepository.delete(postText);
+            template.convertAndSend(result);
+        } finally {
+            luceneRepository.delete(postText);
+        }
     }
 }
