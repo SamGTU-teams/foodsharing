@@ -19,8 +19,12 @@ import ru.rassafel.foodsharing.common.model.dto.ProductDto;
 import ru.rassafel.foodsharing.common.model.mapper.ProductMapper;
 import ru.rassafel.foodsharing.parser.model.RawPost;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -43,9 +47,16 @@ public class PostRabbitListener {
     private final ProductLuceneAnalyzerService productsAnalyzer;
     private final GeoLuceneAnalyzerService geoAnalyzer;
     private final ProductMapper mapper;
+    private final Validator validator;
 
     @RabbitHandler
     public void handle(RawPost rawPost) {
+        Set<ConstraintViolation<RawPost>> violations = validator.validate(rawPost);
+        if (!violations.isEmpty()) {
+            log.debug("Validation exception: {}", violations);
+            throw new ConstraintViolationException(violations);
+        }
+
         FoodPost result = new FoodPost();
 
         LuceneIndexedString postText = luceneRepository.add(rawPost.getText());
@@ -61,7 +72,7 @@ public class PostRabbitListener {
             result.setProducts(products);
 
             Optional<GeoPoint> geoPoint = geoAnalyzer.parseGeoPoint(rawPost, postText);
-            if(geoPoint.isEmpty()) {
+            if (geoPoint.isEmpty()) {
                 log.debug("Post does not contains geopoint: {}", rawPost);
                 throw new GeoPointParseException("Post does not contains geopoint");
             }
