@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.springframework.data.util.Pair;
+import ru.rassafel.foodsharing.analyzer.config.LuceneProperties;
 import ru.rassafel.foodsharing.analyzer.model.LuceneIndexedString;
 import ru.rassafel.foodsharing.analyzer.repository.ProductRepository;
 import ru.rassafel.foodsharing.analyzer.repository.impl.LuceneRepositoryImpl;
@@ -31,6 +32,8 @@ import static org.mockito.Mockito.when;
  */
 class ProductLuceneAnalyzerServiceImplTest {
     @Spy
+    LuceneProperties luceneProperties;
+    @Spy
     LuceneRepositoryImpl luceneRepository;
     @Mock
     ProductRepository productRepository;
@@ -39,6 +42,7 @@ class ProductLuceneAnalyzerServiceImplTest {
 
     @BeforeEach
     void setUp() throws IOException {
+        luceneProperties = new LuceneProperties();
         Directory directory = new RAMDirectory();
         StandardAnalyzer analyzer = new StandardAnalyzer();
         IndexWriterConfig config = new IndexWriterConfig(analyzer);
@@ -50,27 +54,6 @@ class ProductLuceneAnalyzerServiceImplTest {
 
     @Test
     void parseProducts() {
-        Product product1 = new Product();
-        product1.setId(1L);
-        product1.setName("apple");
-
-        Product product2 = new Product();
-        product2.setId(2L);
-        product2.setName("orange");
-        when(productRepository.findByNameIsNotNull())
-            .thenReturn(Stream.of(product1, product2));
-
-        List<Product> actual = service.parseProducts("Test post contains products like: banana, orenge")
-            .map(Pair::getFirst)
-            .collect(Collectors.toList());
-
-        assertThat(actual)
-            .contains(product2)
-            .doesNotContain(product1);
-    }
-
-    @Test
-    void syncParseProducts() {
         luceneRepository.add(new LuceneIndexedString("sync1", "Test string with orange"));
         luceneRepository.add(new LuceneIndexedString("sync2", "Test string with apple"));
 
@@ -81,17 +64,18 @@ class ProductLuceneAnalyzerServiceImplTest {
         Product product2 = new Product();
         product2.setId(2L);
         product2.setName("orange");
+
         when(productRepository.findByNameIsNotNull())
             .thenReturn(Stream.of(product1, product2));
 
-        List<Pair<Product, Float>> collect = service.parseProducts("Test post contains products like: banana, orenge")
+        List<Pair<Product, Float>> actual = service.parseProducts("Test post contains products like: banana, orenge")
             .collect(Collectors.toList());
-        System.out.println(collect);
 
-        List<Product> actual = collect.stream().map(Pair::getFirst).collect(Collectors.toList());
+        System.out.println(actual);
 
-
-        assertThat(actual)
+        assertThat(actual.stream()
+            .map(Pair::getFirst)
+            .collect(Collectors.toList()))
             .contains(product2)
             .doesNotContain(product1);
     }

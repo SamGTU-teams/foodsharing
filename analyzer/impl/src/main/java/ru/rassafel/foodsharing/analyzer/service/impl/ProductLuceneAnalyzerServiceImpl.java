@@ -1,13 +1,12 @@
 package ru.rassafel.foodsharing.analyzer.service.impl;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.*;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
+import ru.rassafel.foodsharing.analyzer.config.LuceneProperties;
 import ru.rassafel.foodsharing.analyzer.model.LuceneIndexedString;
 import ru.rassafel.foodsharing.analyzer.repository.LuceneRepository;
 import ru.rassafel.foodsharing.analyzer.repository.ProductRepository;
@@ -27,7 +26,7 @@ import java.util.stream.Stream;
 public class ProductLuceneAnalyzerServiceImpl implements ProductLuceneAnalyzerService {
     private final ProductRepository productRepository;
     private final LuceneRepository luceneRepository;
-    private final RequestParams params = new RequestParams();
+    private final LuceneProperties params;
 
     @Override
     public Stream<Pair<Product, Float>> parseProducts(RawPost post) {
@@ -87,17 +86,5 @@ public class ProductLuceneAnalyzerServiceImpl implements ProductLuceneAnalyzerSe
             params.getPrefixLength(),
             params.getMaxExpansions(),
             params.isTranspositions());
-    }
-
-    @Data
-    @RequiredArgsConstructor
-    @AllArgsConstructor
-    public static class RequestParams {
-        private int luceneMaxResults = 100;
-        private Integer maxEdits = FuzzyQuery.defaultMaxEdits;
-        private int prefixLength = FuzzyQuery.defaultPrefixLength;
-        private int maxExpansions = FuzzyQuery.defaultMaxExpansions;
-        private boolean transpositions = FuzzyQuery.defaultTranspositions;
-        private float minimumSimilarity = FuzzyQuery.defaultMinSimilarity;
     }
 }
