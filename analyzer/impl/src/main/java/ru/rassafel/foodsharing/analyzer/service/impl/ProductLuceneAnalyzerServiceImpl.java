@@ -6,8 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.*;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import ru.rassafel.foodsharing.analyzer.model.LuceneIndexedString;
 import ru.rassafel.foodsharing.analyzer.repository.LuceneRepository;
@@ -17,7 +16,7 @@ import ru.rassafel.foodsharing.common.model.entity.Product;
 import ru.rassafel.foodsharing.parser.model.RawPost;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * @author rassafel
@@ -31,24 +30,45 @@ public class ProductLuceneAnalyzerServiceImpl implements ProductLuceneAnalyzerSe
     private final RequestParams params = new RequestParams();
 
     @Override
-    public List<Product> parseProducts(RawPost post) {
+    public Stream<Pair<Product, Float>> parseProducts(RawPost post) {
         return parseProducts(post.getText());
     }
 
     @Override
-    public List<Product> parseProducts(String... strings) {
-        LuceneIndexedString[] indexedStrings = Arrays.stream(strings).map(luceneRepository::create).toArray(LuceneIndexedString[]::new);
+    public Stream<Pair<Product, Float>> parseProducts(String... strings) {
+        LuceneIndexedString[] indexedStrings = Arrays.stream(strings)
+            .map(luceneRepository::add)
+            .toArray(LuceneIndexedString[]::new);
         return parseProducts(indexedStrings);
     }
 
     @Override
-    public List<Product> parseProducts(RawPost post, LuceneIndexedString... indexedStrings) {
+    public Stream<Pair<Product, Float>> parseProducts(RawPost post, LuceneIndexedString... indexedStrings) {
         return parseProducts(indexedStrings);
     }
 
     @Override
-    public List<Product> parseProducts(LuceneIndexedString... indexedStrings) {
-        return List.of();
+    public Stream<Pair<Product, Float>> parseProducts(LuceneIndexedString... indexedStrings) {
+        Query byIdQuery = findByIdQuery(indexedStrings);
+
+        return productRepository.findByNameIsNotNull()
+            .map(product -> parseProduct(product, byIdQuery))
+            .filter(pair -> pair.getSecond() > 0);
+    }
+
+    Pair<Product, Float> parseProduct(Product product, Query findByIdQuery) {
+        Query fizzyQuery = fizzyQuery(product.getName());
+        BooleanQuery query = new BooleanQuery.Builder()
+            .add(fizzyQuery, BooleanClause.Occur.MUST)
+            .add(findByIdQuery, BooleanClause.Occur.MUST)
+            .build();
+
+        float maxScore = (float) luceneRepository.search(query, params.getLuceneMaxResults())
+            .stream()
+            .mapToDouble(Pair::getSecond)
+            .max()
+            .orElse(0);
+        return Pair.of(product, maxScore);
     }
 
     BooleanQuery findByIdQuery(LuceneIndexedString... indexedStrings) {
@@ -56,7 +76,8 @@ public class ProductLuceneAnalyzerServiceImpl implements ProductLuceneAnalyzerSe
         Arrays.stream(indexedStrings)
             .map(s -> new Term(LuceneRepository.FIELD_ID, s.getId()))
             .map(TermQuery::new)
-            .forEach(t -> findByIdBuilder.add(t, BooleanClause.Occur.SHOULD));
+            .map(q -> new BooleanClause(q, BooleanClause.Occur.SHOULD))
+            .forEachOrdered(findByIdBuilder::add);
         return findByIdBuilder.build();
     }
 
@@ -72,11 +93,11 @@ public class ProductLuceneAnalyzerServiceImpl implements ProductLuceneAnalyzerSe
     @RequiredArgsConstructor
     @AllArgsConstructor
     public static class RequestParams {
-        public int pageSize = 100;
-        public Integer maxEdits = FuzzyQuery.defaultMaxEdits;
-        public int prefixLength = FuzzyQuery.defaultPrefixLength;
-        public int maxExpansions = FuzzyQuery.defaultMaxExpansions;
-        public boolean transpositions = FuzzyQuery.defaultTranspositions;
-        public float minimumSimilarity = FuzzyQuery.defaultMinSimilarity;
+        private int luceneMaxResults = 100;
+        private Integer maxEdits = FuzzyQuery.defaultMaxEdits;
+        private int prefixLength = FuzzyQuery.defaultPrefixLength;
+        private int maxExpansions = FuzzyQuery.defaultMaxExpansions;
+        private boolean transpositions = FuzzyQuery.defaultTranspositions;
+        private float minimumSimilarity = FuzzyQuery.defaultMinSimilarity;
     }
 }

@@ -5,17 +5,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.rabbit.annotation.*;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 import ru.rassafel.foodsharing.analyzer.model.LuceneIndexedString;
 import ru.rassafel.foodsharing.analyzer.model.dto.FoodPost;
 import ru.rassafel.foodsharing.analyzer.repository.LuceneRepository;
 import ru.rassafel.foodsharing.analyzer.service.GeoLuceneAnalyzerService;
 import ru.rassafel.foodsharing.analyzer.service.ProductLuceneAnalyzerService;
-import ru.rassafel.foodsharing.common.model.entity.Product;
 import ru.rassafel.foodsharing.common.model.mapper.ProductMapper;
 import ru.rassafel.foodsharing.parser.model.RawPost;
 
-import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author rassafel
@@ -42,14 +42,15 @@ public class PostRabbitListener {
     public void handle(RawPost rawPost) {
         FoodPost result = new FoodPost();
 
-        LuceneIndexedString postText = luceneRepository.create(rawPost.getText());
+        LuceneIndexedString postText = luceneRepository.add(rawPost.getText());
 
-        List<Product> products = productsAnalyzer.parseProducts(rawPost, postText);
-
-        result.setProducts(mapper.entitiesToDtos(products));
+        result.setProducts(productsAnalyzer.parseProducts(rawPost, postText)
+            .map(Pair::getFirst)
+            .map(mapper::entityToDto)
+            .collect(Collectors.toList()));
 
         geoAnalyzer.parseGeoPoint(rawPost, postText)
-                .ifPresent(result::setPoint);
+            .ifPresent(result::setPoint);
 
         result.setText(rawPost.getText());
         result.setUrl(rawPost.getUrl());
