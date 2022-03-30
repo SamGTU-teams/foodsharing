@@ -43,7 +43,7 @@ class LuceneRepositoryImplTest {
         assertThat(repository.findAll())
             .isEmpty();
 
-        LuceneIndexedString result = repository.create(body);
+        LuceneIndexedString result = repository.add(body);
 
         assertThat(result)
             .isNotNull();
@@ -79,7 +79,7 @@ class LuceneRepositoryImplTest {
         LuceneIndexedString object = createFirstObject(body);
         Stream.generate(() -> RandomStringUtils.randomAlphabetic(16))
             .limit(10)
-            .forEach(text -> repository.create(text));
+            .forEach(text -> repository.add(text));
 
         TermQuery query = new TermQuery(new Term(LuceneRepositoryImpl.FIELD_ID, object.getId()));
         List<LuceneIndexedString> result = repository.search(query);
@@ -100,7 +100,7 @@ class LuceneRepositoryImplTest {
         int count = 10;
         Stream.generate(() -> RandomStringUtils.randomAlphabetic(16))
             .limit(count)
-            .forEach(text -> repository.create(text));
+            .forEach(text -> repository.add(text));
         List<LuceneIndexedString> actual = repository.findAll(count);
         assertThat(actual)
             .hasSize(count);

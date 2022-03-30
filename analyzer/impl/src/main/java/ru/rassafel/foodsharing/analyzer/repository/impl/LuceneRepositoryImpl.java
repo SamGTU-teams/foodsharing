@@ -34,14 +34,14 @@ public class LuceneRepositoryImpl implements LuceneRepository {
     private final int numberPerPage;
 
     @Override
-    public LuceneIndexedString create(String text) {
+    public LuceneIndexedString add(String text) {
         String hash = DigestUtils.md5Hex(text).toUpperCase();
         LuceneIndexedString object = new LuceneIndexedString(hash, text);
-        create(object);
+        add(object);
         return object;
     }
 
-    private void create(LuceneIndexedString... objects) {
+    private void add(LuceneIndexedString... objects) {
         List<Document> docs = Arrays.stream(objects).map(this::map)
             .collect(Collectors.toUnmodifiableList());
         try {

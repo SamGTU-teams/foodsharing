@@ -14,7 +14,7 @@ public interface LuceneRepository {
     String FIELD_ID = "id";
     String FIELD_BODY = "body";
 
-    LuceneIndexedString create(String body);
+    LuceneIndexedString add(String body);
 
     void delete(String id);
 
