@@ -11,6 +11,7 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.util.Pair;
 import org.testcontainers.shaded.org.apache.commons.lang.RandomStringUtils;
 import ru.rassafel.foodsharing.analyzer.model.LuceneIndexedString;
 
@@ -25,22 +26,20 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 class LuceneRepositoryImplTest {
     LuceneRepositoryImpl repository;
-    Directory directory;
-    SearcherManager searcherManager;
 
     @BeforeEach
     void setUp() throws IOException {
-        directory = new RAMDirectory();
+        Directory directory = new RAMDirectory();
         StandardAnalyzer analyzer = new StandardAnalyzer();
         IndexWriterConfig config = new IndexWriterConfig(analyzer);
         IndexWriter writer = new IndexWriter(directory, config);
-        searcherManager = new SearcherManager(writer, false, false, null);
-        repository = new LuceneRepositoryImpl(searcherManager, writer, 100);
+        SearcherManager searcherManager = new SearcherManager(writer, false, false, null);
+        repository = new LuceneRepositoryImpl(searcherManager, writer);
     }
 
     @SneakyThrows
     LuceneIndexedString createFirstObject(String body) {
-        assertThat(repository.findAll())
+        assertThat(repository.findAll(100))
             .isEmpty();
 
         LuceneIndexedString result = repository.add(body);
@@ -52,7 +51,7 @@ class LuceneRepositoryImplTest {
         assertThat(result.getId())
             .isNotEmpty();
 
-        assertThat(repository.findAll())
+        assertThat(repository.findAll(100))
             .isNotEmpty();
 
         return result;
@@ -69,7 +68,7 @@ class LuceneRepositoryImplTest {
         String body = "Test value for create object.";
         LuceneIndexedString object = createFirstObject(body);
         repository.delete(object);
-        assertThat(repository.findAll())
+        assertThat(repository.findAll(100))
             .isEmpty();
     }
 
@@ -82,12 +81,12 @@ class LuceneRepositoryImplTest {
             .forEach(text -> repository.add(text));
 
         TermQuery query = new TermQuery(new Term(LuceneRepositoryImpl.FIELD_ID, object.getId()));
-        List<LuceneIndexedString> result = repository.search(query);
+        List<Pair<LuceneIndexedString, Float>> result = repository.search(query, 100);
 
         assertThat(result)
             .hasSize(1);
 
-        LuceneIndexedString actual = result.get(0);
+        LuceneIndexedString actual = result.get(0).getFirst();
 
         assertThat(actual)
             .isNotNull();
