@@ -31,7 +31,6 @@ public class CallbackControllerImpl implements CallbackController {
             } catch (Exception ex) {
                 return ResponseEntity.badRequest().body(ex.getMessage());
             }
-            return ResponseEntity.ok("ok");
         }
         return ResponseEntity.ok("ok");
     }
