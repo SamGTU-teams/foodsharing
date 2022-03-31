@@ -1,0 +1,5 @@
+embedded:
+  postgresql:
+    enabled: true
+    dockerImage: postgis/postgis:10-3.2-alpine
+    initScriptPath: initdb/init_foodsharing_db.sql
