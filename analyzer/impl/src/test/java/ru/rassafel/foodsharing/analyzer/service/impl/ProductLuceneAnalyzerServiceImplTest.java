@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.springframework.data.util.Pair;
+import org.springframework.data.util.Streamable;
 import ru.rassafel.foodsharing.analyzer.config.LuceneProperties;
 import ru.rassafel.foodsharing.analyzer.model.LuceneIndexedString;
 import ru.rassafel.foodsharing.analyzer.repository.ProductRepository;
@@ -22,7 +23,6 @@ import ru.rassafel.foodsharing.common.model.entity.Product;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -65,11 +65,11 @@ class ProductLuceneAnalyzerServiceImplTest {
         product2.setId(2L);
         product2.setName("orange");
 
-        when(productRepository.findByNameIsNotNull())
-            .thenReturn(Stream.of(product1, product2));
+        when(productRepository.findAll())
+            .thenReturn(Streamable.of(product1, product2));
 
         List<Pair<Product, Float>> actual = service.parseProducts("Test post contains products like: banana, orenge")
-            .collect(Collectors.toList());
+            .toList();
 
         System.out.println(actual);
 

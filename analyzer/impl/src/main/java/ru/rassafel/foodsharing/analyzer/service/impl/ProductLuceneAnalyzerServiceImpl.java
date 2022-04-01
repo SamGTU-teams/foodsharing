@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.*;
 import org.springframework.data.util.Pair;
+import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
 import ru.rassafel.foodsharing.analyzer.config.LuceneProperties;
 import ru.rassafel.foodsharing.analyzer.model.LuceneIndexedString;
@@ -15,7 +16,6 @@ import ru.rassafel.foodsharing.common.model.entity.Product;
 import ru.rassafel.foodsharing.parser.model.RawPost;
 
 import java.util.Arrays;
-import java.util.stream.Stream;
 
 /**
  * @author rassafel
@@ -29,12 +29,12 @@ public class ProductLuceneAnalyzerServiceImpl implements ProductLuceneAnalyzerSe
     private final LuceneProperties params;
 
     @Override
-    public Stream<Pair<Product, Float>> parseProducts(RawPost post) {
+    public Streamable<Pair<Product, Float>> parseProducts(RawPost post) {
         return parseProducts(post.getText());
     }
 
     @Override
-    public Stream<Pair<Product, Float>> parseProducts(String... strings) {
+    public Streamable<Pair<Product, Float>> parseProducts(String... strings) {
         LuceneIndexedString[] indexedStrings = Arrays.stream(strings)
             .map(luceneRepository::add)
             .toArray(LuceneIndexedString[]::new);
@@ -42,15 +42,15 @@ public class ProductLuceneAnalyzerServiceImpl implements ProductLuceneAnalyzerSe
     }
 
     @Override
-    public Stream<Pair<Product, Float>> parseProducts(RawPost post, LuceneIndexedString... indexedStrings) {
+    public Streamable<Pair<Product, Float>> parseProducts(RawPost post, LuceneIndexedString... indexedStrings) {
         return parseProducts(indexedStrings);
     }
 
     @Override
-    public Stream<Pair<Product, Float>> parseProducts(LuceneIndexedString... indexedStrings) {
+    public Streamable<Pair<Product, Float>> parseProducts(LuceneIndexedString... indexedStrings) {
         Query byIdQuery = findByIdQuery(indexedStrings);
 
-        return productRepository.findByNameIsNotNull()
+        return productRepository.findAll()
             .map(product -> parseProduct(product, byIdQuery))
             .filter(pair -> pair.getSecond() > 0);
     }

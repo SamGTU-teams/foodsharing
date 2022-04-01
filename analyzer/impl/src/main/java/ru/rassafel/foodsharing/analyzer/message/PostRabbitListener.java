@@ -25,7 +25,6 @@ import javax.validation.Validator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @author rassafel
@@ -63,7 +62,7 @@ public class PostRabbitListener {
             List<ProductDto> products = productsAnalyzer.parseProducts(rawPost, postText)
                 .map(Pair::getFirst)
                 .map(mapper::entityToDto)
-                .collect(Collectors.toList());
+                .toList();
             if (products.isEmpty()) {
                 log.debug("Post does not contains products: {}", rawPost);
                 throw new ProductParseException("Post does not contains products");

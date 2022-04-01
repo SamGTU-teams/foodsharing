@@ -27,6 +27,6 @@ public class ProductAnalyzerControllerImpl implements ProductAnalyzerController 
         return service.parseProducts(text)
             .map(Pair::getFirst)
             .map(mapper::entityToDto)
-            .collect(Collectors.toList());
+            .toList();
     }
 }
