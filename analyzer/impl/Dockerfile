@@ -4,13 +4,16 @@ WORKDIR /app
 
 ENV spring_profiles_active=docker \
     CONFIG_SERVER_URL=http://config:8888/ \
-    SERVER_PORT=8010
+    SERVER_PORT=8010 \
+    LUCENE_DIR=/lucene/indexDir
 
 ARG JAR_FILE=target/*.jar
 
 RUN apk --no-cache add curl
 
 COPY ${JAR_FILE} app.jar
+
+VOLUME ${LUCENE_DIR}
 
 CMD ["java", "-Xmx200m", "-jar", "app.jar"]
 
