@@ -9,23 +9,22 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties(prefix = RabbitMqProperties.PREFIX)
 @Getter
-@Setter
 public class RabbitMqProperties {
     public static final String PREFIX = "spring.rabbitmq";
 
-    private Consumer consumer;
-    private Producer producer;
+    private final Consumer consumer = new Consumer();
+    private final Producer producer = new Producer();
 
     @Getter
     @Setter
     public class Consumer {
-        private String exchange = "post-raw-exchange";
-        private String queue = "post.raw.analyzer";
+        private String exchange = "post-raw-default-exchange";
+        private String queue = "post.raw.analyzer.default";
     }
 
     @Getter
     @Setter
     public class Producer {
-        private String exchange = "post-ready-exchange";
+        private String exchange = "post-ready-default-exchange";
     }
 }
