@@ -5,8 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.util.Pair;
 import org.springframework.web.bind.annotation.RestController;
 import ru.rassafel.foodsharing.analyzer.controller.ProductAnalyzerController;
+import ru.rassafel.foodsharing.analyzer.model.dto.ScoreProductDto;
 import ru.rassafel.foodsharing.analyzer.service.ProductAnalyzerService;
-import ru.rassafel.foodsharing.common.model.dto.ProductDto;
 import ru.rassafel.foodsharing.common.model.entity.Product;
 import ru.rassafel.foodsharing.common.model.mapper.ProductMapper;
 
@@ -26,12 +26,12 @@ public class ProductAnalyzerControllerImpl implements ProductAnalyzerController 
     private final ProductMapper mapper;
 
     @Override
-    public List<Pair<ProductDto, Float>> parseProducts(String text, Long count) {
+    public List<ScoreProductDto> parseProducts(String text, Long count) {
         return service.parseProducts(text)
             .stream()
             .sorted(comparator.reversed())
             .limit(count)
-            .map(p -> Pair.of(mapper.entityToDto(p.getFirst()), p.getSecond()))
+            .map(p -> new ScoreProductDto(mapper.entityToDto(p.getFirst()), p.getSecond()))
             .collect(Collectors.toUnmodifiableList());
     }
 }

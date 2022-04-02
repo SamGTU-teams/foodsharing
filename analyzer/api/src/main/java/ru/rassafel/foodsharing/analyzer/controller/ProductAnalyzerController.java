@@ -1,11 +1,10 @@
 package ru.rassafel.foodsharing.analyzer.controller;
 
-import org.springframework.data.util.Pair;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.rassafel.foodsharing.common.model.dto.ProductDto;
+import ru.rassafel.foodsharing.analyzer.model.dto.ScoreProductDto;
 
 import java.util.List;
 
@@ -17,6 +16,6 @@ public interface ProductAnalyzerController {
     String MAPPING = "/products";
 
     @PostMapping
-    List<Pair<ProductDto, Float>> parseProducts(@RequestBody String text,
-                                                @RequestParam(name = "count", defaultValue = "" + Long.MAX_VALUE) Long count);
+    List<ScoreProductDto> parseProducts(@RequestBody String text,
+                                        @RequestParam(name = "count", defaultValue = "" + Long.MAX_VALUE) Long count);
 }
