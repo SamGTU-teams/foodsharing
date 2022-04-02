@@ -9,4 +9,4 @@ spring:
         health:
           enabled: true
   profiles:
-    active: ${SPR_PROFILE:native}
+    active: ${spring_profiles_active:native}

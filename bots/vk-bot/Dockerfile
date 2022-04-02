@@ -2,7 +2,7 @@ FROM adoptopenjdk/openjdk11:alpine-jre
 
 WORKDIR /app
 
-ENV SPR_PROFILE=docker \
+ENV spring_profiles_active=docker \
     CONFIG_SERVER_URL=http://config:8888/ \
     VK_BOT_GROUP_ID=12345 \
     VK_BOT_ACCESS_TOKEN=TEST \

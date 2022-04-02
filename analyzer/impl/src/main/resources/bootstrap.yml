@@ -5,7 +5,7 @@ spring:
     config:
       uri: ${CONFIG_SERVER_URL:http://localhost:8888/}
   profiles:
-    active: ${SPR_PROFILE:default}
+    active: ${spring_profiles_active:default}
 
 server:
   port: ${SERVER_PORT:8010}

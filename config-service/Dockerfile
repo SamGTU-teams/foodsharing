@@ -2,7 +2,7 @@ FROM adoptopenjdk/openjdk11:alpine-jre
 
 WORKDIR /app
 
-ENV SPR_PROFILE=native,docker \
+ENV spring_profiles_active=native,docker \
     CONFIG_DIR=/app/shared \
     SERVER_PORT=8888
 

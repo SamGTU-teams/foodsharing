@@ -2,7 +2,7 @@ FROM adoptopenjdk/openjdk11:alpine-jre
 
 WORKDIR /app
 
-ENV SPR_PROFILE=docker \
+ENV spring_profiles_active=docker \
     CONFIG_SERVER_URL=http://config:8888/ \
     TG_BOT_WEB_HOOK_PATH=TEST \
     TG_BOT_USERNAME=TEST \
