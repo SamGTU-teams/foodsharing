@@ -2,7 +2,7 @@ package ru.rassafel.foodsharing.common.model.mapper;
 
 import org.junit.jupiter.api.Test;
 import ru.rassafel.foodsharing.common.model.GeoPoint;
-import ru.rassafel.foodsharing.common.model.GeoPointEmbeddable;
+import ru.rassafel.foodsharing.common.model.entity.geo.GeoPointEmbeddable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static ru.rassafel.foodsharing.common.model.ModelFactory.createPoint;

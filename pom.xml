@@ -16,7 +16,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>15</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -25,6 +25,7 @@
 
         <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
         <vk.sdk.version>1.0.11</vk.sdk.version>
+        <tg.sdk.version>4.4.0.2</tg.sdk.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <lombok.mapstruct.binding.version>0.2.0
         </lombok.mapstruct.binding.version>
@@ -43,6 +44,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.telegram</groupId>
+                <artifactId>telegrambots-spring-boot-starter</artifactId>
+                <version>${tg.sdk.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>

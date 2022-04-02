@@ -5,15 +5,36 @@ spring:
     config:
       uri: ${CONFIG_SERVER_URL:http://localhost:8888/}
       fail-fast: true
-      enabled: true
+      enabled: false
   profiles:
     active: ${SPR_PROFILE:default}
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:file:./.h2/testdb;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  liquibase:
+    enabled: false
+    change-log: classpath:init_foodsharing_db.sql
 
 server:
-  port: ${SERVER_PORT:8040}
+  port: ${SERVER_PORT:80}
 
 management:
   endpoints:
     web:
       exposure:
         include: health,info,refresh
+
+

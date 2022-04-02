@@ -3,7 +3,7 @@ package ru.rassafel.foodsharing.common.model.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import ru.rassafel.foodsharing.common.model.dto.ProductDto;
-import ru.rassafel.foodsharing.common.model.entity.Product;
+import ru.rassafel.foodsharing.common.model.entity.product.Product;
 
 /**
  * @author rassafel
