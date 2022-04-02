@@ -5,6 +5,9 @@ import ru.rassafel.foodsharing.common.model.GeoPoint;
 import ru.rassafel.foodsharing.common.model.dto.ProductDto;
 import ru.rassafel.foodsharing.common.model.dto.RegionDto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,15 +18,19 @@ import java.util.List;
 public class FoodPost {
     private String url;
 
+    @NotNull
     private LocalDateTime date;
 
+    @NotBlank
     private String text;
 
     private List<String> attachments;
 
+    @NotNull
     private GeoPoint point;
 
     private List<RegionDto> regions;
 
+    @NotEmpty
     private List<ProductDto> products;
 }
