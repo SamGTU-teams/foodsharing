@@ -1,5 +1,6 @@
 package ru.rassafel.foodsharing.analyzer.config;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -22,18 +23,21 @@ import java.nio.file.Paths;
 /**
  * @author rassafel
  */
+@RequiredArgsConstructor
 @Slf4j
 @Configuration
 @EnableConfigurationProperties(LuceneProperties.class)
 public class LuceneConfiguration {
+    private final LuceneProperties luceneProperties;
+
     @Bean
     Analyzer luceneAnalyzer() {
         return new StandardAnalyzer();
     }
 
     @Bean
-    Directory luceneDirectory(LuceneProperties properties) throws IOException {
-        Path path = Paths.get(properties.getPath());
+    Directory luceneDirectory() throws IOException {
+        Path path = Paths.get(luceneProperties.getPath());
         File file = path.toFile();
         file.mkdirs();
         FSDirectory dir = FSDirectory.open(path);
