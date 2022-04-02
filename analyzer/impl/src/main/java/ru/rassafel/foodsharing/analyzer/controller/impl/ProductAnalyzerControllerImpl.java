@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.rassafel.foodsharing.analyzer.controller.ProductAnalyzerController;
 import ru.rassafel.foodsharing.analyzer.service.ProductAnalyzerService;
 import ru.rassafel.foodsharing.common.model.dto.ProductDto;
+import ru.rassafel.foodsharing.common.model.entity.Product;
 import ru.rassafel.foodsharing.common.model.mapper.ProductMapper;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,14 +21,17 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 public class ProductAnalyzerControllerImpl implements ProductAnalyzerController {
+    private static final Comparator<Pair<Product, Float>> comparator = Comparator.comparing(Pair::getSecond);
     private final ProductAnalyzerService service;
     private final ProductMapper mapper;
 
     @Override
-    public List<ProductDto> parseProducts(String text) {
+    public List<Pair<ProductDto, Float>> parseProducts(String text, Long count) {
         return service.parseProducts(text)
-            .map(Pair::getFirst)
-            .map(mapper::entityToDto)
-            .toList();
+            .stream()
+            .sorted(comparator.reversed())
+            .limit(count)
+            .map(p -> Pair.of(mapper.entityToDto(p.getFirst()), p.getSecond()))
+            .collect(Collectors.toUnmodifiableList());
     }
 }
