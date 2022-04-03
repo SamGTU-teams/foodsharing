@@ -1,2 +1,8 @@
 #!/bin/sh
-complete -W "parser analyzer ibot tg-bot vk-bot config postgres rabbitmq" ./dev
+set -eu
+
+services='parser analyzer ibot tg-bot vk-bot config postgres rabbitmq'
+
+complete -W "$services" ./build
+complete -W "$services" ./dev
+complete -W "$services" ./prod

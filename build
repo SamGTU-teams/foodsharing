@@ -1,10 +1,12 @@
 #!/bin/sh
+set -eu
+
+./env
 
 echo 'Start maven build'
 ./mvnw package -DskipTests
-
-ret=$?
-
 echo 'Finish maven build'
 
-exit $ret
+echo 'Start docker build'
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml build "$@"
+echo 'Finish docker build'
