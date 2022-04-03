@@ -9,6 +9,7 @@ import com.vk.api.sdk.queries.messages.MessagesSendQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.rassafel.bot.session.dto.SessionResponse;
+import ru.rassafel.bot.session.model.BotButtons;
 import ru.rassafel.bot.session.util.ButtonsUtil;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class VkMessengerService {
         }
     }
 
-    public void sendMessage(String message, Long id){
+    public void sendMessage(String message, Long id) {
         try {
             MessagesSendQuery messagesSendQuery = vk.messages().send(groupActor)
                 .message(message).userId(id.intValue())
@@ -47,17 +48,28 @@ public class VkMessengerService {
         }
     }
 
-    private Keyboard createKeyboard(List<String> rawKeys) {
+    private Keyboard createKeyboard(BotButtons rawKeys) {
         List<List<KeyboardButton>> keyboardButtons = new ArrayList<>();
-        if (rawKeys == null || rawKeys.isEmpty()) {
-            rawKeys = ButtonsUtil.DEFAULT_BUTTONS;
-        }
-        for (String rawKey : rawKeys) {
-            KeyboardButton button = new KeyboardButton()
-                    .setAction(new KeyboardButtonAction()
-                            .setLabel(rawKey)
-                            .setType(TemplateActionTypeNames.TEXT))
+//        if (rawKeys == null || rawKeys.isEmpty()) {
+//            rawKeys = ButtonsUtil.DEFAULT_BUTTONS;
+//        }
+        for (BotButtons.BotButton rawKey : rawKeys.getButtons()) {
+//            KeyboardButton button = new KeyboardButton()
+//                    .setAction(new KeyboardButtonAction()
+//                            .setLabel(rawKey)
+//                            .setType(TemplateActionTypeNames.TEXT))
+//                    .setColor(KeyboardButtonColor.POSITIVE);
+//            List<KeyboardButton> line = List.of(button);
+//            keyboardButtons.add(line);
+            KeyboardButton button = new KeyboardButton();
+            if (rawKey.isGeo()) {
+                button.setAction(new KeyboardButtonAction().setType(TemplateActionTypeNames.LOCATION));
+            }else {
+                button.setAction(new KeyboardButtonAction()
+                        .setLabel(rawKey.getText())
+                        .setType(TemplateActionTypeNames.TEXT))
                     .setColor(KeyboardButtonColor.POSITIVE);
+            }
             List<KeyboardButton> line = List.of(button);
             keyboardButtons.add(line);
         }

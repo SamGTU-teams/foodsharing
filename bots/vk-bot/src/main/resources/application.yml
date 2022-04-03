@@ -4,7 +4,7 @@ session-starter:
 
 vk:
   server:
-    confirm_code: be55323c
+    confirm_code: 88d7c1ae
   bot:
     groupId: ${VK_BOT_GROUP_ID}
     accessToken: ${VK_BOT_ACCESS_TOKEN}

@@ -32,6 +32,7 @@ public class VkBotHandlerService {
             } catch (BotException ex){
                 vkMessengerService.sendMessage(ex.getMessage(), ex.getSendTo());
             }catch (Exception ex) {
+
                 log.error("Caught an error {}", ex.getMessage());
                 ex.printStackTrace();
             }

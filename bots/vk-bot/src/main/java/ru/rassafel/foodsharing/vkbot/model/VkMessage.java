@@ -5,17 +5,15 @@ import lombok.Data;
 
 @Data
 public class VkMessage {
-    public int date;
-    public int from_id;
-    public int id;
-    public int out;
-    public int peer_id;
-    public String text;
-    public int conversation_message_id;
-    //    public ArrayList<Object> fwd_messages;
-    public boolean important;
-    public int random_id;
-    //    public ArrayList<Object> attachments;
-    public boolean is_hidden;
+    private int date;
+    private int from_id;
+    private int id;
+    private int out;
+    private int peer_id;
+    private String text;
+    private int conversation_message_id;
+    private boolean important;
+    private int random_id;
+    private boolean is_hidden;
     private Geo geo;
 }

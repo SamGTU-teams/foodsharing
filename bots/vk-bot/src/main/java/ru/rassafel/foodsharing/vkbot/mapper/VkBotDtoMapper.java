@@ -18,7 +18,7 @@ public abstract class VkBotDtoMapper {
 
     @AfterMapping
     public void map(VkUpdate update, @MappingTarget SessionRequest request){
-        request.setMessage(update.getObject().getMessage().text.toLowerCase());
+        request.setMessage(update.getObject().getMessage().getText().toLowerCase());
         request.setType(PlatformType.VK);
     }
 }

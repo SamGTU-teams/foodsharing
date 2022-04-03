@@ -47,6 +47,18 @@ public class PlaceService {
         ));
     }
 
+    public String getUsersPlaceMapMessage(User user, PlatformType platformType, String additionalMessage){
+        return getUsersPlacesNamesMap(user, platformType).entrySet().stream().map(entry -> entry.getKey() + "." + entry.getValue())
+            .collect(Collectors.joining("\n"))
+            + "\n\n" + additionalMessage;
+    }
+
+    public String getUsersPlaceMapMessage(User user, PlatformType platformType){
+        return getUsersPlaceMapMessage(user, platformType, "");
+    }
+
+
+
     public void deletePlace(Place place, PlatformType platformType){
         if(platformType == PlatformType.TG){
             tgUserPlaceRepository.delete((TgUserPlace) place);

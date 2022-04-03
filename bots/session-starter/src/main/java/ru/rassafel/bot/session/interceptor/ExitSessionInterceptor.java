@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import ru.rassafel.bot.session.dto.SessionRequest;
 import ru.rassafel.bot.session.dto.SessionResponse;
 import ru.rassafel.bot.session.dto.To;
+import ru.rassafel.bot.session.model.BotButtons;
 import ru.rassafel.bot.session.service.FilePropertiesService;
 import ru.rassafel.bot.session.type.BotSession;
 import ru.rassafel.foodsharing.common.model.entity.geo.Place;
@@ -32,7 +33,7 @@ public class ExitSessionInterceptor implements SessionExecutorInterceptor {
             return SessionResponse.builder()
                     .message(filePropertiesService.getSessionMessage("back-to-main"))
                     .sendTo(new To(user.getId()))
-                    .buttons(ButtonsUtil.DEFAULT_BUTTONS)
+                    .buttons(new BotButtons(ButtonsUtil.DEFAULT_BUTTONS))
                     .build();
         }
         return next.execute(request, user);

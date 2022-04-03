@@ -7,6 +7,7 @@ import ru.rassafel.bot.session.dto.SessionRequest;
 import ru.rassafel.bot.session.dto.SessionResponse;
 import ru.rassafel.bot.session.dto.To;
 import ru.rassafel.bot.session.exception.BotException;
+import ru.rassafel.bot.session.model.BotButtons;
 import ru.rassafel.bot.session.service.ProductService;
 import ru.rassafel.bot.session.type.BotSession;
 import ru.rassafel.bot.session.util.SessionUtil;
@@ -35,7 +36,7 @@ public class ProductSession implements BotSession {
         EmbeddedUserSession userSession = user.getUserSession();
         int step = userSession.getSessionStep();
 
-        List<String> responseButtons = new ArrayList<>();
+        BotButtons responseButtons = new BotButtons();
         String responseMessage;
 
         if (step == 0) {
@@ -85,16 +86,14 @@ public class ProductSession implements BotSession {
             //Поиск подходящих продуктов
             List<String> similarProducts = productService.getSimilarProducts(message);
 
-//            List<Pair<ProductDto, Float>>
-
             if (similarProducts.isEmpty()) {
                 responseMessage = "Такого продукта не нашлось";
 
                 userSession.setSessionStep(1);
 
             } else {
-                responseMessage = "Возможно вы имели ввиду следующие продукты, выберите какой из них вы хотите добавить";
-                responseButtons.addAll(similarProducts);
+                responseMessage = "Возможно вы имели ввиду следующие продукты, выберите какой из них вы хотите добавить или попробуйте ввести еще";
+                responseButtons.addButton(new BotButtons.BotButton("Попробовать еще")).addAll(similarProducts);
 
                 userSession.setSessionStep(3);
             }
@@ -130,7 +129,9 @@ public class ProductSession implements BotSession {
                 userSession.setSessionStep(1);
                 responseButtons.addAll(PRODUCT_MAIN_BUTTONS);
             }else {
-                responseMessage = "Продукты удалены, введите еще";
+                responseMessage = "Продукты удалены, введите еще\n\n" +
+                getUsersProductNamesMap(user).entrySet().stream().map(entry -> entry.getKey() + "." + entry.getValue())
+                    .collect(Collectors.joining("\n"));
             }
         } else {
             throw new IllegalArgumentException("Step not found!");
@@ -141,7 +142,7 @@ public class ProductSession implements BotSession {
             .sendTo(To.builder()
                 .id(user.getId())
                 .build())
-            .buttons(addBackToMainButton(responseButtons))
+            .buttons(responseButtons)
             .message(responseMessage)
             .build();
     }

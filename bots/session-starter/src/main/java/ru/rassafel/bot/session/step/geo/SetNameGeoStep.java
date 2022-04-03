@@ -3,54 +3,55 @@ package ru.rassafel.bot.session.step.geo;
 import com.github.benmanes.caffeine.cache.Cache;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.rassafel.bot.session.dto.LocationDto;
 import ru.rassafel.bot.session.dto.SessionRequest;
 import ru.rassafel.bot.session.dto.SessionResponse;
+import ru.rassafel.bot.session.exception.BotException;
+import ru.rassafel.bot.session.model.BotButtons;
 import ru.rassafel.bot.session.step.Step;
-import ru.rassafel.foodsharing.common.model.PlatformType;
-import ru.rassafel.foodsharing.common.model.entity.geo.*;
+import ru.rassafel.foodsharing.common.model.entity.geo.Place;
 import ru.rassafel.foodsharing.common.model.entity.user.User;
 import ru.rassafel.foodsharing.common.model.entity.user.EmbeddedUserSession;
-import ru.rassafel.bot.session.util.ButtonsUtil;
+import ru.rassafel.foodsharing.common.service.PlaceService;
 
-@Component("geo-2")
+import java.util.Collection;
+
+import static ru.rassafel.bot.session.util.ButtonsUtil.DEFAULT_BUTTONS;
+
+@Component("geo-3")
 @RequiredArgsConstructor
 public class SetNameGeoStep implements Step {
 
     private final Cache<Long, Place> geoPointCache;
+    private final PlaceService placeService;
 
     @Override
     public Integer getStepNumber() {
-        return 2;
+        return 3;
     }
 
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
         EmbeddedUserSession userSession = user.getUserSession();
-        if (sessionRequest.getLocation() == null || sessionRequest.getLocation().getLatitude() == 0 || sessionRequest.getLocation().getLongitude() == 0) {
-            sessionResponse.setMessage("Мне необходима геолокация!");
-        } else {
-            LocationDto location = sessionRequest.getLocation();
+        String message = sessionRequest.getMessage();
+        Place place = geoPointCache.getIfPresent(user.getId());
 
-            Place place;
-            if(sessionRequest.getType() == PlatformType.TG){
-                place = new TgUserPlace()
-                    .withUser(user)
-                    .withGeo(new GeoPointEmbeddable(location.getLatitude(), location.getLongitude()));
-            }else if(sessionRequest.getType() == PlatformType.VK){
-                place = new VkUserPlace()
-                    .withUser(user)
-                    .withGeo(new GeoPointEmbeddable(location.getLatitude(), location.getLongitude()));
-            }else
-                throw new RuntimeException();
-
-            geoPointCache.put(user.getId(), place);
-
-            sessionResponse.setMessage("Теперь дайте название этому месту");
-
-            userSession.setSessionStep(3);
+        if (place == null) {
+            userSession.setSessionActive(false);
+            sessionResponse.setButtons(new BotButtons(DEFAULT_BUTTONS));
+            sessionResponse.setMessage("Время данной операции истекло");
+            return;
         }
 
-        sessionResponse.setButtons(ButtonsUtil.BACK_TO_MAIN);
+        Collection<Place> usersPlaces = placeService.findByUserId(user.getId(), sessionRequest.getType());
+
+        if(usersPlaces.stream().anyMatch(p -> p.getName().equalsIgnoreCase(message))){
+            throw new BotException(user.getId(), "Введите другое название, место " + message + " у вас уже есть");
+        }
+
+        place.setName(message);
+
+        sessionResponse.setMessage("Отлично, а теперь укажите радиус поиска вокруг этого места, по умолчанию радиус будет указан в 1 км");
+        sessionResponse.setButtons(new BotButtons().addButton(new BotButtons.BotButton("Оставить как есть")));
+        userSession.setSessionStep(4);
     }
 }

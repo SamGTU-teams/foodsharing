@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.rassafel.bot.session.model.BotButtons;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
 public class SessionResponse {
 
     private String message;
-    private List<String> buttons;
+    private BotButtons buttons;
     private To sendTo;
 
 }

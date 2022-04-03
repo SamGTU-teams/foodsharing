@@ -24,11 +24,4 @@ public class VkBotEndpoint {
         return ResponseEntity.ok(vkBotHandlerService.handleUpdate(update));
     }
 
-//    @PostMapping
-//    public ResponseEntity<String> handle(@RequestBody String update) {
-//        log.debug("Got request from VK : {}", update);
-////        return ResponseEntity.ok(vkBotHandlerService.handleUpdate(update));
-//        return ResponseEntity.ok("2622bee3");
-//    }
-
 }
