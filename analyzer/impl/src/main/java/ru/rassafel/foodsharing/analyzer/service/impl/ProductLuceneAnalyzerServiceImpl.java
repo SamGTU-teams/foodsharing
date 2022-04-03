@@ -38,6 +38,7 @@ public class ProductLuceneAnalyzerServiceImpl implements ProductLuceneAnalyzerSe
         LuceneIndexedString[] indexedStrings = Arrays.stream(strings)
             .map(luceneRepository::add)
             .toArray(LuceneIndexedString[]::new);
+//        ToDo: Add remove hook
         return parseProducts(indexedStrings);
     }
 
