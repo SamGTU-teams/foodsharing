@@ -6,8 +6,6 @@ import ru.rassafel.foodsharing.common.model.entity.user.User;
 
 public interface Step {
 
-    Integer getStepNumber();
-
     void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user);
 
 }

@@ -28,11 +28,6 @@ public class DeleteGeoStep implements Step {
     private final PlaceService placeService;
 
     @Override
-    public Integer getStepNumber() {
-        return 5;
-    }
-
-    @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
         String message = sessionRequest.getMessage();
         EmbeddedUserSession userSession = user.getUserSession();

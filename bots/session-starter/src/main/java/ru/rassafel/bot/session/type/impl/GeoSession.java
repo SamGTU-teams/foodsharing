@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import ru.rassafel.bot.session.dto.SessionRequest;
 import ru.rassafel.bot.session.dto.SessionResponse;
 import ru.rassafel.bot.session.dto.To;
-import ru.rassafel.bot.session.step.geo.GeoSteps;
+import ru.rassafel.bot.session.step.StepFinder;
 import ru.rassafel.bot.session.type.BotSession;
 import ru.rassafel.foodsharing.common.model.entity.user.User;
 import ru.rassafel.foodsharing.common.model.entity.user.EmbeddedUserSession;
@@ -14,7 +14,7 @@ import ru.rassafel.foodsharing.common.model.entity.user.EmbeddedUserSession;
 @RequiredArgsConstructor
 public class GeoSession implements BotSession {
 
-    private final GeoSteps geoSteps;
+    private final StepFinder stepFinder;
 
     @Override
     public SessionResponse execute(SessionRequest request, User user) {
@@ -22,7 +22,7 @@ public class GeoSession implements BotSession {
         int step = userSession.getSessionStep();
         final SessionResponse response = new SessionResponse();
 
-        geoSteps.execute(step, request, response, user);
+        stepFinder.execute(step, request, response, user, "geo");
 
         return response.toBuilder()
                 .sendTo(To.builder()

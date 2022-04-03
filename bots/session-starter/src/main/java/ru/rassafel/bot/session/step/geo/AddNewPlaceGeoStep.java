@@ -20,11 +20,6 @@ public class AddNewPlaceGeoStep implements Step {
     private final Cache<Long, Place> geoPointCache;
 
     @Override
-    public Integer getStepNumber() {
-        return 2;
-    }
-
-    @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
         EmbeddedUserSession userSession = user.getUserSession();
         BotButtons responseButtons = new BotButtons();

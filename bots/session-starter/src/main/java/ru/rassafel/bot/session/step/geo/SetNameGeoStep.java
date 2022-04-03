@@ -25,11 +25,6 @@ public class SetNameGeoStep implements Step {
     private final PlaceService placeService;
 
     @Override
-    public Integer getStepNumber() {
-        return 3;
-    }
-
-    @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
         EmbeddedUserSession userSession = user.getUserSession();
         String message = sessionRequest.getMessage();

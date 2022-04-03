@@ -16,11 +16,6 @@ import java.util.List;
 public class StartGeoStep implements Step {
 
     @Override
-    public Integer getStepNumber() {
-        return 0;
-    }
-
-    @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
         EmbeddedUserSession userSession = user.getUserSession();
         sessionResponse.setMessage("Выберите: ");

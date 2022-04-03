@@ -29,11 +29,6 @@ public class FinishSaveGeoStep implements Step {
     private final PlaceService placeService;
 
     @Override
-    public Integer getStepNumber() {
-        return 4;
-    }
-
-    @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
         EmbeddedUserSession userSession = user.getUserSession();
         String message = sessionRequest.getMessage();

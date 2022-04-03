@@ -24,11 +24,6 @@ public class SetNewRadiusGeoStep implements Step {
     private final PlaceService placeService;
 
     @Override
-    public Integer getStepNumber() {
-        return 7;
-    }
-
-    @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
         String message = sessionRequest.getMessage();
         EmbeddedUserSession userSession = user.getUserSession();
