@@ -52,8 +52,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      VK_PARSER_TOKEN: $VK_PARSER_TOKEN
-      VK_PARSER_APP_ID: $VK_PARSER_APP_ID
+      SERVER_URL: $SERVER_URL
     depends_on:
       config:
         condition: service_healthy

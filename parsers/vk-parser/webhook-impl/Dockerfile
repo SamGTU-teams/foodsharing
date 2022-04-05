@@ -9,8 +9,7 @@ RUN apk --no-cache add curl
 
 ENV spring_profiles_active=docker \
     CONFIG_SERVER_URL=http://config:8888/ \
-    VK_PARSER_TOKEN=TOKEN \
-    VK_PARSER_APP_ID=12345 \
+    SERVER_URL=localhost \
     SERVER_PORT=8000
 
 EXPOSE ${SERVER_PORT}
