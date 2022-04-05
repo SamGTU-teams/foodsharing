@@ -10,8 +10,7 @@ RUN apk --no-cache add curl
 ENV spring_profiles_active=docker \
     CONFIG_SERVER_URL=http://config:8888/ \
     SERVER_PORT=8000 \
-    SERVER_URL=localhost
-    CALLBACK_URL=${SERVER_URL}:${SERVER_PORT}/callback
+    CALLBACK_URL=localhost/callback
 
 EXPOSE ${SERVER_PORT}
 
