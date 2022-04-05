@@ -3,5 +3,5 @@ spring:
     exchangeName: post-raw-exchange
 
 application:
-  url: ${SERVER_URL}
+  callbackUrl: ${CALLBACK_URL}
   serverTitle: GetFood_Parser
