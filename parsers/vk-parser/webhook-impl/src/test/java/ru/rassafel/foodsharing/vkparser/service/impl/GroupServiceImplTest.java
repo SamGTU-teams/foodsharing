@@ -63,7 +63,7 @@ class GroupServiceImplTest {
     class WithAccessCases {
         @BeforeEach
         void setUp() {
-            when(properties.getUrl()).thenReturn("TestUrl");
+            when(properties.getCallbackUrl()).thenReturn("TestUrl");
             when(properties.getServerTitle()).thenReturn("Test title");
 
             when(client.getVersion()).thenReturn("5.131");
