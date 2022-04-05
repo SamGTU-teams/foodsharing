@@ -6,6 +6,9 @@ services:
   postgres:
     image: postgis/postgis:10-3.2-alpine
 
+  nginx:
+    image: nginx:stable-alpine
+
   config:
     build:
       context: ./config-service
