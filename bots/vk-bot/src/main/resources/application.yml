@@ -4,7 +4,7 @@ session-starter:
 
 vk:
   server:
-    confirm_code: 88d7c1ae
+    confirm_code: ${VK_CONFIRM_CODE}
   bot:
     groupId: ${VK_BOT_GROUP_ID}
     accessToken: ${VK_BOT_ACCESS_TOKEN}
@@ -12,7 +12,7 @@ vk:
 spring:
   h2:
     console:
-      enabled: true
+      enabled: false
       path: /h2
   datasource:
     driverClassName: org.h2.Driver
@@ -22,10 +22,3 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-  liquibase:
-    enabled: false
-    change-log: classpath:init_foodsharing_db.sql

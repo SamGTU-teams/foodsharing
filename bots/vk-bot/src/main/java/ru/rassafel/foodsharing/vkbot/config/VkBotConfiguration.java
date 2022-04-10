@@ -7,10 +7,12 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @Setter
 @ConfigurationProperties(prefix = "vk.bot")
 @Configuration
+@EnableScheduling
 public class VkBotConfiguration {
 
     private int groupId;

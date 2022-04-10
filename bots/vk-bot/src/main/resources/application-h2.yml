@@ -1,15 +1,6 @@
 
 session-starter:
   enabled: true
-
-vk:
-  server:
-    confirm_code: 88d7c1ae
-  bot:
-    groupId: ${VK_BOT_GROUP_ID:1123}
-    accessToken: ${VK_BOT_ACCESS_TOKEN:fvnf}
-
-
 spring:
   h2:
     console:
@@ -17,16 +8,17 @@ spring:
       path: /h2
   datasource:
     driverClassName: org.h2.Driver
-    url: jdbc:h2:mem:demoh2gis;INIT=CREATE ALIAS IF NOT EXISTS H2GIS_SPATIAL FOR "org.h2gis.functions.factory.H2GISFunctions.load"\;CALL H2GIS_SPATIAL()
+    url: jdbc:h2:mem:/testdb;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE
     username: sa
     password:
   jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
     show-sql: true
     properties:
       hibernate:
         format_sql: true
   liquibase:
-    enabled: false
+    enabled: true
     change-log: classpath:init_foodsharing_db.sql

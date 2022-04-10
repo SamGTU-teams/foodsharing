@@ -41,10 +41,11 @@ public class PlaceService {
     public Map<Integer, String> getUsersPlacesNamesMap(User user, PlatformType platformType){
         int[] productCounter = {1};
         Collection<Place> usersPlaces = findByUserId(user.getId(), platformType);
-        return usersPlaces.stream().map(Place::getName).collect(Collectors.toMap(
+        Map<Integer, String> collect = usersPlaces.stream().map(Place::getName).collect(Collectors.toMap(
             o -> productCounter[0]++,
             o -> o
         ));
+        return collect;
     }
 
     public String getUsersPlaceMapMessage(User user, PlatformType platformType, String additionalMessage){

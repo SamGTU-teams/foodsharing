@@ -22,7 +22,7 @@ public class WelcomeSession implements BotSession {
         return SessionResponse
             .builder()
             .buttons(new BotButtons(ButtonsUtil.DEFAULT_BUTTONS))
-            .message("hello")
+            .message(propertiesService.getSessionMessage("welcome"))
             .sendTo(To.builder()
                 .id(user.getId())
                 .build())

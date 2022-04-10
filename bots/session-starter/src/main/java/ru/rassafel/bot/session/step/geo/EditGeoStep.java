@@ -31,7 +31,7 @@ public class EditGeoStep implements Step {
         Collection<Place> usersPoints = placeService.findByUserId(user.getId(), sessionRequest.getType());
         Place point;
         if(message.matches("\\d+")){
-            String placeNameToEdit = placeService.getUsersPlacesNamesMap(user, PlatformType.VK).get(Integer.parseInt(message));
+            String placeNameToEdit = placeService.getUsersPlacesNamesMap(user, sessionRequest.getType()).get(Integer.parseInt(message));
             point = usersPoints.stream().filter(p -> p.getName().equalsIgnoreCase(placeNameToEdit)).findFirst().orElseThrow(() ->
                 new RuntimeException("Uncaught exception, place name not found in user places!"));
         }else {

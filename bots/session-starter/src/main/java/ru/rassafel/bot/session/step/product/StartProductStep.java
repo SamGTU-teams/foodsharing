@@ -18,7 +18,7 @@ public class StartProductStep implements Step {
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
 
         EmbeddedUserSession userSession = user.getUserSession();
-        sessionResponse.setMessage("Выберите: ");
+        sessionResponse.setMessage("Выберите:");
         BotButtons responseButtons = new BotButtons();
         sessionResponse.setButtons(responseButtons.addAll(PRODUCT_MAIN_BUTTONS));
         userSession.setSessionStep(1);
