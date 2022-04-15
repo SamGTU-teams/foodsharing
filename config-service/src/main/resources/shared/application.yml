@@ -15,8 +15,4 @@ spring:
     hibernate.ddl-auto: validate
 
 server:
-  tomcat:
-    port-header: X-Forwarded-Port
-    remote-ip-header: X-Forwarded-For
-    protocol-header: X-Forwarded-Proto
-    remoteip: X-Real-IP
+  use-forward-headers: true
