@@ -1,12 +1,12 @@
 spring:
   rabbitmq:
-    host: 80.78.247.178
+    host: localhost
     port: 5672
     username: guest
     password: guest
 
   datasource:
-    url: jdbc:postgresql://80.78.247.178:5432/foodsharing
+    url: jdbc:postgresql://localhost:5432/foodsharing
     driverClassName: org.postgresql.Driver
     username: postgres
     password: postgres
