@@ -8,6 +8,8 @@ import ru.rassafel.foodsharing.common.model.PlatformType;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class SessionRequest {
 
     private String message;

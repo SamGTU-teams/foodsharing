@@ -5,11 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 public class BotException extends RuntimeException {
 
     private Long sendTo;
-    private String message;
 
+    public BotException(Long sendTo, String message) {
+        super(message);
+        this.sendTo = sendTo;
+    }
 }

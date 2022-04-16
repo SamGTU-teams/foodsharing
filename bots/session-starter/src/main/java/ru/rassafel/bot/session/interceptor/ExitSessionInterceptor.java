@@ -21,7 +21,7 @@ public class ExitSessionInterceptor implements SessionExecutorInterceptor {
     private final FilePropertiesService filePropertiesService;
     private final Cache<Long, Place> geoPointCache;
 
-    public SessionResponse handle(SessionRequest request, User user, BotSession next) {
+    public SessionResponse  handle(SessionRequest request, User user, BotSession next) {
         final String userMsg = request.getMessage();
 
         if (userMsg.equals(filePropertiesService.getButtonName("back-to-main")) && user.getUserSession() != null) {
