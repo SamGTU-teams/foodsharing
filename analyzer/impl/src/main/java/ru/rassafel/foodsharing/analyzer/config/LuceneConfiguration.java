@@ -11,9 +11,12 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.SearcherManager;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.store.RAMDirectory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,12 +39,19 @@ public class LuceneConfiguration {
     }
 
     @Bean
+    @Profile("docker")
     Directory luceneDirectory() throws IOException {
         Path path = Paths.get(luceneProperties.getPath());
         File file = path.toFile();
         file.mkdirs();
         FSDirectory dir = FSDirectory.open(path);
         return dir;
+    }
+
+    @Bean
+    @Profile("!docker")
+    Directory luceneInMemoryDirectory() {
+        return new RAMDirectory();
     }
 
     @Bean
