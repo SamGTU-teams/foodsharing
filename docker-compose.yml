@@ -15,7 +15,7 @@ services:
       interval: 30s
       timeout: 5s
       retries: 5
-      start_period: 30s
+      start_period: 10s
 
   postgres:
     image: postgis/postgis:10-3.2
@@ -33,7 +33,7 @@ services:
       interval: 30s
       timeout: 5s
       retries: 5
-      start_period: 30s
+      start_period: 10s
 
   nginx:
     image: nginx:stable

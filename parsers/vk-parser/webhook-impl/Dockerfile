@@ -19,5 +19,5 @@ CMD ["java", "-Xmx200m", "-jar", "app.jar"]
 HEALTHCHECK --interval=30s \
             --timeout=5s \
             --retries=5 \
-            --start-period=30s \
+            --start-period=10s \
             CMD curl -f http://localhost:${SERVER_PORT}/actuator/health || exit 1
