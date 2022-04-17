@@ -65,10 +65,14 @@ class ProductLuceneAnalyzerServiceImplTest {
         product2.setId(2L);
         product2.setName("orange");
 
-        when(productRepository.findAll())
-            .thenReturn(Streamable.of(product1, product2));
+        Product product3 = new Product();
+        product3.setId(3L);
+        product3.setName("peach");
 
-        List<Pair<Product, Float>> actual = service.parseProducts("Test post contains products like: banana, orenge")
+        when(productRepository.findAll())
+            .thenReturn(Streamable.of(product1, product2, product3));
+
+        List<Pair<Product, Float>> actual = service.parseProducts("Test post contains products like: banana, orenge, peach")
             .toList();
 
         System.out.println(actual);
@@ -77,6 +81,7 @@ class ProductLuceneAnalyzerServiceImplTest {
             .map(Pair::getFirst)
             .collect(Collectors.toList()))
             .contains(product2)
+            .contains(product3)
             .doesNotContain(product1);
     }
 }
