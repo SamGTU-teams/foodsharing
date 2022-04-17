@@ -10,3 +10,9 @@ spring:
 server:
   port: ${SERVER_PORT:8010}
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
