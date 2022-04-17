@@ -3,3 +3,8 @@ spring:
     host: rabbitmq
   datasource:
     url: jdbc:postgresql://postgres:5432/foodsharing
+feign:
+  analyzer:
+    url: http://analyzer:8010/
+  ibot:
+    url: http://ibot:8020/
