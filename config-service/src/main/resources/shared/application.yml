@@ -1,12 +1,12 @@
 spring:
   rabbitmq:
-    host: localhost
+    host: ${RABBITMQ_HOST:localhost}
     port: 5672
     username: guest
     password: guest
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/foodsharing
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:5432/foodsharing
     driverClassName: org.postgresql.Driver
     username: postgres
     password: postgres
