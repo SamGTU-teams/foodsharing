@@ -8,6 +8,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 import ru.rassafel.foodsharing.analyzer.exception.GeoPointParseException;
+import ru.rassafel.foodsharing.analyzer.exception.ParseException;
 import ru.rassafel.foodsharing.analyzer.exception.ProductParseException;
 import ru.rassafel.foodsharing.analyzer.model.LuceneIndexedString;
 import ru.rassafel.foodsharing.analyzer.model.dto.FoodPost;
@@ -54,8 +55,8 @@ public class PostRabbitListener {
     public void handle(RawPost rawPost) {
         Set<ConstraintViolation<RawPost>> violations = validator.validate(rawPost);
         if (!violations.isEmpty()) {
-            log.debug("Validation exception: {}", violations);
-            throw new ConstraintViolationException(violations);
+            log.debug("Validation exception", new ConstraintViolationException(violations));
+            return;
         }
 
         FoodPost result = new FoodPost();
@@ -85,6 +86,8 @@ public class PostRabbitListener {
             result.setDate(rawPost.getDate());
 
             template.convertAndSend(result);
+        } catch (ParseException ex) {
+//            ToDo: Add handler
         } finally {
             luceneRepository.unregister(postText);
         }
