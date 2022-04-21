@@ -11,6 +11,7 @@ import ru.rassafel.foodsharing.vkparser.model.vk.Wallpost;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -37,15 +38,17 @@ public abstract class RawPostMapper {
         String wallpostUrl = String.format(WALLPOST_PATTERN, absOwnerId, source.getId());
         target.setUrl(wallpostUrl);
 
-        List<String> attachments = source
-            .getAttachments()
-            .stream()
-            .filter(attachment -> WallpostAttachmentType.PHOTO.equals(attachment.getType()))
-            .map(WallpostAttachment::getPhoto)
-            .map(Photo::getId)
-            .map(id -> String.format(PHOTO_PATTERN, absOwnerId, id))
-            .collect(Collectors.toList());
-        target.getContext().setAttachments(attachments);
+        List<WallpostAttachment> wallpostAttachments = source.getAttachments();
+        if (Objects.nonNull(wallpostAttachments) && !wallpostAttachments.isEmpty()) {
+            List<String> attachments = wallpostAttachments
+                .stream()
+                .filter(attachment -> WallpostAttachmentType.PHOTO.equals(attachment.getType()))
+                .map(WallpostAttachment::getPhoto)
+                .map(Photo::getId)
+                .map(id -> String.format(PHOTO_PATTERN, absOwnerId, id))
+                .collect(Collectors.toList());
+            target.getContext().setAttachments(attachments);
+        }
 
         LocalDateTime date = LocalDateTime.ofEpochSecond(source.getDate().longValue(),
             0, ZoneOffset.UTC);
