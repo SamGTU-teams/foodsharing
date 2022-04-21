@@ -13,6 +13,7 @@ import ru.rassafel.foodsharing.common.model.mapper.ProductMapper;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * @author rassafel
@@ -27,11 +28,11 @@ public class ProductAnalyzerControllerImpl implements ProductAnalyzerController 
 
     @Override
     public List<ScoreProductDto> parseProducts(String text, Long count) {
-        return service.parseProducts(text)
-            .stream()
+        return StreamSupport
+            .stream(service.parseProducts(text).spliterator(), false)
             .sorted(comparator.reversed())
             .limit(count)
             .map(p -> new ScoreProductDto(mapper.entityToDto(p.getFirst()), p.getSecond()))
-            .collect(Collectors.toUnmodifiableList());
+            .collect(Collectors.toList());
     }
 }

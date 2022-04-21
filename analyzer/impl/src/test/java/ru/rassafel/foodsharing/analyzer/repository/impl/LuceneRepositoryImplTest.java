@@ -58,16 +58,16 @@ class LuceneRepositoryImplTest {
     }
 
     @Test
-    void create() throws IOException {
+    void create() {
         String body = "Test value for create object.";
         LuceneIndexedString object = createFirstObject(body);
     }
 
     @Test
-    void delete() throws IOException {
+    void delete() {
         String body = "Test value for create object.";
         LuceneIndexedString object = createFirstObject(body);
-        repository.delete(object);
+        repository.unregister(object);
         assertThat(repository.findAll(100))
             .isEmpty();
     }

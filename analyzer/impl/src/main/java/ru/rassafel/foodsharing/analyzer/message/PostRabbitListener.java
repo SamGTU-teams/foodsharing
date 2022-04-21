@@ -25,6 +25,8 @@ import javax.validation.Validator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * @author rassafel
@@ -59,10 +61,11 @@ public class PostRabbitListener {
         FoodPost result = new FoodPost();
         LuceneIndexedString postText = luceneRepository.add(rawPost.getText());
         try {
-            List<ProductDto> products = productsAnalyzer.parseProducts(rawPost, postText)
+            List<ProductDto> products = StreamSupport
+                .stream(productsAnalyzer.parseProducts(rawPost, postText).spliterator(), false)
                 .map(Pair::getFirst)
                 .map(mapper::entityToDto)
-                .toList();
+                .collect(Collectors.toList());
             if (products.isEmpty()) {
                 log.debug("Post does not contains products: {}", rawPost);
                 throw new ProductParseException("Post does not contains products");
@@ -83,7 +86,7 @@ public class PostRabbitListener {
 
             template.convertAndSend(result);
         } finally {
-            luceneRepository.delete(postText);
+            luceneRepository.unregister(postText);
         }
     }
 }

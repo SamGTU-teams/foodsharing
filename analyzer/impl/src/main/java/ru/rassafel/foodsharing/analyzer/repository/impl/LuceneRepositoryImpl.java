@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import static lombok.Lombok.sneakyThrow;
 
@@ -32,17 +33,10 @@ public class LuceneRepositoryImpl implements LuceneRepository {
     private final SearcherManager searcherManager;
     private final IndexWriter writer;
 
-    @Override
-    public LuceneIndexedString add(String text) {
-        String hash = DigestUtils.md5Hex(text).toUpperCase();
-        LuceneIndexedString object = new LuceneIndexedString(hash, text);
-        add(object);
-        return object;
-    }
-
-    public void add(LuceneIndexedString... objects) {
-        List<Document> docs = Arrays.stream(objects).map(this::map)
-            .collect(Collectors.toUnmodifiableList());
+    public void registerAll(Iterable<LuceneIndexedString> objects) {
+        List<Document> docs = StreamSupport.stream(objects.spliterator(), false)
+            .map(this::map)
+            .collect(Collectors.toList());
         try {
             writer.addDocuments(docs);
         } catch (IOException e) {
@@ -52,10 +46,21 @@ public class LuceneRepositoryImpl implements LuceneRepository {
     }
 
     @Override
-    public void delete(String id) {
-        Term term = new Term(FIELD_ID, id);
+    public List<LuceneIndexedString> addAll(Iterable<String> strings) {
+        List<LuceneIndexedString> indexedStrings = StreamSupport.stream(strings.spliterator(), false)
+            .map(this::createNotRegisteredString)
+            .collect(Collectors.toList());
+        registerAll(indexedStrings);
+        return indexedStrings;
+    }
+
+    @Override
+    public void deleteAll(Iterable<String> ids) {
+        Term[] terms = StreamSupport.stream(ids.spliterator(), false)
+            .map(id -> new Term(FIELD_ID, id))
+            .toArray(Term[]::new);
         try {
-            writer.deleteDocuments(term);
+            writer.deleteDocuments(terms);
         } catch (IOException e) {
             log.error("Lucene index writer IO exception.", e);
             throw new RuntimeException(e);
@@ -82,6 +87,15 @@ public class LuceneRepositoryImpl implements LuceneRepository {
             .stream()
             .map(Pair::getFirst)
             .collect(Collectors.toList());
+    }
+
+    String hashString(String string) {
+        return DigestUtils.md5Hex(string).toUpperCase();
+    }
+
+    LuceneIndexedString createNotRegisteredString(String string) {
+        String hash = hashString(string);
+        return new LuceneIndexedString(hash, string);
     }
 
     List<Pair<LuceneIndexedString, Float>> map(IndexSearcher searcher, TopDocs topDocs) throws IOException {

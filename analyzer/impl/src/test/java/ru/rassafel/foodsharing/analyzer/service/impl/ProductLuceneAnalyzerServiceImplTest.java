@@ -54,8 +54,9 @@ class ProductLuceneAnalyzerServiceImplTest {
 
     @Test
     void parseProducts() {
-        luceneRepository.add(new LuceneIndexedString("sync1", "Test string with orange"));
-        luceneRepository.add(new LuceneIndexedString("sync2", "Test string with apple"));
+        luceneRepository.registerAll(List.of(
+            new LuceneIndexedString("sync1", "Test string with orange"),
+            new LuceneIndexedString("sync2", "Test string with apple")));
 
         Product product1 = new Product();
         product1.setId(1L);
@@ -72,8 +73,7 @@ class ProductLuceneAnalyzerServiceImplTest {
         when(productRepository.findAll())
             .thenReturn(Streamable.of(product1, product2, product3));
 
-        List<Pair<Product, Float>> actual = service.parseProducts("Test post contains products like: banana, orenge, peach")
-            .toList();
+        List<Pair<Product, Float>> actual = service.parseProducts("Test post contains products like: banana, orenge, peach");
 
         System.out.println(actual);
 

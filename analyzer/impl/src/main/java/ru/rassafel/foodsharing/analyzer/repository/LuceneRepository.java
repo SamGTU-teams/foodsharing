@@ -6,6 +6,9 @@ import org.springframework.data.util.Pair;
 import ru.rassafel.foodsharing.analyzer.model.LuceneIndexedString;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 
 /**
  * @author rassafel
@@ -15,15 +18,36 @@ public interface LuceneRepository {
     String FIELD_ID = "id";
     String FIELD_BODY = "body";
 
-    LuceneIndexedString add(String body);
+    Iterable<LuceneIndexedString> addAll(Iterable<String> strings);
 
-    void delete(String id);
+    default LuceneIndexedString add(String string) {
+        return addAll(List.of(string)).iterator().next();
+    }
 
-    default void delete(LuceneIndexedString object) {
+    void registerAll(Iterable<LuceneIndexedString> strings);
+
+    default void register(LuceneIndexedString string) {
+        registerAll(List.of(string));
+    }
+
+    void deleteAll(Iterable<String> ids);
+
+    default void delete(String id) {
+        deleteAll(List.of(id));
+    }
+
+    default void unregisterAll(Iterable<LuceneIndexedString> objects) {
+        List<String> ids = StreamSupport.stream(objects.spliterator(), false)
+            .map(LuceneIndexedString::getId)
+            .collect(Collectors.toList());
+        deleteAll(ids);
+    }
+
+    default void unregister(LuceneIndexedString object) {
         delete(object.getId());
     }
 
-    List<Pair<LuceneIndexedString, Float>> search(Query query, int count);
+    Iterable<Pair<LuceneIndexedString, Float>> search(Query query, int count);
 
-    List<LuceneIndexedString> findAll(int count);
+    Iterable<LuceneIndexedString> findAll(int count);
 }
