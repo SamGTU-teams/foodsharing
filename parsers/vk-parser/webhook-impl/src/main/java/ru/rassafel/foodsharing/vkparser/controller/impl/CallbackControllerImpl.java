@@ -29,9 +29,9 @@ public class CallbackControllerImpl implements CallbackController {
             try {
                 service.wallpostNew(message.getGroupId(), message.getWallpost(), message.getSecret());
             } catch (Exception ex) {
+                log.error("Catch exception", ex);
                 return ResponseEntity.badRequest().body(ex.getMessage());
             }
-            return ResponseEntity.ok("ok");
         }
         return ResponseEntity.ok("ok");
     }

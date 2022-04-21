@@ -1,4 +1,9 @@
 #!/bin/sh
+set -eu
+
+echo 'Start load environment variables'
 
 export $(cat .env.example | xargs)
 export $(cat .env | xargs)
+
+echo 'Finish load environment variables'

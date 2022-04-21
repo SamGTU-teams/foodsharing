@@ -1,1 +1,10 @@
+spring:
+  rabbitmq:
+    exchangeName: post-ready-exchange
+    queueName: post.ready.vk
+
+vk:
+  bot:
+    groupId: 1
+    accessToken: TOKEN
 

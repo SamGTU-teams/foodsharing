@@ -8,8 +8,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.*;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import ru.rassafel.foodsharing.common.model.mapper.RegionMapper;
-import ru.rassafel.foodsharing.parser.model.dto.PostContext;
-import ru.rassafel.foodsharing.parser.model.dto.RawPostDto;
+import ru.rassafel.foodsharing.parser.model.PostContext;
+import ru.rassafel.foodsharing.parser.model.RawPost;
 import ru.rassafel.foodsharing.vkparser.model.entity.VkGroup;
 import ru.rassafel.foodsharing.vkparser.model.mapper.RawPostMapper;
 import ru.rassafel.foodsharing.vkparser.model.vk.Wallpost;
@@ -63,7 +63,7 @@ class CallbackServiceImplTest {
             sourceWallpost.setId(2);
             sourceWallpost.setOwnerId(1);
 
-            RawPostDto expected = new RawPostDto();
+            RawPost expected = new RawPost();
             expected.setText("Test text");
             expected.setDate(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC));
             expected.setUrl("https://vk.com/club1?w=wall-1_2");
@@ -72,11 +72,11 @@ class CallbackServiceImplTest {
             when(repository.findById(any()))
                 .thenReturn(Optional.of(fromDb));
 
-            RawPostDto actual = service.wallpostNew(1, sourceWallpost, acceptedSecret);
+            RawPost actual = service.wallpostNew(1, sourceWallpost, acceptedSecret);
 
-            ArgumentCaptor<RawPostDto> wallpostCapture = ArgumentCaptor.forClass(RawPostDto.class);
+            ArgumentCaptor<RawPost> wallpostCapture = ArgumentCaptor.forClass(RawPost.class);
             verify(template).convertAndSend(wallpostCapture.capture());
-            RawPostDto captured = wallpostCapture.getValue();
+            RawPost captured = wallpostCapture.getValue();
 
             assertThat(captured)
                 .isNotNull()

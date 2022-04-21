@@ -1,1 +1,10 @@
+spring:
+  rabbitmq:
+    exchangeName: post-ready-exchange
+    queueName: post.ready.tg
 
+tg:
+  bot:
+    webHookPath: localhost:${server.port:8080}/callback
+    username: GetFood
+    token: TOKEN

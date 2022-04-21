@@ -1,14 +1,12 @@
 package ru.rassafel.foodsharing.vkparser.config;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * @author rassafel
  */
-@Getter
-@Setter
+@Data
 @ConfigurationProperties(prefix = RabbitMqProperties.PREFIX)
 public class RabbitMqProperties {
     public static final String PREFIX = "spring.rabbitmq";

@@ -54,7 +54,7 @@ public class GroupServiceImpl implements GroupService {
         try {
             log.debug("Try to add callback server for group with id = {}.", groupId);
             serverId = api.groups()
-                .addCallbackServer(actor, groupId, properties.getUrl(), properties.getServerTitle())
+                .addCallbackServer(actor, groupId, properties.getCallbackUrl(), properties.getServerTitle())
                 .secretKey(group.getSecretKey())
                 .execute()
                 .getServerId();

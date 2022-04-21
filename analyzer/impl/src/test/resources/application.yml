@@ -1,0 +1,7 @@
+spring:
+  rabbitmq:
+    consumer:
+      exchange: post-raw-exchange
+      queue: post.raw.analyzer
+    producer:
+      exchange: post-ready-exchange

@@ -2,24 +2,22 @@ FROM adoptopenjdk/openjdk11:alpine-jre
 
 WORKDIR /app
 
-ENV SPR_PROFILE=docker \
-    CONFIG_SERVER_URL=http://config:8888/ \
-    VK_PARSER_TOKEN=TOKEN \
-    VK_PARSER_APP_ID=12345 \
-    SERVER_PORT=8000
-
 ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
 
 RUN apk --no-cache add curl
 
-COPY ${JAR_FILE} app.jar
+ENV spring_profiles_active=docker \
+    CONFIG_SERVER_URL=http://config:8888/ \
+    SERVER_PORT=8000 \
+    CALLBACK_URL=localhost/callback
+
+EXPOSE ${SERVER_PORT}
 
 CMD ["java", "-Xmx200m", "-jar", "app.jar"]
 
 HEALTHCHECK --interval=30s \
             --timeout=5s \
             --retries=5 \
-            --start-period=30s \
+            --start-period=10s \
             CMD curl -f http://localhost:${SERVER_PORT}/actuator/health || exit 1
-
-EXPOSE ${SERVER_PORT}

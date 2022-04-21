@@ -1,42 +1,61 @@
-version: "3.4"
+version: "2.4"
 services:
   rabbitmq:
-    image: rabbitmq:3-alpine
+    image: rabbitmq:3-management-alpine
+    ports:
+      - "5672:5672"
 
   postgres:
     image: postgis/postgis:10-3.2-alpine
+    ports:
+      - "5432:5432"
+
+  nginx:
+    image: nginx:stable-alpine
 
   config:
     build:
       context: ./config-service
       dockerfile: Dockerfile
+    ports:
+      - "8888:8888"
 
   parser:
     build:
       context: ./parsers/vk-parser/webhook-impl
       dockerfile: Dockerfile
     restart: "no"
+    ports:
+      - "8000:8000"
 
   analyzer:
     build:
       context: ./analyzer/impl
       dockerfile: Dockerfile
     restart: "no"
+    ports:
+      - "8010:8010"
 
   ibot:
     build:
       context: ./bots/ibot/impl
       dockerfile: Dockerfile
     restart: "no"
+    ports:
+      - "8020:8020"
 
   tg-bot:
     build:
       context: ./bots/tg-bot
       dockerfile: Dockerfile
     restart: "no"
+    ports:
+      - "8030:8030"
 
   vk-bot:
     build:
       context: ./bots/vk-bot
       dockerfile: Dockerfile
     restart: "no"
+    ports:
+      - "8040:8040"

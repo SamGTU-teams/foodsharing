@@ -2,4 +2,7 @@ embedded:
   postgresql:
     enabled: true
     dockerImage: postgis/postgis:10-3.2-alpine
-    initScriptPath: initScript.sql
+    initScriptPath: initdb/init_foodsharing_db.sql
+  rabbitmq:
+    enabled: true
+    docker-image: rabbitmq:3-management-alpine

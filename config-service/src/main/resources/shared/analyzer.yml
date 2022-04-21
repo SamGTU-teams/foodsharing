@@ -1,21 +1,8 @@
 spring:
-  application:
-    name: analyzer
   rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
     consumer:
       exchange: post-raw-exchange
       queue: post.raw.analyzer
     producer:
       exchange: post-ready-exchange
-
-  datasource:
-    host: localhost
-    port: 5432
-    name: foodsharing
-    username: postgres
-    password: postgres
 

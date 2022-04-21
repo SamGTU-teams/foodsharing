@@ -7,7 +7,7 @@ spring:
       fail-fast: true
       enabled: true
   profiles:
-    active: ${SPR_PROFILE:default}
+    active: ${spring_profiles_active:default}
 
 server:
   port: ${SERVER_PORT:8030}
@@ -16,4 +16,4 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,refresh
+        include: health,info
