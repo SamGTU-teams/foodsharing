@@ -18,14 +18,14 @@ public class RabbitMqProperties {
 
     @Getter
     @Setter
-    public class Consumer {
+    public static class Consumer {
         private String exchange = "post-raw-default-exchange";
         private String queue = "post.raw.analyzer.default";
     }
 
     @Getter
     @Setter
-    public class Producer {
+    public static class Producer {
         private String exchange = "post-ready-default-exchange";
     }
 }
