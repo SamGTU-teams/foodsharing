@@ -1,5 +1,6 @@
 package ru.rassafel.foodsharing.parser.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -16,6 +17,7 @@ public class RawPost {
     private String url;
 
     @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime date;
 
     @NotBlank
