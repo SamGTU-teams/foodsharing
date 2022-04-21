@@ -97,6 +97,12 @@
             </dependency>
 
             <dependency>
+                <groupId>com.playtika.testcontainers</groupId>
+                <artifactId>embedded-rabbitmq</artifactId>
+                <version>${testcontainers.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.apache.lucene</groupId>
                 <artifactId>lucene-analyzers-common</artifactId>
                 <version>${lucene.version}</version>
@@ -182,6 +188,12 @@
         <dependency>
             <groupId>com.playtika.testcontainers</groupId>
             <artifactId>embedded-postgresql</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.playtika.testcontainers</groupId>
+            <artifactId>embedded-rabbitmq</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

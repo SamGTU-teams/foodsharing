@@ -7,3 +7,9 @@ spring:
   jpa:
     database-platform: org.hibernate.spatial.dialect.postgis.PostgisPG10Dialect
     hibernate.ddl-auto: validate
+  rabbitmq:
+    host: ${embedded.rabbitmq.host}
+    port: ${embedded.rabbitmq.port}
+    username: ${embedded.rabbitmq.user}
+    password: ${embedded.rabbitmq.password}
+
