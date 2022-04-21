@@ -1,1 +1,7 @@
+spring:
+  rabbitmq:
+    exchangeName: post-raw-exchange
 
+application:
+  callbackUrl: localhost:${server.port:8080}/callback
+  serverTitle: GetFood_Parser
