@@ -1,5 +1,6 @@
 package ru.rassafel.foodsharing.analyzer.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import ru.rassafel.foodsharing.common.model.GeoPoint;
 import ru.rassafel.foodsharing.common.model.dto.ProductDto;
@@ -19,6 +20,7 @@ public class FoodPost {
     private String url;
 
     @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime date;
 
     @NotBlank

@@ -1,5 +1,6 @@
 package ru.rassafel.foodsharing.analyzer.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -16,8 +17,8 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties(RabbitMqProperties.class)
 public class RabbitMqConfiguration {
     @Bean
-    MessageConverter jsonMessageConverter() {
-        return new Jackson2JsonMessageConverter();
+    MessageConverter jsonMessageConverter(ObjectMapper mapper) {
+        return new Jackson2JsonMessageConverter(mapper);
     }
 
     @Bean

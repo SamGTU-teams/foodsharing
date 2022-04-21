@@ -1,5 +1,6 @@
 package ru.rassafel.foodsharing.vkparser.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -25,8 +26,8 @@ public class RabbitMqConfiguration {
     }
 
     @Bean
-    MessageConverter jsonMessageConverter() {
-        return new Jackson2JsonMessageConverter();
+    MessageConverter jsonMessageConverter(ObjectMapper mapper) {
+        return new Jackson2JsonMessageConverter(mapper);
     }
 
     @Bean
