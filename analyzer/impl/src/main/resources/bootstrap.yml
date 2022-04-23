@@ -6,6 +6,8 @@ spring:
       uri: ${CONFIG_SERVER_URL:http://localhost:8888/}
   profiles:
     active: ${spring_profiles_active:default}
+  liquibase:
+    change-log: classpath:/db/changelog/master-changelog.xml
 
 server:
   port: ${SERVER_PORT:8010}
