@@ -25,7 +25,7 @@ public class VkBotHandlerService {
 
     public String handleUpdate(VkUpdate update) {
         if (update.getType() == Type.MESSAGE_NEW) {
-            SessionRequest request = mapper.map(update);
+            SessionRequest request = mapper.mapDto(update);
             try {
                 SessionResponse response = sessionService.handle(request);
                 vkMessengerService.sendMessage(response);

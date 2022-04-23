@@ -56,8 +56,8 @@ public abstract class RawPostMapper {
         @Mapping(source = "geo", target = "context.point"),
         @Mapping(source = "text", target = "text"),
         @Mapping(source = "date", target = "date", ignore = true),
-        @Mapping(target = "url", source = "url", ignore = true),
-        @Mapping(target = "context", source = "context", ignore = true),
+//        @Mapping(target = "url", source = "url", ignore = true),
+//        @Mapping(target = "context", source = "context", ignore = true),
     })
     public abstract RawPostDto map(Wallpost source);
 }

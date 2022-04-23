@@ -30,7 +30,7 @@ public class UserService {
         else if(type == PlatformType.VK){
             return vkUserRepository.findById(id).map(Function.identity());
         }else {
-            throw new RuntimeException();
+            throw new RuntimeException("Not found PlatformType");
         }
     }
 

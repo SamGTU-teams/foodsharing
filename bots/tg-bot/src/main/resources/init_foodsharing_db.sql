@@ -91,7 +91,7 @@ ALTER TABLE ibot.food_post_products ADD CONSTRAINT FK_IBOT_FOOD_POST_PRODUCTS_PR
 -- VK_BOT SCHEMA
 CREATE SCHEMA IF NOT EXISTS vk_bot;
 
-CREATE TABLE vk_bot.user (
+CREATE TABLE vk_bot."user" (
   id BIGINT NOT NULL,
   session_active BOOLEAN NOT NULL,
   session_step INTEGER NOT NULL,

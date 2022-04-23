@@ -1,8 +1,13 @@
 package ru.rassafel.foodsharing.common.model.entity.geo;
 
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(schema = "tg_bot", name = "place")
@@ -10,8 +15,14 @@ import javax.persistence.*;
 public class TgUserPlace extends Place {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tg_bot_place_id_seq")
-    @SequenceGenerator(schema = "tg_bot", sequenceName = "place_id_sequence", name = "tg_bot_place_id_seq")
+    @GeneratedValue(generator = "tg_bot_place_id_seq")
+    @GenericGenerator(
+        name = "tg_bot_place_id_seq",
+        strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+        parameters = {
+            @Parameter(name = "sequence_name", value = "tg_bot.place_id_sequence")
+        }
+    )
     private Long id;
 
 }

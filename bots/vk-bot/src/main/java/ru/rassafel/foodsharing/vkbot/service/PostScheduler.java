@@ -21,7 +21,7 @@ public class PostScheduler {
     private final VkUserRepository repository;
 
 
-    @Scheduled(fixedDelay = 100)
+//    @Scheduled(fixedDelay = 100)
     public void sendPost(){
         service.sendEvent(() -> {
             List<Long> userIds = repository.findUserIds();

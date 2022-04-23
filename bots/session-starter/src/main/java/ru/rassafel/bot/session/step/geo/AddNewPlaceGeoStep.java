@@ -12,12 +12,14 @@ import ru.rassafel.foodsharing.common.model.PlatformType;
 import ru.rassafel.foodsharing.common.model.entity.geo.*;
 import ru.rassafel.foodsharing.common.model.entity.user.User;
 import ru.rassafel.foodsharing.common.model.entity.user.EmbeddedUserSession;
+import ru.rassafel.foodsharing.common.service.UserService;
 
 @Component("geo-2")
 @RequiredArgsConstructor
 public class AddNewPlaceGeoStep implements Step {
 
     private final Cache<Long, Place> geoPointCache;
+    private final UserService userService;
 
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
@@ -44,9 +46,12 @@ public class AddNewPlaceGeoStep implements Step {
 
             geoPointCache.put(user.getId(), place);
 
-            sessionResponse.setMessage("Теперь дайте название этому месту");
+            sessionResponse.setMessage("Теперь дайте название этому месту" +
+                "\nПримечание: лучше не использовать цифровые названия");
 
             userSession.setSessionStep(3);
+
+            userService.saveUser(user);
         }
 
         sessionResponse.setButtons(responseButtons);

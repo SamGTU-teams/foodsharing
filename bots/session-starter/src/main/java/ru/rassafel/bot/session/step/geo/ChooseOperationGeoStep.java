@@ -14,6 +14,7 @@ import ru.rassafel.foodsharing.common.model.entity.user.User;
 import ru.rassafel.foodsharing.common.model.entity.user.EmbeddedUserSession;
 import ru.rassafel.bot.session.util.ButtonsUtil;
 import ru.rassafel.foodsharing.common.service.PlaceService;
+import ru.rassafel.foodsharing.common.service.UserService;
 
 import java.util.Collection;
 import java.util.List;
@@ -27,6 +28,7 @@ import static ru.rassafel.bot.session.util.GeoButtonsUtil.GEO_MAIN_BUTTONS;
 public class ChooseOperationGeoStep implements Step {
 
     private final PlaceService placeService;
+    private final UserService userService;
 
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
@@ -95,5 +97,7 @@ public class ChooseOperationGeoStep implements Step {
 
         sessionResponse.setButtons(responseButtons);
         sessionResponse.setMessage(responseMessage);
+
+        userService.saveUser(user);
     }
 }

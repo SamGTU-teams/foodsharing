@@ -9,6 +9,7 @@ import ru.rassafel.bot.session.service.ProductService;
 import ru.rassafel.bot.session.step.Step;
 import ru.rassafel.foodsharing.common.model.entity.user.EmbeddedUserSession;
 import ru.rassafel.foodsharing.common.model.entity.user.User;
+import ru.rassafel.foodsharing.common.service.UserService;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ import java.util.List;
 public class ChooseNewProductStep implements Step {
 
     private final ProductService productService;
+    private final UserService userService;
 
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
@@ -43,5 +45,7 @@ public class ChooseNewProductStep implements Step {
 
         sessionResponse.setButtons(responseButtons);
         sessionResponse.setMessage(responseMessage);
+
+        userService.saveUser(user);
     }
 }

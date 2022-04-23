@@ -26,7 +26,6 @@ public class SessionService {
     private final FilePropertiesService messageService;
     private final SessionUtil sessionUtil;
 
-    @Transactional
     public SessionResponse handle(SessionRequest request) {
 
         String userMessage = request.getMessage();
