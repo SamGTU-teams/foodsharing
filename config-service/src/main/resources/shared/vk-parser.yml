@@ -1,6 +1,8 @@
 spring:
   rabbitmq:
     exchangeName: post-raw-exchange
+  liquibase:
+    contexts: vk-parser,data
 
 application:
   callbackUrl: ${CALLBACK_URL}

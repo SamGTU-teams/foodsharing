@@ -2,8 +2,8 @@ spring:
   rabbitmq:
     exchangeName: post-ready-exchange
     queueName: post.ready.vk
-  jpa:
-    database-platform: org.hibernate.spatial.dialect.postgis.PostgisPG10Dialect
+  liquibase:
+    contexts: vk-bot,data
 
 vk:
   bot:
