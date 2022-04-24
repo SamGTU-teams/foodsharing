@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog
-    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
     <include file="db/changelog/init-public-schema-changelog.xml"/>
-    <include file="db/changelog/init-vk-parser-schema-changelog.xml" context="vk-parser"/>
+    <include file="db/changelog/init-vk-parser-schema-changelog.xml"
+             context="vk-parser"/>
     <include file="db/changelog/init-ibot-schema-changelog.xml" context="ibot"/>
-    <include file="db/changelog/init-tg-bot-schema-changelog.xml" context="tg-bot"/>
-    <include file="db/changelog/init-vk-bot-schema-changelog.xml" context="vk-bot"/>
+    <include file="db/changelog/init-tg-bot-schema-changelog.xml"
+             context="tg-bot"/>
+    <include file="db/changelog/init-vk-bot-schema-changelog.xml"
+             context="vk-bot"/>
 </databaseChangeLog>
