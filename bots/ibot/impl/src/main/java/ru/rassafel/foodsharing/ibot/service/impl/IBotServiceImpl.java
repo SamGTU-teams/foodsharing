@@ -11,6 +11,7 @@ import ru.rassafel.foodsharing.ibot.service.IBotService;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author rassafel
@@ -26,6 +27,6 @@ public class IBotServiceImpl implements IBotService {
                                           LocalDateTime after,
                                           List<Product> products) {
         return repository.findNearbyPosts(point.getLat(), point.getLon(),
-            range, after, products);
+            range, after, products.stream().map(Product::getId).collect(Collectors.toList()));
     }
 }
