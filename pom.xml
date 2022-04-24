@@ -25,6 +25,7 @@
 
         <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
         <vk.sdk.version>1.0.11</vk.sdk.version>
+        <tg-bot.sdk.version>4.4.0.2</tg-bot.sdk.version>
         <lucene.version>8.11.1</lucene.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <lombok.mapstruct.binding.version>0.2.0
@@ -85,9 +86,9 @@
             </dependency>
 
             <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-spatial</artifactId>
-                <version>${hibernate.version}</version>
+                <groupId>org.telegram</groupId>
+                <artifactId>telegrambots-spring-boot-starter</artifactId>
+                <version>${tg-bot.sdk.version}</version>
             </dependency>
 
             <dependency>
