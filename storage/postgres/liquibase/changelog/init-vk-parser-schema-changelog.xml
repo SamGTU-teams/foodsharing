@@ -4,5 +4,47 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="init-vk-parser-schema-01" author="rassafel">
+        <sql>CREATE SCHEMA IF NOT EXISTS vk_parser;</sql>
 
+        <createTable schemaName="vk_parser"
+                     tableName="group">
+            <column name="id" type="INT">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="PK_GROUP"/>
+            </column>
+            <column name="server_id" type="INT"/>
+            <column name="access_token" type="VARCHAR(255)"/>
+            <column name="secret_key" type="VARCHAR(255)"/>
+            <column name="confirmation_code" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable schemaName="vk_parser"
+                     tableName="group_regions">
+            <column name="group_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="region_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableSchemaName="vk_parser"
+                                 baseTableName="group_regions"
+                                 baseColumnNames="region_id"
+                                 constraintName="FK_VK_PARSER_GROUP_REGIONS_REGION_ID"
+                                 referencedTableSchemaName="public"
+                                 referencedTableName="region"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableSchemaName="vk_parser"
+                                 baseTableName="group_regions"
+                                 baseColumnNames="group_id"
+                                 constraintName="FK_VK_PARSER_GROUP_REGIONS_GROUP_ID"
+                                 referencedTableSchemaName="vk_parser"
+                                 referencedTableName="group"
+                                 referencedColumnNames="id"/>
+    </changeSet>
 </databaseChangeLog>

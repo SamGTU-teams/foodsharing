@@ -4,5 +4,66 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="init-public-schema-01" author="rassafel">
+        <sql>CREATE SCHEMA IF NOT EXISTS public;</sql>
 
+        <createTable schemaName="public"
+                     tableName="region">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="PK_REGION"/>
+            </column>
+            <column name="name" type="VARCHAR(63)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lat" type="DOUBLE"/>
+            <column name="lon" type="DOUBLE"/>
+        </createTable>
+        <addUniqueConstraint columnNames="name"
+                             constraintName="UQ_REGION_NAME"
+                             schemaName="public"
+                             tableName="region"/>
+
+        <createTable schemaName="public"
+                     tableName="product">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="PK_PRODUCT"/>
+            </column>
+            <column name="name" type="VARCHAR(63)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category_id" type="BIGINT"/>
+        </createTable>
+        <addUniqueConstraint columnNames="name"
+                             constraintName="UQ_PRODUCT_NAME"
+                             schemaName="public"
+                             tableName="product"/>
+
+        <createTable schemaName="public"
+                     tableName="category">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="PK_CATEGORY"/>
+            </column>
+            <column name="name" type="VARCHAR(63)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint columnNames="name"
+                             constraintName="UQ_CATEGORY_NAME"
+                             schemaName="public"
+                             tableName="category"/>
+
+        <addForeignKeyConstraint baseColumnNames="category_id"
+                                 baseTableName="product"
+                                 baseTableSchemaName="public"
+                                 constraintName="FK_PRODUCT_CATEGORY_ID"
+                                 referencedColumnNames="id"
+                                 referencedTableName="category"
+                                 referencedTableSchemaName="public"/>
+    </changeSet>
 </databaseChangeLog>
