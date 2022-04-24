@@ -51,7 +51,7 @@ public class FoodPost {
     @EqualsAndHashCode.Exclude
     private Set<Region> regions;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(schema = "ibot", name = "food_post_products",
         joinColumns = @JoinColumn(name = "food_post_id", nullable = false,
             foreignKey = @ForeignKey(name = "FK_IBOT_FOOD_POST_PRODUCTS_FOOD_POST_ID")),
