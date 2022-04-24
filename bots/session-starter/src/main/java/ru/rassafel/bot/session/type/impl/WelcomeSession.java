@@ -6,14 +6,13 @@ import ru.rassafel.bot.session.dto.SessionRequest;
 import ru.rassafel.bot.session.dto.SessionResponse;
 import ru.rassafel.bot.session.dto.To;
 import ru.rassafel.bot.session.model.BotButtons;
+import ru.rassafel.bot.session.model.entity.user.User;
 import ru.rassafel.bot.session.service.FilePropertiesService;
 import ru.rassafel.bot.session.type.BotSession;
 import ru.rassafel.bot.session.util.ButtonsUtil;
-import ru.rassafel.bot.session.model.entity.user.User;
 
 @Component
 public class WelcomeSession implements BotSession {
-
     @Autowired
     private FilePropertiesService propertiesService;
 

@@ -9,20 +9,19 @@ import ru.rassafel.bot.session.dto.SessionRequest;
 import ru.rassafel.bot.session.dto.SessionResponse;
 import ru.rassafel.bot.session.exception.BotException;
 import ru.rassafel.bot.session.model.BotButtons;
-import ru.rassafel.bot.session.util.GeoButtonsUtil;
 import ru.rassafel.bot.session.model.entity.place.Place;
-import ru.rassafel.bot.session.step.Step;
-import ru.rassafel.bot.session.model.entity.user.User;
 import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
+import ru.rassafel.bot.session.model.entity.user.User;
 import ru.rassafel.bot.session.service.PlaceService;
 import ru.rassafel.bot.session.service.UserService;
+import ru.rassafel.bot.session.step.Step;
+import ru.rassafel.bot.session.util.GeoButtonsUtil;
 
 import static ru.rassafel.bot.session.util.ButtonsUtil.DEFAULT_BUTTONS;
 
 @Component("geo-7")
 @RequiredArgsConstructor
 public class SetNewRadiusGeoStep implements Step {
-
     private final Cache<Long, Place> geoPointCache;
     private final PlaceService placeService;
     private final UserService userService;

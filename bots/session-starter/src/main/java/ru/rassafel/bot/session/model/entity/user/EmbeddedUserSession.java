@@ -27,5 +27,4 @@ public class EmbeddedUserSession {
     public void decrementStep() {
         sessionStep -= 1;
     }
-
 }

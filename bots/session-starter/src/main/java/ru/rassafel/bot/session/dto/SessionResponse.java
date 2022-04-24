@@ -6,16 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.rassafel.bot.session.model.BotButtons;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
 public class SessionResponse {
-
     private String message;
     private BotButtons buttons;
     private To sendTo;
-
 }

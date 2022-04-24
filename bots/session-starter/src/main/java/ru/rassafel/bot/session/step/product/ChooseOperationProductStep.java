@@ -6,17 +6,17 @@ import ru.rassafel.bot.session.dto.SessionRequest;
 import ru.rassafel.bot.session.dto.SessionResponse;
 import ru.rassafel.bot.session.exception.BotException;
 import ru.rassafel.bot.session.model.BotButtons;
-import ru.rassafel.bot.session.service.ProductService;
-import ru.rassafel.bot.session.step.Step;
 import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
 import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.service.ProductService;
 import ru.rassafel.bot.session.service.UserService;
+import ru.rassafel.bot.session.step.Step;
 
 import static ru.rassafel.bot.session.util.ProductButtonsUtil.PRODUCT_MAIN_BUTTONS;
 
 @Component("product-1")
 @RequiredArgsConstructor
-public class ChooseOperationProductStep  implements Step {
+public class ChooseOperationProductStep implements Step {
 
     private final ProductService productService;
     private final UserService userService;
@@ -32,7 +32,7 @@ public class ChooseOperationProductStep  implements Step {
 
         if (message.equals("добавить продукт")) {
             int productCount = user.getProducts().size();
-            if(productCount > 2 ){
+            if (productCount > 2) {
                 throw new BotException(user.getId(), "Вы не можете добавить больше 100 продуктов, сначала удалите несколько");
             }
             responseMessage = "Введите название продукта, который хотите добавить";
@@ -58,12 +58,12 @@ public class ChooseOperationProductStep  implements Step {
             }
             responseButtons.addAll(PRODUCT_MAIN_BUTTONS);
         } else {
-            throw new BotException(user.getId(), """
-                    На этом этапе доступны только следующие команды :
-                    Добавить продукт
-                    Удалить продукт
-                    Мои продукты
-                    На главную""");
+            throw new BotException(user.getId(),
+                "На этом этапе доступны только следующие команды :\n" +
+                    "Добавить продукт\n" +
+                    "Удалить продукт\n" +
+                    "Мои продукты\n" +
+                    "На главную");
         }
 
         sessionResponse.setButtons(responseButtons);

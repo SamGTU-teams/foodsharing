@@ -1,13 +1,11 @@
 package ru.rassafel.bot.session.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Getter
 public class BotException extends RuntimeException {
-
     private Long sendTo;
 
     public BotException(Long sendTo, String message) {

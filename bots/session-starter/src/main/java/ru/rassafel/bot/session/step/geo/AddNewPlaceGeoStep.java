@@ -10,17 +10,16 @@ import ru.rassafel.bot.session.model.BotButtons;
 import ru.rassafel.bot.session.model.entity.place.Place;
 import ru.rassafel.bot.session.model.entity.place.TgUserPlace;
 import ru.rassafel.bot.session.model.entity.place.VkUserPlace;
+import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
+import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.service.UserService;
 import ru.rassafel.bot.session.step.Step;
 import ru.rassafel.foodsharing.common.model.PlatformType;
-import ru.rassafel.foodsharing.common.model.entity.geo.*;
-import ru.rassafel.bot.session.model.entity.user.User;
-import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
-import ru.rassafel.bot.session.service.UserService;
+import ru.rassafel.foodsharing.common.model.entity.geo.GeoPointEmbeddable;
 
 @Component("geo-2")
 @RequiredArgsConstructor
 public class AddNewPlaceGeoStep implements Step {
-
     private final Cache<Long, Place> geoPointCache;
     private final UserService userService;
 
@@ -35,15 +34,15 @@ public class AddNewPlaceGeoStep implements Step {
             LocationDto location = sessionRequest.getLocation();
 
             Place place;
-            if(sessionRequest.getType() == PlatformType.TG){
+            if (sessionRequest.getType() == PlatformType.TG) {
                 place = new TgUserPlace()
                     .withUser(user)
                     .withGeo(new GeoPointEmbeddable(location.getLatitude(), location.getLongitude()));
-            }else if(sessionRequest.getType() == PlatformType.VK){
+            } else if (sessionRequest.getType() == PlatformType.VK) {
                 place = new VkUserPlace()
                     .withUser(user)
                     .withGeo(new GeoPointEmbeddable(location.getLatitude(), location.getLongitude()));
-            }else {
+            } else {
                 throw new IllegalArgumentException("No platformType found!");
             }
 

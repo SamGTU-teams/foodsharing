@@ -7,12 +7,12 @@ import ru.rassafel.bot.session.dto.SessionRequest;
 import ru.rassafel.bot.session.dto.SessionResponse;
 import ru.rassafel.bot.session.exception.BotException;
 import ru.rassafel.bot.session.model.BotButtons;
-import ru.rassafel.bot.session.step.Step;
 import ru.rassafel.bot.session.model.entity.place.Place;
-import ru.rassafel.bot.session.model.entity.user.User;
 import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
+import ru.rassafel.bot.session.model.entity.user.User;
 import ru.rassafel.bot.session.service.PlaceService;
 import ru.rassafel.bot.session.service.UserService;
+import ru.rassafel.bot.session.step.Step;
 
 import java.util.Collection;
 
@@ -21,7 +21,6 @@ import static ru.rassafel.bot.session.util.ButtonsUtil.DEFAULT_BUTTONS;
 @Component("geo-3")
 @RequiredArgsConstructor
 public class SetNameGeoStep implements Step {
-
     private final Cache<Long, Place> geoPointCache;
     private final PlaceService placeService;
     private final UserService userService;
@@ -42,7 +41,7 @@ public class SetNameGeoStep implements Step {
 
         Collection<Place> usersPlaces = placeService.findByUserId(user.getId(), sessionRequest.getType());
 
-        if(usersPlaces.stream().anyMatch(p -> p.getName().equalsIgnoreCase(message))){
+        if (usersPlaces.stream().anyMatch(p -> p.getName().equalsIgnoreCase(message))) {
             throw new BotException(user.getId(), "Введите другое название, место " + message + " у вас уже есть");
         }
 

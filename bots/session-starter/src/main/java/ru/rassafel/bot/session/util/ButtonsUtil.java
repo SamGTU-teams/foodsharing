@@ -14,15 +14,13 @@ public class ButtonsUtil {
         return buttons;
     }
 
-    public static List<String> getModifiableList(List<String> buttons){
+    public static List<String> getModifiableList(List<String> buttons) {
         return new ArrayList<>(buttons);
     }
 
-    public static List<String> withBackToMain(List<String> buttons){
+    public static List<String> withBackToMain(List<String> buttons) {
         List<String> modifiableList = getModifiableList(buttons);
         modifiableList.add(0, "На главную");
         return modifiableList;
     }
-
-
 }

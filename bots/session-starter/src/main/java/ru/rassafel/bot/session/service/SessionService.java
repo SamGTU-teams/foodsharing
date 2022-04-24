@@ -7,16 +7,15 @@ import ru.rassafel.bot.session.dto.SessionResponse;
 import ru.rassafel.bot.session.exception.BotException;
 import ru.rassafel.bot.session.interceptor.ExitSessionInterceptor;
 import ru.rassafel.bot.session.mapper.UserDtoMapper;
-import ru.rassafel.bot.session.type.BotSession;
-import ru.rassafel.bot.session.model.entity.user.User;
 import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
+import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.type.BotSession;
 
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class SessionService {
-
     private final SessionFactory factory;
     private final UserService userService;
     private final UserDtoMapper userMapper;
@@ -44,11 +43,11 @@ public class SessionService {
             if (!userSession.isSessionActive()) {
                 try {
                     botSession = factory.getSession(userMessage);
-                }catch (IllegalArgumentException ex){
-                    throw new BotException(user.getId(), """
-                        На данном этапе доступны только следующие команды
-                        Продукты
-                        Места""");
+                } catch (IllegalArgumentException ex) {
+                    throw new BotException(user.getId(),
+                        "На данном этапе доступны только следующие команды\n" +
+                            "Продукты\n" +
+                            "Места");
                 }
 
                 EmbeddedUserSession newUserSession = EmbeddedUserSession.builder()
@@ -63,5 +62,4 @@ public class SessionService {
         }
         return interceptor.handle(request, user, botSession);
     }
-
 }

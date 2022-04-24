@@ -14,6 +14,9 @@ import ru.rassafel.bot.session.dto.SessionRequest;
 import ru.rassafel.bot.session.dto.SessionResponse;
 import ru.rassafel.bot.session.exception.BotException;
 import ru.rassafel.bot.session.model.BotButtons;
+import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.model.entity.user.VkUser;
+import ru.rassafel.bot.session.repository.user.VkUserRepository;
 import ru.rassafel.bot.session.service.FilePropertiesService;
 import ru.rassafel.bot.session.service.ProductService;
 import ru.rassafel.bot.session.service.SessionEnum;
@@ -21,9 +24,6 @@ import ru.rassafel.bot.session.service.SessionService;
 import ru.rassafel.bot.session.util.ButtonsUtil;
 import ru.rassafel.bot.session.util.ProductButtonsUtil;
 import ru.rassafel.foodsharing.common.model.PlatformType;
-import ru.rassafel.bot.session.model.entity.user.User;
-import ru.rassafel.bot.session.model.entity.user.VkUser;
-import ru.rassafel.bot.session.repository.user.VkUserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-@ActiveProfiles("h2")
+@ActiveProfiles("integration-test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ProductTestSessionVkBot {
 
@@ -60,6 +60,20 @@ class ProductTestSessionVkBot {
     VkUserRepository vkUserRepository;
     @Autowired
     JdbcTemplate jdbc;
+
+    private static void assertResponse(SessionRequest request, SessionResponse response, String message) {
+        assertThat(response)
+            .extracting("message", "sendTo.id")
+            .containsExactly(message,
+                request.getFrom().getId());
+    }
+
+    private static void assertButtons(SessionResponse response, List<String> expectedButtons) {
+        assertThat(response.getButtons().getButtons())
+            .hasSize(expectedButtons.size())
+            .flatExtracting(BotButtons.BotButton::getText)
+            .containsExactlyElementsOf(expectedButtons);
+    }
 
     @Test
     @Order(1)
@@ -88,10 +102,9 @@ class ProductTestSessionVkBot {
             .hasFieldOrPropertyWithValue("sendTo", userId);
     }
 
-
     @Test
     @Order(3)
-    void testStartProductSession(){
+    void testStartProductSession() {
         request.setMessage("продукты");
 
         SessionResponse response = service.handle(request);
@@ -109,7 +122,7 @@ class ProductTestSessionVkBot {
 
     @Test
     @Order(4)
-    void testAddProduct(){
+    void testAddProduct() {
         request.setMessage("добавить продукт");
 
         SessionResponse response = service.handle(request);
@@ -152,21 +165,7 @@ class ProductTestSessionVkBot {
 
     }
 
-    private static void assertResponse(SessionRequest request, SessionResponse response, String message){
-        assertThat(response)
-            .extracting("message", "sendTo.id")
-            .containsExactly(message,
-                request.getFrom().getId());
-    }
-
-    private static void assertButtons(SessionResponse response, List<String> expectedButtons){
-        assertThat(response.getButtons().getButtons())
-            .hasSize(expectedButtons.size())
-            .flatExtracting(BotButtons.BotButton::getText)
-            .containsExactlyElementsOf(expectedButtons);
-    }
-
-    private User assertUserAndUserSessionAndGetUser(String sessionName, int step, boolean active){
+    private User assertUserAndUserSessionAndGetUser(String sessionName, int step, boolean active) {
         Optional<VkUser> byId = vkUserRepository.findById(userId);
         assertThat(byId)
             .isPresent()

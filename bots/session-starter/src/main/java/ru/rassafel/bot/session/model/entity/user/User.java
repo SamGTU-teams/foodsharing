@@ -9,13 +9,18 @@ import java.util.Collection;
 @Data
 @MappedSuperclass
 public abstract class User {
-
     @Id
+    @Column(name = "id", nullable = false)
     private Long id;
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "sessionName", column = @Column(name = "session_name", nullable = false)),
+        @AttributeOverride(name = "sessionStep", column = @Column(name = "session_step", nullable = false)),
+        @AttributeOverride(name = "sessionActive", column = @Column(name = "session_active", nullable = false))
+    })
     private EmbeddedUserSession userSession = EmbeddedUserSession.EMPTY;
 
     public abstract void addProduct(Product product);
 
     public abstract Collection<Product> getProducts();
-
 }

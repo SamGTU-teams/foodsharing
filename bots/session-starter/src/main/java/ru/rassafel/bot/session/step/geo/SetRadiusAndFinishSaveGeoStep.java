@@ -11,11 +11,11 @@ import ru.rassafel.bot.session.dto.SessionResponse;
 import ru.rassafel.bot.session.exception.BotException;
 import ru.rassafel.bot.session.model.BotButtons;
 import ru.rassafel.bot.session.model.entity.place.Place;
-import ru.rassafel.bot.session.step.Step;
-import ru.rassafel.bot.session.model.entity.user.User;
 import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
+import ru.rassafel.bot.session.model.entity.user.User;
 import ru.rassafel.bot.session.service.PlaceService;
 import ru.rassafel.bot.session.service.UserService;
+import ru.rassafel.bot.session.step.Step;
 
 import static ru.rassafel.bot.session.util.ButtonsUtil.DEFAULT_BUTTONS;
 import static ru.rassafel.bot.session.util.GeoButtonsUtil.GEO_MAIN_BUTTONS;
@@ -23,7 +23,6 @@ import static ru.rassafel.bot.session.util.GeoButtonsUtil.GEO_MAIN_BUTTONS;
 @Component("geo-4")
 @RequiredArgsConstructor
 public class SetRadiusAndFinishSaveGeoStep implements Step {
-
     private final Cache<Long, Place> geoPointCache;
     private final PlaceService placeService;
     private final UserService userService;
@@ -53,7 +52,7 @@ public class SetRadiusAndFinishSaveGeoStep implements Step {
         } else {
             try {
                 radius = Integer.parseInt(message);
-                if(radius >= 5000){
+                if (radius >= 5000) {
                     throw new BotException(user.getId(), "Нужно ввести радиус меньше 5 км");
                 }
             } catch (NumberFormatException ex) {

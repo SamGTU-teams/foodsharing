@@ -5,10 +5,10 @@ import org.springframework.stereotype.Component;
 import ru.rassafel.bot.session.dto.SessionRequest;
 import ru.rassafel.bot.session.dto.SessionResponse;
 import ru.rassafel.bot.session.dto.To;
+import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
+import ru.rassafel.bot.session.model.entity.user.User;
 import ru.rassafel.bot.session.step.StepFinder;
 import ru.rassafel.bot.session.type.BotSession;
-import ru.rassafel.bot.session.model.entity.user.User;
-import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
 
 @Component
 @RequiredArgsConstructor
@@ -25,15 +25,14 @@ public class GeoSession implements BotSession {
         stepFinder.execute(step, request, response, user, "geo");
 
         return response.toBuilder()
-                .sendTo(To.builder()
-                        .id(user.getId())
-                        .build())
-                .build();
+            .sendTo(To.builder()
+                .id(user.getId())
+                .build())
+            .build();
     }
 
     @Override
     public String getName() {
         return "geoSession";
     }
-
 }

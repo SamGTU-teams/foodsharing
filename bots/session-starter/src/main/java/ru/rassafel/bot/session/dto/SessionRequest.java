@@ -11,17 +11,14 @@ import ru.rassafel.foodsharing.common.model.PlatformType;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SessionRequest {
-
     private String message;
     private From from;
     private LocationDto location;
 
     private PlatformType type;
 
-    public SessionRequest type(PlatformType type){
+    public SessionRequest type(PlatformType type) {
         this.type = type;
         return this;
     }
-
-
 }

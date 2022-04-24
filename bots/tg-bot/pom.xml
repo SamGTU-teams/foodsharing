@@ -13,7 +13,7 @@
     <artifactId>tg-bot</artifactId>
 
     <dependencies>
-<!--        Telegram bot sdk-->
+        <!--        Telegram bot sdk-->
         <dependency>
             <groupId>org.telegram</groupId>
             <artifactId>telegrambots-spring-boot-starter</artifactId>

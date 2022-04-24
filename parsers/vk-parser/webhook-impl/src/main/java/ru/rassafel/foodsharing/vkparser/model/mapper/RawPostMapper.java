@@ -23,7 +23,7 @@ public abstract class RawPostMapper {
     public static final RawPostMapper INSTANCE = Mappers.getMapper(RawPostMapper.class);
 
     /**
-     *  Example: https://vk.com/wall-109125816_677938
+     * Example: https://vk.com/wall-109125816_677938
      */
     public static final String WALLPOST_PATTERN = "https://vk.com/wall-%d_%d";
 

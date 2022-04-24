@@ -12,14 +12,14 @@ import ru.rassafel.bot.session.dto.From;
 import ru.rassafel.bot.session.dto.LocationDto;
 import ru.rassafel.bot.session.dto.SessionRequest;
 import ru.rassafel.bot.session.dto.SessionResponse;
-import ru.rassafel.bot.session.service.SessionService;
-import ru.rassafel.bot.session.util.GeoButtonsUtil;
-import ru.rassafel.foodsharing.common.model.PlatformType;
 import ru.rassafel.bot.session.model.entity.place.Place;
 import ru.rassafel.bot.session.model.entity.user.User;
 import ru.rassafel.bot.session.model.entity.user.VkUser;
 import ru.rassafel.bot.session.service.PlaceService;
+import ru.rassafel.bot.session.service.SessionService;
 import ru.rassafel.bot.session.service.UserService;
+import ru.rassafel.bot.session.util.GeoButtonsUtil;
+import ru.rassafel.foodsharing.common.model.PlatformType;
 
 import java.util.*;
 
@@ -27,18 +27,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static ru.rassafel.foodsharing.vkbot.TestUtils.*;
 
 @SpringBootTest
-@ActiveProfiles("h2")
+@ActiveProfiles("integration-test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class PlaceTestSessionVkBotTest {
-
-    @Autowired
-    Cache<Long, Place> geoCache;
-    @Autowired
-    SessionService service;
-    @Autowired
-    UserService userService;
-    @Autowired
-    PlaceService placeService;
 
     private static final Long userId = 1L;
     final SessionRequest request = SessionRequest.builder()
@@ -48,6 +39,14 @@ public class PlaceTestSessionVkBotTest {
             .build())
         .type(PlatformType.VK)
         .build();
+    @Autowired
+    Cache<Long, Place> geoCache;
+    @Autowired
+    SessionService service;
+    @Autowired
+    UserService userService;
+    @Autowired
+    PlaceService placeService;
 
     @Test
     @Order(1)

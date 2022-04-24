@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestUtils {
 
-    public static void assertVkUserAndUserSession(VkUser user, String sessionName, int step, boolean active){
+    public static void assertVkUserAndUserSession(VkUser user, String sessionName, int step, boolean active) {
         assertThat(user)
             .extracting(VkUser::getUserSession)
             .hasFieldOrPropertyWithValue("sessionName", sessionName)
@@ -21,13 +21,13 @@ public class TestUtils {
             .hasFieldOrPropertyWithValue("sessionActive", active);
     }
 
-    public static void assertResponse(SessionResponse response, String message, Long userId){
+    public static void assertResponse(SessionResponse response, String message, Long userId) {
         assertThat(response)
             .extracting("message", "sendTo.id")
             .containsExactly(message, userId);
     }
 
-    public static void assertButtons(BotButtons buttons, Map<String, Boolean> buttonsMap){
+    public static void assertButtons(BotButtons buttons, Map<String, Boolean> buttonsMap) {
         List<BotButtons.BotButton> buttonList = buttons.getButtons();
         Stream<String> textButtons = buttonList.stream().map(BotButtons.BotButton::getText);
         assertThat(textButtons)

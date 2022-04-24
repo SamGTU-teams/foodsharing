@@ -16,7 +16,6 @@ import ru.rassafel.foodsharing.vkbot.model.VkUpdate;
 @Slf4j
 @RequiredArgsConstructor
 public class VkBotHandlerService {
-
     private final VkBotDtoMapper mapper;
     private final SessionService sessionService;
     private final VkMessengerService vkMessengerService;
@@ -29,9 +28,9 @@ public class VkBotHandlerService {
             try {
                 SessionResponse response = sessionService.handle(request);
                 vkMessengerService.sendMessage(response);
-            } catch (BotException ex){
+            } catch (BotException ex) {
                 vkMessengerService.sendMessage(ex.getMessage(), ex.getSendTo());
-            }catch (Exception ex) {
+            } catch (Exception ex) {
                 log.error("Caught an error {}", ex.getMessage());
             }
         } else if (update.getType() == Type.CONFIRMATION) {
@@ -39,5 +38,4 @@ public class VkBotHandlerService {
         }
         return "ok";
     }
-
 }

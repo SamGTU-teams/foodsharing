@@ -5,8 +5,6 @@ import ru.rassafel.bot.session.model.entity.place.TgUserPlace;
 
 import java.util.Collection;
 
-public interface  TgUserPlaceRepository extends JpaRepository<TgUserPlace, Long> {
-
+public interface TgUserPlaceRepository extends JpaRepository<TgUserPlace, Long> {
     Collection<TgUserPlace> findByUserId(Long userId);
-
 }

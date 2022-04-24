@@ -1,7 +1,6 @@
 package ru.rassafel.foodsharing.common.model.entity.product;
 
 import lombok.*;
-import ru.rassafel.foodsharing.common.model.entity.product.Product;
 
 import javax.persistence.*;
 import java.util.Set;

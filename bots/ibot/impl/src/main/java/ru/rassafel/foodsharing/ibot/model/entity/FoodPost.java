@@ -2,8 +2,8 @@ package ru.rassafel.foodsharing.ibot.model.entity;
 
 import lombok.*;
 import ru.rassafel.foodsharing.common.model.entity.geo.GeoPointEmbeddable;
-import ru.rassafel.foodsharing.common.model.entity.product.Product;
 import ru.rassafel.foodsharing.common.model.entity.geo.Region;
+import ru.rassafel.foodsharing.common.model.entity.product.Product;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

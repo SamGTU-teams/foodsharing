@@ -10,10 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "tg_bot", name = "place")
+@Table(schema = "tg_bot", name = "tg_place")
 @Data
 public class TgUserPlace extends Place {
-
     @Id
     @GeneratedValue(generator = "tg_bot_place_id_seq")
     @GenericGenerator(
@@ -24,5 +23,4 @@ public class TgUserPlace extends Place {
         }
     )
     private Long id;
-
 }

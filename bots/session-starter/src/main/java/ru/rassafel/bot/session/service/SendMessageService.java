@@ -7,24 +7,18 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
-import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class SendMessageService {
-
     @Value("${send-message.fixedDelay:3000}")
     private Long fixedDelay;
     private LocalDateTime lastExecuted = LocalDateTime.now();
 
-    public synchronized void sendEvent(Runnable operation){
+    public synchronized void sendEvent(Runnable operation) {
         long until = lastExecuted.until(LocalDateTime.now(), ChronoUnit.MILLIS);
-        if(until < fixedDelay){
+        if (until < fixedDelay) {
             try {
                 Thread.sleep(fixedDelay - until);
             } catch (InterruptedException e) {
@@ -34,5 +28,4 @@ public class SendMessageService {
         operation.run();
         lastExecuted = LocalDateTime.now();
     }
-
 }

@@ -5,18 +5,17 @@ import org.springframework.stereotype.Component;
 import ru.rassafel.bot.session.dto.SessionRequest;
 import ru.rassafel.bot.session.dto.SessionResponse;
 import ru.rassafel.bot.session.model.BotButtons;
-import ru.rassafel.bot.session.service.ProductService;
-import ru.rassafel.bot.session.step.Step;
 import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
 import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.service.ProductService;
 import ru.rassafel.bot.session.service.UserService;
+import ru.rassafel.bot.session.step.Step;
 
 import java.util.List;
 
 @Component("product-2")
 @RequiredArgsConstructor
 public class ChooseNewProductStep implements Step {
-
     private final ProductService productService;
     private final UserService userService;
 

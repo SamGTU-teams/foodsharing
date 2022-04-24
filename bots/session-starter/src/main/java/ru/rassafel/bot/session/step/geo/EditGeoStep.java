@@ -7,12 +7,12 @@ import ru.rassafel.bot.session.dto.SessionRequest;
 import ru.rassafel.bot.session.dto.SessionResponse;
 import ru.rassafel.bot.session.exception.BotException;
 import ru.rassafel.bot.session.model.BotButtons;
-import ru.rassafel.bot.session.step.Step;
 import ru.rassafel.bot.session.model.entity.place.Place;
-import ru.rassafel.bot.session.model.entity.user.User;
 import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
+import ru.rassafel.bot.session.model.entity.user.User;
 import ru.rassafel.bot.session.service.PlaceService;
 import ru.rassafel.bot.session.service.UserService;
+import ru.rassafel.bot.session.step.Step;
 
 import java.util.Collection;
 import java.util.Map;
@@ -31,15 +31,15 @@ public class EditGeoStep implements Step {
         EmbeddedUserSession userSession = user.getUserSession();
         Collection<Place> usersPoints = placeService.findByUserId(user.getId(), sessionRequest.getType());
         Place point;
-        if(message.matches("\\d+")){
+        if (message.matches("\\d+")) {
             Map<Integer, String> usersPlacesNamesMap = placeService.getUsersPlacesNamesMap(usersPoints);
             String placeNameToEdit = usersPlacesNamesMap.get(Integer.parseInt(message));
-            if(placeNameToEdit == null){
+            if (placeNameToEdit == null) {
                 throw new BotException(user.getId(), "Такого номера места у вас нет, попробуйте еще");
             }
             point = usersPoints.stream().filter(p -> p.getName().equalsIgnoreCase(placeNameToEdit)).findFirst().orElseThrow(() ->
                 new RuntimeException("Uncaught exception, place name not found in user places!"));
-        }else {
+        } else {
             point = usersPoints.stream().filter(p -> p.getName().equalsIgnoreCase(message)).findFirst().orElseThrow(() ->
                 new BotException(user.getId(), "Такого названия места нет, попробуйте еще"));
         }

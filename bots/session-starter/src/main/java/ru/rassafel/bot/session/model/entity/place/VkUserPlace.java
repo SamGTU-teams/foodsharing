@@ -11,11 +11,9 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(schema = "vk_bot", name = "place")
+@Table(schema = "vk_bot", name = "vk_place")
 @Data
-public class VkUserPlace extends Place{
-
-
+public class VkUserPlace extends Place {
     @Id
     @GeneratedValue(generator = "vk_bot_place_id_seq")
     @GenericGenerator(

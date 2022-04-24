@@ -8,7 +8,6 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 @Getter
 public enum SessionEnum {
-
     WELCOME("/start", "welcomeSession"),
     PRODUCT("продукты", "productSession"),
     GEO("места", "geoSession");
@@ -18,6 +17,6 @@ public enum SessionEnum {
 
     public static String getBeanName(String message) {
         return Arrays.stream(values()).filter(o -> o.getMessage().
-                equals(message)).findFirst().map(SessionEnum::getBeanName).orElseThrow(IllegalArgumentException::new);
+            equals(message)).findFirst().map(SessionEnum::getBeanName).orElseThrow(IllegalArgumentException::new);
     }
 }

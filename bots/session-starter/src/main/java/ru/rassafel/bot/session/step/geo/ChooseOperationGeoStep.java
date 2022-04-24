@@ -6,12 +6,12 @@ import ru.rassafel.bot.session.dto.SessionRequest;
 import ru.rassafel.bot.session.dto.SessionResponse;
 import ru.rassafel.bot.session.exception.BotException;
 import ru.rassafel.bot.session.model.BotButtons;
-import ru.rassafel.bot.session.step.Step;
 import ru.rassafel.bot.session.model.entity.place.Place;
-import ru.rassafel.bot.session.model.entity.user.User;
 import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
+import ru.rassafel.bot.session.model.entity.user.User;
 import ru.rassafel.bot.session.service.PlaceService;
 import ru.rassafel.bot.session.service.UserService;
+import ru.rassafel.bot.session.step.Step;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -21,7 +21,6 @@ import static ru.rassafel.bot.session.util.GeoButtonsUtil.GEO_MAIN_BUTTONS;
 @Component("geo-1")
 @RequiredArgsConstructor
 public class ChooseOperationGeoStep implements Step {
-
     private final PlaceService placeService;
     private final UserService userService;
 
@@ -41,11 +40,11 @@ public class ChooseOperationGeoStep implements Step {
 
             } else {
                 int[] i = {1};
-                String pointText = points.stream().map(p -> String.format("""
-                        %d. Название места : %s
-                        Координаты места : %f - широта, %f - долгота
-                        Радиус поиска вокруг этого места : %d
-                        """, i[0]++, p.getName(), p.getGeo().getLat(), p.getGeo().getLon(), p.getRadius()))
+                String pointText = points.stream().map(p -> String.format(
+                        "%d. Название места : %s\n" +
+                            "Координаты места : %f - широта, %f - долгота\n" +
+                            "Радиус поиска вокруг этого места : %d\n",
+                        i[0]++, p.getName(), p.getGeo().getLat(), p.getGeo().getLon(), p.getRadius()))
                     .collect(Collectors.joining("\n"));
 
                 responseMessage = "Ваши места : \n" + pointText;

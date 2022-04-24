@@ -1,5 +1,5 @@
 tg:
-  bot:
-    webHookPath: ${TG_BOT_WEB_HOOK_PATH}
-    username: ${TG_BOT_USERNAME}
-    token: ${TG_BOT_TOKEN}
+    bot:
+        webHookPath: ${TG_BOT_WEB_HOOK_PATH}
+        username: ${TG_BOT_USERNAME}
+        token: ${TG_BOT_TOKEN}

@@ -6,13 +6,13 @@ import ru.rassafel.bot.session.dto.SessionRequest;
 import ru.rassafel.bot.session.dto.SessionResponse;
 import ru.rassafel.bot.session.exception.BotException;
 import ru.rassafel.bot.session.model.BotButtons;
+import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
+import ru.rassafel.bot.session.model.entity.user.User;
 import ru.rassafel.bot.session.service.ProductService;
+import ru.rassafel.bot.session.service.UserService;
 import ru.rassafel.bot.session.step.Step;
 import ru.rassafel.bot.session.util.SessionUtil;
 import ru.rassafel.foodsharing.common.model.entity.product.Product;
-import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
-import ru.rassafel.bot.session.model.entity.user.User;
-import ru.rassafel.bot.session.service.UserService;
 
 import java.util.Collection;
 import java.util.Map;
@@ -50,11 +50,11 @@ public class DeleteProductStep implements Step {
             products.remove(product);
         }
 
-        if(products.isEmpty()) {
+        if (products.isEmpty()) {
             responseMessage = "Продукты удалены, у вас больше не осталось продуктов";
             userSession.setSessionStep(1);
             responseButtons.addAll(PRODUCT_MAIN_BUTTONS);
-        }else {
+        } else {
             responseMessage = "Продукты удалены, введите еще\n\n" +
                 productService.getUsersProductNamesMapMessage(user);
         }

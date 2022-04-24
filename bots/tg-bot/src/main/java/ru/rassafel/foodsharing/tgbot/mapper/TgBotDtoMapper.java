@@ -20,7 +20,6 @@ import static java.util.Optional.ofNullable;
 
 @Mapper(componentModel = "spring")
 public abstract class TgBotDtoMapper {
-
     @Mappings({
         @Mapping(source = "message", target = "message", ignore = true),
         @Mapping(source = "message.chat.id", target = "from.id"),
@@ -31,14 +30,14 @@ public abstract class TgBotDtoMapper {
     public abstract SessionRequest map(Update update);
 
     @AfterMapping
-    protected void map(Update update, @MappingTarget SessionRequest request){
+    protected void map(Update update, @MappingTarget SessionRequest request) {
         final Message message = update.getMessage();
         String text = ofNullable(message.getText()).orElse("#geoPositionRequest");
         request.setMessage(text.toLowerCase().trim());
         request.setType(PlatformType.TG);
     }
 
-    public SessionRequest mapFromUpdate(Update update){
+    public SessionRequest mapFromUpdate(Update update) {
         SessionRequest mapped = map(update);
         map(update, mapped);
         return mapped;
@@ -50,18 +49,18 @@ public abstract class TgBotDtoMapper {
     public abstract SendMessage map(SessionResponse response);
 
     @AfterMapping
-    protected void map(SessionResponse response, @MappingTarget SendMessage sendMessage){
+    protected void map(SessionResponse response, @MappingTarget SendMessage sendMessage) {
         sendMessage.setChatId(response.getSendTo().getId());
         BotButtons buttons = Optional.ofNullable(response.getButtons()).orElse(new BotButtons(ButtonsUtil.DEFAULT_BUTTONS));
         ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
         keyboardMarkup.setKeyboard(buttons.getButtons().stream().map(o -> {
             KeyboardRow buttonRow = new KeyboardRow();
-            if(o.isGeo()){
+            if (o.isGeo()) {
                 KeyboardButton button = new KeyboardButton();
                 button.setRequestLocation(true);
                 button.setText("Геолокация");
                 buttonRow.add(button);
-            }else {
+            } else {
                 buttonRow.add(o.getText());
             }
             return buttonRow;

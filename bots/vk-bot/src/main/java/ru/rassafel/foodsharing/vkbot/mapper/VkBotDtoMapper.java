@@ -2,7 +2,6 @@ package ru.rassafel.foodsharing.vkbot.mapper;
 
 import org.mapstruct.*;
 import ru.rassafel.bot.session.dto.SessionRequest;
-import ru.rassafel.bot.session.dto.SessionResponse;
 import ru.rassafel.foodsharing.common.model.PlatformType;
 import ru.rassafel.foodsharing.vkbot.model.VkUpdate;
 
@@ -17,14 +16,14 @@ public abstract class VkBotDtoMapper {
     })
     public abstract SessionRequest map(VkUpdate vkUpdate);
 
-    public SessionRequest mapDto(VkUpdate update){
+    public SessionRequest mapDto(VkUpdate update) {
         SessionRequest mapped = map(update);
         map(update, mapped);
         return mapped;
     }
 
     @AfterMapping
-    public void map(VkUpdate update, @MappingTarget SessionRequest request){
+    public void map(VkUpdate update, @MappingTarget SessionRequest request) {
         request.setMessage(update.getObject().getMessage().getText().toLowerCase());
         request.setType(PlatformType.VK);
     }

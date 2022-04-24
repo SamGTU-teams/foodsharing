@@ -15,13 +15,12 @@ import java.util.Collection;
  * @author rassafel
  */
 @Entity
-@Table(schema = "tg_bot", name = "user")
+@Table(schema = "tg_bot", name = "tg_user")
 @RequiredArgsConstructor
 @ToString
 @Getter
 @Setter
-public class TgUser extends User{
-
+public class TgUser extends User {
     @ManyToMany
     @JoinTable(schema = "tg_bot", name = "user_products",
         joinColumns = @JoinColumn(name = "user_id"),
@@ -36,6 +35,4 @@ public class TgUser extends User{
     public void addProduct(Product product) {
         products.add(product);
     }
-
-
 }

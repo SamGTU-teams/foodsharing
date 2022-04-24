@@ -9,12 +9,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-@Table(schema = "vk_bot", name = "user")
+@Table(schema = "vk_bot", name = "vk_user")
 @Data
-public class VkUser extends User{
-
+public class VkUser extends User {
     @ManyToMany
-    @JoinTable(schema = "vk_bot", name = "user_products",
+    @JoinTable(schema = "vk_bot", name = "vk_user_products",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "product_id"))
     private Collection<Product> products = new ArrayList<>();
@@ -27,5 +26,4 @@ public class VkUser extends User{
     public void addProduct(Product product) {
         products.add(product);
     }
-
 }

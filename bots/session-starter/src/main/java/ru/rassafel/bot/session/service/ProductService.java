@@ -2,8 +2,8 @@ package ru.rassafel.bot.session.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.rassafel.foodsharing.common.model.entity.product.Product;
 import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.foodsharing.common.model.entity.product.Product;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +13,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ProductService {
-
-    public List<String> getSimilarProducts(String product){
+    public List<String> getSimilarProducts(String product) {
         ArrayList<String> objects = new ArrayList<>();
         objects.add("Молоко");
         objects.add("Кефир");
@@ -34,14 +33,13 @@ public class ProductService {
         return user.getProducts().stream().map(Product::getName).collect(Collectors.toList());
     }
 
-    public String getUsersProductNamesMapMessage(User user, String additionalMessage){
+    public String getUsersProductNamesMapMessage(User user, String additionalMessage) {
         return getUsersProductNamesMap(user).entrySet().stream().map(entry -> entry.getKey() + "." + entry.getValue())
             .collect(Collectors.joining("\n"))
             + "\n\n" + additionalMessage;
     }
 
-    public String getUsersProductNamesMapMessage(User user){
+    public String getUsersProductNamesMapMessage(User user) {
         return getUsersProductNamesMapMessage(user, "");
     }
-
 }

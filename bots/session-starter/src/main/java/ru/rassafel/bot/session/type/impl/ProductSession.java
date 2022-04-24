@@ -5,15 +5,14 @@ import org.springframework.stereotype.Component;
 import ru.rassafel.bot.session.dto.SessionRequest;
 import ru.rassafel.bot.session.dto.SessionResponse;
 import ru.rassafel.bot.session.dto.To;
-import ru.rassafel.bot.session.step.StepFinder;
-import ru.rassafel.bot.session.type.BotSession;
 import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
 import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.step.StepFinder;
+import ru.rassafel.bot.session.type.BotSession;
 
 @Component("productSession")
 @RequiredArgsConstructor
 public class ProductSession implements BotSession {
-
     private final StepFinder stepFinder;
 
     @Override

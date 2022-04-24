@@ -4,9 +4,9 @@ import ru.rassafel.foodsharing.common.model.dto.CategoryDto;
 import ru.rassafel.foodsharing.common.model.dto.ProductDto;
 import ru.rassafel.foodsharing.common.model.dto.RegionDto;
 import ru.rassafel.foodsharing.common.model.entity.geo.GeoPointEmbeddable;
+import ru.rassafel.foodsharing.common.model.entity.geo.Region;
 import ru.rassafel.foodsharing.common.model.entity.product.Category;
 import ru.rassafel.foodsharing.common.model.entity.product.Product;
-import ru.rassafel.foodsharing.common.model.entity.geo.Region;
 
 import java.util.Set;
 
