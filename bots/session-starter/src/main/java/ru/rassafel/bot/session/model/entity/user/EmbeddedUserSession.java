@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 
 @Embeddable
 @Data
@@ -13,7 +14,7 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EmbeddedUserSession {
-
+    @Transient
     public static final EmbeddedUserSession EMPTY = new EmbeddedUserSession();
 
     private String sessionName = "";
