@@ -2,3 +2,6 @@ spring:
   rabbitmq:
     exchangeName: post-ready-exchange
     queueName: post.ready.main
+  liquibase:
+    change-log: classpath:/db/changelog/master-changelog.xml
+    contexts: ibot,data,test

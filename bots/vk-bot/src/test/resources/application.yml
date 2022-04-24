@@ -2,18 +2,13 @@ spring:
   rabbitmq:
     exchangeName: post-ready-exchange
     queueName: post.ready.vk
-
-vk:
-  bot:
-    groupId: 1
-    accessToken: TOKEN
-
-session-starter:
-  enabled: true
+  liquibase:
+    change-log: classpath:/db/changelog/master-changelog.xml
+    contexts: vk-bot,data,test
 
 vk:
   server:
-    confirm_code: 88d7c1ae
+    confirm_code: ${VK_CONFIRM_CODE:confirmCode}
   bot:
     groupId: ${VK_BOT_GROUP_ID:1}
     accessToken: ${VK_BOT_ACCESS_TOKEN:testAccessToken}

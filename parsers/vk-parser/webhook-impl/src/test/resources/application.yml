@@ -1,6 +1,9 @@
 spring:
   rabbitmq:
     exchangeName: post-raw-exchange
+  liquibase:
+    change-log: classpath:/db/changelog/master-changelog.xml
+    contexts: vk-parser,data,test
 
 application:
   callbackUrl: localhost:${server.port:8080}/callback

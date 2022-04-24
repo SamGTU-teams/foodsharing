@@ -5,3 +5,6 @@ spring:
       queue: post.raw.analyzer
     producer:
       exchange: post-ready-exchange
+  liquibase:
+    change-log: classpath:/db/changelog/master-changelog.xml
+    contexts: none,data,test
