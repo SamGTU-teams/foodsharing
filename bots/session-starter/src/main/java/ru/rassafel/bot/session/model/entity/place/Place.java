@@ -1,7 +1,8 @@
-package ru.rassafel.foodsharing.common.model.entity.geo;
+package ru.rassafel.bot.session.model.entity.place;
 
 import lombok.Data;
-import ru.rassafel.foodsharing.common.model.entity.user.User;
+import ru.rassafel.foodsharing.common.model.entity.geo.GeoPointEmbeddable;
+import ru.rassafel.bot.session.model.entity.user.User;
 
 import javax.persistence.*;
 

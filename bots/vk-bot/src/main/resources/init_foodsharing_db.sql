@@ -91,7 +91,7 @@ ALTER TABLE ibot.food_post_products ADD CONSTRAINT FK_IBOT_FOOD_POST_PRODUCTS_PR
 -- VK_BOT SCHEMA
 CREATE SCHEMA IF NOT EXISTS vk_bot;
 
-CREATE TABLE vk_bot."user" (
+CREATE TABLE vk_bot.user (
   id BIGINT NOT NULL,
   session_active BOOLEAN NOT NULL,
   session_step INTEGER NOT NULL,
@@ -120,16 +120,16 @@ CREATE TABLE vk_bot.user_products (
 
 ALTER TABLE vk_bot.place ADD CONSTRAINT UQ_VK_PLACE_NAME_USER_ID UNIQUE (name, user_id);
 
-ALTER TABLE vk_bot.place ADD CONSTRAINT FK_VK_PLACE_USER FOREIGN KEY (user_id) REFERENCES vk_bot."user" (id);
+ALTER TABLE vk_bot.place ADD CONSTRAINT FK_VK_PLACE_USER FOREIGN KEY (user_id) REFERENCES vk_bot.user (id);
 
-ALTER TABLE vk_bot.user_products ADD CONSTRAINT FK_VK_USER_PRODUCTS_USER FOREIGN KEY (user_id) REFERENCES vk_bot."user" (id);
+ALTER TABLE vk_bot.user_products ADD CONSTRAINT FK_VK_USER_PRODUCTS_USER FOREIGN KEY (user_id) REFERENCES vk_bot.user (id);
 ALTER TABLE vk_bot.user_products ADD CONSTRAINT FK_VK_USER_PRODUCTS_PRODUCT FOREIGN KEY (product_id) REFERENCES public.product (id);
 
 
 -- TG_BOT SCHEMA
 CREATE SCHEMA IF NOT EXISTS tg_bot;
 
-CREATE TABLE tg_bot."user" (
+CREATE TABLE tg_bot.user (
   id BIGINT NOT NULL,
   session_active BOOLEAN NOT NULL,
   session_step INTEGER NOT NULL,
@@ -158,9 +158,9 @@ CREATE TABLE tg_bot.user_products (
 
 ALTER TABLE tg_bot.place ADD CONSTRAINT UQ_TG_PLACE_NAME_USER_ID UNIQUE (name, user_id);
 
-ALTER TABLE tg_bot.place ADD CONSTRAINT FK_TG_PLACE_USER FOREIGN KEY (user_id) REFERENCES tg_bot."user" (id);
+ALTER TABLE tg_bot.place ADD CONSTRAINT FK_TG_PLACE_USER FOREIGN KEY (user_id) REFERENCES tg_bot.user (id);
 
-ALTER TABLE tg_bot.user_products ADD CONSTRAINT FK_TG_USER_PRODUCTS_USER FOREIGN KEY (user_id) REFERENCES tg_bot."user" (id);
+ALTER TABLE tg_bot.user_products ADD CONSTRAINT FK_TG_USER_PRODUCTS_USER FOREIGN KEY (user_id) REFERENCES tg_bot.user (id);
 ALTER TABLE tg_bot.user_products ADD CONSTRAINT FK_TG_USER_PRODUCTS_PRODUCT FOREIGN KEY (product_id) REFERENCES public.product (id);
 
 --DATA

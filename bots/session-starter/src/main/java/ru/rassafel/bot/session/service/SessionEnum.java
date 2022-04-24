@@ -2,7 +2,6 @@ package ru.rassafel.bot.session.service;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import ru.rassafel.bot.session.exception.BotException;
 
 import java.util.Arrays;
 
@@ -11,7 +10,7 @@ import java.util.Arrays;
 public enum SessionEnum {
 
     WELCOME("/start", "welcomeSession"),
-    TEST("продукты", "productSession"),
+    PRODUCT("продукты", "productSession"),
     GEO("места", "geoSession");
 
     private final String message;

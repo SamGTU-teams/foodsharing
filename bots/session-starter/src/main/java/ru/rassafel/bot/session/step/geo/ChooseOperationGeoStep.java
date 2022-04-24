@@ -6,18 +6,14 @@ import ru.rassafel.bot.session.dto.SessionRequest;
 import ru.rassafel.bot.session.dto.SessionResponse;
 import ru.rassafel.bot.session.exception.BotException;
 import ru.rassafel.bot.session.model.BotButtons;
-import ru.rassafel.bot.session.util.GeoButtonsUtil;
 import ru.rassafel.bot.session.step.Step;
-import ru.rassafel.foodsharing.common.model.PlatformType;
-import ru.rassafel.foodsharing.common.model.entity.geo.Place;
-import ru.rassafel.foodsharing.common.model.entity.user.User;
-import ru.rassafel.foodsharing.common.model.entity.user.EmbeddedUserSession;
-import ru.rassafel.bot.session.util.ButtonsUtil;
-import ru.rassafel.foodsharing.common.service.PlaceService;
+import ru.rassafel.bot.session.model.entity.place.Place;
+import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
+import ru.rassafel.bot.session.service.PlaceService;
+import ru.rassafel.bot.session.service.UserService;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static ru.rassafel.bot.session.util.GeoButtonsUtil.GEO_MAIN_BUTTONS;
@@ -27,6 +23,7 @@ import static ru.rassafel.bot.session.util.GeoButtonsUtil.GEO_MAIN_BUTTONS;
 public class ChooseOperationGeoStep implements Step {
 
     private final PlaceService placeService;
+    private final UserService userService;
 
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
@@ -95,5 +92,7 @@ public class ChooseOperationGeoStep implements Step {
 
         sessionResponse.setButtons(responseButtons);
         sessionResponse.setMessage(responseMessage);
+
+        userService.saveUser(user);
     }
 }

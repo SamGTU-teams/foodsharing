@@ -1,12 +1,12 @@
-package ru.rassafel.foodsharing.common.service;
+package ru.rassafel.bot.session.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.rassafel.foodsharing.common.repository.user.AbstractUserRepository;
-import ru.rassafel.foodsharing.common.repository.user.TgUserRepository;
+import ru.rassafel.bot.session.repository.user.AbstractUserRepository;
+import ru.rassafel.bot.session.repository.user.TgUserRepository;
 import ru.rassafel.foodsharing.common.model.PlatformType;
-import ru.rassafel.foodsharing.common.model.entity.user.User;
-import ru.rassafel.foodsharing.common.repository.user.VkUserRepository;
+import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.repository.user.VkUserRepository;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -30,8 +30,7 @@ public class UserService {
         else if(type == PlatformType.VK){
             return vkUserRepository.findById(id).map(Function.identity());
         }else {
-            throw new RuntimeException();
+            throw new RuntimeException("Not found PlatformType");
         }
     }
-
 }

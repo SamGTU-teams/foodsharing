@@ -1,4 +1,4 @@
-package ru.rassafel.foodsharing.common.model.entity.user;
+package ru.rassafel.bot.session.model.entity.user;
 
 import lombok.Data;
 import ru.rassafel.foodsharing.common.model.entity.product.Product;

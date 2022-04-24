@@ -8,10 +8,12 @@ import ru.rassafel.bot.session.exception.BotException;
 import ru.rassafel.bot.session.model.BotButtons;
 import ru.rassafel.bot.session.service.ProductService;
 import ru.rassafel.bot.session.step.Step;
+import ru.rassafel.bot.session.util.ProductButtonsUtil;
 import ru.rassafel.foodsharing.common.model.entity.product.Product;
-import ru.rassafel.foodsharing.common.model.entity.user.EmbeddedUserSession;
-import ru.rassafel.foodsharing.common.model.entity.user.User;
-import ru.rassafel.foodsharing.common.repository.ProductRepository;
+import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
+import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.repository.ProductRepository;
+import ru.rassafel.bot.session.service.UserService;
 
 @Component("product-3")
 @RequiredArgsConstructor
@@ -19,7 +21,8 @@ public class AddNewProductStep implements Step {
 
     private final ProductService productService;
     private final ProductRepository productRepository;
-    private final ChooseNewProductStep chooseNewProductStep;
+    private final UserService userService;
+
 
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
@@ -30,6 +33,7 @@ public class AddNewProductStep implements Step {
         String responseMessage;
         BotButtons responseButtons = new BotButtons();
 
+        int resultSessionStep = 2;
         if(message.equals("попробовать еще")){
             responseMessage = "Введите продукт еще раз";
         }else {
@@ -41,12 +45,23 @@ public class AddNewProductStep implements Step {
                 responseMessage = "У вас уже есть такой продукт, введите еще";
             } else {
                 user.addProduct(productByName);
-                responseMessage = "Вы успешно добавили продукт! Введите еще";
+                responseMessage = "Вы успешно добавили продукт!\n";
+
+                int productCount = user.getProducts().size();
+                if(productCount > 2){
+                    responseMessage += "Вы не можете добавить более 100 продуктов, удалите несколько чтобы добавить еще";
+                    resultSessionStep = 1;
+                    responseButtons.addAll(ProductButtonsUtil.PRODUCT_MAIN_BUTTONS);
+                }else{
+                    responseMessage += "Введите еще";
+                }
             }
         }
-        userSession.setSessionStep(2);
+        userSession.setSessionStep(resultSessionStep);
 
-        sessionResponse.setButtons(responseButtons);
         sessionResponse.setMessage(responseMessage);
+        sessionResponse.setButtons(responseButtons);
+
+        userService.saveUser(user);
     }
 }

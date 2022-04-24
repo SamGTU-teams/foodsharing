@@ -8,10 +8,9 @@ import ru.rassafel.bot.session.exception.BotException;
 import ru.rassafel.bot.session.model.BotButtons;
 import ru.rassafel.bot.session.service.ProductService;
 import ru.rassafel.bot.session.step.Step;
-import ru.rassafel.foodsharing.common.model.entity.user.EmbeddedUserSession;
-import ru.rassafel.foodsharing.common.model.entity.user.User;
-
-import java.util.stream.Collectors;
+import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
+import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.service.UserService;
 
 import static ru.rassafel.bot.session.util.ProductButtonsUtil.PRODUCT_MAIN_BUTTONS;
 
@@ -20,6 +19,7 @@ import static ru.rassafel.bot.session.util.ProductButtonsUtil.PRODUCT_MAIN_BUTTO
 public class ChooseOperationProductStep  implements Step {
 
     private final ProductService productService;
+    private final UserService userService;
 
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
@@ -31,7 +31,10 @@ public class ChooseOperationProductStep  implements Step {
         BotButtons responseButtons = new BotButtons();
 
         if (message.equals("добавить продукт")) {
-
+            int productCount = user.getProducts().size();
+            if(productCount > 2 ){
+                throw new BotException(user.getId(), "Вы не можете добавить больше 100 продуктов, сначала удалите несколько");
+            }
             responseMessage = "Введите название продукта, который хотите добавить";
 
             userSession.setSessionStep(2);
@@ -65,5 +68,7 @@ public class ChooseOperationProductStep  implements Step {
 
         sessionResponse.setButtons(responseButtons);
         sessionResponse.setMessage(responseMessage);
+
+        userService.saveUser(user);
     }
 }

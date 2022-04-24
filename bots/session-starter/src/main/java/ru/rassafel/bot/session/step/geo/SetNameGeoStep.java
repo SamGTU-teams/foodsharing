@@ -8,10 +8,11 @@ import ru.rassafel.bot.session.dto.SessionResponse;
 import ru.rassafel.bot.session.exception.BotException;
 import ru.rassafel.bot.session.model.BotButtons;
 import ru.rassafel.bot.session.step.Step;
-import ru.rassafel.foodsharing.common.model.entity.geo.Place;
-import ru.rassafel.foodsharing.common.model.entity.user.User;
-import ru.rassafel.foodsharing.common.model.entity.user.EmbeddedUserSession;
-import ru.rassafel.foodsharing.common.service.PlaceService;
+import ru.rassafel.bot.session.model.entity.place.Place;
+import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
+import ru.rassafel.bot.session.service.PlaceService;
+import ru.rassafel.bot.session.service.UserService;
 
 import java.util.Collection;
 
@@ -23,6 +24,7 @@ public class SetNameGeoStep implements Step {
 
     private final Cache<Long, Place> geoPointCache;
     private final PlaceService placeService;
+    private final UserService userService;
 
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
@@ -34,6 +36,7 @@ public class SetNameGeoStep implements Step {
             userSession.setSessionActive(false);
             sessionResponse.setButtons(new BotButtons(DEFAULT_BUTTONS));
             sessionResponse.setMessage("Время данной операции истекло");
+            userService.saveUser(user);
             return;
         }
 
@@ -48,5 +51,7 @@ public class SetNameGeoStep implements Step {
         sessionResponse.setMessage("Отлично, а теперь укажите радиус поиска вокруг этого места, по умолчанию радиус будет указан в 1 км");
         sessionResponse.setButtons(new BotButtons().addButton(new BotButtons.BotButton("Оставить как есть")));
         userSession.setSessionStep(4);
+
+        userService.saveUser(user);
     }
 }

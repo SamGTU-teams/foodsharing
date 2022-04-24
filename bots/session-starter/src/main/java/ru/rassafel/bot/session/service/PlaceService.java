@@ -1,14 +1,14 @@
-package ru.rassafel.foodsharing.common.service;
+package ru.rassafel.bot.session.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.rassafel.foodsharing.common.model.PlatformType;
-import ru.rassafel.foodsharing.common.model.entity.geo.Place;
-import ru.rassafel.foodsharing.common.model.entity.geo.TgUserPlace;
-import ru.rassafel.foodsharing.common.model.entity.geo.VkUserPlace;
-import ru.rassafel.foodsharing.common.model.entity.user.User;
-import ru.rassafel.foodsharing.common.repository.place.TgUserPlaceRepository;
-import ru.rassafel.foodsharing.common.repository.place.VkUserPlaceRepository;
+import ru.rassafel.bot.session.model.entity.place.Place;
+import ru.rassafel.bot.session.model.entity.place.TgUserPlace;
+import ru.rassafel.bot.session.model.entity.place.VkUserPlace;
+import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.repository.place.TgUserPlaceRepository;
+import ru.rassafel.bot.session.repository.place.VkUserPlaceRepository;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -39,9 +39,13 @@ public class PlaceService {
     }
 
     public Map<Integer, String> getUsersPlacesNamesMap(User user, PlatformType platformType){
-        int[] productCounter = {1};
         Collection<Place> usersPlaces = findByUserId(user.getId(), platformType);
-        return usersPlaces.stream().map(Place::getName).collect(Collectors.toMap(
+        return getUsersPlacesNamesMap(usersPlaces);
+    }
+
+    public Map<Integer, String> getUsersPlacesNamesMap(Collection<Place> places){
+        int[] productCounter = {1};
+        return places.stream().map(Place::getName).collect(Collectors.toMap(
             o -> productCounter[0]++,
             o -> o
         ));

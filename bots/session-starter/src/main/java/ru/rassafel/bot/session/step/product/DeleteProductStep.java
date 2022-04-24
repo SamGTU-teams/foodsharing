@@ -10,8 +10,9 @@ import ru.rassafel.bot.session.service.ProductService;
 import ru.rassafel.bot.session.step.Step;
 import ru.rassafel.bot.session.util.SessionUtil;
 import ru.rassafel.foodsharing.common.model.entity.product.Product;
-import ru.rassafel.foodsharing.common.model.entity.user.EmbeddedUserSession;
-import ru.rassafel.foodsharing.common.model.entity.user.User;
+import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
+import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.service.UserService;
 
 import java.util.Collection;
 import java.util.Map;
@@ -24,6 +25,8 @@ import static ru.rassafel.bot.session.util.ProductButtonsUtil.PRODUCT_MAIN_BUTTO
 public class DeleteProductStep implements Step {
 
     private final ProductService productService;
+    private final UserService userService;
+
 
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
@@ -55,6 +58,8 @@ public class DeleteProductStep implements Step {
             responseMessage = "Продукты удалены, введите еще\n\n" +
                 productService.getUsersProductNamesMapMessage(user);
         }
+
+        userService.saveUser(user);
 
         sessionResponse.setButtons(responseButtons);
         sessionResponse.setMessage(responseMessage);

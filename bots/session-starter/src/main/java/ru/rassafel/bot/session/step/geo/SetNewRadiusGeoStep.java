@@ -3,16 +3,19 @@ package ru.rassafel.bot.session.step.geo;
 import com.github.benmanes.caffeine.cache.Cache;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.support.TransactionTemplate;
 import ru.rassafel.bot.session.dto.SessionRequest;
 import ru.rassafel.bot.session.dto.SessionResponse;
 import ru.rassafel.bot.session.exception.BotException;
 import ru.rassafel.bot.session.model.BotButtons;
 import ru.rassafel.bot.session.util.GeoButtonsUtil;
-import ru.rassafel.foodsharing.common.model.entity.geo.Place;
+import ru.rassafel.bot.session.model.entity.place.Place;
 import ru.rassafel.bot.session.step.Step;
-import ru.rassafel.foodsharing.common.model.entity.user.User;
-import ru.rassafel.foodsharing.common.model.entity.user.EmbeddedUserSession;
-import ru.rassafel.foodsharing.common.service.PlaceService;
+import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
+import ru.rassafel.bot.session.service.PlaceService;
+import ru.rassafel.bot.session.service.UserService;
 
 import static ru.rassafel.bot.session.util.ButtonsUtil.DEFAULT_BUTTONS;
 
@@ -22,6 +25,8 @@ public class SetNewRadiusGeoStep implements Step {
 
     private final Cache<Long, Place> geoPointCache;
     private final PlaceService placeService;
+    private final UserService userService;
+    private final PlatformTransactionManager transactionManager;
 
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
@@ -34,6 +39,7 @@ public class SetNewRadiusGeoStep implements Step {
             userSession.setSessionActive(false);
             sessionResponse.setButtons(new BotButtons(DEFAULT_BUTTONS));
             sessionResponse.setMessage("Время данной операции истекло");
+            userService.saveUser(user);
             return;
         }
 
@@ -47,13 +53,19 @@ public class SetNewRadiusGeoStep implements Step {
             throw new BotException(user.getId(), "Нужно ввести число");
         }
 
-
         editable.setRadius(newRadius);
-        placeService.save(editable, sessionRequest.getType());
-        geoPointCache.invalidate(user.getId());
+        userSession.setSessionStep(1);
+
+        TransactionTemplate template = new TransactionTemplate(transactionManager);
+        template.setName("SetNewRadiusGeoStep.executeStep");
+
+        template.executeWithoutResult(transactionStatus -> {
+            placeService.save(editable, sessionRequest.getType());
+            userService.saveUser(user);
+        });
 
         sessionResponse.setButtons(new BotButtons().addAll(GeoButtonsUtil.GEO_MAIN_BUTTONS));
+        geoPointCache.invalidate(user.getId());
         sessionResponse.setMessage("Место изменено!");
-        userSession.setSessionStep(1);
     }
 }

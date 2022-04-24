@@ -8,3 +8,12 @@ vk:
     groupId: 1
     accessToken: TOKEN
 
+session-starter:
+  enabled: true
+
+vk:
+  server:
+    confirm_code: 88d7c1ae
+  bot:
+    groupId: ${VK_BOT_GROUP_ID:1}
+    accessToken: ${VK_BOT_ACCESS_TOKEN:testAccessToken}

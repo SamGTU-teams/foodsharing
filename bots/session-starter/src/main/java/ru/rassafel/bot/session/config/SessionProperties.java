@@ -14,4 +14,6 @@ public class SessionProperties {
     public static final String PREFIX = "bot.session";
 
     private Duration expirationTime;
+
+    private boolean enabled = true;
 }

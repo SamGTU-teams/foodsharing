@@ -7,8 +7,8 @@ import ru.rassafel.bot.session.dto.SessionResponse;
 import ru.rassafel.bot.session.dto.To;
 import ru.rassafel.bot.session.step.StepFinder;
 import ru.rassafel.bot.session.type.BotSession;
-import ru.rassafel.foodsharing.common.model.entity.user.EmbeddedUserSession;
-import ru.rassafel.foodsharing.common.model.entity.user.User;
+import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
+import ru.rassafel.bot.session.model.entity.user.User;
 
 @Component("productSession")
 @RequiredArgsConstructor

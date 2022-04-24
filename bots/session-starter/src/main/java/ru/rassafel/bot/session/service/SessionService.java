@@ -8,11 +8,9 @@ import ru.rassafel.bot.session.exception.BotException;
 import ru.rassafel.bot.session.interceptor.ExitSessionInterceptor;
 import ru.rassafel.bot.session.mapper.UserDtoMapper;
 import ru.rassafel.bot.session.type.BotSession;
-import ru.rassafel.foodsharing.common.model.entity.user.User;
-import ru.rassafel.foodsharing.common.model.entity.user.EmbeddedUserSession;
-import ru.rassafel.foodsharing.common.service.UserService;
+import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
 
-import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -26,7 +24,6 @@ public class SessionService {
     private final FilePropertiesService messageService;
     private final SessionUtil sessionUtil;
 
-    @Transactional
     public SessionResponse handle(SessionRequest request) {
 
         String userMessage = request.getMessage();

@@ -1,7 +1,7 @@
-package ru.rassafel.foodsharing.common.repository.user;
+package ru.rassafel.bot.session.repository.user;
 
 import org.springframework.data.repository.CrudRepository;
-import ru.rassafel.foodsharing.common.model.entity.user.User;
+import ru.rassafel.bot.session.model.entity.user.User;
 
 public interface AbstractUserRepository extends CrudRepository<User, Long> {
 }
