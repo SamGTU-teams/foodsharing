@@ -11,9 +11,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
-/**
- * @author rassafel
- */
 @Entity
 @Table(schema = "tg_bot", name = "tg_user")
 @RequiredArgsConstructor
@@ -22,7 +19,7 @@ import java.util.Collection;
 @Setter
 public class TgUser extends User {
     @ManyToMany
-    @JoinTable(schema = "tg_bot", name = "user_products",
+    @JoinTable(schema = "tg_bot", name = "tg_user_products",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "product_id"))
     private Collection<Product> products = new ArrayList<>();

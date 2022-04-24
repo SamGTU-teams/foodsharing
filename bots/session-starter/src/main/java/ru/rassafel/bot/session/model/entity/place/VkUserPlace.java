@@ -4,11 +4,7 @@ import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
+import javax.persistence.*;
 
 @Entity
 @Table(schema = "vk_bot", name = "vk_place")
@@ -23,5 +19,6 @@ public class VkUserPlace extends Place {
             @Parameter(name = "sequence_name", value = "vk_bot.place_id_sequence")
         }
     )
+    @Column(name = "id", nullable = false)
     private Long id;
 }

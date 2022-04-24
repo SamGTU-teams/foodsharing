@@ -19,7 +19,7 @@ public class EmbeddedUserSession {
 
     private String sessionName = "";
     private Integer sessionStep = 0;
-    private boolean sessionActive;
+    private boolean sessionActive = false;
 
     public void incrementStep() {
         sessionStep += 1;

@@ -14,9 +14,12 @@ public abstract class User {
     private Long id;
     @Embedded
     @AttributeOverrides({
-        @AttributeOverride(name = "sessionName", column = @Column(name = "session_name", nullable = false)),
-        @AttributeOverride(name = "sessionStep", column = @Column(name = "session_step", nullable = false)),
-        @AttributeOverride(name = "sessionActive", column = @Column(name = "session_active", nullable = false))
+        @AttributeOverride(name = "sessionName",
+            column = @Column(name = "session_name", nullable = false, length = 63)),
+        @AttributeOverride(name = "sessionStep",
+            column = @Column(name = "session_step", nullable = false)),
+        @AttributeOverride(name = "sessionActive",
+            column = @Column(name = "session_active", nullable = false))
     })
     private EmbeddedUserSession userSession = EmbeddedUserSession.EMPTY;
 
