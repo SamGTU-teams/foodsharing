@@ -11,7 +11,7 @@ import ru.rassafel.foodsharing.analyzer.model.LuceneIndexedString;
 import ru.rassafel.foodsharing.analyzer.repository.LuceneRepository;
 import ru.rassafel.foodsharing.analyzer.repository.ProductRepository;
 import ru.rassafel.foodsharing.analyzer.service.ProductLuceneAnalyzerService;
-import ru.rassafel.foodsharing.common.model.entity.Product;
+import ru.rassafel.foodsharing.common.model.entity.product.Product;
 import ru.rassafel.foodsharing.parser.model.RawPost;
 
 import java.util.Arrays;

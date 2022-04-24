@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.rassafel.foodsharing.analyzer.controller.ProductAnalyzerController;
 import ru.rassafel.foodsharing.analyzer.model.dto.ScoreProductDto;
 import ru.rassafel.foodsharing.analyzer.service.ProductAnalyzerService;
-import ru.rassafel.foodsharing.common.model.entity.Product;
+import ru.rassafel.foodsharing.common.model.entity.product.Product;
 import ru.rassafel.foodsharing.common.model.mapper.ProductMapper;
 
 import java.util.Comparator;

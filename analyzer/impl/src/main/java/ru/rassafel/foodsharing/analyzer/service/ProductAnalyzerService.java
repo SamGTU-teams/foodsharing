@@ -1,7 +1,7 @@
 package ru.rassafel.foodsharing.analyzer.service;
 
 import org.springframework.data.util.Pair;
-import ru.rassafel.foodsharing.common.model.entity.Product;
+import ru.rassafel.foodsharing.common.model.entity.product.Product;
 import ru.rassafel.foodsharing.parser.model.RawPost;
 
 /**
