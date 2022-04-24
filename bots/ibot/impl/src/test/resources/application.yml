@@ -1,1 +1,6 @@
+spring:
+  rabbitmq:
+    consumer:
+      exchangeName: post-ready-exchange
+      queueName: post.ready.main
 

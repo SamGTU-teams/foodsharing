@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.rassafel.foodsharing.ibot.model.entity.FoodPost;
 import ru.rassafel.foodsharing.ibot.model.mapper.FoodPostMapper;
-import ru.rassafel.foodsharing.ibot.model.mapper.FoodPostMapperImpl;
 
 /**
  * @author rassafel
@@ -13,10 +12,8 @@ import ru.rassafel.foodsharing.ibot.model.mapper.FoodPostMapperImpl;
 @Configuration
 @EntityScan(basePackageClasses = FoodPost.class)
 public class IBotConfiguration {
-
     @Bean
     public FoodPostMapper foodPostMapper(){
         return FoodPostMapper.INSTANCE;
     }
-
 }
