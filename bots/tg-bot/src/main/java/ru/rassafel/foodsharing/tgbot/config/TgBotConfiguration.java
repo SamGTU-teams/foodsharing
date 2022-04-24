@@ -27,5 +27,4 @@ public class TgBotConfiguration {
         options.setProxyPort(9150);
         return new TgBotHandlerService(botUsername, botUsername, webHookPath);
     }
-
 }

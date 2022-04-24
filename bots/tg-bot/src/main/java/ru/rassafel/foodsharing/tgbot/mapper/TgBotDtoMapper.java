@@ -13,7 +13,6 @@ import ru.rassafel.bot.session.model.BotButtons;
 import ru.rassafel.bot.session.util.ButtonsUtil;
 import ru.rassafel.foodsharing.common.model.PlatformType;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -37,6 +36,12 @@ public abstract class TgBotDtoMapper {
         String text = ofNullable(message.getText()).orElse("#geoPositionRequest");
         request.setMessage(text.toLowerCase().trim());
         request.setType(PlatformType.TG);
+    }
+
+    public SessionRequest mapFromUpdate(Update update){
+        SessionRequest mapped = map(update);
+        map(update, mapped);
+        return mapped;
     }
 
     @Mappings({

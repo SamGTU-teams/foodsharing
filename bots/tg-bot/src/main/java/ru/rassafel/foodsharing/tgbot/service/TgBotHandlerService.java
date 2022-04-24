@@ -29,7 +29,7 @@ public class TgBotHandlerService extends TelegramWebhookBot {
     @SneakyThrows
     @Override
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
-        SessionRequest request = mapper.map(update);
+        SessionRequest request = mapper.mapFromUpdate(update);
         SessionResponse sessionResponse;
         try {
             sessionResponse = service.handle(request);
