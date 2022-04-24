@@ -119,6 +119,7 @@ services:
     environment:
       VK_BOT_GROUP_ID: $VK_BOT_GROUP_ID
       VK_BOT_ACCESS_TOKEN: $VK_BOT_ACCESS_TOKEN
+      VK_CONFIRM_CODE: $VK_CONFIRM_CODE
     depends_on:
       config:
         condition: service_healthy

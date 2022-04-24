@@ -6,6 +6,8 @@ spring:
     contexts: vk-bot,data
 
 vk:
+  server:
+    confirm_code: ${VK_CONFIRM_CODE}
   bot:
     groupId: ${VK_BOT_GROUP_ID}
     accessToken: ${VK_BOT_ACCESS_TOKEN}

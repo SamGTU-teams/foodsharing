@@ -11,6 +11,7 @@ ENV spring_profiles_active=docker \
     CONFIG_SERVER_URL=http://config:8888/ \
     VK_BOT_GROUP_ID=12345 \
     VK_BOT_ACCESS_TOKEN=TEST \
+    VK_CONFIRM_CODE=TEST \
     SERVER_PORT=8040
 
 EXPOSE ${SERVER_PORT}
