@@ -21,13 +21,10 @@ import ru.rassafel.bot.session.service.SessionService;
 import ru.rassafel.bot.session.util.ButtonsUtil;
 import ru.rassafel.bot.session.util.ProductButtonsUtil;
 import ru.rassafel.foodsharing.common.model.PlatformType;
-import ru.rassafel.foodsharing.common.model.entity.product.Product;
-import ru.rassafel.foodsharing.common.model.entity.user.User;
-import ru.rassafel.foodsharing.common.model.entity.user.VkUser;
-import ru.rassafel.foodsharing.common.repository.ProductRepository;
-import ru.rassafel.foodsharing.common.repository.user.VkUserRepository;
+import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.model.entity.user.VkUser;
+import ru.rassafel.bot.session.repository.user.VkUserRepository;
 
-import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +38,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @ActiveProfiles("h2")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class VkBotApplicationIntegrationTest {
+class ProductTestSessionVkBot {
 
     final Long userId = 12345L;
 

@@ -1,4 +1,4 @@
-package ru.rassafel.foodsharing.common.model.entity.geo;
+package ru.rassafel.bot.session.model.entity.place;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;

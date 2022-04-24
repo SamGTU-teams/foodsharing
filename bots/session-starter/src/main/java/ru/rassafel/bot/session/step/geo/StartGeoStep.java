@@ -6,13 +6,10 @@ import ru.rassafel.bot.session.dto.SessionRequest;
 import ru.rassafel.bot.session.dto.SessionResponse;
 import ru.rassafel.bot.session.model.BotButtons;
 import ru.rassafel.bot.session.step.Step;
-import ru.rassafel.bot.session.util.ButtonsUtil;
 import ru.rassafel.bot.session.util.GeoButtonsUtil;
-import ru.rassafel.foodsharing.common.model.entity.user.User;
-import ru.rassafel.foodsharing.common.model.entity.user.EmbeddedUserSession;
-import ru.rassafel.foodsharing.common.service.UserService;
-
-import java.util.List;
+import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
+import ru.rassafel.bot.session.service.UserService;
 
 @Component("geo-0")
 @RequiredArgsConstructor

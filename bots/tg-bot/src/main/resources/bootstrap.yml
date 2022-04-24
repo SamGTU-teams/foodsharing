@@ -8,7 +8,6 @@ spring:
       enabled: true
   profiles:
     active: ${SPR_PROFILE:default}
-
 server:
   port: ${SERVER_PORT:8030}
 

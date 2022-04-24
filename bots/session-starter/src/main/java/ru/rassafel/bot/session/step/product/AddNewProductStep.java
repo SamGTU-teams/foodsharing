@@ -10,10 +10,10 @@ import ru.rassafel.bot.session.service.ProductService;
 import ru.rassafel.bot.session.step.Step;
 import ru.rassafel.bot.session.util.ProductButtonsUtil;
 import ru.rassafel.foodsharing.common.model.entity.product.Product;
-import ru.rassafel.foodsharing.common.model.entity.user.EmbeddedUserSession;
-import ru.rassafel.foodsharing.common.model.entity.user.User;
-import ru.rassafel.foodsharing.common.repository.ProductRepository;
-import ru.rassafel.foodsharing.common.service.UserService;
+import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
+import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.repository.ProductRepository;
+import ru.rassafel.bot.session.service.UserService;
 
 @Component("product-3")
 @RequiredArgsConstructor

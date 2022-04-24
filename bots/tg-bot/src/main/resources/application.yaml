@@ -1,27 +1,5 @@
-spring:
-  h2:
-    console:
-      enabled: true
-      path: /h2
-  datasource:
-    driverClassName: org.h2.Driver
-    url: jdbc:h2:file:./.h2/testdb;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1
-    username: sa
-    password:
-  jpa:
-    hibernate:
-      ddl-auto: none
-    show-sql: true
-    properties:
-      hibernate:
-          format_sql: true
-  liquibase:
-    enabled: true
-    change-log: classpath:init_foodsharing_db.sql
 tg:
   bot:
     webHookPath: ${TG_BOT_WEB_HOOK_PATH}
     username: ${TG_BOT_USERNAME}
     token: ${TG_BOT_TOKEN}
-session-starter:
-  enabled: true

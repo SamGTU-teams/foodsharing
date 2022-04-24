@@ -1,6 +1,5 @@
 package ru.rassafel.foodsharing.vkbot.service;
 
-import com.vk.api.sdk.client.ClientResponse;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.GroupActor;
 import com.vk.api.sdk.exceptions.ApiException;
@@ -8,20 +7,15 @@ import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.objects.messages.*;
 import com.vk.api.sdk.queries.messages.MessagesSendQuery;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import ru.rassafel.bot.session.dto.SessionResponse;
 import ru.rassafel.bot.session.model.BotButtons;
-import ru.rassafel.bot.session.util.ButtonsUtil;
-import ru.rassafel.foodsharing.common.repository.user.VkUserRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

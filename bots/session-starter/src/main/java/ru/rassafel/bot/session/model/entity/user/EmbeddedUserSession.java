@@ -1,4 +1,4 @@
-package ru.rassafel.foodsharing.common.model.entity.user;
+package ru.rassafel.bot.session.model.entity.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -18,7 +18,6 @@ public class TgBotEndpoint {
 
     @PostMapping
     public BotApiMethod<?> handleUpdate(@RequestBody Update update) {
-
         return tgBotHandlerService.onWebhookUpdateReceived(update);
     }
 

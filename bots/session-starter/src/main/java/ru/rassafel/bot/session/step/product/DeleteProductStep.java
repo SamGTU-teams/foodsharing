@@ -10,9 +10,9 @@ import ru.rassafel.bot.session.service.ProductService;
 import ru.rassafel.bot.session.step.Step;
 import ru.rassafel.bot.session.util.SessionUtil;
 import ru.rassafel.foodsharing.common.model.entity.product.Product;
-import ru.rassafel.foodsharing.common.model.entity.user.EmbeddedUserSession;
-import ru.rassafel.foodsharing.common.model.entity.user.User;
-import ru.rassafel.foodsharing.common.service.UserService;
+import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
+import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.service.UserService;
 
 import java.util.Collection;
 import java.util.Map;

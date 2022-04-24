@@ -9,11 +9,11 @@ import ru.rassafel.bot.session.dto.To;
 import ru.rassafel.bot.session.model.BotButtons;
 import ru.rassafel.bot.session.service.FilePropertiesService;
 import ru.rassafel.bot.session.type.BotSession;
-import ru.rassafel.foodsharing.common.model.entity.geo.Place;
-import ru.rassafel.foodsharing.common.model.entity.user.EmbeddedUserSession;
-import ru.rassafel.foodsharing.common.model.entity.user.User;
+import ru.rassafel.bot.session.model.entity.place.Place;
+import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
+import ru.rassafel.bot.session.model.entity.user.User;
 import ru.rassafel.bot.session.util.ButtonsUtil;
-import ru.rassafel.foodsharing.common.service.UserService;
+import ru.rassafel.bot.session.service.UserService;
 
 @Component
 @RequiredArgsConstructor

@@ -1,14 +1,14 @@
-package ru.rassafel.foodsharing.common.service;
+package ru.rassafel.bot.session.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.rassafel.foodsharing.common.model.PlatformType;
-import ru.rassafel.foodsharing.common.model.entity.geo.Place;
-import ru.rassafel.foodsharing.common.model.entity.geo.TgUserPlace;
-import ru.rassafel.foodsharing.common.model.entity.geo.VkUserPlace;
-import ru.rassafel.foodsharing.common.model.entity.user.User;
-import ru.rassafel.foodsharing.common.repository.place.TgUserPlaceRepository;
-import ru.rassafel.foodsharing.common.repository.place.VkUserPlaceRepository;
+import ru.rassafel.bot.session.model.entity.place.Place;
+import ru.rassafel.bot.session.model.entity.place.TgUserPlace;
+import ru.rassafel.bot.session.model.entity.place.VkUserPlace;
+import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.repository.place.TgUserPlaceRepository;
+import ru.rassafel.bot.session.repository.place.VkUserPlaceRepository;
 
 import java.util.ArrayList;
 import java.util.Collection;

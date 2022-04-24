@@ -10,12 +10,12 @@ import ru.rassafel.bot.session.dto.SessionRequest;
 import ru.rassafel.bot.session.dto.SessionResponse;
 import ru.rassafel.bot.session.exception.BotException;
 import ru.rassafel.bot.session.model.BotButtons;
-import ru.rassafel.foodsharing.common.model.entity.geo.Place;
+import ru.rassafel.bot.session.model.entity.place.Place;
 import ru.rassafel.bot.session.step.Step;
-import ru.rassafel.foodsharing.common.model.entity.user.User;
-import ru.rassafel.foodsharing.common.model.entity.user.EmbeddedUserSession;
-import ru.rassafel.foodsharing.common.service.PlaceService;
-import ru.rassafel.foodsharing.common.service.UserService;
+import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
+import ru.rassafel.bot.session.service.PlaceService;
+import ru.rassafel.bot.session.service.UserService;
 
 import static ru.rassafel.bot.session.util.ButtonsUtil.DEFAULT_BUTTONS;
 import static ru.rassafel.bot.session.util.GeoButtonsUtil.GEO_MAIN_BUTTONS;

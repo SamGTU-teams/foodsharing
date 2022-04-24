@@ -1,7 +1,7 @@
-package ru.rassafel.foodsharing.common.repository.place;
+package ru.rassafel.bot.session.repository.place;
 
 import org.springframework.data.repository.CrudRepository;
-import ru.rassafel.foodsharing.common.model.entity.geo.VkUserPlace;
+import ru.rassafel.bot.session.model.entity.place.VkUserPlace;
 
 import java.util.Collection;
 

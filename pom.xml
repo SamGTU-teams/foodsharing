@@ -95,11 +95,11 @@
                 <version>${hibernate.version}</version>
             </dependency>
 
-<!--            <dependency>-->
-<!--                <groupId>com.playtika.testcontainers</groupId>-->
-<!--                <artifactId>embedded-postgresql</artifactId>-->
-<!--                <version>${testcontainers.version}</version>-->
-<!--            </dependency>-->
+            <dependency>
+                <groupId>com.playtika.testcontainers</groupId>
+                <artifactId>embedded-postgresql</artifactId>
+                <version>${testcontainers.version}</version>
+            </dependency>
 
 
             <dependency>
@@ -172,11 +172,11 @@
             <scope>test</scope>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>com.playtika.testcontainers</groupId>-->
-<!--            <artifactId>embedded-postgresql</artifactId>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.playtika.testcontainers</groupId>
+            <artifactId>embedded-postgresql</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
