@@ -35,14 +35,14 @@
         <addForeignKeyConstraint baseTableSchemaName="vk_parser"
                                  baseTableName="group_regions"
                                  baseColumnNames="region_id"
-                                 constraintName="FK_VK_PARSER_GROUP_REGIONS_REGION_ID"
+                                 constraintName="FK_VK_PARSER_GROUP_REGIONS_ON_REGION_"
                                  referencedTableSchemaName="public"
                                  referencedTableName="region"
                                  referencedColumnNames="id"/>
         <addForeignKeyConstraint baseTableSchemaName="vk_parser"
                                  baseTableName="group_regions"
                                  baseColumnNames="group_id"
-                                 constraintName="FK_VK_PARSER_GROUP_REGIONS_GROUP_ID"
+                                 constraintName="FK_VK_PARSER_GROUP_REGIONS_ON_GROUP"
                                  referencedTableSchemaName="vk_parser"
                                  referencedTableName="group"
                                  referencedColumnNames="id"/>

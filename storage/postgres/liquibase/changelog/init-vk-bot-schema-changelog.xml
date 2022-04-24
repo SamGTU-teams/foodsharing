@@ -36,7 +36,7 @@
                              primaryKey="true"
                              primaryKeyName="PK_VK_PLACE"/>
             </column>
-            <column name="name" type="VARCHAR(255)">
+            <column name="name" type="VARCHAR(63)">
                 <constraints nullable="false"/>
             </column>
             <column name="radius" type="INT" defaultValueNumeric="1000">
@@ -62,7 +62,7 @@
                                  referencedColumnNames="id"/>
 
         <createSequence schemaName="vk_bot"
-                        sequenceName="place_id_sequence"
+                        sequenceName="vk_bot_place_id_seq"
                         startValue="1"
                         incrementBy="1"/>
 
@@ -75,20 +75,20 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+
         <addForeignKeyConstraint baseTableSchemaName="vk_bot"
                                  baseTableName="vk_user_products"
                                  baseColumnNames="product_id"
-                                 constraintName="FK_VKUSEPRO_ON_PRODUCT"
+                                 constraintName="FK_VK_USER_PRODUCTS_ON_PRODUCT"
                                  referencedTableSchemaName="public"
                                  referencedTableName="product"
                                  referencedColumnNames="id"/>
         <addForeignKeyConstraint baseTableSchemaName="vk_bot"
                                  baseTableName="vk_user_products"
                                  baseColumnNames="user_id"
-                                 constraintName="FK_VKUSEPRO_ON_VK_USER"
+                                 constraintName="FK_VK_USER_PRODUCTS_ON_VK_USER"
                                  referencedTableSchemaName="vk_bot"
                                  referencedTableName="vk_user"
                                  referencedColumnNames="id"/>
-
     </changeSet>
 </databaseChangeLog>

@@ -61,7 +61,7 @@
         <addForeignKeyConstraint baseColumnNames="category_id"
                                  baseTableName="product"
                                  baseTableSchemaName="public"
-                                 constraintName="FK_PRODUCT_CATEGORY_ID"
+                                 constraintName="FK_PRODUCT_ON_CATEGORY"
                                  referencedColumnNames="id"
                                  referencedTableName="category"
                                  referencedTableSchemaName="public"/>
