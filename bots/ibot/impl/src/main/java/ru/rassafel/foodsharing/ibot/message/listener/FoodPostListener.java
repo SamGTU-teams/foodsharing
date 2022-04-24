@@ -15,12 +15,11 @@ import ru.rassafel.foodsharing.ibot.repository.FoodPostRepository;
 @RequiredArgsConstructor
 @Slf4j
 @Component
-public class FoodPostListener implements MessageListener<FoodPostDto> {
+public class FoodPostListener {
     private final FoodPostRepository repository;
 
     private final FoodPostMapper mapper;
 
-    @Override
     public void receiveMessage(FoodPostDto foodPostDto) {
         log.debug("Accepted message: {}", foodPostDto);
 
