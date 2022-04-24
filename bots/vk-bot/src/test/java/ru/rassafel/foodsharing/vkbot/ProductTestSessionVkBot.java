@@ -39,7 +39,6 @@ import static org.mockito.Mockito.when;
 @ActiveProfiles("integration-test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ProductTestSessionVkBot {
-
     final Long userId = 12345L;
 
     final SessionRequest request = SessionRequest.builder()
@@ -149,13 +148,13 @@ class ProductTestSessionVkBot {
 
         SessionResponse finishedResponse = service.handle(request);
 
-        assertResponse(request, finishedResponse, "Вы успешно добавили продукт! Введите еще");
+        assertResponse(request, finishedResponse, "Вы успешно добавили продукт!\nВведите еще");
 
         assertButtons(finishedResponse, List.of("На главную"));
 
         assertUserAndUserSessionAndGetUser(SessionEnum.PRODUCT.getBeanName(), 2, true);
 
-        List<Map<String, Object>> usersProducts = jdbc.queryForList("select * from product p join vk_bot.user_products up on p.id = up.product_id where up.user_id = ?",
+        List<Map<String, Object>> usersProducts = jdbc.queryForList("select * from product p join vk_bot.vk_user_products up on p.id = up.product_id where up.user_id = ?",
             userId);
         assertThat(usersProducts)
             .hasSize(1);
@@ -176,5 +175,4 @@ class ProductTestSessionVkBot {
             .hasFieldOrPropertyWithValue("sessionActive", active);
         return byId.get();
     }
-
 }
