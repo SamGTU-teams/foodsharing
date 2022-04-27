@@ -4,8 +4,12 @@
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="load-public-data-01" author="rassafel" context="!test">
+        <loadData tableName="category" file="db/data/categories.csv"/>
+        <loadData tableName="product" file="db/data/products.csv"/>
+    </changeSet>
 
-    <changeSet id="1650815614040-1" author="rassafel" context="test">
+    <changeSet id="load-public-test-data-01" author="rassafel" context="test">
         <insert tableName="category">
             <column name="id" valueNumeric="1"/>
             <column name="name" value="Зелень"/>
