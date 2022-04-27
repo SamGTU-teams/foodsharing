@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @ConfigurationProperties(prefix = VkParserProperties.PREFIX)
 public class VkParserProperties {
-    public static final String PREFIX = "application";
+    public static final String PREFIX = "vk.parser";
 
     private String callbackUrl;
 

@@ -4,6 +4,7 @@ spring:
   liquibase:
     contexts: vk-parser,data
 
-application:
-  callbackUrl: ${CALLBACK_URL}
-  serverTitle: GetFood_Parser
+vk:
+  parser:
+    callbackUrl: ${CALLBACK_URL}
+    serverTitle: GetFood_Parser

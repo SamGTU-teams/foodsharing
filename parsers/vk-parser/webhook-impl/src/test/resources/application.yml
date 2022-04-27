@@ -5,6 +5,7 @@ spring:
     change-log: classpath:/db/changelog/master-changelog.xml
     contexts: vk-parser,data,test
 
-application:
-  callbackUrl: localhost:${server.port:8080}/callback
-  serverTitle: GetFood_Parser
+vk:
+  parser:
+    callbackUrl: localhost:${server.port:8080}/callback
+    serverTitle: GetFood_Parser
