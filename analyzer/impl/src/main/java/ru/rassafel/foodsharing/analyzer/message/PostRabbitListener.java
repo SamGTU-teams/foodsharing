@@ -45,7 +45,7 @@ import java.util.Set;
 public class PostRabbitListener {
     private final RabbitTemplate template;
     private final LuceneRepository luceneRepository;
-    private final ProductLuceneAnalyzerService productsAnalyzer;
+    private final ProductLuceneAnalyzerService productService;
     private final GeoLuceneAnalyzerService geoAnalyzer;
     private final ProductMapper mapper;
     private final Validator validator;
@@ -59,10 +59,10 @@ public class PostRabbitListener {
         }
 
         FoodPost result = new FoodPost();
-        LuceneIndexedString postText = luceneRepository.add(rawPost.getText());
+        LuceneIndexedString postText = luceneRepository.add(rawPost.getText().toLowerCase());
         try {
             List<ProductDto> products = Streamable
-                .of(productsAnalyzer.parseProducts(rawPost, postText))
+                .of(productService.parseProducts(rawPost, postText))
                 .map(ScoreProduct::getProduct)
                 .map(mapper::entityToDto)
                 .toList();

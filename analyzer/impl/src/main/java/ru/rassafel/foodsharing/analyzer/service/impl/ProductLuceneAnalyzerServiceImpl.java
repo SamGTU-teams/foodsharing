@@ -38,6 +38,7 @@ public class ProductLuceneAnalyzerServiceImpl implements ProductLuceneAnalyzerSe
     @Override
     public List<ScoreProduct> parseProducts(String... strings) {
         LuceneIndexedString[] indexedStrings = Arrays.stream(strings)
+            .map(String::toLowerCase)
             .map(luceneRepository::add)
             .toArray(LuceneIndexedString[]::new);
         List<ScoreProduct> result = parseProducts(indexedStrings);
@@ -88,7 +89,7 @@ public class ProductLuceneAnalyzerServiceImpl implements ProductLuceneAnalyzerSe
     }
 
     FuzzyQuery fizzyQuery(String text) {
-        return new FuzzyQuery(new Term(LuceneRepository.FIELD_BODY, text),
+        return new FuzzyQuery(new Term(LuceneRepository.FIELD_BODY, text.toLowerCase()),
             params.getMaxEdits(),
             params.getPrefixLength(),
             params.getMaxExpansions(),
