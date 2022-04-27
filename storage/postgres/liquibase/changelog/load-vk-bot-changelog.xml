@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="1650814559402-1" author="rassafel" context="test">
+    <changeSet id="load-vk-bot-test-data-01" author="rassafel" context="test">
         <insert schemaName="vk_bot"
                 tableName="vk_user">
             <column name="id" valueNumeric="1"/>
