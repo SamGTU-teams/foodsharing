@@ -15,7 +15,7 @@ import org.mockito.Answers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import ru.rassafel.foodsharing.vkparser.config.ApplicationProperties;
+import ru.rassafel.foodsharing.vkparser.config.VkParserProperties;
 import ru.rassafel.foodsharing.vkparser.model.entity.VkGroup;
 import ru.rassafel.foodsharing.vkparser.repository.GroupRepository;
 
@@ -41,7 +41,7 @@ class GroupServiceImplTest {
     VkApiClient client;
 
     @Mock
-    ApplicationProperties properties;
+    VkParserProperties properties;
 
     VkGroup accepted;
 

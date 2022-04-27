@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.rassafel.foodsharing.vkparser.config.ApplicationProperties;
+import ru.rassafel.foodsharing.vkparser.config.VkParserProperties;
 import ru.rassafel.foodsharing.vkparser.model.entity.VkGroup;
 import ru.rassafel.foodsharing.vkparser.repository.GroupRepository;
 import ru.rassafel.foodsharing.vkparser.service.GroupService;
@@ -26,7 +26,7 @@ import static ru.rassafel.foodsharing.vkparser.util.GroupUtil.throwIfSecretKeyNo
 public class GroupServiceImpl implements GroupService {
     private final VkApiClient api;
     private final GroupRepository repository;
-    private final ApplicationProperties properties;
+    private final VkParserProperties properties;
 
     @Override
     @Transactional

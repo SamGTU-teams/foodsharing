@@ -16,11 +16,11 @@ import ru.rassafel.foodsharing.vkparser.model.mapper.VkGroupMapper;
  * @author rassafel
  */
 @Configuration
-@EnableConfigurationProperties(ApplicationProperties.class)
+@EnableConfigurationProperties(VkParserProperties.class)
 @EntityScan(basePackageClasses = VkGroup.class)
-public class ApplicationConfiguration {
+public class VkParserConfiguration {
     @Bean
-    VkApiClient vkApiClient(ApplicationProperties properties) {
+    VkApiClient vkApiClient(VkParserProperties properties) {
         HttpTransportClient instance = new HttpTransportClient(
             properties.getRetryAttemptsNetworkErrorCount(),
             properties.getRetryAttemptsInvalidStatusCount());

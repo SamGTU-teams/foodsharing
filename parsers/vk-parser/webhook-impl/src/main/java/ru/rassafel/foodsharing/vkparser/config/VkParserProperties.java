@@ -7,8 +7,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author rassafel
  */
 @Data
-@ConfigurationProperties(prefix = ApplicationProperties.PREFIX)
-public class ApplicationProperties {
+@ConfigurationProperties(prefix = VkParserProperties.PREFIX)
+public class VkParserProperties {
     public static final String PREFIX = "application";
 
     private String callbackUrl;
