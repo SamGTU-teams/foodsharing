@@ -14,6 +14,7 @@ current_dir = os.path.dirname(os.path.realpath(__file__))
     *[current_dir, "liquibase", "data", f]) for f in ["categories.csv", "products.csv"]]
 
 categories = dict()
+products = set()
 category_index, product_index = count(start=1), count(start=1)
 
 with open(categories_path, 'w', newline='') as writer_cat, \
@@ -27,8 +28,11 @@ with open(categories_path, 'w', newline='') as writer_cat, \
     reader = map(lambda l: l.decode('utf-8'), reader)
     for row in csv.DictReader(reader, delimiter=','):
         category, product = row['category'], row['product']
+        if product in products:
+            continue
+        products.add(product)
         category_id = categories.get(category)
-        if category_id == None:
+        if category_id is None:
             category_id = next(category_index)
             categories[category] = category_id
             csv_cat.writerow({'id': category_id, 'name': category})
