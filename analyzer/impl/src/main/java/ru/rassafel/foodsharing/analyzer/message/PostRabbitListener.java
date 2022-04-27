@@ -5,12 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.rabbit.annotation.*;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.data.util.Pair;
+import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Component;
 import ru.rassafel.foodsharing.analyzer.exception.GeoPointParseException;
 import ru.rassafel.foodsharing.analyzer.exception.ParseException;
 import ru.rassafel.foodsharing.analyzer.exception.ProductParseException;
 import ru.rassafel.foodsharing.analyzer.model.LuceneIndexedString;
+import ru.rassafel.foodsharing.analyzer.model.ScoreProduct;
 import ru.rassafel.foodsharing.analyzer.model.dto.FoodPost;
 import ru.rassafel.foodsharing.analyzer.repository.LuceneRepository;
 import ru.rassafel.foodsharing.analyzer.service.GeoLuceneAnalyzerService;
@@ -26,8 +27,6 @@ import javax.validation.Validator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 /**
  * @author rassafel
@@ -62,11 +61,11 @@ public class PostRabbitListener {
         FoodPost result = new FoodPost();
         LuceneIndexedString postText = luceneRepository.add(rawPost.getText());
         try {
-            List<ProductDto> products = StreamSupport
-                .stream(productsAnalyzer.parseProducts(rawPost, postText).spliterator(), false)
-                .map(Pair::getFirst)
+            List<ProductDto> products = Streamable
+                .of(productsAnalyzer.parseProducts(rawPost, postText))
+                .map(ScoreProduct::getProduct)
                 .map(mapper::entityToDto)
-                .collect(Collectors.toList());
+                .toList();
             if (products.isEmpty()) {
                 log.debug("Post does not contains products: {}", rawPost);
                 throw new ProductParseException("Post does not contains products");

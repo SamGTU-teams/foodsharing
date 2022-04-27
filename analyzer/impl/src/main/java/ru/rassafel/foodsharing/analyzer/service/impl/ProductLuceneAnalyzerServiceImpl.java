@@ -5,9 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.*;
 import org.springframework.data.util.Pair;
+import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
 import ru.rassafel.foodsharing.analyzer.config.LuceneProperties;
 import ru.rassafel.foodsharing.analyzer.model.LuceneIndexedString;
+import ru.rassafel.foodsharing.analyzer.model.ScoreProduct;
 import ru.rassafel.foodsharing.analyzer.repository.LuceneRepository;
 import ru.rassafel.foodsharing.analyzer.repository.ProductRepository;
 import ru.rassafel.foodsharing.analyzer.service.ProductLuceneAnalyzerService;
@@ -16,7 +18,6 @@ import ru.rassafel.foodsharing.parser.model.RawPost;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.StreamSupport;
 
 /**
  * @author rassafel
@@ -30,36 +31,36 @@ public class ProductLuceneAnalyzerServiceImpl implements ProductLuceneAnalyzerSe
     private final LuceneProperties params;
 
     @Override
-    public List<Pair<Product, Float>> parseProducts(RawPost post) {
+    public List<ScoreProduct> parseProducts(RawPost post) {
         return parseProducts(post.getText());
     }
 
     @Override
-    public List<Pair<Product, Float>> parseProducts(String... strings) {
+    public List<ScoreProduct> parseProducts(String... strings) {
         LuceneIndexedString[] indexedStrings = Arrays.stream(strings)
             .map(luceneRepository::add)
             .toArray(LuceneIndexedString[]::new);
-        List<Pair<Product, Float>> result = parseProducts(indexedStrings);
+        List<ScoreProduct> result = parseProducts(indexedStrings);
         luceneRepository.unregisterAll(List.of(indexedStrings));
         return result;
     }
 
     @Override
-    public List<Pair<Product, Float>> parseProducts(RawPost post, LuceneIndexedString... indexedStrings) {
+    public List<ScoreProduct> parseProducts(RawPost post, LuceneIndexedString... indexedStrings) {
         return parseProducts(indexedStrings);
     }
 
     @Override
-    public List<Pair<Product, Float>> parseProducts(LuceneIndexedString... indexedStrings) {
+    public List<ScoreProduct> parseProducts(LuceneIndexedString... indexedStrings) {
         Query byIdQuery = findByIdQuery(indexedStrings);
 
         return productRepository.findAll()
             .map(product -> parseProduct(product, byIdQuery))
-            .filter(pair -> pair.getSecond() > 0)
+            .filter(pair -> pair.getScore() > 0f)
             .toList();
     }
 
-    Pair<Product, Float> parseProduct(Product product, Query findByIdQuery) {
+    ScoreProduct parseProduct(Product product, Query findByIdQuery) {
         Query fizzyQuery = fizzyQuery(product.getName());
         BooleanQuery query = new BooleanQuery.Builder()
             .add(fizzyQuery, BooleanClause.Occur.MUST)
@@ -68,12 +69,12 @@ public class ProductLuceneAnalyzerServiceImpl implements ProductLuceneAnalyzerSe
 
         int maxResults = params.getLuceneMaxResults();
 
-        float maxScore = StreamSupport
-            .stream(luceneRepository.search(query, maxResults).spliterator(), false)
+        return Streamable.of(luceneRepository.search(query, maxResults))
             .map(Pair::getSecond)
+            .stream()
             .max(Float::compare)
-            .orElse(0f);
-        return Pair.of(product, maxScore);
+            .map(f -> new ScoreProduct(f, product))
+            .orElseGet(() -> new ScoreProduct(0f, product));
     }
 
     BooleanQuery findByIdQuery(LuceneIndexedString... indexedStrings) {
