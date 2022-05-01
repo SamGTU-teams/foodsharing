@@ -17,6 +17,7 @@ import ru.rassafel.foodsharing.vkparser.repository.GroupRepository;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -66,8 +67,9 @@ class CallbackServiceImplTest {
             RawPost expected = new RawPost();
             expected.setText("Test text");
             expected.setDate(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC));
-            expected.setUrl("https://vk.com/club1?w=wall-1_2");
+            expected.setUrl("https://vk.com/wall-1_2");
             expected.setContext(new PostContext());
+            expected.getContext().setAttachments(List.of());
 
             when(repository.findById(any()))
                 .thenReturn(Optional.of(fromDb));
@@ -78,11 +80,11 @@ class CallbackServiceImplTest {
             verify(template).convertAndSend(wallpostCapture.capture());
             RawPost captured = wallpostCapture.getValue();
 
-            assertThat(captured)
+            assertThat(actual)
                 .isNotNull()
                 .isNotSameAs(sourceWallpost)
                 .isNotSameAs(expected)
-                .isSameAs(actual)
+                .isSameAs(captured)
                 .isEqualToComparingFieldByField(expected);
         }
 

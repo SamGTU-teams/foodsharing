@@ -1,10 +1,8 @@
 spring:
-  rabbitmq:
-    exchangeName: post-raw-exchange
   liquibase:
     contexts: vk-parser,data
 
 vk:
   parser:
     callbackUrl: ${CALLBACK_URL}
-    serverTitle: GetFood_Parser
+    serverTitle: GetFoodWall
