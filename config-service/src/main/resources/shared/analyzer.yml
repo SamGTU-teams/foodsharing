@@ -1,8 +1,7 @@
 spring:
   rabbitmq:
-    consumer:
-      exchange: post-raw-exchange
+    raw-post:
       queue: post.raw.analyzer
-    producer:
-      exchange: post-ready-exchange
-
+      dlq: post.raw.dlq.analyzer
+  liquibase:
+    contexts: data
