@@ -18,7 +18,7 @@ services:
       context: ./config-service
       dockerfile: Dockerfile
     ports:
-      - "80:8888"
+      - "8888:80"
 
   parser:
     build:
@@ -26,7 +26,7 @@ services:
       dockerfile: Dockerfile
     restart: "no"
     ports:
-      - "80:8000"
+      - "8000:80"
 
   analyzer:
     build:
@@ -34,7 +34,7 @@ services:
       dockerfile: Dockerfile
     restart: "no"
     ports:
-      - "80:8010"
+      - "8010:80"
 
   ibot:
     build:
@@ -42,7 +42,7 @@ services:
       dockerfile: Dockerfile
     restart: "no"
     ports:
-      - "80:8020"
+      - "8020:80"
 
   tg-bot:
     build:
@@ -50,7 +50,7 @@ services:
       dockerfile: Dockerfile
     restart: "no"
     ports:
-      - "80:8030"
+      - "8030:80"
 
   vk-bot:
     build:
@@ -58,7 +58,7 @@ services:
       dockerfile: Dockerfile
     restart: "no"
     ports:
-      - "80:8040"
+      - "8040:80"
 
   ad:
     build:
@@ -66,4 +66,4 @@ services:
       dockerfile: Dockerfile
     restart: "no"
     ports:
-      - "80:8050"
+      - "8050:80"
