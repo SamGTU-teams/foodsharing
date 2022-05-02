@@ -13,7 +13,7 @@ import ru.rassafel.foodsharing.ibot.model.mapper.FoodPostMapper;
 @EntityScan(basePackageClasses = FoodPost.class)
 public class IBotConfiguration {
     @Bean
-    public FoodPostMapper foodPostMapper(){
+    public FoodPostMapper foodPostMapper() {
         return FoodPostMapper.INSTANCE;
     }
 }

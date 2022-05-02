@@ -27,6 +27,9 @@ public class IBotServiceImpl implements IBotService {
                                           LocalDateTime after,
                                           List<Product> products) {
         return repository.findNearbyPosts(point.getLat(), point.getLon(),
-            range, after, products.stream().map(Product::getId).collect(Collectors.toList()));
+            range, after,
+            products.stream()
+                .map(Product::getId)
+                .collect(Collectors.toList()));
     }
 }
