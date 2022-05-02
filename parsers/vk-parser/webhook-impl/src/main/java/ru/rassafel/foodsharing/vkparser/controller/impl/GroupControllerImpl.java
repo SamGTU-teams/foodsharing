@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import ru.rassafel.foodsharing.common.exception.ApiException;
 import ru.rassafel.foodsharing.vkparser.controller.GroupController;
 import ru.rassafel.foodsharing.vkparser.model.entity.VkGroup;
 import ru.rassafel.foodsharing.vkparser.model.mapper.VkGroupMapper;
@@ -27,8 +28,8 @@ public class GroupControllerImpl implements GroupController {
         VkGroup group = mapper.map(groupDto);
         try {
             service.registerWithAccess(group);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (ApiException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
         }
         return ResponseEntity.ok().build();
     }

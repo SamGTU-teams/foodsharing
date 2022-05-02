@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
+import ru.rassafel.foodsharing.common.exception.ApiException;
 import ru.rassafel.foodsharing.common.model.dto.RegionDto;
 import ru.rassafel.foodsharing.common.model.mapper.RegionMapper;
 import ru.rassafel.foodsharing.parser.model.RawPost;
@@ -59,7 +60,7 @@ public class CallbackServiceImpl implements CallbackService {
         } else {
             log.warn("Group with id = {} does not exists in DB.", groupId);
 //          ToDo: Create exception class.
-            throw new RuntimeException("Group not registered.");
+            throw new ApiException("Group not registered.");
         }
         return group;
     }
