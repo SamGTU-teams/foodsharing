@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 import ru.rassafel.foodsharing.analyzer.model.dto.FoodPostDto;
-import ru.rassafel.foodsharing.common.model.entity.Product;
+import ru.rassafel.foodsharing.common.model.entity.product.Product;
 import ru.rassafel.foodsharing.common.model.mapper.ProductMapper;
 import ru.rassafel.foodsharing.ibot.controller.IBotController;
 import ru.rassafel.foodsharing.ibot.model.dto.RequestFoodPostDto;

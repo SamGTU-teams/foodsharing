@@ -12,7 +12,7 @@ import ru.rassafel.foodsharing.analyzer.exception.ParseException;
 import ru.rassafel.foodsharing.analyzer.exception.ProductParseException;
 import ru.rassafel.foodsharing.analyzer.model.LuceneIndexedString;
 import ru.rassafel.foodsharing.analyzer.model.ScoreProduct;
-import ru.rassafel.foodsharing.analyzer.model.dto.FoodPost;
+import ru.rassafel.foodsharing.analyzer.model.dto.FoodPostDto;
 import ru.rassafel.foodsharing.analyzer.repository.LuceneRepository;
 import ru.rassafel.foodsharing.analyzer.service.GeoLuceneAnalyzerService;
 import ru.rassafel.foodsharing.analyzer.service.ProductLuceneAnalyzerService;
@@ -53,7 +53,7 @@ public class PostRabbitListener {
             return;
         }
 
-        FoodPost result = new FoodPost();
+        FoodPostDto result = new FoodPostDto();
         LuceneIndexedString postText = luceneRepository.add(rawPost.getText().toLowerCase());
         try {
             List<ProductDto> products = Streamable

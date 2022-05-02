@@ -16,7 +16,7 @@ import java.util.List;
  * @author rassafel
  */
 @Data
-public class FoodPost {
+public class FoodPostDto {
     private String url;
 
     @NotNull

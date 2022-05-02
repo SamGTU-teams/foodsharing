@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.rassafel.foodsharing.common.model.GeoPoint;
-import ru.rassafel.foodsharing.common.model.entity.Product;
+import ru.rassafel.foodsharing.common.model.entity.product.Product;
 import ru.rassafel.foodsharing.ibot.model.entity.FoodPost;
 import ru.rassafel.foodsharing.ibot.repository.FoodPostRepository;
 import ru.rassafel.foodsharing.ibot.service.IBotService;
