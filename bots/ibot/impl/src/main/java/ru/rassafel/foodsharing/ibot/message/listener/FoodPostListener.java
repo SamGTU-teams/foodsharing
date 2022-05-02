@@ -2,8 +2,8 @@ package ru.rassafel.foodsharing.ibot.message.listener;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.ExchangeTypes;
-import org.springframework.amqp.rabbit.annotation.*;
+import org.springframework.amqp.rabbit.annotation.RabbitHandler;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 import ru.rassafel.foodsharing.analyzer.model.dto.FoodPostDto;
 import ru.rassafel.foodsharing.ibot.model.entity.FoodPost;
@@ -16,13 +16,7 @@ import ru.rassafel.foodsharing.ibot.repository.FoodPostRepository;
 @RequiredArgsConstructor
 @Slf4j
 @Component
-@RabbitListener(
-    bindings = {
-        @QueueBinding(
-            value = @Queue(value = "${spring.rabbitmq.consumer.queue}"),
-            exchange = @Exchange(value = "${spring.rabbitmq.consumer.exchange}", type = ExchangeTypes.FANOUT)
-        )
-    })
+@RabbitListener(queues = {"${spring.rabbitmq.ready-post.queue}"})
 public class FoodPostListener {
     private final FoodPostRepository repository;
 
