@@ -21,7 +21,7 @@ services:
     image: postgis/postgis:10-3.2
     restart: always
     volumes:
-      - ./storage/postgres/initdb:/docker-entrypoint-initdb.d
+      - ./storage/postgres/initdb/init_foodsharing_db.sql:/docker-entrypoint-initdb.d/init_schema.sql
       - ./storage/postgres/data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: foodsharing
