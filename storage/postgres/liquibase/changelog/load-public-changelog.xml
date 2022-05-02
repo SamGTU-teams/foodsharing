@@ -153,11 +153,5 @@
             <column name="name" value="Перец чёрный"/>
             <column name="category_id" valueNumeric="8"/>
         </insert>
-        <insert schemaName="public"
-                tableName="product">
-            <column name="id" valueNumeric="17"/>
-            <column name="name" value="Брусничный соус"/>
-            <column name="category_id" valueNumeric="9"/>
-        </insert>
     </changeSet>
 </databaseChangeLog>

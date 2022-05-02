@@ -1,6 +1,8 @@
 spring:
   rabbitmq:
-    exchangeName: post-raw-exchange
+    raw-post:
+      exchange: post-raw-exchange
+      storage: post.raw.storage
   liquibase:
     change-log: classpath:/db/changelog/master-changelog.xml
     contexts: vk-parser,data,test
@@ -8,4 +10,4 @@ spring:
 vk:
   parser:
     callbackUrl: localhost:${server.port:8080}/callback
-    serverTitle: GetFood_Parser
+    serverTitle: GetFoodWall

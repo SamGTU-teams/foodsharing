@@ -1,7 +1,12 @@
 spring:
   rabbitmq:
-    exchangeName: post-ready-exchange
-    queueName: post.ready.main
+    ready-post:
+      exchange: post-ready-exchange
+      storage: post.ready.storage
+      queue: post.ready.ibot
+      dlx: post-ready-dlx
+      dlq-storage: post.ready.dlq.storage
+      dlq: post.ready.dlq.ibot
   liquibase:
     change-log: classpath:/db/changelog/master-changelog.xml
     contexts: ibot,data,test

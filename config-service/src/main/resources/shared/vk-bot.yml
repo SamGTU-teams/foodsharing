@@ -1,7 +1,11 @@
 spring:
   rabbitmq:
-    exchangeName: post-ready-exchange
-    queueName: post.ready.vk
+    ready-post:
+      queue: post.ready.vk
+      dlq: post.ready.dlq.vk
+    ad-post:
+      queue: post.ad.vk
+      dlq: post.ad.dlq.vk
   liquibase:
     contexts: vk-bot,data
 

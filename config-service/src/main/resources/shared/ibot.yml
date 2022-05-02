@@ -1,6 +1,7 @@
 spring:
   rabbitmq:
-    exchangeName: post-ready-exchange
-    queueName: post.ready.main
+    ready-post:
+      queue: post.ready.ibot
+      dlq: post.ready.dlq.ibot
   liquibase:
     contexts: ibot,data
