@@ -16,7 +16,8 @@
                   usePreparedStatements="true"/>
     </changeSet>
 
-    <changeSet id="load-public-test-data-region-01" author="rassafel" context="test">
+    <changeSet id="load-public-test-data-region-01" author="rassafel"
+               context="test">
         <insert schemaName="public"
                 tableName="region">
             <column name="id" valueNumeric="1"/>
