@@ -7,6 +7,7 @@ import ru.rassafel.foodsharing.common.model.entity.product.Product;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -14,11 +15,9 @@ import java.util.Set;
  */
 @Entity
 @Table(schema = "ibot", name = "food_post")
-@Getter
-@Setter
+@Data
 @RequiredArgsConstructor
-@EqualsAndHashCode
-@ToString
+@AllArgsConstructor
 public class FoodPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,7 +48,7 @@ public class FoodPost {
             foreignKey = @ForeignKey(name = "FK_IBOT_FOOD_POST_REGIONS_REGION_ID")))
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Set<Region> regions;
+    private Set<Region> regions = new HashSet<>();
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(schema = "ibot", name = "food_post_products",
@@ -59,5 +58,5 @@ public class FoodPost {
             foreignKey = @ForeignKey(name = "FK_IBOT_FOOD_POST_PRODUCTS_PRODUCT_ID")))
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Set<Product> products;
+    private Set<Product> products = new HashSet<>();
 }

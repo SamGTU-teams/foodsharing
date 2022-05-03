@@ -2,13 +2,13 @@ package ru.rassafel.foodsharing.common.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 /**
  * @author rassafel
  */
 @Data
-@NoArgsConstructor
+@RequiredArgsConstructor
 @AllArgsConstructor
 public class GeoPoint {
     private double lat;

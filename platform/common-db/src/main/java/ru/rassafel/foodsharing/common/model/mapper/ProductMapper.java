@@ -9,9 +9,6 @@ import ru.rassafel.foodsharing.common.model.entity.product.Product;
 import java.util.List;
 import java.util.Set;
 
-import java.util.List;
-import java.util.Set;
-
 /**
  * @author rassafel
  */
