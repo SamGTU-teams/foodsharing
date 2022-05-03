@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
  */
 @Data
 @RequiredArgsConstructor
-@AllArgsConstructor
 public class ApiException extends RuntimeException {
     public ApiException(String message) {
         super(message);
