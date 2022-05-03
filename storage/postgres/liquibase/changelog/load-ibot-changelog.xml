@@ -11,7 +11,7 @@
             <column name="url" value="http://testurl.com"/>
             <column name="date" valueDate="2022-05-02 12:00:00"/>
             <column name="text"
-                    value="Text text with region and test products like: яблако, зефир, хлеб и греча"/>
+                    value="СамГТУ: Text text with region and test products like: яблако, зефир, хлеб и греча"/>
             <column name="lat" valueNumeric="53.207442"/>
             <column name="lon" valueNumeric="50.1238752"/>
         </insert>
@@ -50,7 +50,7 @@
             <column name="url" value="http://testurl.com"/>
             <column name="date" valueDate="2022-05-03 12:00:00"/>
             <column name="text"
-                    value="Text text with test products like: яблако, кефир и молоко"/>
+                    value="СамГТУ АСУ: Text text with test products like: яблако, кефир и молоко"/>
             <column name="lat" valueNumeric="53.1953243"/>
             <column name="lon" valueNumeric="50.1058904"/>
         </insert>
