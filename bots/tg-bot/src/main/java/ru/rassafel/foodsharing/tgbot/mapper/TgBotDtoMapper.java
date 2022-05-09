@@ -1,6 +1,7 @@
 package ru.rassafel.foodsharing.tgbot.mapper;
 
 import org.mapstruct.*;
+import org.mapstruct.factory.Mappers;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -19,8 +20,9 @@ import java.util.stream.Collectors;
 
 import static java.util.Optional.ofNullable;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public abstract class TgBotDtoMapper implements UserDtoMapper {
+    public static final TgBotDtoMapper INSTANCE = Mappers.getMapper(TgBotDtoMapper.class);
     @Mappings({
         @Mapping(source = "message", target = "message", ignore = true),
         @Mapping(source = "message.chat.id", target = "from.id"),

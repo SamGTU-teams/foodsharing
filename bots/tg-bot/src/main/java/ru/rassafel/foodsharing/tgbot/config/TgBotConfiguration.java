@@ -15,6 +15,11 @@ import ru.rassafel.foodsharing.tgbot.service.TgBotHandlerService;
 @EntityScan(basePackages = "ru.rassafel.foodsharing.tgbot.model")
 public class TgBotConfiguration {
     @Bean
+    TgBotDtoMapper tgBotDtoMapper() {
+        return TgBotDtoMapper.INSTANCE;
+    }
+
+    @Bean
     public TgBotHandlerService foodSharingWebHookBot(TgBotProperties properties) {
         DefaultBotOptions options = ApiContext.getInstance(DefaultBotOptions.class);
         options.setProxyHost("localhost");

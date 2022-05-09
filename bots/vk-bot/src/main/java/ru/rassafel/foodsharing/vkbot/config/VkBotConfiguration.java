@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import ru.rassafel.foodsharing.vkbot.mapper.VkBotDtoMapper;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -24,6 +25,11 @@ import java.util.concurrent.BlockingQueue;
 @EnableScheduling
 @EntityScan(basePackages = "ru.rassafel.foodsharing.vkbot.model.domain")
 public class VkBotConfiguration {
+    @Bean
+    VkBotDtoMapper vkBotDtoMapper() {
+        return VkBotDtoMapper.INSTANCE;
+    }
+
     @Bean
     VkApiClient vkApiClient(VkBotProperties properties) {
         HttpTransportClient instance = new HttpTransportClient(

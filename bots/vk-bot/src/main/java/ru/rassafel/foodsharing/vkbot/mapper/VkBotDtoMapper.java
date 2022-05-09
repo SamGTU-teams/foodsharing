@@ -1,13 +1,15 @@
 package ru.rassafel.foodsharing.vkbot.mapper;
 
 import org.mapstruct.*;
+import org.mapstruct.factory.Mappers;
 import ru.rassafel.bot.session.model.dto.SessionRequest;
 import ru.rassafel.bot.session.model.mapper.UserDtoMapper;
 import ru.rassafel.foodsharing.vkbot.model.domain.VkUser;
 import ru.rassafel.foodsharing.vkbot.model.dto.VkUpdate;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public abstract class VkBotDtoMapper implements UserDtoMapper {
+    public static final VkBotDtoMapper INSTANCE = Mappers.getMapper(VkBotDtoMapper.class);
 
     @Mappings({
         @Mapping(source = "type", target = "type", ignore = true),
