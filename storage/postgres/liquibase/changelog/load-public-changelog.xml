@@ -5,7 +5,10 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
     <changeSet id="load-public-data-products-01" author="rassafel"
-               context="!test">
+               context="!test"
+               runAlways="false"
+               runOnChange="false"
+               failOnError="false">
         <loadData schemaName="public"
                   tableName="category"
                   file="db/data/categories.csv"
