@@ -1,6 +1,8 @@
 package ru.rassafel.foodsharing.common.model.entity.geo;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 
@@ -10,11 +12,9 @@ import javax.persistence.*;
 @Entity
 @Table(schema = "public", name = "region",
     uniqueConstraints = @UniqueConstraint(name = "UQ_REGION_NAME", columnNames = "name"))
-@Getter
-@Setter
+@Data
 @RequiredArgsConstructor
-@EqualsAndHashCode
-@ToString
+@AllArgsConstructor
 public class Region {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

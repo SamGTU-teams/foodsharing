@@ -4,7 +4,11 @@
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
-    <changeSet id="load-public-data-01" author="rassafel" context="!test">
+    <changeSet id="load-public-data-products-01" author="rassafel"
+               context="!test"
+               runAlways="false"
+               runOnChange="false"
+               failOnError="false">
         <loadData schemaName="public"
                   tableName="category"
                   file="db/data/categories.csv"
@@ -15,16 +19,28 @@
                   usePreparedStatements="true"/>
     </changeSet>
 
-    <changeSet id="load-public-test-data-01" author="rassafel" context="test">
+    <changeSet id="load-public-test-data-region-01" author="rassafel"
+               context="test">
+        <insert schemaName="public"
+                tableName="region">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="Самара"/>
+            <column name="lat" valueNumeric="53.2608259"/>
+            <column name="lon" valueNumeric="50.0579964"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="load-public-test-data-products-01" author="rassafel"
+               context="test">
         <insert schemaName="public"
                 tableName="category">
             <column name="id" valueNumeric="1"/>
-            <column name="name" value="Зелень"/>
+            <column name="name" value="Овощи"/>
         </insert>
         <insert schemaName="public"
                 tableName="category">
             <column name="id" valueNumeric="2"/>
-            <column name="name" value="Десерты и сладости"/>
+            <column name="name" value="Молочные продукты"/>
         </insert>
         <insert schemaName="public"
                 tableName="category">
@@ -39,119 +55,91 @@
         <insert schemaName="public"
                 tableName="category">
             <column name="id" valueNumeric="5"/>
-            <column name="name" value="Масла"/>
-        </insert>
-        <insert schemaName="public"
-                tableName="category">
-            <column name="id" valueNumeric="6"/>
-            <column name="name" value="Овощи"/>
-        </insert>
-        <insert schemaName="public"
-                tableName="category">
-            <column name="id" valueNumeric="7"/>
             <column name="name" value="Крупы и злаки"/>
         </insert>
         <insert schemaName="public"
                 tableName="category">
-            <column name="id" valueNumeric="8"/>
-            <column name="name" value="Специи"/>
+            <column name="id" valueNumeric="6"/>
+            <column name="name" value="Десерты и сладости"/>
         </insert>
 
         <insert schemaName="public"
                 tableName="product">
             <column name="id" valueNumeric="1"/>
-            <column name="name" value="Лук-батун"/>
-            <column name="category_id" valueNumeric="1"/>
-        </insert>
-        <insert schemaName="public"
-                tableName="product">
-            <column name="id" valueNumeric="2"/>
-            <column name="name" value="Коржи"/>
-            <column name="category_id" valueNumeric="2"/>
-        </insert>
-        <insert schemaName="public"
-                tableName="product">
-            <column name="id" valueNumeric="3"/>
-            <column name="name" value="Сухари"/>
-            <column name="category_id" valueNumeric="3"/>
-        </insert>
-        <insert schemaName="public"
-                tableName="product">
-            <column name="id" valueNumeric="4"/>
-            <column name="name" value="Цедра лимона"/>
-            <column name="category_id" valueNumeric="4"/>
-        </insert>
-        <insert schemaName="public"
-                tableName="product">
-            <column name="id" valueNumeric="5"/>
-            <column name="name" value="Бейгл"/>
-            <column name="category_id" valueNumeric="3"/>
-        </insert>
-        <insert schemaName="public"
-                tableName="product">
-            <column name="id" valueNumeric="6"/>
-            <column name="name" value="Масло виноградных косточек"/>
+            <column name="name" value="Гречка"/>
             <column name="category_id" valueNumeric="5"/>
         </insert>
         <insert schemaName="public"
                 tableName="product">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="Манка"/>
+            <column name="category_id" valueNumeric="5"/>
+        </insert>
+        <insert schemaName="public"
+                tableName="product">
+            <column name="id" valueNumeric="3"/>
+            <column name="name" value="Кефир"/>
+            <column name="category_id" valueNumeric="2"/>
+        </insert>
+        <insert schemaName="public"
+                tableName="product">
+            <column name="id" valueNumeric="4"/>
+            <column name="name" value="Молоко"/>
+            <column name="category_id" valueNumeric="2"/>
+        </insert>
+        <insert schemaName="public"
+                tableName="product">
+            <column name="id" valueNumeric="5"/>
+            <column name="name" value="Сыр"/>
+            <column name="category_id" valueNumeric="2"/>
+        </insert>
+        <insert schemaName="public"
+                tableName="product">
+            <column name="id" valueNumeric="6"/>
+            <column name="name" value="Хлеб"/>
+            <column name="category_id" valueNumeric="3"/>
+        </insert>
+        <insert schemaName="public"
+                tableName="product">
             <column name="id" valueNumeric="7"/>
-            <column name="name" value="Сухари из хлеба"/>
+            <column name="name" value="Батон"/>
             <column name="category_id" valueNumeric="3"/>
         </insert>
         <insert schemaName="public"
                 tableName="product">
             <column name="id" valueNumeric="8"/>
-            <column name="name" value="Оливки зелёные"/>
-            <column name="category_id" valueNumeric="4"/>
-        </insert>
-        <insert schemaName="public"
-                tableName="product">
-            <column name="id" valueNumeric="9"/>
-            <column name="name" value="Пита"/>
+            <column name="name" value="Макароны"/>
             <column name="category_id" valueNumeric="3"/>
         </insert>
         <insert schemaName="public"
                 tableName="product">
+            <column name="id" valueNumeric="9"/>
+            <column name="name" value="Капуста"/>
+            <column name="category_id" valueNumeric="1"/>
+        </insert>
+        <insert schemaName="public"
+                tableName="product">
             <column name="id" valueNumeric="10"/>
-            <column name="name" value="Фасоль розовая"/>
-            <column name="category_id" valueNumeric="6"/>
+            <column name="name" value="Картофель"/>
+            <column name="category_id" valueNumeric="1"/>
         </insert>
         <insert schemaName="public"
                 tableName="product">
             <column name="id" valueNumeric="11"/>
-            <column name="name" value="Коржи бисквитные"/>
-            <column name="category_id" valueNumeric="2"/>
+            <column name="name" value="Груша"/>
+            <column name="category_id" valueNumeric="4"/>
         </insert>
         <insert schemaName="public"
                 tableName="product">
             <column name="id" valueNumeric="12"/>
-            <column name="name" value="Фасоль пёстрая"/>
-            <column name="category_id" valueNumeric="6"/>
+            <column name="name" value="Яблоко"/>
+            <column name="category_id" valueNumeric="4"/>
         </insert>
         <insert schemaName="public"
                 tableName="product">
             <column name="id" valueNumeric="13"/>
-            <column name="name" value="Салат айсберг"/>
+            <column name="name" value="Зефир"/>
             <column name="category_id" valueNumeric="6"/>
-        </insert>
-        <insert schemaName="public"
-                tableName="product">
-            <column name="id" valueNumeric="14"/>
-            <column name="name" value="Свекла"/>
-            <column name="category_id" valueNumeric="6"/>
-        </insert>
-        <insert schemaName="public"
-                tableName="product">
-            <column name="id" valueNumeric="15"/>
-            <column name="name" value="Овсянка"/>
-            <column name="category_id" valueNumeric="7"/>
-        </insert>
-        <insert schemaName="public"
-                tableName="product">
-            <column name="id" valueNumeric="16"/>
-            <column name="name" value="Перец чёрный"/>
-            <column name="category_id" valueNumeric="8"/>
         </insert>
     </changeSet>
 </databaseChangeLog>

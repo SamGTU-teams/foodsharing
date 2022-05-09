@@ -3,6 +3,7 @@ package ru.rassafel.foodsharing.common.model.entity.product;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -11,11 +12,9 @@ import java.util.Set;
 @Entity
 @Table(schema = "public", name = "category",
     uniqueConstraints = @UniqueConstraint(name = "UQ_CATEGORY_NAME", columnNames = "name"))
-@Getter
-@Setter
-@RequiredArgsConstructor
-@EqualsAndHashCode
-@ToString
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,5 +27,5 @@ public class Category {
     @OneToMany(mappedBy = "category", orphanRemoval = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Set<Product> products;
+    private Set<Product> products = new HashSet<>();
 }
