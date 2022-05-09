@@ -8,9 +8,9 @@ import org.telegram.telegrambots.bots.TelegramWebhookBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import ru.rassafel.bot.session.exception.BotException;
 import ru.rassafel.bot.session.model.dto.SessionRequest;
 import ru.rassafel.bot.session.model.dto.SessionResponse;
-import ru.rassafel.bot.session.exception.BotException;
 import ru.rassafel.bot.session.service.SessionService;
 import ru.rassafel.foodsharing.tgbot.mapper.TgBotDtoMapper;
 
@@ -45,7 +45,7 @@ public class TgBotHandlerService extends TelegramWebhookBot {
         return mapper.map(sessionResponse);
     }
 
-    public void sendEvent(String text, Long...userIds){
+    public void sendEvent(String text, Long... userIds) {
         SendMessage sm = new SendMessage();
         //...
     }

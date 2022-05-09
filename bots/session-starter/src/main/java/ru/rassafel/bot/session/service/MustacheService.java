@@ -1,8 +1,6 @@
 package ru.rassafel.bot.session.service;
 
-import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
-import com.github.mustachejava.TemplateContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,5 +16,4 @@ public class MustacheService {
 //        Mustache compile = factory.compile(templateName);
 //
 //    }
-
 }

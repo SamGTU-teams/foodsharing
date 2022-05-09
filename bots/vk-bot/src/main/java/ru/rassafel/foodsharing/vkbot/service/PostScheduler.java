@@ -2,8 +2,8 @@ package ru.rassafel.foodsharing.vkbot.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.rassafel.foodsharing.vkbot.repository.VkUserRepository;
 import ru.rassafel.bot.session.service.SendMessageService;
+import ru.rassafel.foodsharing.vkbot.repository.VkUserRepository;
 
 import java.util.List;
 

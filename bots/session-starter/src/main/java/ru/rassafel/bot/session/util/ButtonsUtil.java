@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ButtonsUtil {
+    public static final List<String> DEFAULT_BUTTONS = List.of("Продукты", "Места");
 
-    public static List<String> DEFAULT_BUTTONS = List.of("Продукты", "Места");
-
-    public static List<String> BACK_TO_MAIN = List.of("На главную");
+    public static final List<String> BACK_TO_MAIN = List.of("На главную");
 
     public static List<String> addBackToMainButton(List<String> buttons) {
         buttons.add(0, "На главную");

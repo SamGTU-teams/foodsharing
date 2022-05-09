@@ -12,7 +12,7 @@ import static ru.rassafel.foodsharing.common.model.ModelFactory.*;
  * @author rassafel
  */
 class CategoryMapperTest {
-    CategoryMapper mapper = CategoryMapper.INSTANCE;
+    final CategoryMapper mapper = CategoryMapper.INSTANCE;
 
     @Test
     void entityToDto() {

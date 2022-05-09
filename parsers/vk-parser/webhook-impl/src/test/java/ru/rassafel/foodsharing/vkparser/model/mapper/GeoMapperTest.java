@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author rassafel
  */
 class GeoMapperTest {
-    GeoMapper mapper = GeoMapper.INSTANCE;
+    final GeoMapper mapper = GeoMapper.INSTANCE;
 
     @Test
     void apiToDto() {

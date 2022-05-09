@@ -98,7 +98,7 @@ public class LuceneRepositoryImpl implements LuceneRepository {
         return new LuceneIndexedString(hash, string);
     }
 
-    List<Pair<LuceneIndexedString, Float>> map(IndexSearcher searcher, TopDocs topDocs) throws IOException {
+    List<Pair<LuceneIndexedString, Float>> map(IndexSearcher searcher, TopDocs topDocs) {
         return Arrays.stream(topDocs.scoreDocs)
             .map(scoreDoc -> {
                 try {

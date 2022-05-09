@@ -1,7 +1,6 @@
 package ru.rassafel.foodsharing.vkbot.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import ru.rassafel.foodsharing.analyzer.model.dto.FoodPostDto;
 import ru.rassafel.foodsharing.common.model.GeoPoint;
@@ -18,7 +17,7 @@ public class FoodPostConsumer {
     private final VkUserRepository repository;
     private final VkMessageSchedulerService schedulerService;
 
-    public void handleFoodPost(FoodPostDto foodPostDto){
+    public void handleFoodPost(FoodPostDto foodPostDto) {
         GeoPoint point = foodPostDto.getPoint();
         double lat = point.getLat();
         double lon = point.getLon();
@@ -29,8 +28,7 @@ public class FoodPostConsumer {
             .map(Long::intValue).toArray(Integer[]::new));
     }
 
-    public void handleAdIntegration(Object ad){
+    public void handleAdIntegration(Object ad) {
 
     }
-
 }

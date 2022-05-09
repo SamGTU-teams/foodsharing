@@ -3,18 +3,19 @@ package ru.rassafel.bot.session.step.geo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import ru.rassafel.bot.session.model.dto.SessionRequest;
-import ru.rassafel.bot.session.model.dto.SessionResponse;
 import ru.rassafel.bot.session.exception.BotException;
 import ru.rassafel.bot.session.model.dto.BotButtons;
-import ru.rassafel.bot.session.model.entity.Place;
+import ru.rassafel.bot.session.model.dto.SessionRequest;
+import ru.rassafel.bot.session.model.dto.SessionResponse;
 import ru.rassafel.bot.session.model.entity.EmbeddedUserSession;
+import ru.rassafel.bot.session.model.entity.Place;
 import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.bot.session.service.PlaceService;
 import ru.rassafel.bot.session.service.UserService;
 import ru.rassafel.bot.session.step.Step;
 import ru.rassafel.bot.session.util.GeoButtonsUtil;
 import ru.rassafel.bot.session.util.SessionUtil;
+import ru.rassafel.foodsharing.common.exception.ApiException;
 
 import java.util.Collection;
 import java.util.Map;
@@ -43,8 +44,10 @@ public class DeleteGeoStep implements Step {
         }
         Collection<Place> usersPlaces = placeService.findByUserId(user.getId());
         for (String placeName : placesNamesToDelete) {
-            Place place = usersPlaces.stream().filter(p -> p.getName().equals(placeName)).findFirst()
-                .orElseThrow(() -> new RuntimeException("Uncaught error! Place name not found"));
+            Place place = usersPlaces.stream()
+                .filter(p -> p.getName().equals(placeName))
+                .findFirst()
+                .orElseThrow(() -> new ApiException("Uncaught error! Place name not found"));
             placeService.deletePlace(place);
             usersPlaces.removeIf(p -> p.getName().equalsIgnoreCase(placeName));
         }
@@ -55,7 +58,7 @@ public class DeleteGeoStep implements Step {
 
             userService.saveUser(user);
         } else {
-            String otherPlaces = placeService.getUsersPlaceMapMessage(user, sessionRequest.getType());
+            String otherPlaces = placeService.getUsersPlaceMapMessage(user);
             sessionResponse.setMessage("Место удалено, введите еще, оставшиеся места:\n\n" + otherPlaces);
         }
         sessionResponse.setButtons(responseButtons);

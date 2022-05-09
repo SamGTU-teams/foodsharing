@@ -32,7 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author rassafel
  */
 class RawPostDtoMapperTest {
-    RawPostMapper mapper = RawPostMapper.INSTANCE;
+    final RawPostMapper mapper = RawPostMapper.INSTANCE;
 
     @Test
     void convertToDto() {

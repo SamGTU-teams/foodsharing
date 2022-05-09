@@ -24,7 +24,9 @@ public class BotButtons {
     }
 
     public BotButtons addAll(List<String> textButtons) {
-        buttons.addAll(textButtons.stream().map(BotButton::new).collect(Collectors.toList()));
+        buttons.addAll(textButtons.stream()
+            .map(BotButton::new)
+            .collect(Collectors.toList()));
         return this;
     }
 

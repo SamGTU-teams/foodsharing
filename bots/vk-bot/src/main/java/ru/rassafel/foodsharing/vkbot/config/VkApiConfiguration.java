@@ -26,7 +26,7 @@ public class VkApiConfiguration {
     private int maxQueryCountPerTime;
 
     @Bean
-    public BlockingQueue<AbstractQueryBuilder> vkQueryQueue(){
+    public BlockingQueue<AbstractQueryBuilder> vkQueryQueue() {
         return new ArrayBlockingQueue<>(maxRequestQueueSize);
     }
 

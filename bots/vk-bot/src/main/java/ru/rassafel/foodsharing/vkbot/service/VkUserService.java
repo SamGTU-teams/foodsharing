@@ -8,21 +8,18 @@ import ru.rassafel.foodsharing.vkbot.model.domain.VkUser;
 import ru.rassafel.foodsharing.vkbot.repository.VkUserRepository;
 
 import java.util.Optional;
-import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
 public class VkUserService implements UserService {
-
     private final VkUserRepository repository;
 
     @Override
     public void saveUser(User user) {
-        if(user instanceof VkUser){
-            repository.save((VkUser) user);
-        }else {
+        if (!(user instanceof VkUser)) {
             throw new IllegalArgumentException("User is not from VK!");
         }
+        repository.save((VkUser) user);
     }
 
     @Override

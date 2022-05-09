@@ -8,10 +8,9 @@ import com.vk.api.sdk.queries.messages.MessagesSendQuery;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.rassafel.bot.session.model.dto.SessionResponse;
 import ru.rassafel.bot.session.model.dto.BotButtons;
+import ru.rassafel.bot.session.model.dto.SessionResponse;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
