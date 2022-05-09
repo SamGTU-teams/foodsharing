@@ -2,13 +2,13 @@ package ru.rassafel.bot.session.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.rassafel.bot.session.dto.SessionRequest;
-import ru.rassafel.bot.session.dto.SessionResponse;
+import ru.rassafel.bot.session.model.dto.SessionRequest;
+import ru.rassafel.bot.session.model.dto.SessionResponse;
 import ru.rassafel.bot.session.exception.BotException;
 import ru.rassafel.bot.session.interceptor.ExitSessionInterceptor;
 import ru.rassafel.bot.session.mapper.UserDtoMapper;
-import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
-import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.model.entity.EmbeddedUserSession;
+import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.bot.session.type.BotSession;
 
 import java.util.Optional;
@@ -30,7 +30,7 @@ public class SessionService {
         BotSession botSession;
         User user;
 
-        Optional<User> userOptional = userService.getUser(request.getFrom().getId(), request.getType());
+        Optional<? extends User> userOptional = userService.getUser(request.getFrom().getId());
 
         if (userOptional.isEmpty()) {
             botSession = sessionUtil.getWelcome();

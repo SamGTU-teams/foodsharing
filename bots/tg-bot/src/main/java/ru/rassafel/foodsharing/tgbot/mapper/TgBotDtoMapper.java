@@ -7,11 +7,13 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
-import ru.rassafel.bot.session.dto.SessionRequest;
-import ru.rassafel.bot.session.dto.SessionResponse;
-import ru.rassafel.bot.session.model.BotButtons;
+import ru.rassafel.bot.session.model.dto.SessionRequest;
+import ru.rassafel.bot.session.model.dto.SessionResponse;
+import ru.rassafel.bot.session.mapper.UserDtoMapper;
+import ru.rassafel.bot.session.model.dto.BotButtons;
 import ru.rassafel.bot.session.util.ButtonsUtil;
 import ru.rassafel.foodsharing.common.model.PlatformType;
+import ru.rassafel.foodsharing.tgbot.model.TgUser;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -19,7 +21,7 @@ import java.util.stream.Collectors;
 import static java.util.Optional.ofNullable;
 
 @Mapper(componentModel = "spring")
-public abstract class TgBotDtoMapper {
+public abstract class TgBotDtoMapper implements UserDtoMapper {
     @Mappings({
         @Mapping(source = "message", target = "message", ignore = true),
         @Mapping(source = "message.chat.id", target = "from.id"),
@@ -28,6 +30,9 @@ public abstract class TgBotDtoMapper {
         @Mapping(source = "message.location.latitude", target = "location.latitude"),
     })
     public abstract SessionRequest map(Update update);
+
+    @Mapping(source = "from.id", target = "id")
+    public abstract TgUser map(SessionRequest request);
 
     @AfterMapping
     protected void map(Update update, @MappingTarget SessionRequest request) {

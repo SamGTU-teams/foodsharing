@@ -2,9 +2,9 @@ package ru.rassafel.bot.session.step;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.rassafel.bot.session.dto.SessionRequest;
-import ru.rassafel.bot.session.dto.SessionResponse;
-import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.model.dto.SessionRequest;
+import ru.rassafel.bot.session.model.dto.SessionResponse;
+import ru.rassafel.bot.session.model.entity.User;
 
 import java.util.Map;
 import java.util.Optional;

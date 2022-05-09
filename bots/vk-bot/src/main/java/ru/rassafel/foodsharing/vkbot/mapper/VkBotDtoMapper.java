@@ -1,12 +1,20 @@
 package ru.rassafel.foodsharing.vkbot.mapper;
 
+import com.vk.api.sdk.client.AbstractQueryBuilder;
+import com.vk.api.sdk.queries.messages.MessagesSendQuery;
 import org.mapstruct.*;
-import ru.rassafel.bot.session.dto.SessionRequest;
+import ru.rassafel.bot.session.mapper.UserDtoMapper;
+import ru.rassafel.bot.session.model.dto.SessionRequest;
+import ru.rassafel.bot.session.model.dto.SessionResponse;
+import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.foodsharing.common.model.PlatformType;
-import ru.rassafel.foodsharing.vkbot.model.VkUpdate;
+import ru.rassafel.foodsharing.vkbot.model.domain.VkUser;
+import ru.rassafel.foodsharing.vkbot.model.dto.VkUpdate;
+
+import java.util.Random;
 
 @Mapper(componentModel = "spring")
-public abstract class VkBotDtoMapper {
+public abstract class VkBotDtoMapper implements UserDtoMapper {
 
     @Mappings({
         @Mapping(source = "type", target = "type", ignore = true),
@@ -15,6 +23,9 @@ public abstract class VkBotDtoMapper {
         @Mapping(source = "object.message.geo.coordinates.longitude", target = "location.longitude"),
     })
     public abstract SessionRequest map(VkUpdate vkUpdate);
+
+    @Mapping(source = "from.id", target = "id")
+    public abstract VkUser map(SessionRequest rq);
 
     public SessionRequest mapDto(VkUpdate update) {
         SessionRequest mapped = map(update);

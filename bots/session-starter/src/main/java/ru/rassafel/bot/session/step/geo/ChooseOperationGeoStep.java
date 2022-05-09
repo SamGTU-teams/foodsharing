@@ -2,13 +2,13 @@ package ru.rassafel.bot.session.step.geo;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.rassafel.bot.session.dto.SessionRequest;
-import ru.rassafel.bot.session.dto.SessionResponse;
+import ru.rassafel.bot.session.model.dto.SessionRequest;
+import ru.rassafel.bot.session.model.dto.SessionResponse;
 import ru.rassafel.bot.session.exception.BotException;
-import ru.rassafel.bot.session.model.BotButtons;
-import ru.rassafel.bot.session.model.entity.place.Place;
-import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
-import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.model.dto.BotButtons;
+import ru.rassafel.bot.session.model.entity.Place;
+import ru.rassafel.bot.session.model.entity.EmbeddedUserSession;
+import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.bot.session.service.PlaceService;
 import ru.rassafel.bot.session.service.UserService;
 import ru.rassafel.bot.session.step.Step;
@@ -33,7 +33,7 @@ public class ChooseOperationGeoStep implements Step {
         BotButtons responseButtons = new BotButtons();
 
         if (message.equals("мои места")) {
-            Collection<Place> points = placeService.findByUserId(user.getId(), sessionRequest.getType());
+            Collection<Place> points = placeService.findByUserId(user.getId());
             if (points.isEmpty()) {
 
                 responseMessage = "У вас нет добавленных мест";
@@ -59,7 +59,7 @@ public class ChooseOperationGeoStep implements Step {
 
             userSession.setSessionStep(2);
         } else if (message.equals("удалить место")) {
-            Collection<Place> points = placeService.findByUserId(user.getId(), sessionRequest.getType());
+            Collection<Place> points = placeService.findByUserId(user.getId());
             if (points.isEmpty()) {
 
                 responseMessage = "У вас пока нет добавленных мест";
@@ -67,19 +67,19 @@ public class ChooseOperationGeoStep implements Step {
 
             } else {
 
-                responseMessage = placeService.getUsersPlaceMapMessage(user, sessionRequest.getType(),
+                responseMessage = placeService.getUsersPlaceMapMessage(user,
                     "Вот список ваших мест, напишите название или номер(а) того которого хотите удалить, пример: 1,2,3");
 
                 userSession.setSessionStep(5);
             }
         } else if (message.equals("редактирование места")) {
-            Collection<Place> points = placeService.findByUserId(user.getId(), sessionRequest.getType());
+            Collection<Place> points = placeService.findByUserId(user.getId());
 
             if (points.isEmpty()) {
                 responseMessage = "У вас пока нет добавленных мест";
                 responseButtons.addAll(GEO_MAIN_BUTTONS);
             } else {
-                responseMessage = placeService.getUsersPlaceMapMessage(user, sessionRequest.getType(),
+                responseMessage = placeService.getUsersPlaceMapMessage(user,
                     "\n\nВот список ваших мест, напишите название или номер, того которого хотите отредактировать, пример: 1 или Дом");
 
                 userSession.setSessionStep(6);

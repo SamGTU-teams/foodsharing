@@ -1,8 +1,8 @@
 package ru.rassafel.foodsharing.vkbot;
 
-import ru.rassafel.bot.session.dto.SessionResponse;
-import ru.rassafel.bot.session.model.BotButtons;
-import ru.rassafel.bot.session.model.entity.user.VkUser;
+import ru.rassafel.bot.session.model.dto.SessionResponse;
+import ru.rassafel.bot.session.model.dto.BotButtons;
+import ru.rassafel.foodsharing.vkbot.model.domain.VkUser;
 
 import java.util.List;
 import java.util.Map;

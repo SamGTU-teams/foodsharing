@@ -2,8 +2,10 @@ package ru.rassafel.foodsharing.tgbot.config;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.meta.ApiContext;
@@ -13,6 +15,7 @@ import ru.rassafel.foodsharing.tgbot.service.TgBotHandlerService;
 @ConfigurationProperties(prefix = "tg.bot")
 @Getter
 @Setter
+@EntityScan(basePackages = "ru.rassafel.foodsharing.tgbot.model")
 public class TgBotConfiguration {
 
     private String token;

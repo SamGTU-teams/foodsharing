@@ -3,13 +3,13 @@ package ru.rassafel.bot.session.step.geo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import ru.rassafel.bot.session.dto.SessionRequest;
-import ru.rassafel.bot.session.dto.SessionResponse;
+import ru.rassafel.bot.session.model.dto.SessionRequest;
+import ru.rassafel.bot.session.model.dto.SessionResponse;
 import ru.rassafel.bot.session.exception.BotException;
-import ru.rassafel.bot.session.model.BotButtons;
-import ru.rassafel.bot.session.model.entity.place.Place;
-import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
-import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.model.dto.BotButtons;
+import ru.rassafel.bot.session.model.entity.Place;
+import ru.rassafel.bot.session.model.entity.EmbeddedUserSession;
+import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.bot.session.service.PlaceService;
 import ru.rassafel.bot.session.service.UserService;
 import ru.rassafel.bot.session.step.Step;
@@ -34,18 +34,18 @@ public class DeleteGeoStep implements Step {
         EmbeddedUserSession userSession = user.getUserSession();
         BotButtons responseButtons = new BotButtons();
 
-        Map<Integer, String> usersPlacesNamesMap = placeService.getUsersPlacesNamesMap(user, sessionRequest.getType());
+        Map<Integer, String> usersPlacesNamesMap = placeService.getUsersPlacesNamesMap(user);
         Set<String> placesNamesToDelete;
         try {
             placesNamesToDelete = SessionUtil.getAllNames(usersPlacesNamesMap, message);
         } catch (IllegalArgumentException ex) {
             throw new BotException(user.getId(), ex.getMessage());
         }
-        Collection<Place> usersPlaces = placeService.findByUserId(user.getId(), sessionRequest.getType());
+        Collection<Place> usersPlaces = placeService.findByUserId(user.getId());
         for (String placeName : placesNamesToDelete) {
             Place place = usersPlaces.stream().filter(p -> p.getName().equals(placeName)).findFirst()
                 .orElseThrow(() -> new RuntimeException("Uncaught error! Place name not found"));
-            placeService.deletePlace(place, sessionRequest.getType());
+            placeService.deletePlace(place);
             usersPlaces.removeIf(p -> p.getName().equalsIgnoreCase(placeName));
         }
         if (usersPlaces.isEmpty()) {

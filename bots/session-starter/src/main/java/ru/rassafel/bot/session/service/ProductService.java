@@ -2,7 +2,7 @@ package ru.rassafel.bot.session.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.foodsharing.common.model.entity.product.Product;
 
 import java.util.ArrayList;

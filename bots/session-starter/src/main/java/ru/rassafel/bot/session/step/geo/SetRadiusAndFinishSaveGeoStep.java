@@ -6,13 +6,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
-import ru.rassafel.bot.session.dto.SessionRequest;
-import ru.rassafel.bot.session.dto.SessionResponse;
+import ru.rassafel.bot.session.model.dto.SessionRequest;
+import ru.rassafel.bot.session.model.dto.SessionResponse;
 import ru.rassafel.bot.session.exception.BotException;
-import ru.rassafel.bot.session.model.BotButtons;
-import ru.rassafel.bot.session.model.entity.place.Place;
-import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
-import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.model.dto.BotButtons;
+import ru.rassafel.bot.session.model.entity.Place;
+import ru.rassafel.bot.session.model.entity.EmbeddedUserSession;
+import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.bot.session.service.PlaceService;
 import ru.rassafel.bot.session.service.UserService;
 import ru.rassafel.bot.session.step.Step;
@@ -67,7 +67,7 @@ public class SetRadiusAndFinishSaveGeoStep implements Step {
         template.setName("FinishSaveGeoStep.executeStep");
 
         template.executeWithoutResult(transactionStatus -> {
-            placeService.save(place, sessionRequest.getType());
+            placeService.save(place);
             userSession.setSessionStep(1);
             userService.saveUser(user);
         });

@@ -4,3 +4,9 @@ vk:
   bot:
     groupId: ${VK_BOT_GROUP_ID}
     accessToken: ${VK_BOT_ACCESS_TOKEN}
+  api:
+    maxRequestQueueSize: 1000
+    maxTimeForSendSomeQueries: 1000
+    maxQueryCountPerTime: 20
+    maxThreadCountForSendQueries: 20
+    maxQuerySizeInBatch: 25

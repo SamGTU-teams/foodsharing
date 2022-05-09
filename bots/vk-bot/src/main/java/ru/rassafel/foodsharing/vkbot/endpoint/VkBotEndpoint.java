@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.rassafel.foodsharing.vkbot.model.VkUpdate;
+import ru.rassafel.foodsharing.vkbot.model.dto.VkUpdate;
 import ru.rassafel.foodsharing.vkbot.service.VkBotHandlerService;
 
 @RestController
@@ -21,7 +21,9 @@ public class VkBotEndpoint {
     @PostMapping
     public ResponseEntity<String> handle(@RequestBody VkUpdate update) {
         log.debug("Got request from VK : {}", update);
-        return ResponseEntity.ok(vkBotHandlerService.handleUpdate(update));
+        ResponseEntity<String> response = ResponseEntity.ok(vkBotHandlerService.handleUpdate(update));
+        log.debug("Sending response to Vk : {}", response);
+        return response;
     }
 
 }

@@ -2,30 +2,33 @@ package ru.rassafel.foodsharing.vkbot.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.rassafel.bot.session.repository.user.VkUserRepository;
+import ru.rassafel.foodsharing.vkbot.repository.VkUserRepository;
 import ru.rassafel.bot.session.service.SendMessageService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 public class PostScheduler {
 
     private final SendMessageService service;
-    private final VkMessengerService vkMessengerService;
+    private final VkMessageSchedulerService vkMessageSchedulerService;
     private final VkUserRepository repository;
 
 
-    //    @Scheduled(fixedDelay = 100)
+//    @Scheduled(fixedDelay = 5000)
     public void sendPost() {
+        System.out.println("Trying to send message");
+        //метро московская 53.20307254713856, 50.16069896267102
+        double lon = 50.16069896267102;
+        double lat = 53.20307254713856;
         service.sendEvent(() -> {
-            List<Long> userIds = repository.findUserIds();
+            List<Long> userIds = repository.findByProductAndSuitablePlace(List.of(1L), lat, lon);
             if (userIds.isEmpty()) {
                 return;
             }
-            vkMessengerService.sendMessage("Приветос",
-                userIds.stream().map(Long::intValue).collect(Collectors.toList()));
+            vkMessageSchedulerService.scheduleEvent("Тебе пост хуила",
+                userIds.stream().map(Long::intValue).toArray(Integer[]::new));
         });
     }
 

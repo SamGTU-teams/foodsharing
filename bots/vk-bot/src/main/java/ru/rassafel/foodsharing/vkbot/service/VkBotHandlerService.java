@@ -5,12 +5,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import ru.rassafel.bot.session.dto.SessionRequest;
-import ru.rassafel.bot.session.dto.SessionResponse;
+import ru.rassafel.bot.session.model.dto.SessionRequest;
+import ru.rassafel.bot.session.model.dto.SessionResponse;
 import ru.rassafel.bot.session.exception.BotException;
 import ru.rassafel.bot.session.service.SessionService;
 import ru.rassafel.foodsharing.vkbot.mapper.VkBotDtoMapper;
-import ru.rassafel.foodsharing.vkbot.model.VkUpdate;
+import ru.rassafel.foodsharing.vkbot.model.dto.VkUpdate;
 
 @Service
 @Slf4j
@@ -18,7 +18,7 @@ import ru.rassafel.foodsharing.vkbot.model.VkUpdate;
 public class VkBotHandlerService {
     private final VkBotDtoMapper mapper;
     private final SessionService sessionService;
-    private final VkMessengerService vkMessengerService;
+    private final VkMessageSchedulerService vkMessageSchedulerService;
     @Value("${vk.server.confirm_code}")
     private String confirmCode;
 
@@ -27,11 +27,13 @@ public class VkBotHandlerService {
             SessionRequest request = mapper.mapDto(update);
             try {
                 SessionResponse response = sessionService.handle(request);
-                vkMessengerService.sendMessage(response);
+                vkMessageSchedulerService.scheduleEvent(response);
             } catch (BotException ex) {
-                vkMessengerService.sendMessage(ex.getMessage(), ex.getSendTo());
+                vkMessageSchedulerService.scheduleEvent(ex.getMessage(), ex.getSendTo().intValue());
             } catch (Exception ex) {
                 log.error("Caught an error {}", ex.getMessage());
+                vkMessageSchedulerService.scheduleEvent("Возникла ошибка на сервере, попробуйте повторить позже",
+                    request.getFrom().getId().intValue());
             }
         } else if (update.getType() == Type.CONFIRMATION) {
             return confirmCode;

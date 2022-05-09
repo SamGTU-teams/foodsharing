@@ -8,13 +8,13 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import ru.rassafel.bot.session.dto.From;
-import ru.rassafel.bot.session.dto.LocationDto;
-import ru.rassafel.bot.session.dto.SessionRequest;
-import ru.rassafel.bot.session.dto.SessionResponse;
-import ru.rassafel.bot.session.model.entity.place.Place;
-import ru.rassafel.bot.session.model.entity.user.User;
-import ru.rassafel.bot.session.model.entity.user.VkUser;
+import ru.rassafel.bot.session.model.dto.From;
+import ru.rassafel.bot.session.model.dto.LocationDto;
+import ru.rassafel.bot.session.model.dto.SessionRequest;
+import ru.rassafel.bot.session.model.dto.SessionResponse;
+import ru.rassafel.bot.session.model.entity.Place;
+import ru.rassafel.bot.session.model.entity.User;
+import ru.rassafel.foodsharing.vkbot.model.domain.VkUser;
 import ru.rassafel.bot.session.service.PlaceService;
 import ru.rassafel.bot.session.service.SessionService;
 import ru.rassafel.bot.session.service.UserService;
@@ -27,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static ru.rassafel.foodsharing.vkbot.TestUtils.*;
 
 @SpringBootTest
-@ActiveProfiles("integration-test")
+@ActiveProfiles("h2")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class PlaceTestSessionVkBotTest {
 
@@ -65,7 +65,7 @@ public class PlaceTestSessionVkBotTest {
 
         assertButtons(response.getButtons(), expectedButtons);
 
-        Optional<User> user = userService.getUser(userId, PlatformType.VK);
+        Optional<? extends User> user = userService.getUser(userId);
 
         assertThat(user)
             .isPresent()
@@ -90,7 +90,7 @@ public class PlaceTestSessionVkBotTest {
         expectedButtons.put(null, true);
         assertButtons(response.getButtons(), expectedButtons);
 
-        TestUtils.assertVkUserAndUserSession((VkUser) userService.getUser(userId, PlatformType.VK).get(),
+        TestUtils.assertVkUserAndUserSession((VkUser) userService.getUser(userId).get(),
             "geoSession", 2, true);
 
         //Location step test
@@ -110,7 +110,7 @@ public class PlaceTestSessionVkBotTest {
 
         assertButtons(locationResponse.getButtons(), Map.of("На главную", false));
 
-        assertVkUserAndUserSession((VkUser) userService.getUser(userId, PlatformType.VK).get(), "geoSession", 3, true);
+        assertVkUserAndUserSession((VkUser) userService.getUser(userId).get(), "geoSession", 3, true);
 
         //Set name step test
         request.setMessage("дом");
@@ -131,10 +131,10 @@ public class PlaceTestSessionVkBotTest {
         request.setMessage("123");
         SessionResponse setRadiusResponse = service.handle(request);
         assertResponse(setRadiusResponse, "Круто! Место сохранено", userId);
-        assertVkUserAndUserSession((VkUser) userService.getUser(userId, PlatformType.VK).get(), "geoSession",
+        assertVkUserAndUserSession((VkUser) userService.getUser(userId).get(), "geoSession",
             1, true);
 
-        Collection<Place> byUserId = placeService.findByUserId(userId, PlatformType.VK);
+        Collection<Place> byUserId = placeService.findByUserId(userId);
         assertThat(byUserId)
             .hasSize(1);
 

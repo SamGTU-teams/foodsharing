@@ -3,25 +3,25 @@ package ru.rassafel.bot.session.step.geo;
 import com.github.benmanes.caffeine.cache.Cache;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.rassafel.bot.session.dto.LocationDto;
-import ru.rassafel.bot.session.dto.SessionRequest;
-import ru.rassafel.bot.session.dto.SessionResponse;
-import ru.rassafel.bot.session.model.BotButtons;
-import ru.rassafel.bot.session.model.entity.place.Place;
-import ru.rassafel.bot.session.model.entity.place.TgUserPlace;
-import ru.rassafel.bot.session.model.entity.place.VkUserPlace;
-import ru.rassafel.bot.session.model.entity.user.EmbeddedUserSession;
-import ru.rassafel.bot.session.model.entity.user.User;
+import ru.rassafel.bot.session.model.dto.LocationDto;
+import ru.rassafel.bot.session.model.dto.SessionRequest;
+import ru.rassafel.bot.session.model.dto.SessionResponse;
+import ru.rassafel.bot.session.model.dto.BotButtons;
+import ru.rassafel.bot.session.model.entity.Place;
+import ru.rassafel.bot.session.model.entity.EmbeddedUserSession;
+import ru.rassafel.bot.session.model.entity.User;
+import ru.rassafel.bot.session.service.OpenStreetMapService;
+import ru.rassafel.bot.session.service.PlaceService;
 import ru.rassafel.bot.session.service.UserService;
 import ru.rassafel.bot.session.step.Step;
-import ru.rassafel.foodsharing.common.model.PlatformType;
-import ru.rassafel.foodsharing.common.model.entity.geo.GeoPointEmbeddable;
 
 @Component("geo-2")
 @RequiredArgsConstructor
 public class AddNewPlaceGeoStep implements Step {
     private final Cache<Long, Place> geoPointCache;
     private final UserService userService;
+    private final PlaceService placeService;
+    private final OpenStreetMapService streetMapService;
 
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
@@ -33,18 +33,9 @@ public class AddNewPlaceGeoStep implements Step {
         } else {
             LocationDto location = sessionRequest.getLocation();
 
-            Place place;
-            if (sessionRequest.getType() == PlatformType.TG) {
-                place = new TgUserPlace()
-                    .withUser(user)
-                    .withGeo(new GeoPointEmbeddable(location.getLatitude(), location.getLongitude()));
-            } else if (sessionRequest.getType() == PlatformType.VK) {
-                place = new VkUserPlace()
-                    .withUser(user)
-                    .withGeo(new GeoPointEmbeddable(location.getLatitude(), location.getLongitude()));
-            } else {
-                throw new IllegalArgumentException("No platformType found!");
-            }
+            Place place = placeService.createPlace(user, location);
+            String address =
+                streetMapService.getAddress(location.getLatitude(), location.getLongitude());
 
             geoPointCache.put(user.getId(), place);
 
