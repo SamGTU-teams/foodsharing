@@ -21,7 +21,6 @@ import java.util.stream.IntStream;
 @RequiredArgsConstructor
 @Slf4j
 public class VkMessageSchedulerService {
-
     private final VkApiClient vk;
     private final GroupActor groupActor;
     private final BlockingQueue<AbstractQueryBuilder> queue;
@@ -82,5 +81,4 @@ public class VkMessageSchedulerService {
         keyboard.setButtons(keyboardButtons);
         return keyboard;
     }
-
 }

@@ -6,8 +6,6 @@ import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 import ru.rassafel.foodsharing.ad.model.AdPostDto;
-import ru.rassafel.foodsharing.tgbot.repository.TgUserRepository;
-import ru.rassafel.foodsharing.tgbot.service.TgBotHandlerService;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;

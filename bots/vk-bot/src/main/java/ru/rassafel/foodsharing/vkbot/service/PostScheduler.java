@@ -31,5 +31,4 @@ public class PostScheduler {
                 userIds.stream().map(Long::intValue).toArray(Integer[]::new));
         });
     }
-
 }
