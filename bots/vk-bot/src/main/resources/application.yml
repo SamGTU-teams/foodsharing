@@ -1,12 +1,11 @@
 vk:
-  server:
-    confirm_code: ${VK_CONFIRM_CODE}
   bot:
+    confirm_code: ${VK_CONFIRM_CODE}
     groupId: ${VK_BOT_GROUP_ID}
     accessToken: ${VK_BOT_ACCESS_TOKEN}
-  api:
-    maxRequestQueueSize: 1000
-    maxTimeForSendSomeQueries: 1000
-    maxQueryCountPerTime: 20
-    maxThreadCountForSendQueries: 20
-    maxQuerySizeInBatch: 25
+    client:
+      maxRequestQueueSize: 1000
+      maxTimeForSendSomeQueries: 1000
+      maxQueryCountPerTime: 20
+      maxThreadCountForSendQueries: 1
+      maxQuerySizeInBatch: 25
