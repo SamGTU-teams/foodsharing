@@ -1,4 +1,4 @@
-package ru.rassafel.foodsharing.parser.model;
+package ru.rassafel.foodsharing.parser.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
