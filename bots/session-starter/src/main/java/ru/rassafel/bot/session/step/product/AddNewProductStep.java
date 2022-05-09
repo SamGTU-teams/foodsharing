@@ -2,10 +2,10 @@ package ru.rassafel.bot.session.step.product;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.rassafel.bot.session.model.dto.SessionRequest;
-import ru.rassafel.bot.session.model.dto.SessionResponse;
 import ru.rassafel.bot.session.exception.BotException;
 import ru.rassafel.bot.session.model.dto.BotButtons;
+import ru.rassafel.bot.session.model.dto.SessionRequest;
+import ru.rassafel.bot.session.model.dto.SessionResponse;
 import ru.rassafel.bot.session.model.entity.EmbeddedUserSession;
 import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.bot.session.repository.ProductRepository;
@@ -24,7 +24,6 @@ public class AddNewProductStep implements Step {
 
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
-
         String message = sessionRequest.getMessage();
         EmbeddedUserSession userSession = user.getUserSession();
 
@@ -35,9 +34,9 @@ public class AddNewProductStep implements Step {
         if (message.equals("попробовать еще")) {
             responseMessage = "Введите продукт еще раз";
         } else {
-
-            Product productByName = productRepository.findByName(message).orElseThrow(() ->
-                new BotException(user.getId(), "Вы ввели неправильное имя продукта, попробуйте еще"));
+            Product productByName = productRepository.findByNameEqualsIgnoreCase(message)
+                .orElseThrow(() -> new BotException(user.getId(),
+                    "Вы ввели неправильное имя продукта, попробуйте еще"));
             boolean contains = productService.getUsersProductNames(user).contains(productByName.getName());
             if (contains) {
                 responseMessage = "У вас уже есть такой продукт, введите еще";
