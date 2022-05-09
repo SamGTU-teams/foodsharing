@@ -40,7 +40,7 @@ public class FoodPost {
     })
     private GeoPointEmbeddable point;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(schema = "ibot", name = "food_post_regions",
         joinColumns = @JoinColumn(name = "food_post_id", nullable = false,
             foreignKey = @ForeignKey(name = "FK_IBOT_FOOD_POST_REGIONS_FOOD_POST_ID")),
@@ -50,7 +50,7 @@ public class FoodPost {
     @EqualsAndHashCode.Exclude
     private Set<Region> regions = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(schema = "ibot", name = "food_post_products",
         joinColumns = @JoinColumn(name = "food_post_id", nullable = false,
             foreignKey = @ForeignKey(name = "FK_IBOT_FOOD_POST_PRODUCTS_FOOD_POST_ID")),
