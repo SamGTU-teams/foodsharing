@@ -6,6 +6,7 @@ import org.mapstruct.factory.Mappers;
 import ru.rassafel.foodsharing.common.model.GeoPoint;
 
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 import static java.util.Objects.isNull;
 
@@ -21,13 +22,10 @@ public abstract class GeoMapper {
             return null;
         }
 
-        GeoPoint point = new GeoPoint();
-        double[] coordinates = Arrays.stream(source.getCoordinates().split("\\s+"))
+        double[] coordinates = Pattern.compile("\\s+")
+            .splitAsStream(source.getCoordinates())
             .mapToDouble(Double::parseDouble)
             .toArray();
-
-        point.setLat(coordinates[0]);
-        point.setLon(coordinates[1]);
-        return point;
+        return new GeoPoint(coordinates[0], coordinates[1]);
     }
 }
