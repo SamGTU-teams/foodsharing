@@ -5,6 +5,22 @@ spring:
     username: guest
     password: guest
 
+    raw-post:
+      exchange: post-raw-exchange
+      storage: post.raw.storage
+      dlx: post-raw-dlx
+      dlq-storage: post.raw.dlq.storage
+    ready-post:
+      exchange: post-ready-exchange
+      storage: post.ready.storage
+      dlx: post-ready-dlx
+      dlq-storage: post.ready.dlq.storage
+    ad-post:
+      exchange: post-ad-exchange
+      storage: post.ad.storage
+      dlx: post-ad-dlx
+      dlq-storage: post.ad.dlq.storage
+
   datasource:
     url: jdbc:postgresql://${POSTGRES_HOST:localhost}:5432/foodsharing
     driverClassName: org.postgresql.Driver

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import ru.rassafel.foodsharing.common.exception.ApiException;
 import ru.rassafel.foodsharing.vkparser.controller.CallbackController;
 import ru.rassafel.foodsharing.vkparser.model.vk.CallbackMessage;
 import ru.rassafel.foodsharing.vkparser.service.CallbackService;
@@ -28,7 +29,7 @@ public class CallbackControllerImpl implements CallbackController {
         if (Events.WALL_POST_NEW.equals(message.getType())) {
             try {
                 service.wallpostNew(message.getGroupId(), message.getWallpost(), message.getSecret());
-            } catch (Exception ex) {
+            } catch (ApiException ex) {
                 log.error("Catch exception", ex);
                 return ResponseEntity.badRequest().body(ex.getMessage());
             }

@@ -1,6 +1,8 @@
 package ru.rassafel.foodsharing.vkbot.model.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.foodsharing.common.model.entity.product.Product;
 
@@ -11,8 +13,10 @@ import java.util.Collection;
 @Entity
 @Table(schema = "vk_bot", name = "vk_user")
 @Data
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class VkUser extends User {
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(schema = "vk_bot", name = "vk_user_products",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "product_id"))

@@ -2,7 +2,7 @@ package ru.rassafel.foodsharing.common.model.entity.geo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.Embeddable;
 
@@ -12,7 +12,7 @@ import javax.persistence.Embeddable;
 @Embeddable
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class GeoPointEmbeddable {
     private double lat;
 

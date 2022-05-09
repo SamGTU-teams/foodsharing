@@ -4,7 +4,13 @@ spring:
   datasource:
     url: jdbc:postgresql://postgres:5432/foodsharing
 feign:
+  parser:
+    url: http://parser/
   analyzer:
-    url: http://analyzer:8010/
+    url: http://analyzer/
   ibot:
-    url: http://ibot:8020/
+    url: http://ibot/
+  vk-bot:
+    url: http://vk-bot/
+  tg-bot:
+    url: http://tg-bot/

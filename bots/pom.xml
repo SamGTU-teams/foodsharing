@@ -14,7 +14,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>message-starter</module>
         <module>ibot</module>
         <module>session-starter</module>
         <module>tg-bot</module>

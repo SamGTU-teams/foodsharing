@@ -4,22 +4,23 @@ WORKDIR /app
 
 RUN apk --no-cache add curl
 
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
-
 ENV spring_profiles_active=docker \
-    CONFIG_SERVER_URL=http://config:8888/ \
-    VK_BOT_GROUP_ID=12345 \
-    VK_BOT_ACCESS_TOKEN=TEST \
-    VK_CONFIRM_CODE=TEST \
-    SERVER_PORT=8040
+    CONFIG_SERVER_URL=http://config/ \
+    SERVER_PORT=80
 
 EXPOSE ${SERVER_PORT}
-
-CMD ["java", "-Xmx200m", "-jar", "app.jar"]
 
 HEALTHCHECK --interval=30s \
             --timeout=5s \
             --retries=5 \
             --start-period=10s \
             CMD curl -f http://localhost:${SERVER_PORT}/actuator/health || exit 1
+
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
+
+ENV VK_BOT_GROUP_ID=1 \
+    VK_BOT_ACCESS_TOKEN=TEST \
+    VK_CONFIRM_CODE=TEST
+
+CMD ["java", "-Xmx200m", "-jar", "app.jar"]

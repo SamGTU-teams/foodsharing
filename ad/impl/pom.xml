@@ -6,21 +6,16 @@
 
     <parent>
         <groupId>ru.rassafel.foodsharing</groupId>
-        <artifactId>bots-pom</artifactId>
+        <artifactId>ad-pom</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>bot-message-starter</artifactId>
+    <artifactId>ad-impl</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>analyzer-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
+            <artifactId>ad-api</artifactId>
         </dependency>
     </dependencies>
 </project>

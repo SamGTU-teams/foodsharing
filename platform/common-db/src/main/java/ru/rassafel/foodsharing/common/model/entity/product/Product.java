@@ -10,11 +10,9 @@ import javax.persistence.*;
 @Entity
 @Table(schema = "public", name = "product",
     uniqueConstraints = @UniqueConstraint(name = "UQ_PRODUCT_NAME", columnNames = "name"))
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
 @RequiredArgsConstructor
-@EqualsAndHashCode
-@ToString
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

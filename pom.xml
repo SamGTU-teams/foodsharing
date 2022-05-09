@@ -36,11 +36,12 @@
     </properties>
 
     <modules>
+        <module>config-service</module>
+        <module>platform</module>
+        <module>parsers</module>
+        <module>ad</module>
         <module>analyzer</module>
         <module>bots</module>
-        <module>config-service</module>
-        <module>parsers</module>
-        <module>platform</module>
     </modules>
 
     <dependencyManagement>
@@ -130,6 +131,12 @@
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
+                <artifactId>ad-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>parser-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -149,12 +156,6 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>bot-session-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>bot-message-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

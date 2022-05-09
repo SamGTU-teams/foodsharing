@@ -2,8 +2,8 @@ package ru.rassafel.foodsharing.analyzer.message;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.ExchangeTypes;
-import org.springframework.amqp.rabbit.annotation.*;
+import org.springframework.amqp.rabbit.annotation.RabbitHandler;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Component;
@@ -12,7 +12,7 @@ import ru.rassafel.foodsharing.analyzer.exception.ParseException;
 import ru.rassafel.foodsharing.analyzer.exception.ProductParseException;
 import ru.rassafel.foodsharing.analyzer.model.LuceneIndexedString;
 import ru.rassafel.foodsharing.analyzer.model.ScoreProduct;
-import ru.rassafel.foodsharing.analyzer.model.dto.FoodPost;
+import ru.rassafel.foodsharing.analyzer.model.dto.FoodPostDto;
 import ru.rassafel.foodsharing.analyzer.repository.LuceneRepository;
 import ru.rassafel.foodsharing.analyzer.service.GeoLuceneAnalyzerService;
 import ru.rassafel.foodsharing.analyzer.service.ProductLuceneAnalyzerService;
@@ -35,12 +35,7 @@ import java.util.Set;
 @Slf4j
 @Component
 @RabbitListener(
-    bindings = {
-        @QueueBinding(
-            value = @Queue(value = "${spring.rabbitmq.consumer.queue}"),
-            exchange = @Exchange(value = "${spring.rabbitmq.consumer.exchange}", type = ExchangeTypes.FANOUT)
-        )
-    }
+    queues = {"${spring.rabbitmq.raw-post.queue}"}
 )
 public class PostRabbitListener {
     private final RabbitTemplate template;
@@ -58,7 +53,7 @@ public class PostRabbitListener {
             return;
         }
 
-        FoodPost result = new FoodPost();
+        FoodPostDto result = new FoodPostDto();
         LuceneIndexedString postText = luceneRepository.add(rawPost.getText().toLowerCase());
         try {
             List<ProductDto> products = Streamable

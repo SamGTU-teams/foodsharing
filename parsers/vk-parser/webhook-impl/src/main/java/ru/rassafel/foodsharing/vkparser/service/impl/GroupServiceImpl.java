@@ -30,7 +30,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     @Transactional
-    public VkGroup registerWithAccess(VkGroup group) throws ClientException, ApiException {
+    public VkGroup registerWithAccess(VkGroup group) {
         Integer groupId = group.getGroupId();
 
         GroupActor actor = new GroupActor(groupId, group.getAccessToken());
@@ -44,9 +44,9 @@ public class GroupServiceImpl implements GroupService {
                 .getCallbackConfirmationCode(actor, groupId)
                 .execute()
                 .getCode();
-        } catch (ClientException | ApiException e) {
+        } catch (ClientException | ApiException ex) {
             log.warn("Fail query to confirmation code for group with id = {}.", groupId);
-            throw e;
+            throw new ru.rassafel.foodsharing.common.exception.ApiException(ex.getMessage());
         }
         group.setConfirmationCode(confirmationCode);
 
@@ -58,9 +58,9 @@ public class GroupServiceImpl implements GroupService {
                 .secretKey(group.getSecretKey())
                 .execute()
                 .getServerId();
-        } catch (ClientException | ApiException e) {
+        } catch (ClientException | ApiException ex) {
             log.warn("Fail query to add callback server for group with id = {}.", groupId);
-            throw e;
+            throw new ru.rassafel.foodsharing.common.exception.ApiException(ex.getMessage());
         }
         group.setServerId(serverId);
 
@@ -72,9 +72,9 @@ public class GroupServiceImpl implements GroupService {
                 .serverId(serverId)
                 .wallPostNew(true)
                 .execute();
-        } catch (ClientException | ApiException e) {
+        } catch (ClientException | ApiException ex) {
             log.warn("Fail query to edit configuration for group with id = {} and server id = {}.", groupId, serverId);
-            throw e;
+            throw new ru.rassafel.foodsharing.common.exception.ApiException(ex.getMessage());
         }
 
         repository.save(group);
