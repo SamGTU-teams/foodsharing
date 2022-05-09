@@ -45,6 +45,11 @@ public class TgBotHandlerService extends TelegramWebhookBot {
         return mapper.map(sessionResponse);
     }
 
+    public void sendEvent(String text, Long...userIds){
+        SendMessage sm = new SendMessage();
+        //...
+    }
+
     @Override
     public String getBotUsername() {
         return botUsername;

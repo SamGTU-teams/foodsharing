@@ -27,7 +27,7 @@ public class VkMessageSchedulerService {
     private final GroupActor groupActor;
     private final BlockingQueue<AbstractQueryBuilder> queue;
 
-    @PostConstruct
+//    @PostConstruct
     public void scheduleEvent() {
         IntStream.range(0, 1000).forEach(o -> queue.add(createQuery("sss " + o, null, 146072345)));
     }
