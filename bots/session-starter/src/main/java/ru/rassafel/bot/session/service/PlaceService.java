@@ -1,24 +1,21 @@
 package ru.rassafel.bot.session.service;
 
-import org.springframework.stereotype.Service;
-import ru.rassafel.bot.session.model.dto.LocationDto;
 import ru.rassafel.bot.session.model.entity.Place;
 import ru.rassafel.bot.session.model.entity.User;
-import ru.rassafel.foodsharing.common.model.PlatformType;
+import ru.rassafel.foodsharing.common.model.GeoPoint;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public interface PlaceService {
-
     Collection<Place> findByUserId(Long id);
 
     void save(Place place);
 
     void deletePlace(Place place);
 
-    Place createPlace(User linkWith, LocationDto location);
+    Place createPlace(User linkWith, GeoPoint geoPoint);
 
     default Map<Integer, String> getUsersPlacesNamesMap(User user) {
         Collection<Place> usersPlaces = findByUserId(user.getId());
@@ -39,7 +36,7 @@ public interface PlaceService {
             + "\n\n" + additionalMessage;
     }
 
-    default String getUsersPlaceMapMessage(User user, PlatformType platformType) {
+    default String getUsersPlaceMapMessage(User user) {
         return getUsersPlaceMapMessage(user, "");
     }
 }

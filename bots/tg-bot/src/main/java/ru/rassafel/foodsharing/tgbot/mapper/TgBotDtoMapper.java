@@ -7,12 +7,11 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
+import ru.rassafel.bot.session.model.dto.BotButtons;
 import ru.rassafel.bot.session.model.dto.SessionRequest;
 import ru.rassafel.bot.session.model.dto.SessionResponse;
-import ru.rassafel.bot.session.mapper.UserDtoMapper;
-import ru.rassafel.bot.session.model.dto.BotButtons;
+import ru.rassafel.bot.session.model.mapper.UserDtoMapper;
 import ru.rassafel.bot.session.util.ButtonsUtil;
-import ru.rassafel.foodsharing.common.model.PlatformType;
 import ru.rassafel.foodsharing.tgbot.model.TgUser;
 
 import java.util.Optional;
@@ -39,7 +38,6 @@ public abstract class TgBotDtoMapper implements UserDtoMapper {
         final Message message = update.getMessage();
         String text = ofNullable(message.getText()).orElse("#geoPositionRequest");
         request.setMessage(text.toLowerCase().trim());
-        request.setType(PlatformType.TG);
     }
 
     public SessionRequest mapFromUpdate(Update update) {
