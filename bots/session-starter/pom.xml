@@ -60,5 +60,9 @@
             <groupId>${project.parent.groupId}</groupId>
             <artifactId>common-db</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ru.rassafel.foodsharing</groupId>
+            <artifactId>analyzer-api</artifactId>
+        </dependency>
     </dependencies>
 </project>
