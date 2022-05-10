@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
-import ru.rassafel.foodsharing.vkbot.mapper.VkBotDtoMapper;
+import ru.rassafel.foodsharing.vkbot.model.mapper.VkBotDtoMapper;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;

@@ -1,4 +1,4 @@
-package ru.rassafel.foodsharing.vkbot.mapper;
+package ru.rassafel.foodsharing.vkbot.model.mapper;
 
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -12,10 +12,9 @@ public abstract class VkBotDtoMapper implements UserDtoMapper {
     public static final VkBotDtoMapper INSTANCE = Mappers.getMapper(VkBotDtoMapper.class);
 
     @Mappings({
-        @Mapping(source = "type", target = "type", ignore = true),
         @Mapping(source = "object.message.from_id", target = "from.id"),
-        @Mapping(source = "object.message.geo.coordinates.latitude", target = "location.latitude"),
-        @Mapping(source = "object.message.geo.coordinates.longitude", target = "location.longitude"),
+        @Mapping(source = "object.message.geo.coordinates.latitude", target = "location.lat"),
+        @Mapping(source = "object.message.geo.coordinates.longitude", target = "location.lon"),
     })
     public abstract SessionRequest map(VkUpdate vkUpdate);
 
