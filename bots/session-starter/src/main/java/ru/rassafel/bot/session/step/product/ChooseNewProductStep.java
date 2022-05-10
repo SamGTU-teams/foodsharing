@@ -7,6 +7,7 @@ import ru.rassafel.bot.session.model.dto.SessionResponse;
 import ru.rassafel.bot.session.model.dto.BotButtons;
 import ru.rassafel.bot.session.model.entity.EmbeddedUserSession;
 import ru.rassafel.bot.session.model.entity.User;
+import ru.rassafel.bot.session.repository.ProductRepository;
 import ru.rassafel.bot.session.service.ProductService;
 import ru.rassafel.bot.session.service.UserService;
 import ru.rassafel.bot.session.step.Step;
@@ -18,6 +19,7 @@ import java.util.List;
 public class ChooseNewProductStep implements Step {
     private final ProductService productService;
     private final UserService userService;
+    private final ProductRepository productRepository;
 
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
@@ -28,7 +30,7 @@ public class ChooseNewProductStep implements Step {
         BotButtons responseButtons = new BotButtons();
 
         //Поиск подходящих продуктов
-        List<String> similarProducts = productService.getSimilarProducts(message);
+        List<String> similarProducts = productService.getSimilarToTextProducts(message);
 
         if (similarProducts.isEmpty()) {
             responseMessage = "Такого продукта не нашлось";
