@@ -2,8 +2,8 @@ package ru.rassafel.bot.session.config;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import com.github.mustachejava.DefaultMustacheFactory;
-import com.github.mustachejava.MustacheFactory;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -20,6 +20,8 @@ import ru.rassafel.bot.session.model.entity.Place;
 /**
  * @author rassafel
  */
+@Data
+@RequiredArgsConstructor
 @Configuration
 @ConditionalOnProperty(prefix = "bot.session", name = "enabled", matchIfMissing = true)
 @EnableConfigurationProperties(SessionProperties.class)
@@ -28,6 +30,7 @@ import ru.rassafel.bot.session.model.entity.Place;
 @EnableJpaRepositories(basePackages = "ru.rassafel.bot.session.repository")
 @EntityScan(basePackages = "ru.rassafel.bot.session.model.entity")
 public class SessionAutoConfiguration {
+    public SessionProperties properties;
     @Bean
     public MessageSource botMessagesSource() {
         ReloadableResourceBundleMessageSource messageSource =
@@ -41,11 +44,6 @@ public class SessionAutoConfiguration {
     public RestTemplate restTemplate() {
         return new RestTemplateBuilder()
             .build();
-    }
-
-    @Bean
-    public MustacheFactory mustacheFactory() {
-        return new DefaultMustacheFactory();
     }
 
     @Bean
