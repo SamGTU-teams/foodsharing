@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     private final ProductAnalyzerController productController;
-    @Value("#{}")
+    @Value("#{session.productCountPerRequest:5}")
     private Long productCountPerRequest;
 
     public List<String> getSimilarProducts(String product) {
