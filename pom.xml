@@ -93,6 +93,13 @@
             </dependency>
 
             <dependency>
+                <groupId>de.grundid.opendatalab</groupId>
+                <artifactId>geojson-jackson</artifactId>
+                <version>1.14</version>
+            </dependency>
+
+
+            <dependency>
                 <groupId>com.playtika.testcontainers</groupId>
                 <artifactId>embedded-postgresql</artifactId>
                 <version>${testcontainers.version}</version>

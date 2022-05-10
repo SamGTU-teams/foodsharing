@@ -2,9 +2,9 @@ package ru.rassafel.bot.session.step.product;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import ru.rassafel.bot.session.model.dto.BotButtons;
 import ru.rassafel.bot.session.model.dto.SessionRequest;
 import ru.rassafel.bot.session.model.dto.SessionResponse;
-import ru.rassafel.bot.session.model.dto.BotButtons;
 import ru.rassafel.bot.session.model.entity.EmbeddedUserSession;
 import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.bot.session.service.UserService;
@@ -19,7 +19,6 @@ public class StartProductStep implements Step {
 
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
-
         EmbeddedUserSession userSession = user.getUserSession();
         sessionResponse.setMessage("Выберите:");
         BotButtons responseButtons = new BotButtons();

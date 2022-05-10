@@ -3,11 +3,11 @@ package ru.rassafel.bot.session.model.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Builder(toBuilder = true)
 public class SessionResponse {
     private String message;

@@ -17,7 +17,7 @@ import ru.rassafel.foodsharing.ibot.repository.FoodPostRepository;
 @Slf4j
 @Component
 @RabbitListener(queues = {"${spring.rabbitmq.ready-post.queue}"})
-public class FoodPostListener {
+public class FoodPostRabbitListener {
     private final FoodPostRepository repository;
 
     private final FoodPostMapper mapper;

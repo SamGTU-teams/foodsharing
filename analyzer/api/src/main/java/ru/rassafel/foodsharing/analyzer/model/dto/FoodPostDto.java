@@ -11,6 +11,7 @@ import ru.rassafel.foodsharing.common.model.dto.RegionDto;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class FoodPostDto {
+    //    Nullable and NotBlack
+    @Pattern(regexp = "^(?!\\s*$).+")
     private String url;
 
     @NotNull
@@ -31,13 +34,15 @@ public class FoodPostDto {
     @NotBlank
     private String text;
 
-    private List<String> attachments = new ArrayList<>();
+    @NotNull
+    private List<@NotBlank String> attachments = new ArrayList<>();
 
     @NotNull
     private GeoPoint point;
 
-    private List<RegionDto> regions = new ArrayList<>();
+    @NotNull
+    private List<@NotNull RegionDto> regions = new ArrayList<>();
 
     @NotEmpty
-    private List<ProductDto> products = new ArrayList<>();
+    private List<@NotNull ProductDto> products = new ArrayList<>();
 }

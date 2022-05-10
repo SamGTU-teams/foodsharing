@@ -11,7 +11,7 @@ import static ru.rassafel.foodsharing.common.model.ModelFactory.*;
  * @author rassafel
  */
 class ProductMapperTest {
-    ProductMapper mapper = ProductMapper.INSTANCE;
+    final ProductMapper mapper = ProductMapper.INSTANCE;
 
     @Test
     void dtoToEntity() {

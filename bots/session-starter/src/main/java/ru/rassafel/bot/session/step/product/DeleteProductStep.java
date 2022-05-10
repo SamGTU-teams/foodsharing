@@ -2,10 +2,10 @@ package ru.rassafel.bot.session.step.product;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.rassafel.bot.session.model.dto.SessionRequest;
-import ru.rassafel.bot.session.model.dto.SessionResponse;
 import ru.rassafel.bot.session.exception.BotException;
 import ru.rassafel.bot.session.model.dto.BotButtons;
+import ru.rassafel.bot.session.model.dto.SessionRequest;
+import ru.rassafel.bot.session.model.dto.SessionResponse;
 import ru.rassafel.bot.session.model.entity.EmbeddedUserSession;
 import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.bot.session.service.ProductService;
@@ -23,10 +23,8 @@ import static ru.rassafel.bot.session.util.ProductButtonsUtil.PRODUCT_MAIN_BUTTO
 @Component("product-4")
 @RequiredArgsConstructor
 public class DeleteProductStep implements Step {
-
     private final ProductService productService;
     private final UserService userService;
-
 
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {

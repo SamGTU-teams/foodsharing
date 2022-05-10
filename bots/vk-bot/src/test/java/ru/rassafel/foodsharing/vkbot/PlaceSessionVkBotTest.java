@@ -9,17 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import ru.rassafel.bot.session.model.dto.From;
-import ru.rassafel.bot.session.model.dto.LocationDto;
 import ru.rassafel.bot.session.model.dto.SessionRequest;
 import ru.rassafel.bot.session.model.dto.SessionResponse;
 import ru.rassafel.bot.session.model.entity.Place;
 import ru.rassafel.bot.session.model.entity.User;
-import ru.rassafel.foodsharing.vkbot.model.domain.VkUser;
 import ru.rassafel.bot.session.service.PlaceService;
 import ru.rassafel.bot.session.service.SessionService;
 import ru.rassafel.bot.session.service.UserService;
 import ru.rassafel.bot.session.util.GeoButtonsUtil;
-import ru.rassafel.foodsharing.common.model.PlatformType;
+import ru.rassafel.foodsharing.common.model.GeoPoint;
+import ru.rassafel.foodsharing.vkbot.model.domain.VkUser;
 
 import java.util.*;
 
@@ -29,7 +28,7 @@ import static ru.rassafel.foodsharing.vkbot.TestUtils.*;
 @SpringBootTest
 @ActiveProfiles("h2")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class PlaceTestSessionVkBotTest {
+public class PlaceSessionVkBotTest {
 
     private static final Long userId = 1L;
     final SessionRequest request = SessionRequest.builder()
@@ -37,7 +36,6 @@ public class PlaceTestSessionVkBotTest {
             .id(userId)
             .username("SomeUsername")
             .build())
-        .type(PlatformType.VK)
         .build();
     @Autowired
     Cache<Long, Place> geoCache;
@@ -94,11 +92,9 @@ public class PlaceTestSessionVkBotTest {
             "geoSession", 2, true);
 
         //Location step test
-        LocationDto locationDto = new LocationDto();
-        locationDto.setLatitude(122.12f);
-        locationDto.setLongitude(12.44f);
+        GeoPoint geoPoint = new GeoPoint(122.12f, 12.44f);
 
-        request.setLocation(locationDto);
+        request.setLocation(geoPoint);
 
         SessionResponse locationResponse = service.handle(request);
         Place placeAfterLocation = geoCache.getIfPresent(userId);
@@ -143,5 +139,4 @@ public class PlaceTestSessionVkBotTest {
             .extracting("name", "radius")
             .containsExactly("дом", 123);
     }
-
 }

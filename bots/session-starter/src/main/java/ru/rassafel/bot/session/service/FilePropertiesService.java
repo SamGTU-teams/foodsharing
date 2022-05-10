@@ -9,7 +9,6 @@ import java.util.Locale;
 @Service
 @RequiredArgsConstructor
 public class FilePropertiesService {
-
     private final MessageSource messageSource;
 
     public String getSessionMessage(String code) {
@@ -19,5 +18,4 @@ public class FilePropertiesService {
     public String getButtonName(String code) {
         return messageSource.getMessage("button." + code, null, Locale.getDefault());
     }
-
 }

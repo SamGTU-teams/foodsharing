@@ -8,6 +8,7 @@ import ru.rassafel.foodsharing.common.model.entity.product.Product;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,21 +23,27 @@ public class ProductService {
     }
 
     public Map<Integer, String> getUsersProductNamesMap(User user) {
-        int[] productCounter = {1};
+        AtomicInteger counter = new AtomicInteger(1);
         return user.getProducts().stream().map(Product::getName).collect(Collectors.toMap(
-            o -> productCounter[0]++,
+            o -> counter.getAndIncrement(),
             o -> o
         ));
     }
 
     public List<String> getUsersProductNames(User user) {
-        return user.getProducts().stream().map(Product::getName).collect(Collectors.toList());
+        return user.getProducts()
+            .stream()
+            .map(Product::getName)
+            .collect(Collectors.toList());
     }
 
     public String getUsersProductNamesMapMessage(User user, String additionalMessage) {
-        return getUsersProductNamesMap(user).entrySet().stream().map(entry -> entry.getKey() + "." + entry.getValue())
-            .collect(Collectors.joining("\n"))
-            + "\n\n" + additionalMessage;
+        return getUsersProductNamesMap(user)
+            .entrySet()
+            .stream()
+            .map(entry -> entry.getKey() + "." + entry.getValue())
+            .collect(Collectors.joining("\n", "",
+                "\n\n" + additionalMessage));
     }
 
     public String getUsersProductNamesMapMessage(User user) {

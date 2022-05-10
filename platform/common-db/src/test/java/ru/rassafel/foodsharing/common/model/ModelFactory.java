@@ -14,12 +14,11 @@ import java.util.Set;
  * @author rassafel
  */
 public class ModelFactory {
+    public static final Long entityId = 1L;
+    public static final Long subEntityId = 2L;
 
-    public static Long entityId = 1L;
-    public static Long subEntityId = 2L;
-
-    public static String entityName = "Entity name";
-    public static String subEntityName = "SubEntity name";
+    public static final String entityName = "Entity name";
+    public static final String subEntityName = "SubEntity name";
 
     public static CategoryDto createCategoryDto(Long id, String name) {
         CategoryDto result = new CategoryDto();
