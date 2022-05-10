@@ -18,7 +18,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Slf4j
 @Component
-@RabbitListener(queues = {"spring.rabbit.ad-post.queue"})
+@RabbitListener(queues = {"${spring.rabbitmq.ad-post.queue}"})
 public class AdPostRabbitListener {
     private final Validator validator;
 
