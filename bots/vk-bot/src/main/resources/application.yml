@@ -1,3 +1,25 @@
+spring:
+  rabbitmq:
+    enabled: false
+    host: ${RABBITMQ_HOST}
+    username: ${RABBITMQ_USER}
+    password: ${RABBITMQ_PASS}
+    ready-post:
+      exchange: post-ready-exchange
+      storage: post.ready.storage
+      queue: post.ready.vk
+      dlx: post-ready-dlx
+      dlq-storage: post.ready.dlq.storage
+      dlq: post.ready.dlq.vk
+    ad-post:
+      exchange: post-ad-exchange
+      storage: post.ad.storage
+      queue: post.ad.vk
+      dlx: post-ad-dlx
+      dlq-storage: post.ad.dlq.storage
+      dlq: post.ad.dlq.vk
+  liquibase:
+    contexts: vk-bot,data
 vk:
   bot:
     confirm_code: ${VK_CONFIRM_CODE}
