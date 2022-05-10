@@ -42,7 +42,10 @@ public class FoodPostRabbitListener {
             .stream()
             .map(ProductDto::getId)
             .collect(Collectors.toList());
-        List<Long> userIds = repository.findByProductAndSuitablePlace(productIds, lat, lon);
+        List<Long> userIds = repository.findByProductAndSuitablePlace(productIds, lat, lon)
+            .stream()
+            .map(o -> (Long) o[0])
+            .collect(Collectors.toList());
         String postText = foodPostDto.getText();
         schedulerService.scheduleEvent(postText, userIds.stream()
             .map(Long::intValue).toArray(Integer[]::new));
