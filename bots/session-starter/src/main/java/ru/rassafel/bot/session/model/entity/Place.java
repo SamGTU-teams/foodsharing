@@ -22,6 +22,8 @@ public abstract class Place {
     private GeoPointEmbeddable geo;
     @Column(name = "user_id", nullable = false)
     private Long userId;
+    @Column(name = "address")
+    private String address;
 
     public Place withName(String name) {
         this.name = name;
