@@ -14,7 +14,7 @@ import java.time.temporal.ChronoUnit;
 public class SessionProperties {
     public static final String PREFIX = "bot.session";
 
-    private Cache placesCache;
+    private Cache placesCache = new Cache();
     private boolean enabled = true;
 
     @Data
