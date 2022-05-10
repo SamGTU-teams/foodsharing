@@ -9,4 +9,6 @@ public interface VkUserPlaceRepository extends CrudRepository<VkUserPlace, Long>
 
     Collection<VkUserPlace> findByUserId(Long userId);
 
+    void deleteAllByUserId(Long userId);
+
 }

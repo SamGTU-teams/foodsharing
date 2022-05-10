@@ -68,8 +68,10 @@ public class ChooseOperationGeoStep implements Step {
             } else {
 
                 responseMessage = placeService.getUsersPlaceMapMessage(user,
-                    "Вот список ваших мест, напишите название или номер(а) того которого хотите удалить, пример: 1,2,3");
+                    "Вот список ваших мест, напишите название или номер(а) того которого хотите удалить, пример: 1,2,3\n" +
+                        "Или вы можете удалить все ваши места");
 
+                responseButtons.addButton(new BotButtons.BotButton("Удалить все"));
                 userSession.setSessionStep(5);
             }
         } else if (message.equals("редактирование места")) {

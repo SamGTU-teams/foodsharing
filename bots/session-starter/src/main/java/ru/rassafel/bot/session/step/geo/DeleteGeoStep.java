@@ -34,29 +34,39 @@ public class DeleteGeoStep implements Step {
         EmbeddedUserSession userSession = user.getUserSession();
         BotButtons responseButtons = new BotButtons();
 
-        Map<Integer, String> usersPlacesNamesMap = placeService.getUsersPlacesNamesMap(user);
-        Set<String> placesNamesToDelete;
-        try {
-            placesNamesToDelete = SessionUtil.getAllNames(usersPlacesNamesMap, message);
-        } catch (IllegalArgumentException ex) {
-            throw new BotException(user.getId(), ex.getMessage());
-        }
-        Collection<Place> usersPlaces = placeService.findByUserId(user.getId());
-        for (String placeName : placesNamesToDelete) {
-            Place place = usersPlaces.stream().filter(p -> p.getName().equals(placeName)).findFirst()
-                .orElseThrow(() -> new RuntimeException("Uncaught error! Place name not found"));
-            placeService.deletePlace(place);
-            usersPlaces.removeIf(p -> p.getName().equalsIgnoreCase(placeName));
-        }
-        if (usersPlaces.isEmpty()) {
-            sessionResponse.setMessage("Место удалено, у вас больше не осталось мест");
-            userSession.setSessionStep(1);
-            responseButtons.addAll(GeoButtonsUtil.GEO_MAIN_BUTTONS);
-
+        if(message.equalsIgnoreCase("удалить все")){
+            placeService.deleteAll(user.getId());
             userService.saveUser(user);
-        } else {
-            String otherPlaces = placeService.getUsersPlaceMapMessage(user, sessionRequest.getType());
-            sessionResponse.setMessage("Место удалено, введите еще, оставшиеся места:\n\n" + otherPlaces);
+
+            responseButtons.addAll(GeoButtonsUtil.GEO_MAIN_BUTTONS);
+            userSession.setSessionStep(1);
+            sessionResponse.setMessage("Вы удалили все ваши места");
+        }else {
+
+            Map<Integer, String> usersPlacesNamesMap = placeService.getUsersPlacesNamesMap(user);
+            Set<String> placesNamesToDelete;
+            try {
+                placesNamesToDelete = SessionUtil.getAllNames(usersPlacesNamesMap, message);
+            } catch (IllegalArgumentException ex) {
+                throw new BotException(user.getId(), ex.getMessage());
+            }
+            Collection<Place> usersPlaces = placeService.findByUserId(user.getId());
+            for (String placeName : placesNamesToDelete) {
+                Place place = usersPlaces.stream().filter(p -> p.getName().equals(placeName)).findFirst()
+                    .orElseThrow(() -> new RuntimeException("Uncaught error! Place name not found"));
+                placeService.deletePlace(place);
+                usersPlaces.removeIf(p -> p.getName().equalsIgnoreCase(placeName));
+            }
+            if (usersPlaces.isEmpty()) {
+                sessionResponse.setMessage("Место удалено, у вас больше не осталось мест");
+                userSession.setSessionStep(1);
+                responseButtons.addAll(GeoButtonsUtil.GEO_MAIN_BUTTONS);
+
+                userService.saveUser(user);
+            } else {
+                String otherPlaces = placeService.getUsersPlaceMapMessage(user, sessionRequest.getType());
+                sessionResponse.setMessage("Место удалено, введите еще, оставшиеся места:\n\n" + otherPlaces);
+            }
         }
         sessionResponse.setButtons(responseButtons);
     }

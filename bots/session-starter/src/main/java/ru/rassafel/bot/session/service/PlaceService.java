@@ -20,6 +20,8 @@ public interface PlaceService {
 
     Place createPlace(User linkWith, LocationDto location);
 
+    void deleteAll(Long userId);
+
     default Map<Integer, String> getUsersPlacesNamesMap(User user) {
         Collection<Place> usersPlaces = findByUserId(user.getId());
         return getUsersPlacesNamesMap(usersPlaces);

@@ -49,4 +49,9 @@ public class VkPlaceService implements PlaceService {
             .withUser(linkWith)
             .withGeo(new GeoPointEmbeddable(location.getLatitude(), location.getLongitude()));
     }
+
+    @Override
+    public void deleteAll(Long userId) {
+        repository.deleteAllByUserId(userId);
+    }
 }
