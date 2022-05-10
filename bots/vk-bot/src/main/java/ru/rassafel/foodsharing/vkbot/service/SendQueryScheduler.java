@@ -26,12 +26,12 @@ public class SendQueryScheduler {
 
     private final VkApiClient vk;
     private final GroupActor groupActor;
-    @Value("${vkBotProperties.client.maxQuerySizeInBatch:25}")
+    @Value("${vkBotConfiguration.properties.client.maxQuerySizeInBatch:25}")
     private int maxQuerySizeInBatch;
 
     @Async("sendVkQueryTaskScheduler")
     @Scheduled(fixedRateString =
-        "#{vkBotProperties.client.maxTimeForSendSomeQueries / vkBotProperties.client.maxQueryCountPerTime}")
+        "#{vkBotConfiguration.properties.client.maxTimeForSendSomeQueries / vkBotConfiguration.properties.client.maxQueryCountPerTime}")
     public void sendScheduled() {
         try {
             List<AbstractQueryBuilder> requests = new ArrayList<>();

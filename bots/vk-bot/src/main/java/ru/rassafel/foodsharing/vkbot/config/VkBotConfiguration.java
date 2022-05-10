@@ -5,6 +5,7 @@ import com.vk.api.sdk.client.AbstractQueryBuilder;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.GroupActor;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
+import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -23,8 +24,10 @@ import java.util.concurrent.BlockingQueue;
 @Configuration
 @EnableConfigurationProperties(VkBotProperties.class)
 @EnableScheduling
+@AllArgsConstructor
 @EntityScan(basePackages = "ru.rassafel.foodsharing.vkbot.model.domain")
 public class VkBotConfiguration {
+    public VkBotProperties properties;
     @Bean
     VkBotDtoMapper vkBotDtoMapper() {
         return VkBotDtoMapper.INSTANCE;

@@ -19,7 +19,7 @@ public class VkBotHandlerService {
     private final VkBotDtoMapper mapper;
     private final SessionService sessionService;
     private final VkMessageSchedulerService vkMessageSchedulerService;
-    @Value("${vk.server.confirm_code}")
+    @Value("${vk.bot.confirm_code}")
     private String confirmCode;
 
     public String handleUpdate(VkUpdate update) {
