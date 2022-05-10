@@ -45,6 +45,7 @@
             <column name="user_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
+            <column name="address" type="VARCHAR(256)"/>
             <column name="lat" type="DOUBLE">
                 <constraints nullable="false"/>
             </column>
