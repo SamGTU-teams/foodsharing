@@ -23,7 +23,7 @@ public abstract class GeoMapper {
         }
 
         double[] coordinates = Pattern.compile("\\s+")
-            .splitAsStream(source.getCoordinates())
+            .splitAsStream(source.getCoordinates().strip())
             .mapToDouble(Double::parseDouble)
             .toArray();
         return new GeoPoint(coordinates[0], coordinates[1]);
