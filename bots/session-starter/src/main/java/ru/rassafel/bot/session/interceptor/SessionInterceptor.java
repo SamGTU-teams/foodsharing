@@ -5,6 +5,6 @@ import ru.rassafel.bot.session.model.dto.SessionResponse;
 import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.bot.session.type.BotSession;
 
-public interface SessionExecutorInterceptor {
+public interface SessionInterceptor {
     SessionResponse handle(SessionRequest request, User user, BotSession next);
 }

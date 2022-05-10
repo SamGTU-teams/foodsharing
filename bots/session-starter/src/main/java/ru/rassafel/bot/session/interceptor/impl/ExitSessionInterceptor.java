@@ -3,7 +3,7 @@ package ru.rassafel.bot.session.interceptor.impl;
 import com.github.benmanes.caffeine.cache.Cache;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.rassafel.bot.session.interceptor.SessionExecutorInterceptor;
+import ru.rassafel.bot.session.interceptor.SessionInterceptor;
 import ru.rassafel.bot.session.model.dto.BotButtons;
 import ru.rassafel.bot.session.model.dto.SessionRequest;
 import ru.rassafel.bot.session.model.dto.SessionResponse;
@@ -18,7 +18,7 @@ import ru.rassafel.bot.session.util.ButtonsUtil;
 
 @Component
 @RequiredArgsConstructor
-public class ExitSessionInterceptor implements SessionExecutorInterceptor {
+public class ExitSessionInterceptor implements SessionInterceptor {
     private final FilePropertiesService filePropertiesService;
     private final Cache<Long, Place> geoPointCache;
     private final UserService userService;
