@@ -51,7 +51,7 @@ public class VkPlaceService implements PlaceService {
     }
 
     @Override
-    public void deleteAll(Long userId) {
+    public void deleteAllByUserId(Long userId) {
         repository.deleteAllByUserId(userId);
     }
 }

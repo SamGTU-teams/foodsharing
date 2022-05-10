@@ -18,7 +18,7 @@ public interface PlaceService {
 
     Place createPlace(User linkWith, GeoPoint geoPoint);
 
-    void deleteAll(Long userId);
+    void deleteAllByUserId(Long userId);
 
     default Map<Integer, String> getUsersPlacesNamesMap(User user) {
         Collection<Place> usersPlaces = findByUserId(user.getId());

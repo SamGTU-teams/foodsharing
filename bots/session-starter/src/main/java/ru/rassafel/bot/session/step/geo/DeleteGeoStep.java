@@ -15,7 +15,6 @@ import ru.rassafel.bot.session.service.UserService;
 import ru.rassafel.bot.session.step.Step;
 import ru.rassafel.bot.session.util.GeoButtonsUtil;
 import ru.rassafel.bot.session.util.SessionUtil;
-import ru.rassafel.foodsharing.common.exception.ApiException;
 
 import java.util.Collection;
 import java.util.Map;
@@ -36,7 +35,7 @@ public class DeleteGeoStep implements Step {
         BotButtons responseButtons = new BotButtons();
 
         if(message.equalsIgnoreCase("удалить все")){
-            placeService.deleteAll(user.getId());
+            placeService.deleteAllByUserId(user.getId());
             userService.saveUser(user);
 
             responseButtons.addAll(GeoButtonsUtil.GEO_MAIN_BUTTONS);
@@ -65,7 +64,7 @@ public class DeleteGeoStep implements Step {
 
                 userService.saveUser(user);
             } else {
-                String otherPlaces = placeService.getUsersPlaceMapMessage(user, sessionRequest.getType());
+                String otherPlaces = placeService.getUsersPlaceMapMessage(user);
                 sessionResponse.setMessage("Место удалено, введите еще, оставшиеся места:\n\n" + otherPlaces);
             }
         }

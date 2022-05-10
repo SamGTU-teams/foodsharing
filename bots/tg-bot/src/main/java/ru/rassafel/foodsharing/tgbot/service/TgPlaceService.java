@@ -49,4 +49,9 @@ public class TgPlaceService implements PlaceService {
             .withUser(linkWith)
             .withGeo(mapper.dtoToEntity(geoPoint));
     }
+
+    @Override
+    public void deleteAllByUserId(Long userId) {
+        repository.deleteAllByUserId(userId);
+    }
 }
