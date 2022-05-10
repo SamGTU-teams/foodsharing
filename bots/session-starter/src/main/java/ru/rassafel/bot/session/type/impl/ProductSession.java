@@ -10,9 +10,10 @@ import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.bot.session.step.StepFinder;
 import ru.rassafel.bot.session.type.BotSession;
 
-@Component("productSession")
 @RequiredArgsConstructor
+@Component(ProductSession.NAME)
 public class ProductSession implements BotSession {
+    public static final String NAME = "productSession";
     private final StepFinder stepFinder;
 
     @Override
@@ -32,6 +33,6 @@ public class ProductSession implements BotSession {
 
     @Override
     public String getName() {
-        return "productSession";
+        return NAME;
     }
 }

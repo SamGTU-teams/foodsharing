@@ -5,19 +5,14 @@ import com.vk.api.sdk.client.ClientResponse;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.GroupActor;
 import com.vk.api.sdk.exceptions.ClientException;
-import com.vk.api.sdk.queries.execute.ExecuteBatchQuery;
-import com.vk.api.sdk.queries.messages.MessagesSendQuery;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import ru.rassafel.bot.session.model.dto.SessionResponse;
-import ru.rassafel.foodsharing.vkbot.config.VkApiConfiguration;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
@@ -27,17 +22,16 @@ import static java.util.Optional.ofNullable;
 @RequiredArgsConstructor
 @Slf4j
 public class SendQueryScheduler {
-
     private final BlockingQueue<AbstractQueryBuilder> queue;
 
     private final VkApiClient vk;
     private final GroupActor groupActor;
-    @Value("${vk.api.maxQuerySizeInBatch:25}")
+    @Value("${vkBotConfiguration.properties.client.maxQuerySizeInBatch:25}")
     private int maxQuerySizeInBatch;
 
     @Async("sendVkQueryTaskScheduler")
     @Scheduled(fixedRateString =
-        "#{vkApiConfiguration.maxTimeForSendSomeQueries / vkApiConfiguration.maxQueryCountPerTime}")
+        "#{vkBotConfiguration.properties.client.maxTimeForSendSomeQueries / vkBotConfiguration.properties.client.maxQueryCountPerTime}")
     public void sendScheduled() {
         try {
             List<AbstractQueryBuilder> requests = new ArrayList<>();
@@ -57,6 +51,4 @@ public class SendQueryScheduler {
             log.error("Exception during send execute query to VK : {}", e.getMessage());
         }
     }
-
-
 }

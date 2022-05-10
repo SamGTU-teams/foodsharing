@@ -10,10 +10,10 @@ import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.bot.session.step.StepFinder;
 import ru.rassafel.bot.session.type.BotSession;
 
-@Component
 @RequiredArgsConstructor
+@Component(GeoSession.NAME)
 public class GeoSession implements BotSession {
-
+    public static final String NAME = "geoSession";
     private final StepFinder stepFinder;
 
     @Override
@@ -33,6 +33,6 @@ public class GeoSession implements BotSession {
 
     @Override
     public String getName() {
-        return "geoSession";
+        return NAME;
     }
 }

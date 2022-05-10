@@ -3,14 +3,12 @@ package ru.rassafel.bot.session.model.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder(toBuilder = true)
 @Data
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Builder(toBuilder = true)
 public class To {
-
     private Long id;
-
 }

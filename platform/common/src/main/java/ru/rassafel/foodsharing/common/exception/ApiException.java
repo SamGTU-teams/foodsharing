@@ -1,6 +1,5 @@
 package ru.rassafel.foodsharing.common.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 

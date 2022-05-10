@@ -9,21 +9,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
+import ru.rassafel.bot.session.exception.BotException;
+import ru.rassafel.bot.session.model.dto.BotButtons;
 import ru.rassafel.bot.session.model.dto.From;
 import ru.rassafel.bot.session.model.dto.SessionRequest;
 import ru.rassafel.bot.session.model.dto.SessionResponse;
-import ru.rassafel.bot.session.exception.BotException;
-import ru.rassafel.bot.session.model.dto.BotButtons;
 import ru.rassafel.bot.session.model.entity.User;
-import ru.rassafel.foodsharing.vkbot.model.domain.VkUser;
-import ru.rassafel.foodsharing.vkbot.repository.VkUserRepository;
 import ru.rassafel.bot.session.service.FilePropertiesService;
 import ru.rassafel.bot.session.service.ProductService;
 import ru.rassafel.bot.session.service.SessionEnum;
 import ru.rassafel.bot.session.service.SessionService;
 import ru.rassafel.bot.session.util.ButtonsUtil;
 import ru.rassafel.bot.session.util.ProductButtonsUtil;
-import ru.rassafel.foodsharing.common.model.PlatformType;
+import ru.rassafel.foodsharing.vkbot.model.domain.VkUser;
+import ru.rassafel.foodsharing.vkbot.repository.VkUserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +37,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @ActiveProfiles("integration-test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class ProductTestSessionVkBot {
+class ProductSessionVkBotIntegrationTest {
     final Long userId = 12345L;
 
     final SessionRequest request = SessionRequest.builder()
@@ -46,7 +45,6 @@ class ProductTestSessionVkBot {
             .id(userId)
             .username("SomeUsername")
             .build())
-        .type(PlatformType.VK)
         .build();
 
     @MockBean

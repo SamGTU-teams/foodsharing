@@ -1,0 +1,23 @@
+spring:
+  rabbitmq:
+    ready-post:
+      exchange: post-ready-exchange
+      storage: post.ready.storage
+      queue: post.ready.tg
+      dlx: post-ready-dlx
+      dlq-storage: post.ready.dlq.storage
+      dlq: post.ready.dlq.tg
+    ad-post:
+      exchange: post-ad-exchange
+      storage: post.ad.storage
+      queue: post.ad.tg
+      dlx: post-ad-dlx
+      dlq-storage: post.ad.dlq.storage
+      dlq: post.ad.dlq.tg
+  liquibase:
+    contexts: tg-bot,data
+tg:
+  bot:
+    webHookPath: ${TG_BOT_WEB_HOOK_PATH}
+    username: ${TG_BOT_USERNAME}
+    token: ${TG_BOT_TOKEN}

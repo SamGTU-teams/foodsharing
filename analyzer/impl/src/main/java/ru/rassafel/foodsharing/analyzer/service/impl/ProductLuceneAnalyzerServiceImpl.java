@@ -14,7 +14,7 @@ import ru.rassafel.foodsharing.analyzer.repository.LuceneRepository;
 import ru.rassafel.foodsharing.analyzer.repository.ProductRepository;
 import ru.rassafel.foodsharing.analyzer.service.ProductLuceneAnalyzerService;
 import ru.rassafel.foodsharing.common.model.entity.product.Product;
-import ru.rassafel.foodsharing.parser.model.RawPost;
+import ru.rassafel.foodsharing.parser.model.dto.RawPostDto;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +31,7 @@ public class ProductLuceneAnalyzerServiceImpl implements ProductLuceneAnalyzerSe
     private final LuceneProperties params;
 
     @Override
-    public List<ScoreProduct> parseProducts(RawPost post) {
+    public List<ScoreProduct> parseProducts(RawPostDto post) {
         return parseProducts(post.getText());
     }
 
@@ -47,7 +47,7 @@ public class ProductLuceneAnalyzerServiceImpl implements ProductLuceneAnalyzerSe
     }
 
     @Override
-    public List<ScoreProduct> parseProducts(RawPost post, LuceneIndexedString... indexedStrings) {
+    public List<ScoreProduct> parseProducts(RawPostDto post, LuceneIndexedString... indexedStrings) {
         return parseProducts(indexedStrings);
     }
 

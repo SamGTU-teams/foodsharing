@@ -9,7 +9,6 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class SessionFactory {
-
     private final Map<String, BotSession> sessionMap;
 
     public BotSession getSession(String firstMessage) {

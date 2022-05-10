@@ -5,7 +5,6 @@ import ru.rassafel.bot.session.model.dto.SessionResponse;
 import ru.rassafel.bot.session.model.entity.User;
 
 public interface BotSession {
-
     SessionResponse execute(SessionRequest request, User user);
 
     String getName();

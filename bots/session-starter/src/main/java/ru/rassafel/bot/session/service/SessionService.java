@@ -2,13 +2,13 @@ package ru.rassafel.bot.session.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.rassafel.bot.session.exception.BotException;
+import ru.rassafel.bot.session.interceptor.impl.ExitSessionInterceptor;
 import ru.rassafel.bot.session.model.dto.SessionRequest;
 import ru.rassafel.bot.session.model.dto.SessionResponse;
-import ru.rassafel.bot.session.exception.BotException;
-import ru.rassafel.bot.session.interceptor.ExitSessionInterceptor;
-import ru.rassafel.bot.session.mapper.UserDtoMapper;
 import ru.rassafel.bot.session.model.entity.EmbeddedUserSession;
 import ru.rassafel.bot.session.model.entity.User;
+import ru.rassafel.bot.session.model.mapper.UserDtoMapper;
 import ru.rassafel.bot.session.type.BotSession;
 
 import java.util.Optional;

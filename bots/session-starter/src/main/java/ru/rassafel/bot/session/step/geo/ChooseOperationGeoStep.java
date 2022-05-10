@@ -2,18 +2,19 @@ package ru.rassafel.bot.session.step.geo;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.rassafel.bot.session.model.dto.SessionRequest;
-import ru.rassafel.bot.session.model.dto.SessionResponse;
 import ru.rassafel.bot.session.exception.BotException;
 import ru.rassafel.bot.session.model.dto.BotButtons;
-import ru.rassafel.bot.session.model.entity.Place;
+import ru.rassafel.bot.session.model.dto.SessionRequest;
+import ru.rassafel.bot.session.model.dto.SessionResponse;
 import ru.rassafel.bot.session.model.entity.EmbeddedUserSession;
+import ru.rassafel.bot.session.model.entity.Place;
 import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.bot.session.service.PlaceService;
 import ru.rassafel.bot.session.service.UserService;
 import ru.rassafel.bot.session.step.Step;
 
 import java.util.Collection;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import static ru.rassafel.bot.session.util.GeoButtonsUtil.GEO_MAIN_BUTTONS;
@@ -39,12 +40,12 @@ public class ChooseOperationGeoStep implements Step {
                 responseMessage = "У вас нет добавленных мест";
 
             } else {
-                int[] i = {1};
+                AtomicInteger counter = new AtomicInteger(1);
                 String pointText = points.stream().map(p -> String.format(
                         "%d. Название места : %s\n" +
                             "Координаты места : %f - широта, %f - долгота\n" +
                             "Радиус поиска вокруг этого места : %d\n",
-                        i[0]++, p.getName(), p.getGeo().getLat(), p.getGeo().getLon(), p.getRadius()))
+                        counter.getAndIncrement(), p.getName(), p.getGeo().getLat(), p.getGeo().getLon(), p.getRadius()))
                     .collect(Collectors.joining("\n"));
 
                 responseMessage = "Ваши места : \n" + pointText;

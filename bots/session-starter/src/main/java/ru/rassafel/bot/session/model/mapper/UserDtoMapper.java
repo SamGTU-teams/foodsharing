@@ -1,4 +1,4 @@
-package ru.rassafel.bot.session.mapper;
+package ru.rassafel.bot.session.model.mapper;
 
 import ru.rassafel.bot.session.model.dto.SessionRequest;
 import ru.rassafel.bot.session.model.entity.User;

@@ -12,7 +12,7 @@ import static ru.rassafel.foodsharing.common.model.ModelFactory.createPointDto;
  * @author rassafel
  */
 class GeoPointEmbeddableMapperTest {
-    GeoPointEmbeddableMapper mapper = GeoPointEmbeddableMapper.INSTANCE;
+    final GeoPointEmbeddableMapper mapper = GeoPointEmbeddableMapper.INSTANCE;
 
     @Test
     void entityToDto() {
