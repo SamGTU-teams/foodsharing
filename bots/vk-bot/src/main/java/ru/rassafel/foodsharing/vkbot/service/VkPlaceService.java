@@ -51,6 +51,13 @@ public class VkPlaceService implements PlaceService {
     }
 
     @Override
+    public Place createPlace(User linkWith, GeoPoint geoPoint, String address) {
+        Place place = createPlace(linkWith, geoPoint);
+        place.setAddress(address);
+        return place;
+    }
+
+    @Override
     public void deleteAllByUserId(Long userId) {
         repository.deleteAllByUserId(userId);
     }

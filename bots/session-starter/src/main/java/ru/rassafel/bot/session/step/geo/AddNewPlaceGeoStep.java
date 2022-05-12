@@ -32,9 +32,10 @@ public class AddNewPlaceGeoStep implements Step {
             sessionResponse.setMessage("Мне необходима геолокация!");
             responseButtons.addButton(BotButtons.BotButton.GEO_BUTTON);
         } else {
-            Place place = placeService.createPlace(user, location);
             String address =
                 streetMapService.getAddress(location.getLat(), location.getLon());
+
+            Place place = placeService.createPlace(user, location, address);
 
             geoPointCache.put(user.getId(), place);
 

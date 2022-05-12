@@ -18,6 +18,8 @@ public interface PlaceService {
 
     Place createPlace(User linkWith, GeoPoint geoPoint);
 
+    Place createPlace(User linkWith, GeoPoint geoPoint, String address);
+
     void deleteAllByUserId(Long userId);
 
     default Map<Integer, String> getUsersPlacesNamesMap(User user) {
