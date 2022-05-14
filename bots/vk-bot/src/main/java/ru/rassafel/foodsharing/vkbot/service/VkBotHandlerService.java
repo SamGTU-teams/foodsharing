@@ -18,7 +18,7 @@ import ru.rassafel.foodsharing.vkbot.model.dto.VkUpdate;
 public class VkBotHandlerService {
     private final VkBotDtoMapper mapper;
     private final SessionService sessionService;
-    private final VkMessageSchedulerService vkMessageSchedulerService;
+    private final VkMessenger vkMessenger;
     @Value("${vk.bot.confirm_code}")
     private String confirmCode;
 
@@ -27,12 +27,12 @@ public class VkBotHandlerService {
             SessionRequest request = mapper.mapDto(update);
             try {
                 SessionResponse response = sessionService.handle(request);
-                vkMessageSchedulerService.scheduleEvent(response);
+                vkMessenger.send(response);
             } catch (BotException ex) {
-                vkMessageSchedulerService.scheduleEvent(ex.getMessage(), ex.getSendTo().intValue());
+                vkMessenger.send(ex.getMessage(), ex.getSendTo().intValue());
             } catch (Exception ex) {
                 log.error("Caught an error {}", ex.getMessage());
-                vkMessageSchedulerService.scheduleEvent("Возникла ошибка на сервере, попробуйте повторить позже",
+                vkMessenger.send("Возникла ошибка на сервере, попробуйте повторить позже",
                     request.getFrom().getId().intValue());
             }
         } else if (update.getType() == Type.CONFIRMATION) {
