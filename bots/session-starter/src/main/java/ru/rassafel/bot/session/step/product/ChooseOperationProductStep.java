@@ -1,6 +1,7 @@
 package ru.rassafel.bot.session.step.product;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.rassafel.bot.session.exception.BotException;
 import ru.rassafel.bot.session.model.dto.BotButtons;
@@ -12,6 +13,7 @@ import ru.rassafel.bot.session.service.ProductService;
 import ru.rassafel.bot.session.service.UserService;
 import ru.rassafel.bot.session.step.Step;
 
+import static java.lang.String.format;
 import static ru.rassafel.bot.session.util.ProductButtonsUtil.PRODUCT_MAIN_BUTTONS;
 
 @Component("product-1")
@@ -19,6 +21,8 @@ import static ru.rassafel.bot.session.util.ProductButtonsUtil.PRODUCT_MAIN_BUTTO
 public class ChooseOperationProductStep implements Step {
     private final ProductService productService;
     private final UserService userService;
+    @Value("${bot-config.max-product-count:2}")
+    private Integer maxProductCount;
 
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
@@ -31,8 +35,8 @@ public class ChooseOperationProductStep implements Step {
 
         if (message.equals("добавить продукт")) {
             int productCount = user.getProducts().size();
-            if (productCount > 2) {
-                throw new BotException(user.getId(), "Вы не можете добавить больше 100 продуктов, сначала удалите несколько");
+            if (productCount >= maxProductCount) {
+                throw new BotException(user.getId(), format("Вы не можете добавить больше %d продуктов, сначала удалите несколько", maxProductCount));
             }
             responseMessage = "Введите название продукта, который хотите добавить";
 
