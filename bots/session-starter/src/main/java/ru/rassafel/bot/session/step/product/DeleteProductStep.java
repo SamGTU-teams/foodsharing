@@ -44,7 +44,7 @@ public class DeleteProductStep implements Step {
             Map<Integer, String> usersProductNamesMap = productService.getUsersProductNamesMap(user);
             Set<String> productNamesToDelete;
             try {
-                productNamesToDelete = SessionUtil.getAllNames(usersProductNamesMap, message);
+                productNamesToDelete = SessionUtil.findValuesByMessage(usersProductNamesMap, message);
             } catch (IllegalArgumentException ex) {
                 throw new BotException(user.getId(), ex.getMessage());
             }

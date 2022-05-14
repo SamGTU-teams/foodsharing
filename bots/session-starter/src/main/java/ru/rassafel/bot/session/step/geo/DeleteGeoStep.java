@@ -46,7 +46,7 @@ public class DeleteGeoStep implements Step {
             Map<Integer, String> usersPlacesNamesMap = placeService.getUsersPlacesNamesMap(user);
             Set<String> placesNamesToDelete;
             try {
-                placesNamesToDelete = SessionUtil.getAllNames(usersPlacesNamesMap, message);
+                placesNamesToDelete = SessionUtil.findValuesByMessage(usersPlacesNamesMap, message);
             } catch (IllegalArgumentException ex) {
                 throw new BotException(user.getId(), ex.getMessage());
             }

@@ -1,7 +1,6 @@
 package ru.rassafel.bot.session.util;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -9,11 +8,11 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class SessionUtil {
-    public static Set<String> getAllNames(Map<Integer, String> objectMap, String message) {
-        Matcher matcher = Pattern.compile("(\\d+\\s*,?)+").matcher(message);
+    public static Set<String> findValuesByMessage(Map<Integer, String> objectMap, String message) {
+        Matcher matcher = Pattern.compile("^\\s*(\\d+\\s*,?\\s*)+$").matcher(message);
         if (!matcher.matches()) {
             if (objectMap.entrySet().stream().noneMatch(entry -> entry.getValue().equalsIgnoreCase(message))) {
-                throw new IllegalArgumentException("Введено неверное название, попробуйте еще");
+                throw new IllegalArgumentException(String.format("Названия %s в списке нет, повторите попытку", message));
             }
             return Set.of(message);
         }
@@ -21,7 +20,7 @@ public class SessionUtil {
         matcher.usePattern(digitPattern);
         matcher.reset();
 
-        List<Integer> nums = new ArrayList<>();
+        Set<Integer> nums = new HashSet<>();
         while (matcher.find()) {
             int num = Integer.parseInt(matcher.group());
             if (!objectMap.containsKey(num)) {
