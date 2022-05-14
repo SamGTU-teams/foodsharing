@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.rassafel.bot.session.model.dto.BotButtons;
 import ru.rassafel.bot.session.model.dto.SessionResponse;
+import ru.rassafel.bot.session.service.Messenger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,17 +21,17 @@ import java.util.stream.IntStream;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class VkMessageSchedulerService {
+public class VkMessenger implements Messenger {
     private final VkApiClient vk;
     private final GroupActor groupActor;
     private final BlockingQueue<AbstractQueryBuilder> queue;
 
 //    @PostConstruct
-    public void scheduleEvent() {
+    public void send() {
         IntStream.range(0, 1000).forEach(o -> queue.add(createQuery("sss " + o, null, 146072345)));
     }
 
-    public void scheduleEvent(SessionResponse response) {
+    public void send(SessionResponse response) {
         MessagesSendQuery query =
             createQuery(response.getMessage(),
                 response.getButtons(),
@@ -42,7 +43,8 @@ public class VkMessageSchedulerService {
         }
     }
 
-    public void scheduleEvent(String message, Integer... ids) {
+    @Override
+    public void send(String message, Integer... ids) {
         MessagesSendQuery query = createQuery(message, null, ids);
         try {
             queue.put(query);
