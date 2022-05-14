@@ -16,20 +16,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
-import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class VkMessenger implements Messenger {
+
     private final VkApiClient vk;
     private final GroupActor groupActor;
     private final BlockingQueue<AbstractQueryBuilder> queue;
-
-//    @PostConstruct
-    public void send() {
-        IntStream.range(0, 1000).forEach(o -> queue.add(createQuery("sss " + o, null, 146072345)));
-    }
 
     public void send(SessionResponse response) {
         MessagesSendQuery query =
