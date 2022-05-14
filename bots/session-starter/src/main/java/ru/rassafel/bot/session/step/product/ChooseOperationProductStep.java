@@ -51,6 +51,7 @@ public class ChooseOperationProductStep implements Step {
                 responseMessage = productService.getUsersProductNamesMapMessage(user,
                     "Вот список ваших продуктов, напишите название или номер(а) того которого хотите удалить, пример: 1,2,3");
 
+                responseButtons.addButton(new BotButtons.BotButton("Удалить все"));
                 userSession.setSessionStep(4);
             }
         } else if (message.equals("мои продукты")) {

@@ -35,26 +35,33 @@ public class DeleteProductStep implements Step {
         String responseMessage;
         BotButtons responseButtons = new BotButtons();
 
-        Map<Integer, String> usersProductNamesMap = productService.getUsersProductNamesMap(user);
-        Set<String> productNamesToDelete;
-        try {
-            productNamesToDelete = SessionUtil.getAllNames(usersProductNamesMap, message);
-        } catch (IllegalArgumentException ex) {
-            throw new BotException(user.getId(), ex.getMessage());
-        }
-        Collection<Product> products = user.getProducts();
-        for (String prodName : productNamesToDelete) {
-            Product product = products.stream().filter(p -> p.getName().equalsIgnoreCase(prodName)).findFirst().orElseThrow(RuntimeException::new);
-            products.remove(product);
-        }
-
-        if (products.isEmpty()) {
-            responseMessage = "Продукты удалены, у вас больше не осталось продуктов";
+        if("удалить все".equals(message)){
+            user.getProducts().clear();
+            responseMessage = "Вы удалили все продукты";
             userSession.setSessionStep(1);
             responseButtons.addAll(PRODUCT_MAIN_BUTTONS);
-        } else {
-            responseMessage = "Продукты удалены, введите еще\n\n" +
-                productService.getUsersProductNamesMapMessage(user);
+        }else {
+            Map<Integer, String> usersProductNamesMap = productService.getUsersProductNamesMap(user);
+            Set<String> productNamesToDelete;
+            try {
+                productNamesToDelete = SessionUtil.getAllNames(usersProductNamesMap, message);
+            } catch (IllegalArgumentException ex) {
+                throw new BotException(user.getId(), ex.getMessage());
+            }
+            Collection<Product> products = user.getProducts();
+            for (String prodName : productNamesToDelete) {
+                Product product = products.stream().filter(p -> p.getName().equalsIgnoreCase(prodName)).findFirst().orElseThrow(RuntimeException::new);
+                products.remove(product);
+            }
+
+            if (products.isEmpty()) {
+                responseMessage = "Продукты удалены, у вас больше не осталось продуктов";
+                userSession.setSessionStep(1);
+                responseButtons.addAll(PRODUCT_MAIN_BUTTONS);
+            } else {
+                responseMessage = "Продукты удалены, введите еще\n\n" +
+                    productService.getUsersProductNamesMapMessage(user);
+            }
         }
 
         userService.saveUser(user);
