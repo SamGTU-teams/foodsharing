@@ -33,12 +33,13 @@ public class SendQueryScheduler {
     @Scheduled(fixedRateString =
         "#{vkBotConfiguration.properties.client.maxTimeForSendSomeQueries / vkBotConfiguration.properties.client.maxQueryCountPerTime}")
     public void sendScheduled() {
+
+        List<AbstractQueryBuilder> requests = new ArrayList<>();
+        queue.drainTo(requests, maxQuerySizeInBatch);
+        if (requests.isEmpty()) {
+            return;
+        }
         try {
-            List<AbstractQueryBuilder> requests = new ArrayList<>();
-            queue.drainTo(requests, maxQuerySizeInBatch);
-            if (requests.isEmpty()) {
-                return;
-            }
             ClientResponse clientRs = vk.execute()
                 .batch(groupActor, requests)
                 .executeAsRaw();
