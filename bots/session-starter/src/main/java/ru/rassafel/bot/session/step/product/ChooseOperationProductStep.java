@@ -21,7 +21,7 @@ import static ru.rassafel.bot.session.util.ProductButtonsUtil.PRODUCT_MAIN_BUTTO
 public class ChooseOperationProductStep implements Step {
     private final ProductService productService;
     private final UserService userService;
-    @Value("${bot-config.max-product-count:2}")
+    @Value("${bot-config.max-product-count:100}")
     private Integer maxProductCount;
 
     @Override

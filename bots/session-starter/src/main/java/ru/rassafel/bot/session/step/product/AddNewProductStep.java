@@ -51,6 +51,7 @@ public class AddNewProductStep implements Step {
                 if (productCount >= maxProductCount) {
                     resultSessionStep = 1;
                     responseButtons.addAll(ProductButtonsUtil.PRODUCT_MAIN_BUTTONS);
+                    responseMessage += String.format("Вы добавили максимальное количество продуктов, больше %d добавить нельзя", maxProductCount);
                 } else {
                     responseMessage += "Введите еще";
                 }
