@@ -23,6 +23,9 @@ import static ru.rassafel.bot.session.util.GeoButtonsUtil.GEO_MAIN_BUTTONS;
 @Component("geo-4")
 @RequiredArgsConstructor
 public class SetRadiusAndFinishSaveGeoStep implements Step {
+
+    public static final int STEP_INDEX = 4;
+
     private final Cache<Long, Place> geoPointCache;
     private final PlaceService placeService;
     private final UserService userService;
@@ -68,7 +71,7 @@ public class SetRadiusAndFinishSaveGeoStep implements Step {
 
         template.executeWithoutResult(transactionStatus -> {
             placeService.save(place);
-            userSession.setSessionStep(1);
+            userSession.setSessionStep(ChooseOperationGeoStep.STEP_INDEX);
             userService.saveUser(user);
         });
 

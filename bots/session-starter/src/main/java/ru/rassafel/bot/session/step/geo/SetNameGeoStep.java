@@ -21,6 +21,9 @@ import static ru.rassafel.bot.session.util.ButtonsUtil.DEFAULT_BUTTONS;
 @Component("geo-3")
 @RequiredArgsConstructor
 public class SetNameGeoStep implements Step {
+
+    public static final int STEP_INDEX = 3;
+
     private final Cache<Long, Place> geoPointCache;
     private final PlaceService placeService;
     private final UserService userService;
@@ -49,7 +52,7 @@ public class SetNameGeoStep implements Step {
 
         sessionResponse.setMessage("Отлично, а теперь укажите радиус поиска вокруг этого места, по умолчанию радиус будет указан в 1 км");
         sessionResponse.setButtons(new BotButtons().addButton(new BotButtons.BotButton("Оставить как есть")));
-        userSession.setSessionStep(4);
+        userSession.setSessionStep(SetRadiusAndFinishSaveGeoStep.STEP_INDEX);
 
         userService.saveUser(user);
     }

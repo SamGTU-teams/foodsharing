@@ -18,6 +18,9 @@ import ru.rassafel.foodsharing.common.model.GeoPoint;
 @Component("geo-2")
 @RequiredArgsConstructor
 public class AddNewPlaceGeoStep implements Step {
+
+    public static final int STEP_INDEX = 2;
+
     private final Cache<Long, Place> geoPointCache;
     private final UserService userService;
     private final PlaceService placeService;
@@ -42,7 +45,7 @@ public class AddNewPlaceGeoStep implements Step {
             sessionResponse.setMessage("Теперь дайте название этому месту" +
                 "\nПримечание: лучше не использовать цифровые названия");
 
-            userSession.setSessionStep(3);
+            userSession.setSessionStep(SetNameGeoStep.STEP_INDEX);
 
             userService.saveUser(user);
         }

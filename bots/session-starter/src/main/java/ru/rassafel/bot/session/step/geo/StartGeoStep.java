@@ -22,7 +22,7 @@ public class StartGeoStep implements Step {
         sessionResponse.setMessage("Выберите:");
         BotButtons responseButtons = new BotButtons();
         sessionResponse.setButtons(responseButtons.addAll(GeoButtonsUtil.GEO_MAIN_BUTTONS));
-        userSession.setSessionStep(1);
+        userSession.setSessionStep(ChooseOperationGeoStep.STEP_INDEX);
 
         userService.saveUser(user);
     }

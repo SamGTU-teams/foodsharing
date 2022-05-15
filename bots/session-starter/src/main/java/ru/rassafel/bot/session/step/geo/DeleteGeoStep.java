@@ -39,7 +39,7 @@ public class DeleteGeoStep implements Step {
             userService.saveUser(user);
 
             responseButtons.addAll(GeoButtonsUtil.GEO_MAIN_BUTTONS);
-            userSession.setSessionStep(1);
+            userSession.setSessionStep(ChooseOperationGeoStep.STEP_INDEX);
             sessionResponse.setMessage("Вы удалили все ваши места");
         }else {
 
@@ -59,7 +59,7 @@ public class DeleteGeoStep implements Step {
             }
             if (usersPlaces.isEmpty()) {
                 sessionResponse.setMessage("Место удалено, у вас больше не осталось мест");
-                userSession.setSessionStep(1);
+                userSession.setSessionStep(ChooseOperationGeoStep.STEP_INDEX);
                 responseButtons.addAll(GeoButtonsUtil.GEO_MAIN_BUTTONS);
 
                 userService.saveUser(user);

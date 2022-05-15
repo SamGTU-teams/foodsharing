@@ -22,6 +22,9 @@ import static ru.rassafel.bot.session.util.ButtonsUtil.DEFAULT_BUTTONS;
 @Component("geo-7")
 @RequiredArgsConstructor
 public class SetNewRadiusGeoStep implements Step {
+
+    public static final int STEP_INDEX = 7;
+
     private final Cache<Long, Place> geoPointCache;
     private final PlaceService placeService;
     private final UserService userService;
@@ -53,7 +56,7 @@ public class SetNewRadiusGeoStep implements Step {
         }
 
         editable.setRadius(newRadius);
-        userSession.setSessionStep(1);
+        userSession.setSessionStep(ChooseOperationGeoStep.STEP_INDEX);
 
         TransactionTemplate template = new TransactionTemplate(transactionManager);
         template.setName("SetNewRadiusGeoStep.executeStep");

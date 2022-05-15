@@ -21,6 +21,9 @@ import java.util.Map;
 @Component("geo-6")
 @RequiredArgsConstructor
 public class EditGeoStep implements Step {
+
+    public static final int STEP_INDEX = 6;
+
     private final Cache<Long, Place> geoPointCache;
     private final PlaceService placeService;
     private final UserService userService;
@@ -46,7 +49,7 @@ public class EditGeoStep implements Step {
         geoPointCache.put(user.getId(), point);
         sessionResponse.setMessage("Укажите новый радиус");
         sessionResponse.setButtons(new BotButtons());
-        userSession.setSessionStep(7);
+        userSession.setSessionStep(SetNewRadiusGeoStep.STEP_INDEX);
 
         userService.saveUser(user);
     }

@@ -22,6 +22,9 @@ import static ru.rassafel.bot.session.util.GeoButtonsUtil.GEO_MAIN_BUTTONS;
 @Component("geo-1")
 @RequiredArgsConstructor
 public class ChooseOperationGeoStep implements Step {
+
+    public static final int STEP_INDEX = 1;
+
     private final PlaceService placeService;
     private final UserService userService;
 
@@ -43,9 +46,9 @@ public class ChooseOperationGeoStep implements Step {
                 AtomicInteger counter = new AtomicInteger(1);
                 String pointText = points.stream().map(p -> String.format(
                         "%d. Название места : %s\n" +
-                            "Координаты места : %f - широта, %f - долгота\n" +
+                            "Полный адрес места : %s\n" +
                             "Радиус поиска вокруг этого места : %d\n",
-                        counter.getAndIncrement(), p.getName(), p.getGeo().getLat(), p.getGeo().getLon(), p.getRadius()))
+                        counter.getAndIncrement(), p.getName(), p.getAddress(), p.getRadius()))
                     .collect(Collectors.joining("\n"));
 
                 responseMessage = "Ваши места : \n" + pointText;
@@ -58,7 +61,7 @@ public class ChooseOperationGeoStep implements Step {
             responseMessage = "Отправьте мне точку на карте";
             responseButtons.addButton(BotButtons.BotButton.GEO_BUTTON);
 
-            userSession.setSessionStep(2);
+            userSession.setSessionStep(AddNewPlaceGeoStep.STEP_INDEX);
         } else if (message.equals("удалить место")) {
             Collection<Place> points = placeService.findByUserId(user.getId());
             if (points.isEmpty()) {
@@ -85,7 +88,7 @@ public class ChooseOperationGeoStep implements Step {
                 responseMessage = placeService.getUsersPlaceMapMessage(user,
                     "\n\nВот список ваших мест, напишите название или номер, того которого хотите отредактировать, пример: 1 или Дом");
 
-                userSession.setSessionStep(6);
+                userSession.setSessionStep(EditGeoStep.STEP_INDEX);
             }
         } else {
             throw new BotException(user.getId(), "На этом этапе доступны только следующие команды " +
