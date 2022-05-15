@@ -50,7 +50,7 @@ public class SetNameGeoStep implements Step {
 
         place.setName(message);
 
-        sessionResponse.setMessage("Отлично, а теперь укажите радиус поиска вокруг этого места, по умолчанию радиус будет указан в 1 км");
+        sessionResponse.setMessage("Отлично, а теперь укажите радиус поиска вокруг этого места (в метрах), по умолчанию радиус будет указан в 1 км");
         sessionResponse.setButtons(new BotButtons().addButton(new BotButtons.BotButton("Оставить как есть")));
         userSession.setSessionStep(SetRadiusAndFinishSaveGeoStep.STEP_INDEX);
 
