@@ -54,7 +54,7 @@ public class DeleteGeoStep implements Step {
             }
             Collection<Place> usersPlaces = placeService.findByUserId(user.getId());
             for (String placeName : placesNamesToDelete) {
-                Place place = usersPlaces.stream().filter(p -> p.getName().equals(placeName)).findFirst()
+                Place place = usersPlaces.stream().filter(p -> p.getName().equalsIgnoreCase(placeName)).findFirst()
                     .orElseThrow(() -> new RuntimeException("Uncaught error! Place name not found"));
                 placeService.deletePlace(place);
                 usersPlaces.removeIf(p -> p.getName().equalsIgnoreCase(placeName));
