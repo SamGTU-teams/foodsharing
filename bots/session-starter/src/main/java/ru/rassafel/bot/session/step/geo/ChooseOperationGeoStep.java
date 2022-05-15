@@ -76,7 +76,7 @@ public class ChooseOperationGeoStep implements Step {
                         "Или вы можете удалить все ваши места");
 
                 responseButtons.addButton(new BotButtons.BotButton("Удалить все"));
-                userSession.setSessionStep(5);
+                userSession.setSessionStep(DeleteGeoStep.STEP_INDEX);
             }
         } else if (message.equals("редактирование места")) {
             Collection<Place> points = placeService.findByUserId(user.getId());

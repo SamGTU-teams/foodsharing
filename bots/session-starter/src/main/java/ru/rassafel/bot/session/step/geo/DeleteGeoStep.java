@@ -24,6 +24,8 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class DeleteGeoStep implements Step {
 
+    public static final int STEP_INDEX = 5;
+
     private final PlaceService placeService;
     private final UserService userService;
 
