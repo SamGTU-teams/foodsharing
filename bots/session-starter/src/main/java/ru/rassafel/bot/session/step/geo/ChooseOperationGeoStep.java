@@ -47,7 +47,7 @@ public class ChooseOperationGeoStep implements Step {
                 String pointText = points.stream().map(p -> String.format(
                         "%d. Название места : %s\n" +
                             "Полный адрес места : %s\n" +
-                            "Радиус поиска вокруг этого места : %d\n",
+                            "Радиус поиска вокруг этого места : %d (метры)\n",
                         counter.getAndIncrement(), p.getName(), p.getAddress(), p.getRadius()))
                     .collect(Collectors.joining("\n"));
 
