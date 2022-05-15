@@ -48,12 +48,13 @@ public class SetNewRadiusGeoStep implements Step {
         int newRadius;
         try {
             newRadius = Integer.parseInt(message);
-            if (newRadius >= 5000) {
-                throw new BotException(user.getId(), "Нужно ввести радиус меньше 5000");
+            if (newRadius > 5000) {
+                throw new BotException(user.getId(), "Нужно ввести радиус меньше 5 км");
             }
         } catch (NumberFormatException ex) {
             throw new BotException(user.getId(), "Нужно ввести число");
         }
+        geoPointCache.invalidate(user.getId());
 
         editable.setRadius(newRadius);
         userSession.setSessionStep(ChooseOperationGeoStep.STEP_INDEX);
@@ -67,7 +68,6 @@ public class SetNewRadiusGeoStep implements Step {
         });
 
         sessionResponse.setButtons(new BotButtons().addAll(GeoButtonsUtil.GEO_MAIN_BUTTONS));
-        geoPointCache.invalidate(user.getId());
         sessionResponse.setMessage("Место изменено!");
     }
 }
