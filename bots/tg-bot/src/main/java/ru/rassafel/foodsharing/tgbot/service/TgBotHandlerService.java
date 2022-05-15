@@ -36,18 +36,13 @@ public class TgBotHandlerService extends TelegramWebhookBot {
         } catch (BotException ex) {
             throw ex;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("Caught an exception with message {}", ex.getMessage());
             SendMessage ifException = new SendMessage();
             ifException.setChatId(update.getMessage().getChatId());
-            ifException.setText("Some exception");
+            ifException.setText("Возникла ошибка на сервере, попробуйте позднее");
             return ifException;
         }
         return mapper.map(sessionResponse);
-    }
-
-    public void sendEvent(String text, Long... userIds) {
-        SendMessage sm = new SendMessage();
-        //...
     }
 
     @Override
