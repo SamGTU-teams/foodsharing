@@ -91,7 +91,7 @@ public class ChooseOperationGeoStep implements Step {
                 userSession.setSessionStep(EditGeoStep.STEP_INDEX);
             }
         } else {
-            throw new BotException(user.getId(), "На этом этапе доступны только следующие команды " +
+            throw new BotException(user.getId(), "На этом этапе доступны только следующие команды\n" +
                 String.join("\n", GEO_MAIN_BUTTONS));
         }
 
