@@ -42,6 +42,10 @@ public class SetNameGeoStep implements Step {
             return;
         }
 
+        if(message.length() > 63){
+            throw new BotException(user.getId(), "Название места слишком большое (больше 63 символов), введите название места поменьше");
+        }
+
         Collection<Place> usersPlaces = placeService.findByUserId(user.getId());
 
         if (usersPlaces.stream().anyMatch(p -> p.getName().equalsIgnoreCase(message))) {
