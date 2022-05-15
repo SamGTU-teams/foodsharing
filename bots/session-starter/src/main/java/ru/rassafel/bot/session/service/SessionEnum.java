@@ -7,7 +7,6 @@ import ru.rassafel.bot.session.type.impl.ProductSession;
 import ru.rassafel.bot.session.type.impl.WelcomeSession;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 @RequiredArgsConstructor
 @Getter
@@ -21,10 +20,9 @@ public enum SessionEnum {
 
     public static String getBeanName(String message) {
         return Arrays.stream(values())
-            .map(SessionEnum::getMessage)
-            .filter(s -> Objects.equals(s, message))
+            .filter(v -> v.getMessage().equalsIgnoreCase(message))
             .findFirst()
-            .map(SessionEnum::getBeanName)
-            .orElseThrow(IllegalArgumentException::new);
+            .orElseThrow()
+            .getBeanName();
     }
 }
