@@ -23,9 +23,7 @@ public class TgBotEndpoint {
 
     @ExceptionHandler(BotException.class)
     public ResponseEntity<SendMessage> handleSessionNotFound(BotException ex) {
-        SendMessage message = new SendMessage();
-        message.setChatId(ex.getSendTo());
-        message.setText(ex.getMessage());
+        SendMessage message = new SendMessage(ex.getSendTo(), ex.getMessage());
         return ResponseEntity.ok(message);
     }
 
