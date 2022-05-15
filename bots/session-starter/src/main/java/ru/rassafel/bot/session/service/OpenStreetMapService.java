@@ -5,15 +5,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.geojson.Feature;
-import org.geojson.FeatureCollection;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
-
-import static java.util.Optional.ofNullable;
 
 @Service
 @RequiredArgsConstructor
@@ -51,7 +49,7 @@ public class OpenStreetMapService {
         if(firstFeature != null){
             JsonNode properties = firstFeature.get("properties");
             if(properties != null){
-                JsonNode name = properties.get("display_name2");
+                JsonNode name = properties.get("display_name");
                 if(name == null){
                     return resultName;
                 }
