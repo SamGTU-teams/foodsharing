@@ -34,20 +34,20 @@ public class EditGeoStep implements Step {
         EmbeddedUserSession userSession = user.getUserSession();
         Collection<Place> usersPoints = placeService.findByUserId(user.getId());
         Place point;
-        if (message.matches("\\d+")) {
+        if (message.matches("^\\d+$")) {
             Map<Integer, String> usersPlacesNamesMap = placeService.getUsersPlacesNamesMap(usersPoints);
             String placeNameToEdit = usersPlacesNamesMap.get(Integer.parseInt(message));
             if (placeNameToEdit == null) {
-                throw new BotException(user.getId(), "Такого номера места у вас нет, попробуйте еще");
+                throw new BotException(user.getId(), String.format("Места под номером %s у вас нет, попробуйте еще", message));
             }
             point = usersPoints.stream().filter(p -> p.getName().equalsIgnoreCase(placeNameToEdit)).findFirst().orElseThrow(() ->
                 new ApiException("Uncaught exception, place name not found in user places!"));
         } else {
             point = usersPoints.stream().filter(p -> p.getName().equalsIgnoreCase(message)).findFirst().orElseThrow(() ->
-                new BotException(user.getId(), "Такого названия места нет, попробуйте еще"));
+                new BotException(user.getId(), String.format("Места с названием %s у вас нет, попробуйте еще", message)));
         }
         geoPointCache.put(user.getId(), point);
-        sessionResponse.setMessage("Укажите новый радиус");
+        sessionResponse.setMessage("Укажите новый радиус (в метрах)");
         sessionResponse.setButtons(new BotButtons());
         userSession.setSessionStep(SetNewRadiusGeoStep.STEP_INDEX);
 
