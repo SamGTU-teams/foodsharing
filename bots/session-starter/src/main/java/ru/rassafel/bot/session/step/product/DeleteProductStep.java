@@ -23,6 +23,9 @@ import static ru.rassafel.bot.session.util.ProductButtonsUtil.PRODUCT_MAIN_BUTTO
 @Component("product-4")
 @RequiredArgsConstructor
 public class DeleteProductStep implements Step {
+
+    public static final int STEP_INDEX = 4;
+
     private final ProductService productService;
     private final UserService userService;
 
@@ -38,7 +41,7 @@ public class DeleteProductStep implements Step {
         if("удалить все".equals(message)){
             user.getProducts().clear();
             responseMessage = "Вы удалили все продукты";
-            userSession.setSessionStep(1);
+            userSession.setSessionStep(ChooseOperationProductStep.STEP_INDEX);
             responseButtons.addAll(PRODUCT_MAIN_BUTTONS);
         }else {
             Map<Integer, String> usersProductNamesMap = productService.getUsersProductNamesMap(user);
@@ -56,7 +59,7 @@ public class DeleteProductStep implements Step {
 
             if (products.isEmpty()) {
                 responseMessage = "Продукты удалены, у вас больше не осталось продуктов";
-                userSession.setSessionStep(1);
+                userSession.setSessionStep(ChooseOperationProductStep.STEP_INDEX);
                 responseButtons.addAll(PRODUCT_MAIN_BUTTONS);
             } else {
                 responseMessage = "Продукты удалены, введите еще\n\n" +

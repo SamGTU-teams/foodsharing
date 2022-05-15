@@ -19,6 +19,9 @@ import static ru.rassafel.bot.session.util.ProductButtonsUtil.PRODUCT_MAIN_BUTTO
 @Component("product-1")
 @RequiredArgsConstructor
 public class ChooseOperationProductStep implements Step {
+
+    public static final int STEP_INDEX = 1;
+
     private final ProductService productService;
     private final UserService userService;
     @Value("${bot-config.max-product-count:100}")
@@ -40,7 +43,7 @@ public class ChooseOperationProductStep implements Step {
             }
             responseMessage = "Введите название продукта, который хотите добавить";
 
-            userSession.setSessionStep(2);
+            userSession.setSessionStep(ChooseNewProductStep.STEP_INDEX);
         } else if (message.equals("удалить продукт")) {
 
             if (user.getProducts().isEmpty()) {
@@ -52,7 +55,7 @@ public class ChooseOperationProductStep implements Step {
                     "Вот список ваших продуктов, напишите название или номер(а) того которого хотите удалить, пример: 1,2,3");
 
                 responseButtons.addButton(new BotButtons.BotButton("Удалить все"));
-                userSession.setSessionStep(4);
+                userSession.setSessionStep(DeleteProductStep.STEP_INDEX);
             }
         } else if (message.equals("мои продукты")) {
             if (user.getProducts().isEmpty()) {

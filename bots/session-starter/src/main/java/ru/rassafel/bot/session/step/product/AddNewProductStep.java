@@ -19,6 +19,9 @@ import ru.rassafel.foodsharing.common.model.entity.product.Product;
 @Component("product-3")
 @RequiredArgsConstructor
 public class AddNewProductStep implements Step {
+
+    public static final int STEP_INDEX = 3;
+
     private final ProductService productService;
     private final ProductRepository productRepository;
     private final UserService userService;
@@ -33,7 +36,7 @@ public class AddNewProductStep implements Step {
         String responseMessage;
         BotButtons responseButtons = new BotButtons();
 
-        int resultSessionStep = 2;
+        int resultSessionStep = ChooseNewProductStep.STEP_INDEX;
         if (message.equals("попробовать еще")) {
             responseMessage = "Введите продукт еще раз";
         } else {
@@ -49,7 +52,7 @@ public class AddNewProductStep implements Step {
 
                 int productCount = user.getProducts().size();
                 if (productCount >= maxProductCount) {
-                    resultSessionStep = 1;
+                    resultSessionStep = ChooseOperationProductStep.STEP_INDEX;
                     responseButtons.addAll(ProductButtonsUtil.PRODUCT_MAIN_BUTTONS);
                     responseMessage += String.format("Вы добавили максимальное количество продуктов, больше %d добавить нельзя", maxProductCount);
                 } else {

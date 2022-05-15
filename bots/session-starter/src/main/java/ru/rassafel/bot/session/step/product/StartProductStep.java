@@ -23,7 +23,7 @@ public class StartProductStep implements Step {
         sessionResponse.setMessage("Выберите:");
         BotButtons responseButtons = new BotButtons();
         sessionResponse.setButtons(responseButtons.addAll(PRODUCT_MAIN_BUTTONS));
-        userSession.setSessionStep(1);
+        userSession.setSessionStep(ChooseOperationProductStep.STEP_INDEX);
         userService.saveUser(user);
     }
 }
