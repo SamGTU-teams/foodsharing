@@ -38,4 +38,9 @@ public class VkUserService implements UserService {
         GeoPoint point = post.getPoint();
         return repository.findByProductAndSuitablePlace(productIds, point.getLat(), point.getLon());
     }
+
+    @Override
+    public Optional<? extends User> getUserWithProducts(Long id) {
+        return repository.findWithProductsById(id);
+    }
 }

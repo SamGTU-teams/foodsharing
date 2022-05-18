@@ -11,7 +11,14 @@ import ru.rassafel.bot.session.model.entity.EmbeddedUserSession;
 import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.bot.session.service.ProductService;
 import ru.rassafel.bot.session.service.UserService;
+import ru.rassafel.bot.session.service.message.TemplateEngine;
 import ru.rassafel.bot.session.step.Step;
+import ru.rassafel.bot.session.templates.ProductTemplates;
+
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 import static ru.rassafel.bot.session.util.ProductButtonsUtil.PRODUCT_MAIN_BUTTONS;
@@ -24,6 +31,7 @@ public class ChooseOperationProductStep implements Step {
 
     private final ProductService productService;
     private final UserService userService;
+    private final TemplateEngine templateEngine;
     @Value("${bot-config.max-product-count:100}")
     private Integer maxProductCount;
 
@@ -35,6 +43,9 @@ public class ChooseOperationProductStep implements Step {
 
         String responseMessage;
         BotButtons responseButtons = new BotButtons();
+
+        user = userService.getUserWithProducts(sessionRequest.getFrom().getId()).orElseThrow(() ->
+            new NoSuchElementException("Повторный запрос пользователя с продуктами не дал результата"));
 
         if (message.equals("добавить продукт")) {
             int productCount = user.getProducts().size();
@@ -50,10 +61,13 @@ public class ChooseOperationProductStep implements Step {
                 responseMessage = "У вас нет добавленных продуктов";
                 responseButtons.addAll(PRODUCT_MAIN_BUTTONS);
             } else {
-
-                responseMessage = productService.getUsersProductNamesMapMessage(user,
-                    "Вот список ваших продуктов, напишите название или номер(а) того которого хотите удалить, пример: 1,2,3");
-
+                AtomicInteger indexer = new AtomicInteger(1);
+                responseMessage = templateEngine.compileTemplate(ProductTemplates.LIST_OF_PRODUCTS,
+                    Map.of("products",
+                        user.getProducts().stream().map(product ->
+                            Map.of(
+                                "index", indexer.getAndIncrement(),
+                                "name", product.getName())).collect(Collectors.toList())));
                 responseButtons.addButton(new BotButtons.BotButton("Удалить все"));
                 userSession.setSessionStep(DeleteProductStep.STEP_INDEX);
             }

@@ -16,6 +16,9 @@ import ru.rassafel.bot.session.step.Step;
 import ru.rassafel.bot.session.util.ProductButtonsUtil;
 import ru.rassafel.foodsharing.common.model.entity.product.Product;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 @Component("product-3")
 @RequiredArgsConstructor
 public class AddNewProductStep implements Step {
@@ -40,9 +43,16 @@ public class AddNewProductStep implements Step {
         if (message.equals("попробовать еще")) {
             responseMessage = "Введите продукт еще раз";
         } else {
-            Product productByName = productRepository.findByNameEqualsIgnoreCase(message)
-                .orElseThrow(() -> new BotException(user.getId(),
-                    "Неверное имя продукта, воспользуйтесь кнопками или попробуйте еще"));
+            Optional<Product> byName = productRepository.findByNameEqualsIgnoreCase(message);
+            if(byName.isEmpty()){
+                throw new BotException(user.getId(),
+                    "Неверное имя продукта, воспользуйтесь кнопками или попробуйте еще");
+            }
+            Product productByName = byName.get();
+
+            user = userService.getUserWithProducts(sessionRequest.getFrom().getId()).orElseThrow(() ->
+                new NoSuchElementException("Повторный запрос пользователя с продуктами не дал результата"));
+
             boolean contains = productService.getUsersProductNames(user).contains(productByName.getName());
             if (contains) {
                 responseMessage = "У вас уже есть такой продукт, введите еще";

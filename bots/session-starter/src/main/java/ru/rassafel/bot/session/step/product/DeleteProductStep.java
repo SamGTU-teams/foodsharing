@@ -16,6 +16,7 @@ import ru.rassafel.foodsharing.common.model.entity.product.Product;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import static ru.rassafel.bot.session.util.ProductButtonsUtil.PRODUCT_MAIN_BUTTONS;
@@ -38,6 +39,9 @@ public class DeleteProductStep implements Step {
         String responseMessage;
         BotButtons responseButtons = new BotButtons();
 
+        user = userService.getUserWithProducts(sessionRequest.getFrom().getId()).orElseThrow(() ->
+            new NoSuchElementException("Повторный запрос пользователя с продуктами не дал результата"));
+
         if("удалить все".equals(message)){
             user.getProducts().clear();
             responseMessage = "Вы удалили все продукты";
@@ -52,10 +56,7 @@ public class DeleteProductStep implements Step {
                 throw new BotException(user.getId(), ex.getMessage());
             }
             Collection<Product> products = user.getProducts();
-            for (String prodName : productNamesToDelete) {
-                Product product = products.stream().filter(p -> p.getName().equalsIgnoreCase(prodName)).findFirst().orElseThrow(RuntimeException::new);
-                products.remove(product);
-            }
+            products.removeIf(p -> productNamesToDelete.contains(p.getName()));
 
             if (products.isEmpty()) {
                 responseMessage = "Продукты удалены, у вас больше не осталось продуктов";

@@ -2,6 +2,7 @@ package ru.rassafel.bot.session.util;
 
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,10 +12,11 @@ public class SessionUtil {
     public static Set<String> findValuesByMessage(Map<Integer, String> objectMap, String message) {
         Matcher matcher = Pattern.compile("^\\s*(\\d+\\s*,?\\s*)+$").matcher(message);
         if (!matcher.matches()) {
-            if (objectMap.entrySet().stream().noneMatch(entry -> entry.getValue().equalsIgnoreCase(message))) {
+            Optional<String> first = objectMap.values().stream().filter(entry -> entry.equalsIgnoreCase(message)).findFirst();
+            if (first.isEmpty()) {
                 throw new IllegalArgumentException(String.format("Названия %s в списке нет, повторите попытку", message));
             }
-            return Set.of(message);
+            return Set.of(first.get());
         }
         Pattern digitPattern = Pattern.compile("\\d+");
         matcher.usePattern(digitPattern);
