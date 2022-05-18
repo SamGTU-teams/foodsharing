@@ -39,7 +39,6 @@ public class ChooseOperationProductStep implements Step {
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
 
         String message = sessionRequest.getMessage();
-        EmbeddedUserSession userSession = user.getUserSession();
 
         String responseMessage;
         BotButtons responseButtons = new BotButtons();
@@ -47,12 +46,14 @@ public class ChooseOperationProductStep implements Step {
         user = userService.getUserWithProducts(sessionRequest.getFrom().getId()).orElseThrow(() ->
             new NoSuchElementException("Повторный запрос пользователя с продуктами не дал результата"));
 
+        EmbeddedUserSession userSession = user.getUserSession();
+
         if (message.equals("добавить продукт")) {
             int productCount = user.getProducts().size();
             if (productCount >= maxProductCount) {
                 throw new BotException(user.getId(), format("Вы не можете добавить больше %d продуктов, сначала удалите несколько", maxProductCount));
             }
-            responseMessage = "Введите название продукта, который хотите добавить";
+            responseMessage = templateEngine.compileTemplate(ProductTemplates.PRODUCT_NAME_EXPECTATION);
 
             userSession.setSessionStep(ChooseNewProductStep.STEP_INDEX);
         } else if (message.equals("удалить продукт")) {
