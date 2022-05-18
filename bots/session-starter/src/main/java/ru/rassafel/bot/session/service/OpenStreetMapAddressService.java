@@ -16,13 +16,13 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class OpenStreetMapService {
+public class OpenStreetMapAddressService implements AddressService {
     private static final String OPEN_MAP_ROOT_PATH =
         "https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lon}&format={format}&accept-language={lang}";
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
-    public String getAddress(double lat, double lon) {
+    public String getAddress(Double lat, Double lon) {
         String response = restTemplate.getForObject(OPEN_MAP_ROOT_PATH, String.class,
             lat,
             lon,

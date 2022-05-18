@@ -9,10 +9,12 @@ import ru.rassafel.bot.session.model.dto.SessionResponse;
 import ru.rassafel.bot.session.model.entity.EmbeddedUserSession;
 import ru.rassafel.bot.session.model.entity.Place;
 import ru.rassafel.bot.session.model.entity.User;
-import ru.rassafel.bot.session.service.OpenStreetMapService;
+import ru.rassafel.bot.session.service.AddressService;
 import ru.rassafel.bot.session.service.PlaceService;
 import ru.rassafel.bot.session.service.UserService;
+import ru.rassafel.bot.session.service.message.TemplateEngine;
 import ru.rassafel.bot.session.step.Step;
+import ru.rassafel.bot.session.templates.PlaceTemplates;
 import ru.rassafel.foodsharing.common.model.GeoPoint;
 
 @Component("geo-2")
@@ -24,7 +26,9 @@ public class AddNewPlaceGeoStep implements Step {
     private final Cache<Long, Place> geoPointCache;
     private final UserService userService;
     private final PlaceService placeService;
-    private final OpenStreetMapService streetMapService;
+    private final AddressService streetMapService;
+
+    private final TemplateEngine templateEngine;
 
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
@@ -42,8 +46,7 @@ public class AddNewPlaceGeoStep implements Step {
 
             geoPointCache.put(user.getId(), place);
 
-            sessionResponse.setMessage("Теперь дайте название этому месту" +
-                "\nПримечание: лучше не использовать цифровые названия");
+            sessionResponse.setMessage(templateEngine.compileTemplate(PlaceTemplates.EXPECTATION_OF_GEO_NAME));
 
             userSession.setSessionStep(SetNameGeoStep.STEP_INDEX);
 
