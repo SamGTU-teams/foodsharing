@@ -12,10 +12,13 @@ import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.bot.session.repository.ProductRepository;
 import ru.rassafel.bot.session.service.ProductService;
 import ru.rassafel.bot.session.service.UserService;
+import ru.rassafel.bot.session.service.message.TemplateEngine;
 import ru.rassafel.bot.session.step.Step;
+import ru.rassafel.bot.session.templates.ProductTemplates;
 import ru.rassafel.bot.session.util.ProductButtonsUtil;
 import ru.rassafel.foodsharing.common.model.entity.product.Product;
 
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -30,6 +33,8 @@ public class AddNewProductStep implements Step {
     private final UserService userService;
     @Value("${bot-config.max-product-count:100}")
     private Integer maxProductCount;
+
+    private final TemplateEngine templateEngine;
 
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
@@ -53,20 +58,22 @@ public class AddNewProductStep implements Step {
             user = userService.getUserWithProducts(sessionRequest.getFrom().getId()).orElseThrow(() ->
                 new NoSuchElementException("Повторный запрос пользователя с продуктами не дал результата"));
 
+            userSession = user.getUserSession();
+
             boolean contains = productService.getUsersProductNames(user).contains(productByName.getName());
             if (contains) {
                 responseMessage = "У вас уже есть такой продукт, введите еще";
             } else {
                 user.addProduct(productByName);
-                responseMessage = "Вы успешно добавили продукт!\n";
 
                 int productCount = user.getProducts().size();
                 if (productCount >= maxProductCount) {
                     resultSessionStep = ChooseOperationProductStep.STEP_INDEX;
                     responseButtons.addAll(ProductButtonsUtil.PRODUCT_MAIN_BUTTONS);
-                    responseMessage += String.format("Вы добавили максимальное количество продуктов, больше %d добавить нельзя", maxProductCount);
+                    responseMessage = templateEngine.compileTemplate(ProductTemplates.SUCCESS_ADD_PRODUCT_AND_QUIT,
+                        Map.of("maxProductCount", maxProductCount));
                 } else {
-                    responseMessage += "Введите еще";
+                    responseMessage = templateEngine.compileTemplate(ProductTemplates.SUCCESS_ADD_PRODUCT);
                 }
             }
         }
