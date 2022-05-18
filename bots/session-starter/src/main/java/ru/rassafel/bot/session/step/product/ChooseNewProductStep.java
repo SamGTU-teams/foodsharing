@@ -10,7 +10,9 @@ import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.bot.session.repository.ProductRepository;
 import ru.rassafel.bot.session.service.ProductService;
 import ru.rassafel.bot.session.service.UserService;
+import ru.rassafel.bot.session.service.message.TemplateEngine;
 import ru.rassafel.bot.session.step.Step;
+import ru.rassafel.bot.session.templates.ProductTemplates;
 
 import java.util.List;
 
@@ -24,6 +26,8 @@ public class ChooseNewProductStep implements Step {
     private final UserService userService;
     private final ProductRepository productRepository;
 
+    private final TemplateEngine templateEngine;
+
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
         String message = sessionRequest.getMessage();
@@ -33,12 +37,12 @@ public class ChooseNewProductStep implements Step {
         BotButtons responseButtons = new BotButtons();
 
         //Поиск подходящих продуктов
-        List<String> similarProducts = productService.getSimilarProducts(message);
+        List<String> similarProducts = productService.getSimilarToTextProducts(message);
 
         if (similarProducts.isEmpty()) {
             responseMessage = "Такого продукта не нашлось, попробуйте снова";
         } else {
-            responseMessage = "Возможно вы имели ввиду следующие продукты, выберите какой из них вы хотите добавить или попробуйте ввести еще";
+            responseMessage = templateEngine.compileTemplate(ProductTemplates.POSSIBLE_PRODUCT_NAMES);
             responseButtons.addButton(new BotButtons.BotButton("Попробовать еще")).addAll(similarProducts);
 
             userSession.setSessionStep(AddNewProductStep.STEP_INDEX);
