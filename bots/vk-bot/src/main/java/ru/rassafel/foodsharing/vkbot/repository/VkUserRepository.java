@@ -1,10 +1,12 @@
 package ru.rassafel.foodsharing.vkbot.repository;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import ru.rassafel.foodsharing.vkbot.model.domain.VkUser;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface VkUserRepository extends CrudRepository<VkUser, Long> {
 
@@ -27,4 +29,7 @@ public interface VkUserRepository extends CrudRepository<VkUser, Long> {
             "AND ST_DWithin(CAST(ST_SetSRID(ST_MakePoint(:lon, :lat), 4326) AS GEOGRAPHY), " +
             "CAST(ST_SetSRID(ST_MakePoint(vp.lon, vp.lat), 4326) AS GEOGRAPHY), vp.radius)")
     List<Object[]> findByProductAndSuitablePlace(List<Long> productIds, double lat, double lon);
+
+    @EntityGraph(attributePaths = "products")
+    Optional<VkUser> findWithProductsById(Long id);
 }
