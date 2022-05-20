@@ -34,13 +34,14 @@ public class DeleteProductStep implements Step {
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
 
         String message = sessionRequest.getMessage();
-        EmbeddedUserSession userSession = user.getUserSession();
 
         String responseMessage;
         BotButtons responseButtons = new BotButtons();
 
         user = userService.getUserWithProducts(sessionRequest.getFrom().getId()).orElseThrow(() ->
             new NoSuchElementException("Повторный запрос пользователя с продуктами не дал результата"));
+
+        EmbeddedUserSession userSession = user.getUserSession();
 
         if("удалить все".equals(message)){
             user.getProducts().clear();
