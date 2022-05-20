@@ -17,10 +17,7 @@ import ru.rassafel.bot.session.templates.ProductTemplates;
 
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
-import static java.lang.String.format;
 import static ru.rassafel.bot.session.util.ProductButtonsUtil.PRODUCT_MAIN_BUTTONS;
 
 @Component("product-1")
@@ -51,7 +48,8 @@ public class ChooseOperationProductStep implements Step {
         if (message.equals("добавить продукт")) {
             int productCount = user.getProducts().size();
             if (productCount >= maxProductCount) {
-                throw new BotException(user.getId(), format("Вы не можете добавить больше %d продуктов, сначала удалите несколько", maxProductCount));
+                throw new BotException(user.getId(), templateEngine.compileTemplate(ProductTemplates.TOO_MANY_PRODUCTS,
+                    Map.of("count", maxProductCount)));
             }
             responseMessage = templateEngine.compileTemplate(ProductTemplates.PRODUCT_NAME_EXPECTATION);
 
@@ -59,24 +57,20 @@ public class ChooseOperationProductStep implements Step {
         } else if (message.equals("удалить продукт")) {
 
             if (user.getProducts().isEmpty()) {
-                responseMessage = "У вас нет добавленных продуктов";
+                responseMessage = templateEngine.compileTemplate(ProductTemplates.EMPTY_PRODUCTS);
                 responseButtons.addAll(PRODUCT_MAIN_BUTTONS);
             } else {
-                AtomicInteger indexer = new AtomicInteger(1);
-                responseMessage = templateEngine.compileTemplate(ProductTemplates.LIST_OF_PRODUCTS,
-                    Map.of("products",
-                        user.getProducts().stream().map(product ->
-                            Map.of(
-                                "index", indexer.getAndIncrement(),
-                                "name", product.getName())).collect(Collectors.toList())));
+                responseMessage = templateEngine.compileTemplate(ProductTemplates.LIST_OF_PRODUCTS_TO_DELETE,
+                    ProductTemplates.buildMapOfProducts(user.getProducts()));
                 responseButtons.addButton(new BotButtons.BotButton("Удалить все"));
                 userSession.setSessionStep(DeleteProductStep.STEP_INDEX);
             }
         } else if (message.equals("мои продукты")) {
             if (user.getProducts().isEmpty()) {
-                responseMessage = "У вас еще нет добавленных продуктов";
+                responseMessage = templateEngine.compileTemplate(ProductTemplates.EMPTY_PRODUCTS);
             } else {
-                responseMessage = "Ваши продукты: \n" + String.join("\n", productService.getUsersProductNames(user));
+                responseMessage = templateEngine.compileTemplate(ProductTemplates.LIST_OF_PRODUCTS,
+                    ProductTemplates.buildMapOfProducts(user.getProducts()));
             }
             responseButtons.addAll(PRODUCT_MAIN_BUTTONS);
         } else {
