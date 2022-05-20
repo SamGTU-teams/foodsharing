@@ -22,7 +22,7 @@ public enum SessionEnum {
         return Arrays.stream(values())
             .filter(v -> v.getMessage().equalsIgnoreCase(message))
             .findFirst()
-            .orElseThrow()
+            .orElseThrow(() -> new IllegalArgumentException("Session name not found"))
             .getBeanName();
     }
 }

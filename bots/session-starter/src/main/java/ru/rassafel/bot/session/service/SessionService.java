@@ -9,6 +9,8 @@ import ru.rassafel.bot.session.model.dto.SessionResponse;
 import ru.rassafel.bot.session.model.entity.EmbeddedUserSession;
 import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.bot.session.model.mapper.UserDtoMapper;
+import ru.rassafel.bot.session.service.message.TemplateEngine;
+import ru.rassafel.bot.session.templates.MainTemplates;
 import ru.rassafel.bot.session.type.BotSession;
 
 import java.util.Optional;
@@ -20,8 +22,8 @@ public class SessionService {
     private final UserService userService;
     private final UserDtoMapper userMapper;
     private final ExitSessionInterceptor interceptor;
-    private final FilePropertiesService messageService;
     private final SessionUtil sessionUtil;
+    private final TemplateEngine templateEngine;
 
     public SessionResponse handle(SessionRequest request) {
 
@@ -45,9 +47,7 @@ public class SessionService {
                     botSession = factory.getSession(userMessage);
                 } catch (IllegalArgumentException ex) {
                     throw new BotException(user.getId(),
-                        "На данном этапе доступны только следующие команды\n" +
-                            "Продукты\n" +
-                            "Места");
+                        templateEngine.compileTemplate(MainTemplates.INVALID_OPERATION));
                 }
 
                 EmbeddedUserSession newUserSession = EmbeddedUserSession.builder()
