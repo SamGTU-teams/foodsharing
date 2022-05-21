@@ -40,7 +40,7 @@ public class ChooseNewProductStep implements Step {
         List<String> similarProducts = productService.getSimilarToTextProducts(message);
 
         if (similarProducts.isEmpty()) {
-            responseMessage = "Такого продукта не нашлось, попробуйте снова";
+            responseMessage = templateEngine.compileTemplate(ProductTemplates.PRODUCT_NOT_FOUND);
         } else {
             responseMessage = templateEngine.compileTemplate(ProductTemplates.POSSIBLE_PRODUCT_NAMES);
             responseButtons.addButton(new BotButtons.BotButton("Попробовать еще")).addAll(similarProducts);
