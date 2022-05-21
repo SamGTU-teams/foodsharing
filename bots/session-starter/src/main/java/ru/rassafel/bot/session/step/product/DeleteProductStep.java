@@ -10,7 +10,9 @@ import ru.rassafel.bot.session.model.entity.EmbeddedUserSession;
 import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.bot.session.service.ProductService;
 import ru.rassafel.bot.session.service.UserService;
+import ru.rassafel.bot.session.service.message.TemplateEngine;
 import ru.rassafel.bot.session.step.Step;
+import ru.rassafel.bot.session.templates.ProductTemplates;
 import ru.rassafel.bot.session.util.SessionUtil;
 import ru.rassafel.foodsharing.common.model.entity.product.Product;
 
@@ -30,6 +32,8 @@ public class DeleteProductStep implements Step {
     private final ProductService productService;
     private final UserService userService;
 
+    private final TemplateEngine templateEngine;
+
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
 
@@ -45,7 +49,7 @@ public class DeleteProductStep implements Step {
 
         if("удалить все".equals(message)){
             user.getProducts().clear();
-            responseMessage = "Вы удалили все продукты";
+            responseMessage = templateEngine.compileTemplate(ProductTemplates.EMPTY_PRODUCTS_AFTER_DELETE);
             userSession.setSessionStep(ChooseOperationProductStep.STEP_INDEX);
             responseButtons.addAll(PRODUCT_MAIN_BUTTONS);
         }else {
@@ -60,12 +64,12 @@ public class DeleteProductStep implements Step {
             products.removeIf(p -> productNamesToDelete.contains(p.getName()));
 
             if (products.isEmpty()) {
-                responseMessage = "Продукты удалены, у вас больше не осталось продуктов";
+                responseMessage = templateEngine.compileTemplate(ProductTemplates.EMPTY_PRODUCTS_AFTER_DELETE);
                 userSession.setSessionStep(ChooseOperationProductStep.STEP_INDEX);
                 responseButtons.addAll(PRODUCT_MAIN_BUTTONS);
             } else {
-                responseMessage = "Продукты удалены, введите еще\n\n" +
-                    productService.getUsersProductNamesMapMessage(user);
+                responseMessage = templateEngine.compileTemplate(ProductTemplates.LIST_OF_PRODUCTS_AFTER_DELETE,
+                    ProductTemplates.buildMapOfProducts(products));
             }
         }
 
