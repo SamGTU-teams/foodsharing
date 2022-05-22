@@ -3,6 +3,7 @@ package ru.rassafel.foodsharing.tgbot.mapper;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Location;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
@@ -13,6 +14,7 @@ import ru.rassafel.bot.session.model.dto.SessionRequest;
 import ru.rassafel.bot.session.model.dto.SessionResponse;
 import ru.rassafel.bot.session.model.mapper.UserDtoMapper;
 import ru.rassafel.bot.session.util.ButtonsUtil;
+import ru.rassafel.foodsharing.common.model.GeoPoint;
 import ru.rassafel.foodsharing.tgbot.model.TgUser;
 
 import java.util.Optional;
@@ -27,20 +29,25 @@ public abstract class TgBotDtoMapper implements UserDtoMapper {
         @Mapping(source = "message", target = "message", ignore = true),
         @Mapping(source = "message.chat.id", target = "from.id"),
         @Mapping(source = "message.from.userName", target = "from.username"),
-        @Mapping(source = "message.location.longitude", target = "location.lon"),
-        @Mapping(source = "message.location.latitude", target = "location.lat"),
+        @Mapping(source = "message.location", target = "location")
     })
     public abstract SessionRequest map(Update update);
 
-    @Mapping(source = "from.id", target = "id")
-    public abstract TgUser map(SessionRequest request);
+    @Mappings({
+        @Mapping(source = "longitude", target = "lon"),
+        @Mapping(source = "latitude", target = "lat")
+    })
+    protected abstract GeoPoint map(Location location);
 
     @AfterMapping
     protected void map(Update update, @MappingTarget SessionRequest request) {
         final Message message = update.getMessage();
-        String text = ofNullable(message.getText()).orElse("#geoPositionRequest");
-        request.setMessage(text.toLowerCase().trim());
+        String text = ofNullable(message.getText()).map(sms -> sms.toLowerCase().trim()).orElse("");
+        request.setMessage(text);
     }
+
+    @Mapping(source = "from.id", target = "id")
+    public abstract TgUser map(SessionRequest request);
 
     public SessionRequest mapFromUpdate(Update update) {
         SessionRequest mapped = map(update);
