@@ -12,7 +12,9 @@ import ru.rassafel.bot.session.model.entity.Place;
 import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.bot.session.service.PlaceService;
 import ru.rassafel.bot.session.service.UserService;
+import ru.rassafel.bot.session.service.message.TemplateEngine;
 import ru.rassafel.bot.session.step.Step;
+import ru.rassafel.bot.session.templates.PlaceTemplates;
 import ru.rassafel.foodsharing.common.exception.ApiException;
 
 import java.util.Collection;
@@ -27,6 +29,7 @@ public class EditGeoStep implements Step {
     private final Cache<Long, Place> geoPointCache;
     private final PlaceService placeService;
     private final UserService userService;
+    private final TemplateEngine templateEngine;
 
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
@@ -38,16 +41,18 @@ public class EditGeoStep implements Step {
             Map<Integer, String> usersPlacesNamesMap = placeService.getUsersPlacesNamesMap(usersPoints);
             String placeNameToEdit = usersPlacesNamesMap.get(Integer.parseInt(message));
             if (placeNameToEdit == null) {
-                throw new BotException(user.getId(), String.format("Места под номером %s у вас нет, попробуйте еще", message));
+                throw new BotException(user.getId(),
+                    templateEngine.compileTemplate(PlaceTemplates.PLACE_BY_NUM_NOT_FOUND, Map.of("number", message)));
             }
             point = usersPoints.stream().filter(p -> p.getName().equalsIgnoreCase(placeNameToEdit)).findFirst().orElseThrow(() ->
                 new ApiException("Uncaught exception, place name not found in user places!"));
         } else {
             point = usersPoints.stream().filter(p -> p.getName().equalsIgnoreCase(message)).findFirst().orElseThrow(() ->
-                new BotException(user.getId(), String.format("Места с названием %s у вас нет, попробуйте еще", message)));
+                new BotException(user.getId(),
+                    templateEngine.compileTemplate(PlaceTemplates.PLACE_WITH_NAME_NOT_FOUND, Map.of("name", message))));
         }
         geoPointCache.put(user.getId(), point);
-        sessionResponse.setMessage("Укажите новый радиус (в метрах)");
+        sessionResponse.setMessage(templateEngine.compileTemplate(PlaceTemplates.EXPECTATION_OF_NEW_RADIUS));
         sessionResponse.setButtons(new BotButtons());
         userSession.setSessionStep(SetNewRadiusGeoStep.STEP_INDEX);
 
