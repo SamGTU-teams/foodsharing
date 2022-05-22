@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 public enum MainTemplates implements Templates {
 
     WELCOME("welcome"),
+    INVALID_OPERATION("invalid-operation-name"),
     BACK_TO_MAIN("back-to-main");
 
     private final String name;
