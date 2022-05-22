@@ -12,7 +12,9 @@ import ru.rassafel.bot.session.model.entity.Place;
 import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.bot.session.service.PlaceService;
 import ru.rassafel.bot.session.service.UserService;
+import ru.rassafel.bot.session.service.message.TemplateEngine;
 import ru.rassafel.bot.session.step.Step;
+import ru.rassafel.bot.session.templates.PlaceTemplates;
 import ru.rassafel.bot.session.util.GeoButtonsUtil;
 import ru.rassafel.bot.session.util.SessionUtil;
 
@@ -29,6 +31,8 @@ public class DeleteGeoStep implements Step {
     private final PlaceService placeService;
     private final UserService userService;
 
+    private final TemplateEngine templateEngine;
+
     @Override
     @Transactional
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
@@ -42,7 +46,7 @@ public class DeleteGeoStep implements Step {
 
             responseButtons.addAll(GeoButtonsUtil.GEO_MAIN_BUTTONS);
             userSession.setSessionStep(ChooseOperationGeoStep.STEP_INDEX);
-            sessionResponse.setMessage("Вы удалили все ваши места");
+            sessionResponse.setMessage(templateEngine.compileTemplate(PlaceTemplates.EMPTY_PLACES_AFTER_DELETE));
         }else {
 
             Map<Integer, String> usersPlacesNamesMap = placeService.getUsersPlacesNamesMap(user);
@@ -60,14 +64,14 @@ public class DeleteGeoStep implements Step {
                 usersPlaces.removeIf(p -> p.getName().equalsIgnoreCase(placeName));
             }
             if (usersPlaces.isEmpty()) {
-                sessionResponse.setMessage("Место удалено, у вас больше не осталось мест");
+                sessionResponse.setMessage(templateEngine.compileTemplate(PlaceTemplates.EMPTY_PLACES_AFTER_DELETE));
                 userSession.setSessionStep(ChooseOperationGeoStep.STEP_INDEX);
                 responseButtons.addAll(GeoButtonsUtil.GEO_MAIN_BUTTONS);
 
                 userService.saveUser(user);
             } else {
-                String otherPlaces = placeService.getUsersPlaceMapMessage(user);
-                sessionResponse.setMessage("Место удалено, введите еще, оставшиеся места:\n\n" + otherPlaces);
+                sessionResponse.setMessage(templateEngine.compileTemplate(PlaceTemplates.PLACES_LIST_AFTER_DELETE,
+                    PlaceTemplates.buildMapOfPlaces(usersPlaces)));
             }
         }
         sessionResponse.setButtons(responseButtons);
