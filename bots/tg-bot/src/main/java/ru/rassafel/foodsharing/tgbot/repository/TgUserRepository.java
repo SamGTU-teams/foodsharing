@@ -1,10 +1,12 @@
 package ru.rassafel.foodsharing.tgbot.repository;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import ru.rassafel.foodsharing.tgbot.model.TgUser;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TgUserRepository extends JpaRepository<TgUser, Long> {
 
@@ -17,5 +19,8 @@ public interface TgUserRepository extends JpaRepository<TgUser, Long> {
             "AND ST_DWithin(CAST(ST_SetSRID(ST_MakePoint(:lon, :lat), 4326) AS GEOGRAPHY), " +
             "CAST(ST_SetSRID(ST_MakePoint(tp.lon, tp.lat), 4326) AS GEOGRAPHY), tp.radius)")
     List<Object[]> findByProductAndSuitablePlace(List<Long> productIds, double lat, double lon);
+
+    @EntityGraph(attributePaths = "products")
+    Optional<TgUser> findWithProductsById(Long id);
 
 }

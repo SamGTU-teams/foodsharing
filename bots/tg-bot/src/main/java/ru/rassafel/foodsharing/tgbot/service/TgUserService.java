@@ -39,4 +39,9 @@ public class TgUserService implements UserService {
         List<Long> collect = post.getProducts().stream().map(ProductDto::getId).collect(Collectors.toList());
         return repository.findByProductAndSuitablePlace(collect, point.getLat(), point.getLon());
     }
+
+    @Override
+    public Optional<? extends User> getUserWithProducts(Long id) {
+        return repository.findWithProductsById(id);
+    }
 }
