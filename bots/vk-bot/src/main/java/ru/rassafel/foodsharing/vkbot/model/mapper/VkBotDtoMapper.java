@@ -1,9 +1,11 @@
 package ru.rassafel.foodsharing.vkbot.model.mapper;
 
+import com.vk.api.sdk.objects.base.GeoCoordinates;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 import ru.rassafel.bot.session.model.dto.SessionRequest;
 import ru.rassafel.bot.session.model.mapper.UserDtoMapper;
+import ru.rassafel.foodsharing.common.model.GeoPoint;
 import ru.rassafel.foodsharing.vkbot.model.domain.VkUser;
 import ru.rassafel.foodsharing.vkbot.model.dto.VkUpdate;
 
@@ -13,13 +15,19 @@ public abstract class VkBotDtoMapper implements UserDtoMapper {
 
     @Mappings({
         @Mapping(source = "object.message.from_id", target = "from.id"),
-        @Mapping(source = "object.message.geo.coordinates.latitude", target = "location.lat"),
-        @Mapping(source = "object.message.geo.coordinates.longitude", target = "location.lon"),
+        @Mapping(source = "object.message.geo.coordinates", target = "location")
     })
     public abstract SessionRequest map(VkUpdate vkUpdate);
 
+    @Mappings({
+        @Mapping(source = "latitude", target = "lat"),
+        @Mapping(source = "longitude", target = "lon")
+    })
+    protected abstract GeoPoint map(GeoCoordinates geo);
+
     @Mapping(source = "from.id", target = "id")
     public abstract VkUser map(SessionRequest rq);
+
 
     public SessionRequest mapDto(VkUpdate update) {
         SessionRequest mapped = map(update);
