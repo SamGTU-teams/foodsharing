@@ -16,7 +16,7 @@ import java.util.Collection;
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class VkUser extends User {
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(schema = "vk_bot", name = "vk_user_products",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "product_id"))
