@@ -2,6 +2,9 @@ package ru.rassafel.bot.session.templates;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+import java.util.Map;
+
 @RequiredArgsConstructor
 public enum MainTemplates implements Templates {
 
@@ -14,6 +17,10 @@ public enum MainTemplates implements Templates {
     @Override
     public String getName(){
         return getName(name);
+    }
+
+    public static Map<String, List<String>> buildMapOfOperations(List<String> operationNames){
+        return Map.of("operations", operationNames);
     }
 
 }

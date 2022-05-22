@@ -12,6 +12,7 @@ import ru.rassafel.bot.session.model.mapper.UserDtoMapper;
 import ru.rassafel.bot.session.service.message.TemplateEngine;
 import ru.rassafel.bot.session.templates.MainTemplates;
 import ru.rassafel.bot.session.type.BotSession;
+import ru.rassafel.bot.session.util.ButtonsUtil;
 
 import java.util.Optional;
 
@@ -47,7 +48,8 @@ public class SessionService {
                     botSession = factory.getSession(userMessage);
                 } catch (IllegalArgumentException ex) {
                     throw new BotException(user.getId(),
-                        templateEngine.compileTemplate(MainTemplates.INVALID_OPERATION));
+                        templateEngine.compileTemplate(MainTemplates.INVALID_OPERATION,
+                            MainTemplates.buildMapOfOperations(ButtonsUtil.DEFAULT_BUTTONS)));
                 }
 
                 EmbeddedUserSession newUserSession = EmbeddedUserSession.builder()
