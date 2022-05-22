@@ -6,10 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.foodsharing.analyzer.controller.ProductAnalyzerController;
-import ru.rassafel.foodsharing.analyzer.model.dto.ScoreProductDto;
 import ru.rassafel.foodsharing.common.model.entity.product.Product;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -21,16 +19,8 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     private final ProductAnalyzerController productController;
-    @Value("#{session.productCountPerRequest:5}")
+    @Value("${session.productCountPerRequest:5}")
     private Long productCountPerRequest;
-
-    public List<String> getSimilarProducts(String product) {
-        ArrayList<String> objects = new ArrayList<>();
-        objects.add("Молоко");
-        objects.add("Кефир");
-        objects.add("Яблоко");
-        return objects;
-    }
 
     public List<String> getSimilarToTextProducts(String text) {
         return
@@ -53,18 +43,5 @@ public class ProductService {
             .stream()
             .map(Product::getName)
             .collect(Collectors.toList());
-    }
-
-    public String getUsersProductNamesMapMessage(User user, String additionalMessage) {
-        return getUsersProductNamesMap(user)
-            .entrySet()
-            .stream()
-            .map(entry -> entry.getKey() + "." + entry.getValue())
-            .collect(Collectors.joining("\n", "",
-                "\n\n" + additionalMessage));
-    }
-
-    public String getUsersProductNamesMapMessage(User user) {
-        return getUsersProductNamesMapMessage(user, "");
     }
 }
