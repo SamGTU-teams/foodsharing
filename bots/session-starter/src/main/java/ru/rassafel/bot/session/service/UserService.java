@@ -12,4 +12,6 @@ public interface UserService {
     Optional<? extends User> getUser(Long id);
 
     List<Object[]> findByFoodPost(FoodPostDto post);
+
+    Optional<? extends User> getUserWithProducts(Long id);
 }
