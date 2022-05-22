@@ -10,6 +10,7 @@ public enum MainTemplates implements Templates {
 
     WELCOME("welcome"),
     INVALID_OPERATION("invalid-operation-name"),
+    OPERATION_TIMEOUT("operation-timeout"),
     BACK_TO_MAIN("back-to-main");
 
     private final String name;
