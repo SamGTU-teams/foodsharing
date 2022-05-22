@@ -11,11 +11,12 @@ import ru.rassafel.bot.session.model.entity.Place;
 import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.bot.session.service.PlaceService;
 import ru.rassafel.bot.session.service.UserService;
+import ru.rassafel.bot.session.service.message.TemplateEngine;
 import ru.rassafel.bot.session.step.Step;
+import ru.rassafel.bot.session.templates.MainTemplates;
+import ru.rassafel.bot.session.templates.PlaceTemplates;
 
 import java.util.Collection;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 import static ru.rassafel.bot.session.util.GeoButtonsUtil.GEO_MAIN_BUTTONS;
 
@@ -27,6 +28,8 @@ public class ChooseOperationGeoStep implements Step {
 
     private final PlaceService placeService;
     private final UserService userService;
+
+    private final TemplateEngine templateEngine;
 
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
@@ -40,25 +43,18 @@ public class ChooseOperationGeoStep implements Step {
             Collection<Place> points = placeService.findByUserId(user.getId());
             if (points.isEmpty()) {
 
-                responseMessage = "У вас нет добавленных мест";
+                responseMessage = templateEngine.compileTemplate(PlaceTemplates.EMPTY_PLACES);
 
             } else {
-                AtomicInteger counter = new AtomicInteger(1);
-                String pointText = points.stream().map(p -> String.format(
-                        "%d. Название места : %s\n" +
-                            "Полный адрес места : %s\n" +
-                            "Радиус поиска вокруг этого места : %d (метры)\n",
-                        counter.getAndIncrement(), p.getName(), p.getAddress(), p.getRadius()))
-                    .collect(Collectors.joining("\n"));
-
-                responseMessage = "Ваши места : \n" + pointText;
+                responseMessage = templateEngine.compileTemplate(PlaceTemplates.PLACES_LIST,
+                    PlaceTemplates.buildMapOfPlaces(points));
             }
 
             responseButtons.addAll(GEO_MAIN_BUTTONS);
 
         } else if (message.equals("добавить место")) {
 
-            responseMessage = "Отправьте мне точку на карте";
+            responseMessage = templateEngine.compileTemplate(PlaceTemplates.EXPECTATION_OF_GEO);
             responseButtons.addButton(BotButtons.BotButton.GEO_BUTTON);
 
             userSession.setSessionStep(AddNewPlaceGeoStep.STEP_INDEX);
@@ -66,14 +62,12 @@ public class ChooseOperationGeoStep implements Step {
             Collection<Place> points = placeService.findByUserId(user.getId());
             if (points.isEmpty()) {
 
-                responseMessage = "У вас пока нет добавленных мест";
+                responseMessage = templateEngine.compileTemplate(PlaceTemplates.EMPTY_PLACES);
                 responseButtons.addAll(GEO_MAIN_BUTTONS);
 
             } else {
-
-                responseMessage = placeService.getUsersPlaceMapMessage(user,
-                    "Вот список ваших мест, напишите название или номер(а) того которого хотите удалить, пример: 1,2,3\n" +
-                        "Или вы можете удалить все ваши места");
+                responseMessage = templateEngine.compileTemplate(PlaceTemplates.PLACES_LIST_TO_DELETE,
+                    PlaceTemplates.buildMapOfPlaces(points));
 
                 responseButtons.addButton(new BotButtons.BotButton("Удалить все"));
                 userSession.setSessionStep(DeleteGeoStep.STEP_INDEX);
@@ -82,17 +76,17 @@ public class ChooseOperationGeoStep implements Step {
             Collection<Place> points = placeService.findByUserId(user.getId());
 
             if (points.isEmpty()) {
-                responseMessage = "У вас пока нет добавленных мест";
+                responseMessage = templateEngine.compileTemplate(PlaceTemplates.EMPTY_PLACES);
                 responseButtons.addAll(GEO_MAIN_BUTTONS);
             } else {
-                responseMessage = placeService.getUsersPlaceMapMessage(user,
-                    "\n\nВот список ваших мест, напишите название или номер, того которого хотите отредактировать, пример: 1 или Дом");
+                responseMessage = templateEngine.compileTemplate(PlaceTemplates.PLACES_LIST_TO_EDIT,
+                    PlaceTemplates.buildMapOfPlaces(placeService.findByUserId(user.getId())));
 
                 userSession.setSessionStep(EditGeoStep.STEP_INDEX);
             }
         } else {
-            throw new BotException(user.getId(), "На этом этапе доступны только следующие команды\n" +
-                String.join("\n", GEO_MAIN_BUTTONS));
+            throw new BotException(user.getId(), templateEngine.compileTemplate(MainTemplates.INVALID_OPERATION,
+                MainTemplates.buildMapOfOperations(GEO_MAIN_BUTTONS)));
         }
 
         sessionResponse.setButtons(responseButtons);
