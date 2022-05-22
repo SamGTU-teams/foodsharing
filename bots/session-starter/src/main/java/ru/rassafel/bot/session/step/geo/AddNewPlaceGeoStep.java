@@ -36,7 +36,7 @@ public class AddNewPlaceGeoStep implements Step {
         BotButtons responseButtons = new BotButtons();
         GeoPoint location = sessionRequest.getLocation();
         if (location == null || location.getLat() == 0 || location.getLon() == 0) {
-            sessionResponse.setMessage("Мне необходима геолокация!");
+            sessionResponse.setMessage(templateEngine.compileTemplate(PlaceTemplates.NO_GEOLOCATION_PROVIDED));
             responseButtons.addButton(BotButtons.BotButton.GEO_BUTTON);
         } else {
             String address =
