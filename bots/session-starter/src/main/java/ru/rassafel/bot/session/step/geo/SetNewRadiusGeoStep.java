@@ -14,7 +14,10 @@ import ru.rassafel.bot.session.model.entity.Place;
 import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.bot.session.service.PlaceService;
 import ru.rassafel.bot.session.service.UserService;
+import ru.rassafel.bot.session.service.message.TemplateEngine;
 import ru.rassafel.bot.session.step.Step;
+import ru.rassafel.bot.session.templates.MainTemplates;
+import ru.rassafel.bot.session.templates.PlaceTemplates;
 import ru.rassafel.bot.session.util.GeoButtonsUtil;
 
 import static ru.rassafel.bot.session.util.ButtonsUtil.DEFAULT_BUTTONS;
@@ -29,6 +32,7 @@ public class SetNewRadiusGeoStep implements Step {
     private final PlaceService placeService;
     private final UserService userService;
     private final PlatformTransactionManager transactionManager;
+    private final TemplateEngine templateEngine;
 
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
@@ -40,7 +44,7 @@ public class SetNewRadiusGeoStep implements Step {
         if (editable == null) {
             userSession.setSessionActive(false);
             sessionResponse.setButtons(new BotButtons(DEFAULT_BUTTONS));
-            sessionResponse.setMessage("Время данной операции истекло");
+            sessionResponse.setMessage(templateEngine.compileTemplate(MainTemplates.OPERATION_TIMEOUT));
             userService.saveUser(user);
             return;
         }
@@ -48,11 +52,11 @@ public class SetNewRadiusGeoStep implements Step {
         int newRadius;
         try {
             newRadius = Integer.parseInt(message);
-            if (newRadius > 5000) {
-                throw new BotException(user.getId(), "Нужно ввести радиус меньше 5 км");
+            if (newRadius > 5000 || newRadius <= 0) {
+                throw new BotException(user.getId(), templateEngine.compileTemplate(PlaceTemplates.INVALID_RADIUS_RANGE));
             }
         } catch (NumberFormatException ex) {
-            throw new BotException(user.getId(), "Нужно ввести число");
+            throw new BotException(user.getId(), templateEngine.compileTemplate(PlaceTemplates.INVALID_RADIUS_FORMAT));
         }
         geoPointCache.invalidate(user.getId());
 
@@ -68,6 +72,6 @@ public class SetNewRadiusGeoStep implements Step {
         });
 
         sessionResponse.setButtons(new BotButtons().addAll(GeoButtonsUtil.GEO_MAIN_BUTTONS));
-        sessionResponse.setMessage("Место изменено!");
+        sessionResponse.setMessage(templateEngine.compileTemplate(PlaceTemplates.PLACE_EDIT_SUCCESS));
     }
 }
