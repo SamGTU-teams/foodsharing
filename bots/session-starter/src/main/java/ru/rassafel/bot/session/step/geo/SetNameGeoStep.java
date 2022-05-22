@@ -12,9 +12,13 @@ import ru.rassafel.bot.session.model.entity.Place;
 import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.bot.session.service.PlaceService;
 import ru.rassafel.bot.session.service.UserService;
+import ru.rassafel.bot.session.service.message.TemplateEngine;
 import ru.rassafel.bot.session.step.Step;
+import ru.rassafel.bot.session.templates.MainTemplates;
+import ru.rassafel.bot.session.templates.PlaceTemplates;
 
 import java.util.Collection;
+import java.util.Map;
 
 import static ru.rassafel.bot.session.util.ButtonsUtil.DEFAULT_BUTTONS;
 
@@ -28,6 +32,8 @@ public class SetNameGeoStep implements Step {
     private final PlaceService placeService;
     private final UserService userService;
 
+    private final TemplateEngine templateEngine;
+
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
         EmbeddedUserSession userSession = user.getUserSession();
@@ -37,24 +43,25 @@ public class SetNameGeoStep implements Step {
         if (place == null) {
             userSession.setSessionActive(false);
             sessionResponse.setButtons(new BotButtons(DEFAULT_BUTTONS));
-            sessionResponse.setMessage("Время данной операции истекло");
+            sessionResponse.setMessage(templateEngine.compileTemplate(MainTemplates.OPERATION_TIMEOUT));
             userService.saveUser(user);
             return;
         }
 
         if(message.length() > 63){
-            throw new BotException(user.getId(), "Название места слишком большое (больше 63 символов), введите название места поменьше");
+            throw new BotException(user.getId(), templateEngine.compileTemplate(PlaceTemplates.TOO_MANY_PLACE_NAME));
         }
 
         Collection<Place> usersPlaces = placeService.findByUserId(user.getId());
 
         if (usersPlaces.stream().anyMatch(p -> p.getName().equalsIgnoreCase(message))) {
-            throw new BotException(user.getId(), "Введите другое название, место " + message + " у вас уже есть");
+            throw new BotException(user.getId(),
+                templateEngine.compileTemplate(PlaceTemplates.PLACE_ALREADY_EXISTS, Map.of("name", message)));
         }
 
         place.setName(message);
 
-        sessionResponse.setMessage("Отлично, а теперь укажите радиус поиска вокруг этого места (в метрах), по умолчанию радиус будет указан в 1 км");
+        sessionResponse.setMessage(templateEngine.compileTemplate(PlaceTemplates.EXPECTATION_OF_RADIUS));
         sessionResponse.setButtons(new BotButtons().addButton(new BotButtons.BotButton("Оставить как есть")));
         userSession.setSessionStep(SetRadiusAndFinishSaveGeoStep.STEP_INDEX);
 
