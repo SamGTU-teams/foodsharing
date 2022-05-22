@@ -73,8 +73,8 @@ public class SessionUtilTest {
     static List<Arguments> testFindValuesByCharacterMessage(){
         return List.of(
             Arguments.of("First", Set.of("First")),
-            Arguments.of("second", Set.of("second")),
-            Arguments.of("THIRD", Set.of("THIRD"))
+            Arguments.of("second", Set.of("Second")),
+            Arguments.of("THIRD", Set.of("Third"))
         );
     }
 
