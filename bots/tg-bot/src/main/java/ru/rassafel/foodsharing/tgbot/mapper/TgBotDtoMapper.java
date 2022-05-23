@@ -24,13 +24,16 @@ import static java.util.Optional.ofNullable;
 
 @Mapper
 public abstract class TgBotDtoMapper implements UserDtoMapper {
+
+    public static final String LOCATION_BUTTON_TEXT = "Текущая геолокация";
+
     public static final TgBotDtoMapper INSTANCE = Mappers.getMapper(TgBotDtoMapper.class);
     @Mappings({
         @Mapping(source = "message", target = "message", ignore = true),
         @Mapping(source = "message.chat.id", target = "from.id"),
         @Mapping(source = "message.location", target = "location")
     })
-    public abstract SessionRequest map(Update update);
+    protected abstract SessionRequest map(Update update);
 
     @Mappings({
         @Mapping(source = "longitude", target = "lon"),
@@ -69,7 +72,7 @@ public abstract class TgBotDtoMapper implements UserDtoMapper {
             if (o.isGeo()) {
                 KeyboardButton button = new KeyboardButton();
                 button.setRequestLocation(true);
-                button.setText("Геолокация");
+                button.setText(LOCATION_BUTTON_TEXT);
                 buttonRow.add(button);
             } else {
                 buttonRow.add(o.getText());
