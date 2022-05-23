@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://${embedded.postgresql.host}:${embedded.postgresql.port}/${embedded.postgresql.schema}
+    username: ${embedded.postgresql.user}
+    password: ${embedded.postgresql.password}
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate.ddl-auto: validate
+  rabbitmq:
+    host: ${embedded.rabbitmq.host}
+    port: ${embedded.rabbitmq.port}
+    username: ${embedded.rabbitmq.user}
+    password: ${embedded.rabbitmq.password}
+
