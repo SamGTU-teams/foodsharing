@@ -1,8 +1,9 @@
 package ru.rassafel.bot.session.service;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.rassafel.bot.session.service.message.TemplateEngine;
+import ru.rassafel.bot.session.templates.MainTemplates;
 import ru.rassafel.foodsharing.analyzer.model.dto.FoodPostDto;
 
 import java.math.BigInteger;
@@ -18,6 +19,7 @@ public class FoodPostHandlerService {
 
     private final UserService userService;
     private final Messenger messenger;
+    private final TemplateEngine templateEngine;
 
     public void handleFoodPostReceived(FoodPostDto foodPostDto){
 
@@ -46,15 +48,13 @@ public class FoodPostHandlerService {
                 return oldEntry;
             }));
         grouped.forEach((key, value) -> {
-            String productNames = String.join(",\n", value.productNames);
-            String placesNames = String.join(",\n", value.placesNames);
-            String resultMessage = String.format("Рядом с вашими местами\n" +
-                "%s\n" +
-                "и вашими избранными продуктами\n" +
-                "%s\n" +
-                "Мы нашли пост\n" +
-                "%s\n\n" +
-                "%s", placesNames, productNames, foodPostDto.getUrl(), foodPostDto.getText());
+            String resultMessage = templateEngine.compileTemplate(MainTemplates.POST_INFO,
+                Map.of(
+                    "places", value.placesNames,
+                    "products", value.productNames,
+                    "url", foodPostDto.getUrl(),
+                    "text", foodPostDto.getText()
+                ));
             messenger.send(resultMessage, key.intValue());
         });
     }
