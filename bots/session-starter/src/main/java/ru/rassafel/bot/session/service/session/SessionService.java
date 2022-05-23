@@ -1,4 +1,4 @@
-package ru.rassafel.bot.session.service;
+package ru.rassafel.bot.session.service.session;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -9,6 +9,7 @@ import ru.rassafel.bot.session.model.dto.SessionResponse;
 import ru.rassafel.bot.session.model.entity.EmbeddedUserSession;
 import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.bot.session.model.mapper.UserDtoMapper;
+import ru.rassafel.bot.session.service.UserService;
 import ru.rassafel.bot.session.service.message.TemplateEngine;
 import ru.rassafel.bot.session.templates.MainTemplates;
 import ru.rassafel.bot.session.type.BotSession;
