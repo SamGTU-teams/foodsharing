@@ -28,7 +28,6 @@ public abstract class TgBotDtoMapper implements UserDtoMapper {
     @Mappings({
         @Mapping(source = "message", target = "message", ignore = true),
         @Mapping(source = "message.chat.id", target = "from.id"),
-        @Mapping(source = "message.from.userName", target = "from.username"),
         @Mapping(source = "message.location", target = "location")
     })
     public abstract SessionRequest map(Update update);
