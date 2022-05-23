@@ -26,6 +26,7 @@ public enum PlaceTemplates implements Templates {
     NO_GEOLOCATION_PROVIDED("places/no-geolocation-provided"),
     PLACES_LIST_TO_EDIT("places/list-of-places-to-edit"),
     TOO_MANY_PLACE_NAME("places/too-many-place-name"),
+    TOO_MANY_PLACES("places/too-many-places"),
     PLACE_ALREADY_EXISTS("places/place-already-exists"),
     INVALID_RADIUS_FORMAT("places/invalid-radius-format"),
     PLACE_WITH_NAME_NOT_FOUND("places/place-with-name-not-found"),

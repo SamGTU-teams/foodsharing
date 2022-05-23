@@ -1,6 +1,7 @@
 package ru.rassafel.bot.session.step.geo;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.rassafel.bot.session.exception.BotException;
 import ru.rassafel.bot.session.model.dto.BotButtons;
@@ -17,6 +18,7 @@ import ru.rassafel.bot.session.templates.MainTemplates;
 import ru.rassafel.bot.session.templates.PlaceTemplates;
 
 import java.util.Collection;
+import java.util.Map;
 
 import static ru.rassafel.bot.session.util.GeoButtonsUtil.GEO_MAIN_BUTTONS;
 
@@ -28,8 +30,10 @@ public class ChooseOperationGeoStep implements Step {
 
     private final PlaceService placeService;
     private final UserService userService;
-
     private final TemplateEngine templateEngine;
+
+    @Value("${bot-config.max-places-count:10}")
+    private Integer maxPlacesCount;
 
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
@@ -39,12 +43,10 @@ public class ChooseOperationGeoStep implements Step {
         String responseMessage;
         BotButtons responseButtons = new BotButtons();
 
+        Collection<Place> points = placeService.findByUserId(user.getId());
         if (message.equals("мои места")) {
-            Collection<Place> points = placeService.findByUserId(user.getId());
             if (points.isEmpty()) {
-
                 responseMessage = templateEngine.compileTemplate(PlaceTemplates.EMPTY_PLACES);
-
             } else {
                 responseMessage = templateEngine.compileTemplate(PlaceTemplates.PLACES_LIST,
                     PlaceTemplates.buildMapOfPlaces(points));
@@ -53,13 +55,15 @@ public class ChooseOperationGeoStep implements Step {
             responseButtons.addAll(GEO_MAIN_BUTTONS);
 
         } else if (message.equals("добавить место")) {
-
+            if(points.size() >= maxPlacesCount){
+                throw new BotException(user.getId(), templateEngine.compileTemplate(PlaceTemplates.TOO_MANY_PLACES,
+                    Map.of("count", maxPlacesCount)));
+            }
             responseMessage = templateEngine.compileTemplate(PlaceTemplates.EXPECTATION_OF_GEO);
             responseButtons.addButton(BotButtons.BotButton.GEO_BUTTON);
 
             userSession.setSessionStep(AddNewPlaceGeoStep.STEP_INDEX);
         } else if (message.equals("удалить место")) {
-            Collection<Place> points = placeService.findByUserId(user.getId());
             if (points.isEmpty()) {
 
                 responseMessage = templateEngine.compileTemplate(PlaceTemplates.EMPTY_PLACES);
@@ -73,7 +77,6 @@ public class ChooseOperationGeoStep implements Step {
                 userSession.setSessionStep(DeleteGeoStep.STEP_INDEX);
             }
         } else if (message.equals("редактирование места")) {
-            Collection<Place> points = placeService.findByUserId(user.getId());
 
             if (points.isEmpty()) {
                 responseMessage = templateEngine.compileTemplate(PlaceTemplates.EMPTY_PLACES);
