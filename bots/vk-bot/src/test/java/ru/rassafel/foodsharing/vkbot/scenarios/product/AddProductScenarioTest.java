@@ -113,8 +113,8 @@ public class AddProductScenarioTest extends SpringCucumberSuperTest {
         Collection<Product> products = getCurrentUser(userId).getProducts();
         assertThat(products)
             .hasSize(oldProductSize + 1)
-            .extracting(Product::getName)
-            .containsExactly("Молоко");
+            .extracting(p -> p.getName().toLowerCase())
+            .containsExactly(message);
     }
 
 
