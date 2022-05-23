@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ru.rassafel.bot.session.model.dto.From;
 import ru.rassafel.bot.session.model.dto.SessionRequest;
 import ru.rassafel.bot.session.model.dto.SessionResponse;
-import ru.rassafel.bot.session.service.SessionEnum;
+import ru.rassafel.bot.session.service.session.SessionEnum;
 import ru.rassafel.bot.session.step.product.AddNewProductStep;
 import ru.rassafel.bot.session.step.product.ChooseNewProductStep;
 import ru.rassafel.bot.session.step.product.ChooseOperationProductStep;

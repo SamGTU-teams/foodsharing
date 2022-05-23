@@ -1,4 +1,4 @@
-package ru.rassafel.bot.session.service;
+package ru.rassafel.bot.session.service.session;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

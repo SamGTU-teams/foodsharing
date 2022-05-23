@@ -1,4 +1,4 @@
-package ru.rassafel.bot.session.service;
+package ru.rassafel.bot.session.service.openmap;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;

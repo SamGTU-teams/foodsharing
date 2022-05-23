@@ -4,7 +4,7 @@ import io.cucumber.java.en.Then;
 import ru.rassafel.bot.session.model.dto.From;
 import ru.rassafel.bot.session.model.dto.SessionRequest;
 import ru.rassafel.bot.session.model.dto.SessionResponse;
-import ru.rassafel.bot.session.service.SessionEnum;
+import ru.rassafel.bot.session.service.session.SessionEnum;
 import ru.rassafel.bot.session.step.product.ChooseOperationProductStep;
 import ru.rassafel.bot.session.step.product.DeleteProductStep;
 import ru.rassafel.bot.session.templates.ProductTemplates;

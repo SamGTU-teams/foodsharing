@@ -7,7 +7,7 @@ import ru.rassafel.bot.session.model.dto.SessionRequest;
 import ru.rassafel.bot.session.model.dto.SessionResponse;
 import ru.rassafel.bot.session.model.entity.Place;
 import ru.rassafel.bot.session.service.PlaceService;
-import ru.rassafel.bot.session.service.SessionEnum;
+import ru.rassafel.bot.session.service.session.SessionEnum;
 import ru.rassafel.bot.session.step.geo.ChooseOperationGeoStep;
 import ru.rassafel.bot.session.step.geo.DeleteGeoStep;
 import ru.rassafel.bot.session.templates.PlaceTemplates;

@@ -1,4 +1,4 @@
-package ru.rassafel.bot.session.service;
+package ru.rassafel.bot.session.service.openmap;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Primary;
