@@ -13,6 +13,7 @@ import ru.rassafel.bot.session.service.ProductService;
 import ru.rassafel.bot.session.service.UserService;
 import ru.rassafel.bot.session.service.message.TemplateEngine;
 import ru.rassafel.bot.session.step.Step;
+import ru.rassafel.bot.session.templates.MainTemplates;
 import ru.rassafel.bot.session.templates.ProductTemplates;
 
 import java.util.Map;
@@ -75,11 +76,8 @@ public class ChooseOperationProductStep implements Step {
             responseButtons.addAll(PRODUCT_MAIN_BUTTONS);
         } else {
             throw new BotException(user.getId(),
-                "На этом этапе доступны только следующие команды :\n" +
-                    "Добавить продукт\n" +
-                    "Удалить продукт\n" +
-                    "Мои продукты\n" +
-                    "На главную");
+                templateEngine.compileTemplate(MainTemplates.INVALID_OPERATION,
+                    MainTemplates.buildMapOfOperations(PRODUCT_MAIN_BUTTONS)));
         }
 
         sessionResponse.setButtons(responseButtons);

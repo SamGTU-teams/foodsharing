@@ -27,7 +27,9 @@ public enum ProductTemplates implements Templates {
     PRODUCT_NOT_FOUND("products/product-not-found"),
     POSSIBLE_PRODUCT_NAMES("products/possible-product-names"),
     SUCCESS_ADD_PRODUCT("products/success-add-product"),
-    SUCCESS_ADD_PRODUCT_AND_QUIT("products/success-add-product-and-quit");
+    INVALID_PRODUCT_NAME("products/invalid-product-name"),
+    SUCCESS_ADD_PRODUCT_AND_QUIT("products/success-add-product-and-quit"),
+    PRODUCT_ALREADY_EXISTS("products/product-already-exists");
 
     private final String name;
     @Override

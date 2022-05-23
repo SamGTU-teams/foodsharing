@@ -51,7 +51,7 @@ public class AddNewProductStep implements Step {
             Optional<Product> byName = productRepository.findByNameEqualsIgnoreCase(message);
             if(byName.isEmpty()){
                 throw new BotException(user.getId(),
-                    "Неверное имя продукта, воспользуйтесь кнопками или попробуйте еще");
+                    templateEngine.compileTemplate(ProductTemplates.INVALID_PRODUCT_NAME));
             }
             Product productByName = byName.get();
 
@@ -62,7 +62,7 @@ public class AddNewProductStep implements Step {
 
             boolean contains = productService.getUsersProductNames(user).contains(productByName.getName());
             if (contains) {
-                responseMessage = "У вас уже есть такой продукт, введите еще";
+                responseMessage = templateEngine.compileTemplate(ProductTemplates.PRODUCT_ALREADY_EXISTS);
             } else {
                 user.addProduct(productByName);
 
