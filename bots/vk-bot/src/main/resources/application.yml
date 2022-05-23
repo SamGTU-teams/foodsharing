@@ -20,6 +20,9 @@ spring:
       dlq: post.ad.dlq.vk
   liquibase:
     contexts: vk-bot,data
+  jpa:
+    hibernate:
+      ddl-auto: validate
 vk:
   bot:
     confirm_code: ${VK_CONFIRM_CODE}
@@ -31,3 +34,7 @@ vk:
       maxQueryCountPerTime: 20
       maxThreadCountForSendQueries: 1
       maxQuerySizeInBatch: 25
+feign:
+  analyzer:
+    url: http://localhost:8081/
+

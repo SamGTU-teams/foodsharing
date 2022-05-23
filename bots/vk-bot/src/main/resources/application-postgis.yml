@@ -6,9 +6,6 @@ spring:
     password: postgres
   liquibase:
     enabled: false
-  jpa:
-    hibernate:
-      ddl-auto: none
     show-sql: true
     properties:
       hibernate:
@@ -16,7 +13,5 @@ spring:
 logging:
   level:
     ru.rassafel.foodsharing.vkbot: DEBUG
-
-#  jpa:
-#    database-platform: org.hibernate.spatial.dialect.postgis.PostgisPG10Dialect
-#    hibernate.ddl-auto: none
+product-analyzer:
+  stub-mode: true
