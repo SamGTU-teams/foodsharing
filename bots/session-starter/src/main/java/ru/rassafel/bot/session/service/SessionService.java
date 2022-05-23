@@ -23,7 +23,7 @@ public class SessionService {
     private final UserService userService;
     private final UserDtoMapper userMapper;
     private final ExitSessionInterceptor interceptor;
-    private final SessionUtil sessionUtil;
+    private final WelcomeSessionProducer welcomeSessionProducer;
     private final TemplateEngine templateEngine;
 
     public SessionResponse handle(SessionRequest request) {
@@ -36,7 +36,7 @@ public class SessionService {
         Optional<? extends User> userOptional = userService.getUser(request.getFrom().getId());
 
         if (userOptional.isEmpty()) {
-            botSession = sessionUtil.getWelcome();
+            botSession = welcomeSessionProducer.getWelcome();
             user = userMapper.map(request);
             userService.saveUser(user);
         } else {

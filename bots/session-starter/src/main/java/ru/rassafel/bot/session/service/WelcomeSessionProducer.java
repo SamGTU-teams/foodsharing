@@ -8,7 +8,7 @@ import ru.rassafel.bot.session.type.impl.WelcomeSession;
 
 @Component
 @RequiredArgsConstructor
-public class SessionUtil {
+public class WelcomeSessionProducer {
     private final ApplicationContext context;
 
     public BotSession getWelcome() {
