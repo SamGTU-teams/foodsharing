@@ -23,13 +23,20 @@ public class OpenStreetMapAddressService implements AddressService {
     private final ObjectMapper objectMapper;
 
     public String getAddress(Double lat, Double lon) {
-        String response = restTemplate.getForObject(OPEN_MAP_ROOT_PATH, String.class,
-            lat,
-            lon,
-            "geojson",
-            "ru");
-
         String resultName = "Не определено";
+        String response;
+        try {
+             response = restTemplate.getForObject(OPEN_MAP_ROOT_PATH, String.class,
+                lat,
+                lon,
+                "geojson",
+                "ru");
+        }catch (Exception ex) {
+            log.warn("Place name not found by coordinates : {}, {}", lat, lon);
+            return resultName;
+        }
+
+
         JsonNode root;
         try {
              root = objectMapper.readTree(response);
