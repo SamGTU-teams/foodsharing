@@ -1,0 +1,5 @@
+feign:
+  analyzer:
+    url: http://analyzer/
+  ibot:
+    url: http://ibot/
