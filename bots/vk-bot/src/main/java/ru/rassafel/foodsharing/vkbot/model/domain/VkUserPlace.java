@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
-import ru.rassafel.bot.session.model.entity.Place;
+import ru.rassafel.foodsharing.session.model.entity.Place;
 
 import javax.persistence.*;
 

@@ -5,7 +5,7 @@ import com.vk.api.sdk.objects.base.GeoCoordinates;
 import com.vk.api.sdk.objects.callback.Type;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import ru.rassafel.bot.session.model.dto.SessionRequest;
+import ru.rassafel.foodsharing.session.model.dto.SessionRequest;
 import ru.rassafel.foodsharing.vkbot.model.dto.VkMessage;
 import ru.rassafel.foodsharing.vkbot.model.dto.VkUpdate;
 import ru.rassafel.foodsharing.vkbot.model.dto.VkUpdateObject;
@@ -17,7 +17,7 @@ import java.util.Locale;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DtoMapperTest {
-    VkBotDtoMapper botDtoMapper = VkBotDtoMapper.INSTANCE;
+    final VkBotDtoMapper botDtoMapper = VkBotDtoMapper.INSTANCE;
 
     public static List<VkUpdate> testMapFromVkObject() {
         Geo geo = new Geo();

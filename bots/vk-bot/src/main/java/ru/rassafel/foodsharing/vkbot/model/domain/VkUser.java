@@ -3,8 +3,8 @@ package ru.rassafel.foodsharing.vkbot.model.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.foodsharing.common.model.entity.product.Product;
+import ru.rassafel.foodsharing.session.model.entity.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;

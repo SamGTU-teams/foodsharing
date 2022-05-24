@@ -3,23 +3,22 @@ package ru.rassafel.foodsharing.tgbot.scenarios.place;
 import com.github.benmanes.caffeine.cache.Cache;
 import io.cucumber.java.en.Then;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.rassafel.bot.session.model.dto.From;
-import ru.rassafel.bot.session.model.dto.SessionRequest;
-import ru.rassafel.bot.session.model.dto.SessionResponse;
-import ru.rassafel.bot.session.model.entity.Place;
-import ru.rassafel.bot.session.service.PlaceService;
-import ru.rassafel.bot.session.service.session.SessionEnum;
-import ru.rassafel.bot.session.step.geo.ChooseOperationGeoStep;
-import ru.rassafel.bot.session.step.geo.EditGeoStep;
-import ru.rassafel.bot.session.step.geo.SetNewRadiusGeoStep;
-import ru.rassafel.bot.session.templates.PlaceTemplates;
-import ru.rassafel.bot.session.util.GeoButtonsUtil;
+import ru.rassafel.foodsharing.session.model.dto.From;
+import ru.rassafel.foodsharing.session.model.dto.SessionRequest;
+import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
+import ru.rassafel.foodsharing.session.model.entity.Place;
+import ru.rassafel.foodsharing.session.service.PlaceService;
+import ru.rassafel.foodsharing.session.service.session.SessionEnum;
+import ru.rassafel.foodsharing.session.step.geo.ChooseOperationGeoStep;
+import ru.rassafel.foodsharing.session.step.geo.EditGeoStep;
+import ru.rassafel.foodsharing.session.step.geo.SetNewRadiusGeoStep;
+import ru.rassafel.foodsharing.session.templates.PlaceTemplates;
+import ru.rassafel.foodsharing.session.util.GeoButtonsUtil;
 import ru.rassafel.foodsharing.tgbot.scenarios.SpringCucumberSuperTest;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static ru.rassafel.foodsharing.tgbot.Util.*;
 
 public class EditPlaceScenarioTest extends SpringCucumberSuperTest {
@@ -73,6 +72,7 @@ public class EditPlaceScenarioTest extends SpringCucumberSuperTest {
             .isNotNull()
             .isEqualTo(singlePlace);
     }
+
     @Then("user with id {long} types new radius for editable place {string}")
     public void user_with_id_types_new_radius_for_editable_place(Long userId, String message) {
 

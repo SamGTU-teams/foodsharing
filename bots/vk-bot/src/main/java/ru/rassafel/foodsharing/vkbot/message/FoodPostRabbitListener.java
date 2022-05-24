@@ -5,8 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
-import ru.rassafel.bot.session.service.FoodPostHandlerService;
 import ru.rassafel.foodsharing.analyzer.model.dto.FoodPostDto;
+import ru.rassafel.foodsharing.session.service.FoodPostHandlerService;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;

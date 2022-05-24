@@ -11,10 +11,10 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
-import ru.rassafel.bot.session.model.dto.BotButtons;
-import ru.rassafel.bot.session.model.dto.SessionRequest;
-import ru.rassafel.bot.session.model.dto.SessionResponse;
-import ru.rassafel.bot.session.model.dto.To;
+import ru.rassafel.foodsharing.session.model.dto.BotButtons;
+import ru.rassafel.foodsharing.session.model.dto.SessionRequest;
+import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
+import ru.rassafel.foodsharing.session.model.dto.To;
 import ru.rassafel.foodsharing.tgbot.model.mapper.TgBotDtoMapper;
 
 import java.lang.reflect.Field;
@@ -27,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class MapperDtoTest {
 
-    TgBotDtoMapper botDtoMapper = TgBotDtoMapper.INSTANCE;
+    final TgBotDtoMapper botDtoMapper = TgBotDtoMapper.INSTANCE;
 
     public static List<SessionResponse> testFromResponseToSendMessage() {
         SessionResponse response1 = new SessionResponse();
@@ -48,7 +48,7 @@ public class MapperDtoTest {
 
     public static List<Update> testFromUpdateToRequest() throws NoSuchFieldException, IllegalAccessException {
         List<Update> updates = new ArrayList<>();
-        for (Integer i = 0; i < 4; i++) {
+        for (long i = 0; i < 4; i++) {
             Update update = new Update();
             Message message = new Message();
             Chat chat = new Chat();
@@ -74,7 +74,7 @@ public class MapperDtoTest {
             Field idF = Chat.class.getDeclaredField("id");
             idF.setAccessible(true);
 
-            idF.set(chat, i.longValue());
+            idF.set(chat, i);
             chatF.set(message, chat);
             textF.set(message, "Hello bot from " + i);
 

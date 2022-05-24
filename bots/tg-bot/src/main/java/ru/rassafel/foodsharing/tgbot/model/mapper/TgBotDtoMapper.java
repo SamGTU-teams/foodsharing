@@ -9,12 +9,12 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
-import ru.rassafel.bot.session.model.dto.BotButtons;
-import ru.rassafel.bot.session.model.dto.SessionRequest;
-import ru.rassafel.bot.session.model.dto.SessionResponse;
-import ru.rassafel.bot.session.model.mapper.UserDtoMapper;
-import ru.rassafel.bot.session.util.ButtonsUtil;
 import ru.rassafel.foodsharing.common.model.GeoPoint;
+import ru.rassafel.foodsharing.session.model.dto.BotButtons;
+import ru.rassafel.foodsharing.session.model.dto.SessionRequest;
+import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
+import ru.rassafel.foodsharing.session.model.mapper.UserDtoMapper;
+import ru.rassafel.foodsharing.session.util.ButtonsUtil;
 import ru.rassafel.foodsharing.tgbot.model.domain.TgUser;
 
 import java.util.Optional;
@@ -32,7 +32,8 @@ public abstract class TgBotDtoMapper implements UserDtoMapper {
     @Mappings({
         @Mapping(source = "message", target = "message", ignore = true),
         @Mapping(source = "message.chat.id", target = "from.id"),
-        @Mapping(source = "message.location", target = "location")
+        @Mapping(source = "message.location", target = "location"),
+        @Mapping(target = "from", ignore = true)
     })
     protected abstract SessionRequest map(Update update);
 
@@ -49,7 +50,12 @@ public abstract class TgBotDtoMapper implements UserDtoMapper {
         request.setMessage(text);
     }
 
-    @Mapping(source = "from.id", target = "id")
+    @Mappings({
+        @Mapping(target = "userSession", ignore = true),
+        @Mapping(target = "products", ignore = true),
+        @Mapping(target = "places", ignore = true),
+        @Mapping(source = "from.id", target = "id")
+    })
     public abstract TgUser map(SessionRequest request);
 
     public SessionRequest mapFromUpdate(Update update) {
@@ -59,7 +65,14 @@ public abstract class TgBotDtoMapper implements UserDtoMapper {
     }
 
     @Mappings({
-        @Mapping(source = "message", target = "text")
+        @Mapping(source = "message", target = "text"),
+        @Mapping(target = "chatId", ignore = true),
+        @Mapping(target = "enableHtml", ignore = true),
+        @Mapping(target = "enableMarkdown", ignore = true),
+        @Mapping(target = "parseMode", ignore = true),
+        @Mapping(target = "replyMarkup", ignore = true),
+        @Mapping(target = "replyToMessageId", ignore = true),
+        @Mapping(target = "chatId", ignore = true)
     })
     public abstract SendMessage map(SessionResponse response);
 

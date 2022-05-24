@@ -3,11 +3,11 @@ package ru.rassafel.foodsharing.vkbot.service;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Service;
-import ru.rassafel.bot.session.model.entity.User;
-import ru.rassafel.bot.session.service.UserService;
 import ru.rassafel.foodsharing.analyzer.model.dto.FoodPostDto;
 import ru.rassafel.foodsharing.common.model.GeoPoint;
 import ru.rassafel.foodsharing.common.model.dto.ProductDto;
+import ru.rassafel.foodsharing.session.model.entity.User;
+import ru.rassafel.foodsharing.session.service.UserService;
 import ru.rassafel.foodsharing.vkbot.model.domain.VkUser;
 import ru.rassafel.foodsharing.vkbot.repository.VkUserRepository;
 

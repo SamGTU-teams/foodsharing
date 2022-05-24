@@ -5,10 +5,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import ru.rassafel.bot.session.exception.BotException;
-import ru.rassafel.bot.session.model.dto.SessionRequest;
-import ru.rassafel.bot.session.model.dto.SessionResponse;
-import ru.rassafel.bot.session.service.session.SessionService;
+import ru.rassafel.foodsharing.session.exception.BotException;
+import ru.rassafel.foodsharing.session.model.dto.SessionRequest;
+import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
+import ru.rassafel.foodsharing.session.service.session.SessionService;
 import ru.rassafel.foodsharing.vkbot.model.dto.VkUpdate;
 import ru.rassafel.foodsharing.vkbot.model.mapper.VkBotDtoMapper;
 

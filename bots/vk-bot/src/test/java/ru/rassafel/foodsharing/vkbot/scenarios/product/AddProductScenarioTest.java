@@ -2,17 +2,17 @@ package ru.rassafel.foodsharing.vkbot.scenarios.product;
 
 import io.cucumber.java.en.Then;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.rassafel.bot.session.model.dto.From;
-import ru.rassafel.bot.session.model.dto.SessionRequest;
-import ru.rassafel.bot.session.model.dto.SessionResponse;
-import ru.rassafel.bot.session.service.session.SessionEnum;
-import ru.rassafel.bot.session.step.product.AddNewProductStep;
-import ru.rassafel.bot.session.step.product.ChooseNewProductStep;
-import ru.rassafel.bot.session.step.product.ChooseOperationProductStep;
-import ru.rassafel.bot.session.templates.ProductTemplates;
-import ru.rassafel.bot.session.util.ProductButtonsUtil;
 import ru.rassafel.foodsharing.analyzer.controller.stub.ProductAnalyzerControllerStub;
 import ru.rassafel.foodsharing.common.model.entity.product.Product;
+import ru.rassafel.foodsharing.session.model.dto.From;
+import ru.rassafel.foodsharing.session.model.dto.SessionRequest;
+import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
+import ru.rassafel.foodsharing.session.service.session.SessionEnum;
+import ru.rassafel.foodsharing.session.step.product.AddNewProductStep;
+import ru.rassafel.foodsharing.session.step.product.ChooseNewProductStep;
+import ru.rassafel.foodsharing.session.step.product.ChooseOperationProductStep;
+import ru.rassafel.foodsharing.session.templates.ProductTemplates;
+import ru.rassafel.foodsharing.session.util.ProductButtonsUtil;
 import ru.rassafel.foodsharing.vkbot.model.domain.VkUser;
 import ru.rassafel.foodsharing.vkbot.scenarios.SpringCucumberSuperTest;
 

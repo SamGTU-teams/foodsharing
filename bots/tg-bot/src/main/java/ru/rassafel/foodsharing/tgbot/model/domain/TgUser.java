@@ -4,8 +4,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.foodsharing.common.model.entity.product.Product;
+import ru.rassafel.foodsharing.session.model.entity.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;

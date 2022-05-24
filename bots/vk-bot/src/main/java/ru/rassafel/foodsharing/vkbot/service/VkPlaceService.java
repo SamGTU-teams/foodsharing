@@ -2,11 +2,11 @@ package ru.rassafel.foodsharing.vkbot.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.rassafel.bot.session.model.entity.Place;
-import ru.rassafel.bot.session.model.entity.User;
-import ru.rassafel.bot.session.service.PlaceService;
 import ru.rassafel.foodsharing.common.model.GeoPoint;
 import ru.rassafel.foodsharing.common.model.mapper.GeoPointEmbeddableMapper;
+import ru.rassafel.foodsharing.session.model.entity.Place;
+import ru.rassafel.foodsharing.session.model.entity.User;
+import ru.rassafel.foodsharing.session.service.PlaceService;
 import ru.rassafel.foodsharing.vkbot.model.domain.VkUserPlace;
 import ru.rassafel.foodsharing.vkbot.repository.VkUserPlaceRepository;
 
