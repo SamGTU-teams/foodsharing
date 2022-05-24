@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import static ru.rassafel.bot.session.util.ProductButtonsUtil.TRY_MORE;
+import static ru.rassafel.foodsharing.session.util.ProductButtonsUtil.TRY_MORE;
 
 @Component("product-3")
 @RequiredArgsConstructor

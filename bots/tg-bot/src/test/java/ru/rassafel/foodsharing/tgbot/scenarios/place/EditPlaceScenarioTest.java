@@ -19,6 +19,7 @@ import ru.rassafel.foodsharing.tgbot.scenarios.SpringCucumberSuperTest;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static ru.rassafel.foodsharing.tgbot.Util.*;
 
 public class EditPlaceScenarioTest extends SpringCucumberSuperTest {

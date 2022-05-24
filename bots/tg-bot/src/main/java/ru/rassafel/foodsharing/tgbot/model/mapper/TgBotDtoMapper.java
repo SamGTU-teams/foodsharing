@@ -66,7 +66,6 @@ public abstract class TgBotDtoMapper implements UserDtoMapper {
 
     @Mappings({
         @Mapping(source = "message", target = "text"),
-        @Mapping(target = "chatId", ignore = true),
         @Mapping(target = "enableHtml", ignore = true),
         @Mapping(target = "enableMarkdown", ignore = true),
         @Mapping(target = "parseMode", ignore = true),

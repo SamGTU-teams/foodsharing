@@ -26,9 +26,9 @@ import ru.rassafel.foodsharing.session.model.entity.Place;
 @ConditionalOnProperty(prefix = "bot.session", name = "enabled", matchIfMissing = true)
 @EnableConfigurationProperties(SessionProperties.class)
 //Скан всех компонентов модуля
-@ComponentScan(basePackages = "ru.rassafel.bot.session")
-@EnableJpaRepositories(basePackages = "ru.rassafel.bot.session.repository")
-@EntityScan(basePackages = "ru.rassafel.bot.session.model.entity")
+@ComponentScan(basePackages = "ru.rassafel.foodsharing.session")
+@EnableJpaRepositories(basePackages = "ru.rassafel.foodsharing.session.repository")
+@EntityScan(basePackages = "ru.rassafel.foodsharing.session.model.entity")
 public class SessionAutoConfiguration {
     public SessionProperties properties;
 

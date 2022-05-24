@@ -16,7 +16,7 @@ import ru.rassafel.foodsharing.session.templates.ProductTemplates;
 
 import java.util.List;
 
-import static ru.rassafel.bot.session.util.ProductButtonsUtil.TRY_MORE;
+import static ru.rassafel.foodsharing.session.util.ProductButtonsUtil.TRY_MORE;
 
 @Component("product-2")
 @RequiredArgsConstructor
