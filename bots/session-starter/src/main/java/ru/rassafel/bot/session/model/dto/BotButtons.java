@@ -1,6 +1,7 @@
 package ru.rassafel.bot.session.model.dto;
 
 import lombok.Data;
+import ru.rassafel.bot.session.util.ButtonsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ public class BotButtons {
     private List<BotButton> buttons = new ArrayList<>();
 
     public BotButtons() {
-        buttons.add(new BotButton("На главную"));
+        buttons.add(new BotButton(ButtonsUtil.BACK_TO_MAIN_MENU));
     }
 
     public BotButtons(List<String> startWith) {
