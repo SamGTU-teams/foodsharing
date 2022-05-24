@@ -16,6 +16,8 @@ import ru.rassafel.bot.session.templates.ProductTemplates;
 
 import java.util.List;
 
+import static ru.rassafel.bot.session.util.ProductButtonsUtil.TRY_MORE;
+
 @Component("product-2")
 @RequiredArgsConstructor
 public class ChooseNewProductStep implements Step {
@@ -43,7 +45,7 @@ public class ChooseNewProductStep implements Step {
             responseMessage = templateEngine.compileTemplate(ProductTemplates.PRODUCT_NOT_FOUND);
         } else {
             responseMessage = templateEngine.compileTemplate(ProductTemplates.POSSIBLE_PRODUCT_NAMES);
-            responseButtons.addButton(new BotButtons.BotButton("Попробовать еще")).addAll(similarProducts);
+            responseButtons.addButton(new BotButtons.BotButton(TRY_MORE)).addAll(similarProducts);
 
             userSession.setSessionStep(AddNewProductStep.STEP_INDEX);
         }

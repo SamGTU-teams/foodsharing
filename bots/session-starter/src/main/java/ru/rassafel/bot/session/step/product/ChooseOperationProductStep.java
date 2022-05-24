@@ -9,7 +9,6 @@ import ru.rassafel.bot.session.model.dto.SessionRequest;
 import ru.rassafel.bot.session.model.dto.SessionResponse;
 import ru.rassafel.bot.session.model.entity.EmbeddedUserSession;
 import ru.rassafel.bot.session.model.entity.User;
-import ru.rassafel.bot.session.service.ProductService;
 import ru.rassafel.bot.session.service.UserService;
 import ru.rassafel.bot.session.service.message.TemplateEngine;
 import ru.rassafel.bot.session.step.Step;
@@ -19,7 +18,7 @@ import ru.rassafel.bot.session.templates.ProductTemplates;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import static ru.rassafel.bot.session.util.ProductButtonsUtil.PRODUCT_MAIN_BUTTONS;
+import static ru.rassafel.bot.session.util.ProductButtonsUtil.*;
 
 @Component("product-1")
 @RequiredArgsConstructor
@@ -27,7 +26,6 @@ public class ChooseOperationProductStep implements Step {
 
     public static final int STEP_INDEX = 1;
 
-    private final ProductService productService;
     private final UserService userService;
     private final TemplateEngine templateEngine;
     @Value("${bot-config.max-product-count:100}")
@@ -46,7 +44,7 @@ public class ChooseOperationProductStep implements Step {
 
         EmbeddedUserSession userSession = user.getUserSession();
 
-        if (message.equals("добавить продукт")) {
+        if (message.equalsIgnoreCase(ADD_PRODUCT)) {
             int productCount = user.getProducts().size();
             if (productCount >= maxProductCount) {
                 throw new BotException(user.getId(), templateEngine.compileTemplate(ProductTemplates.TOO_MANY_PRODUCTS,
@@ -55,7 +53,7 @@ public class ChooseOperationProductStep implements Step {
             responseMessage = templateEngine.compileTemplate(ProductTemplates.PRODUCT_NAME_EXPECTATION);
 
             userSession.setSessionStep(ChooseNewProductStep.STEP_INDEX);
-        } else if (message.equals("удалить продукт")) {
+        } else if (message.equalsIgnoreCase(DELETE_PRODUCT)) {
 
             if (user.getProducts().isEmpty()) {
                 responseMessage = templateEngine.compileTemplate(ProductTemplates.EMPTY_PRODUCTS);
@@ -63,10 +61,10 @@ public class ChooseOperationProductStep implements Step {
             } else {
                 responseMessage = templateEngine.compileTemplate(ProductTemplates.LIST_OF_PRODUCTS_TO_DELETE,
                     ProductTemplates.buildMapOfProducts(user.getProducts()));
-                responseButtons.addButton(new BotButtons.BotButton("Удалить все"));
+                responseButtons.addButton(new BotButtons.BotButton(DELETE_ALL));
                 userSession.setSessionStep(DeleteProductStep.STEP_INDEX);
             }
-        } else if (message.equals("мои продукты")) {
+        } else if (message.equalsIgnoreCase(MY_PRODUCTS)) {
             if (user.getProducts().isEmpty()) {
                 responseMessage = templateEngine.compileTemplate(ProductTemplates.EMPTY_PRODUCTS);
             } else {

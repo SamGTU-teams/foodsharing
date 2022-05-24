@@ -22,6 +22,7 @@ import ru.rassafel.bot.session.templates.PlaceTemplates;
 
 import static ru.rassafel.bot.session.util.ButtonsUtil.DEFAULT_BUTTONS;
 import static ru.rassafel.bot.session.util.GeoButtonsUtil.GEO_MAIN_BUTTONS;
+import static ru.rassafel.bot.session.util.GeoButtonsUtil.LEAVE_RADIUS_AS_IS;
 
 @Component("geo-4")
 @RequiredArgsConstructor
@@ -55,7 +56,7 @@ public class SetRadiusAndFinishSaveGeoStep implements Step {
 
         int radius;
 
-        if (message.equals("оставить как есть")) {
+        if (message.equalsIgnoreCase(LEAVE_RADIUS_AS_IS)) {
             radius = 1000;
         } else {
             try {

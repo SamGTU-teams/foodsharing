@@ -16,6 +16,7 @@ import ru.rassafel.bot.session.service.message.TemplateEngine;
 import ru.rassafel.bot.session.step.Step;
 import ru.rassafel.bot.session.templates.MainTemplates;
 import ru.rassafel.bot.session.templates.PlaceTemplates;
+import ru.rassafel.bot.session.util.GeoButtonsUtil;
 
 import java.util.Collection;
 import java.util.Map;
@@ -62,7 +63,7 @@ public class SetNameGeoStep implements Step {
         place.setName(message);
 
         sessionResponse.setMessage(templateEngine.compileTemplate(PlaceTemplates.EXPECTATION_OF_RADIUS));
-        sessionResponse.setButtons(new BotButtons().addButton(new BotButtons.BotButton("Оставить как есть")));
+        sessionResponse.setButtons(new BotButtons().addButton(new BotButtons.BotButton(GeoButtonsUtil.LEAVE_RADIUS_AS_IS)));
         userSession.setSessionStep(SetRadiusAndFinishSaveGeoStep.STEP_INDEX);
 
         userService.saveUser(user);

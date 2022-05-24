@@ -40,7 +40,7 @@ public class DeleteGeoStep implements Step {
         EmbeddedUserSession userSession = user.getUserSession();
         BotButtons responseButtons = new BotButtons();
 
-        if(message.equalsIgnoreCase("удалить все")){
+        if(message.equalsIgnoreCase(GeoButtonsUtil.DELETE_ALL)){
             placeService.deleteAllByUserId(user.getId());
             userService.saveUser(user);
 
