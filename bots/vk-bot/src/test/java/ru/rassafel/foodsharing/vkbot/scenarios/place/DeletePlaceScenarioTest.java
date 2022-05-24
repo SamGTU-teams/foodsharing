@@ -22,7 +22,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static ru.rassafel.foodsharing.vkbot.Util.*;
 
 public class DeletePlaceScenarioTest extends SpringCucumberSuperTest {
-
     @Autowired
     PlaceService placeService;
 
@@ -69,5 +68,4 @@ public class DeletePlaceScenarioTest extends SpringCucumberSuperTest {
         assertThat(afterDelete)
             .isEmpty();
     }
-
 }

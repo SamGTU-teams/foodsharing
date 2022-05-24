@@ -32,17 +32,18 @@ public enum ProductTemplates implements Templates {
     PRODUCT_ALREADY_EXISTS("products/product-already-exists");
 
     private final String name;
-    @Override
-    public String getName() {
-        return getName(name);
-    }
 
-    public static Map<String, Object> buildMapOfProducts(Collection<Product> products){
+    public static Map<String, Object> buildMapOfProducts(Collection<Product> products) {
         AtomicInteger indexer = new AtomicInteger(1);
         return Map.of("products",
             products.stream().map(product ->
                 Map.of(
                     "index", indexer.getAndIncrement(),
                     "name", product.getName())).collect(Collectors.toList()));
+    }
+
+    @Override
+    public String getName() {
+        return getName(name);
     }
 }

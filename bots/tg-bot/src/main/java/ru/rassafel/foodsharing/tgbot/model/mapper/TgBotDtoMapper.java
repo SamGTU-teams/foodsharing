@@ -28,6 +28,7 @@ public abstract class TgBotDtoMapper implements UserDtoMapper {
     public static final String LOCATION_BUTTON_TEXT = "Текущая геолокация";
 
     public static final TgBotDtoMapper INSTANCE = Mappers.getMapper(TgBotDtoMapper.class);
+
     @Mappings({
         @Mapping(source = "message", target = "message", ignore = true),
         @Mapping(source = "message.chat.id", target = "from.id"),

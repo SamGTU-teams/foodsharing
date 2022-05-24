@@ -5,7 +5,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import ru.rassafel.foodsharing.common.model.GeoPoint;
 
-import java.util.Arrays;
 import java.util.regex.Pattern;
 
 import static java.util.Objects.isNull;

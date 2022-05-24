@@ -6,9 +6,7 @@ import ru.rassafel.foodsharing.vkbot.model.domain.VkUserPlace;
 import java.util.Collection;
 
 public interface VkUserPlaceRepository extends CrudRepository<VkUserPlace, Long> {
-
     Collection<VkUserPlace> findByUserId(Long userId);
 
     void deleteAllByUserId(Long userId);
-
 }

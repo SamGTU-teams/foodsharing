@@ -25,16 +25,14 @@ import java.util.Optional;
 @Component("product-3")
 @RequiredArgsConstructor
 public class AddNewProductStep implements Step {
-
     public static final int STEP_INDEX = 3;
 
     private final ProductService productService;
     private final ProductRepository productRepository;
     private final UserService userService;
+    private final TemplateEngine templateEngine;
     @Value("${bot-config.max-product-count:100}")
     private Integer maxProductCount;
-
-    private final TemplateEngine templateEngine;
 
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
@@ -49,7 +47,7 @@ public class AddNewProductStep implements Step {
             responseMessage = "Введите продукт еще раз";
         } else {
             Optional<Product> byName = productRepository.findByNameEqualsIgnoreCase(message);
-            if(byName.isEmpty()){
+            if (byName.isEmpty()) {
                 throw new BotException(user.getId(),
                     templateEngine.compileTemplate(ProductTemplates.INVALID_PRODUCT_NAME));
             }

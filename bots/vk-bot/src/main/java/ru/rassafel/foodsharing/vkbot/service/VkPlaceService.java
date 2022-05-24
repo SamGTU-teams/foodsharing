@@ -16,7 +16,6 @@ import java.util.Collection;
 @Service
 @RequiredArgsConstructor
 public class VkPlaceService implements PlaceService {
-
     private final VkUserPlaceRepository repository;
     private final GeoPointEmbeddableMapper mapper;
 

@@ -7,6 +7,7 @@ import ru.rassafel.bot.session.templates.Templates;
  */
 public interface TemplateEngine {
     String compileTemplate(Templates template, Object context);
+
     String compileTemplate(Templates template);
 
 }

@@ -24,7 +24,6 @@ import static ru.rassafel.bot.session.util.ProductButtonsUtil.PRODUCT_MAIN_BUTTO
 @Component("product-1")
 @RequiredArgsConstructor
 public class ChooseOperationProductStep implements Step {
-
     public static final int STEP_INDEX = 1;
 
     private final ProductService productService;

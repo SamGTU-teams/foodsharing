@@ -28,6 +28,7 @@ import java.util.concurrent.BlockingQueue;
 @EntityScan(basePackages = "ru.rassafel.foodsharing.vkbot.model.domain")
 public class VkBotConfiguration {
     public VkBotProperties properties;
+
     @Bean
     VkBotDtoMapper vkBotDtoMapper() {
         return VkBotDtoMapper.INSTANCE;

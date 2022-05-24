@@ -18,7 +18,6 @@ import java.util.Set;
 @Component
 @RabbitListener(queues = {"${spring.rabbitmq.ready-post.queue}"})
 public class FoodPostRabbitListener {
-
     private final FoodPostHandlerService foodPostHandlerService;
     private final Validator validator;
 

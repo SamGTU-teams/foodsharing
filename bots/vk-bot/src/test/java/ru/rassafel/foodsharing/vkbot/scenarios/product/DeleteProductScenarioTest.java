@@ -21,7 +21,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static ru.rassafel.foodsharing.vkbot.Util.*;
 
 public class DeleteProductScenarioTest extends SpringCucumberSuperTest {
-
     @Then("user with id {long} wants to delete any products and types {string}")
     public void user_wants_to_delete_any_products_and_types(long userId, String message) {
 

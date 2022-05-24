@@ -23,10 +23,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static ru.rassafel.foodsharing.vkbot.Util.*;
 
 public class EditPlaceScenarioTest extends SpringCucumberSuperTest {
-
     @Autowired
     PlaceService placeService;
-
     @Autowired
     Cache<Long, Place> geoPointCache;
 
@@ -73,6 +71,7 @@ public class EditPlaceScenarioTest extends SpringCucumberSuperTest {
             .isNotNull()
             .isEqualTo(singlePlace);
     }
+
     @Then("user with id {long} types new radius for editable place {string}")
     public void user_with_id_types_new_radius_for_editable_place(Long userId, String message) {
 

@@ -25,7 +25,6 @@ import static ru.rassafel.bot.session.util.ButtonsUtil.DEFAULT_BUTTONS;
 @Component("geo-7")
 @RequiredArgsConstructor
 public class SetNewRadiusGeoStep implements Step {
-
     public static final int STEP_INDEX = 7;
 
     private final Cache<Long, Place> geoPointCache;

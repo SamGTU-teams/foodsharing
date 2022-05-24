@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface VkUserRepository extends CrudRepository<VkUser, Long> {
-
     @Query("select u.id from VkUser u")
     List<Long> findUserIds();
 

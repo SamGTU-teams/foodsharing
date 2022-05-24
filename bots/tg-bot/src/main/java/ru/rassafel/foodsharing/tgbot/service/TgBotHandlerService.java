@@ -17,7 +17,6 @@ import ru.rassafel.foodsharing.tgbot.mapper.TgBotDtoMapper;
 @RequiredArgsConstructor
 @Slf4j
 public class TgBotHandlerService extends TelegramWebhookBot {
-
     private final String botUsername;
     private final String botToken;
     private final String webHookPath;

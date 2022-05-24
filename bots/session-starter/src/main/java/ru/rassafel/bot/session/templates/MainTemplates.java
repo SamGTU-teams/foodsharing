@@ -7,7 +7,6 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 public enum MainTemplates implements Templates {
-
     WELCOME("welcome"),
     INVALID_OPERATION("invalid-operation-name"),
     OPERATION_TIMEOUT("operation-timeout"),
@@ -16,13 +15,12 @@ public enum MainTemplates implements Templates {
 
     private final String name;
 
-    @Override
-    public String getName(){
-        return getName(name);
-    }
-
-    public static Map<String, List<String>> buildMapOfOperations(List<String> operationNames){
+    public static Map<String, List<String>> buildMapOfOperations(List<String> operationNames) {
         return Map.of("operations", operationNames);
     }
 
+    @Override
+    public String getName() {
+        return getName(name);
+    }
 }

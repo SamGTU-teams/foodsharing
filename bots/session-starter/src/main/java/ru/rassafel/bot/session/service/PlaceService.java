@@ -37,6 +37,7 @@ public interface PlaceService {
             ));
     }
 
+    // ToDo: remove if not in use
     default String getUsersPlaceMapMessage(User user, String additionalMessage) {
         return getUsersPlacesNamesMap(user)
             .entrySet()
@@ -46,6 +47,7 @@ public interface PlaceService {
                 "\n\n" + additionalMessage));
     }
 
+    // ToDo: remove if not in use
     default String getUsersPlaceMapMessage(User user) {
         return getUsersPlaceMapMessage(user, "");
     }

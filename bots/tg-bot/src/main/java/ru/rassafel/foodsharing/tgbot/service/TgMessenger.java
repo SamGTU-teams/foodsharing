@@ -13,7 +13,6 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 @Slf4j
 public class TgMessenger implements Messenger {
-
     private final TgBotHandlerService service;
 
     @Override

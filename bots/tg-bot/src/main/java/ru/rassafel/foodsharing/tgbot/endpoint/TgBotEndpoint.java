@@ -13,7 +13,6 @@ import ru.rassafel.foodsharing.tgbot.service.TgBotHandlerService;
 @RequiredArgsConstructor
 @RequestMapping("/")
 public class TgBotEndpoint {
-
     private final TgBotHandlerService tgBotHandlerService;
 
     @PostMapping
@@ -26,6 +25,4 @@ public class TgBotEndpoint {
         SendMessage message = new SendMessage(ex.getSendTo(), ex.getMessage());
         return ResponseEntity.ok(message);
     }
-
-
 }

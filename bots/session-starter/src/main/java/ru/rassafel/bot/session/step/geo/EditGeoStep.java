@@ -23,7 +23,6 @@ import java.util.Map;
 @Component("geo-6")
 @RequiredArgsConstructor
 public class EditGeoStep implements Step {
-
     public static final int STEP_INDEX = 6;
 
     private final Cache<Long, Place> geoPointCache;

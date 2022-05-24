@@ -15,7 +15,6 @@ import ru.rassafel.foodsharing.vkbot.service.VkBotHandlerService;
 @RequestMapping("/")
 @Slf4j
 public class VkBotEndpoint {
-
     private final VkBotHandlerService vkBotHandlerService;
 
     @PostMapping
@@ -25,5 +24,4 @@ public class VkBotEndpoint {
         log.debug("Sending response to Vk : {}", response);
         return response;
     }
-
 }

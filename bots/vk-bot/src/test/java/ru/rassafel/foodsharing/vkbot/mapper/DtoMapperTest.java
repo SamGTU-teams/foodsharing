@@ -17,29 +17,9 @@ import java.util.Locale;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DtoMapperTest {
-
     VkBotDtoMapper botDtoMapper = VkBotDtoMapper.INSTANCE;
 
-    @ParameterizedTest
-    @MethodSource
-    public void testMapFromVkObject(VkUpdate dto){
-        SessionRequest request = botDtoMapper.mapDto(dto);
-        Geo geo = dto.getObject().getMessage().getGeo();
-        assertThat(request)
-            .hasFieldOrPropertyWithValue("message", dto.getObject().getMessage().getText().toLowerCase(Locale.ROOT))
-            .hasFieldOrPropertyWithValue("from.id", (long)dto.getObject().getMessage().getFrom_id());
-
-        if(geo == null || geo.getCoordinates() == null){
-            assertThat(request.getLocation())
-                .isNull();
-        }else {
-            assertThat(request)
-                .hasFieldOrPropertyWithValue("location.lat", geo.getCoordinates().getLatitude().doubleValue())
-                .hasFieldOrPropertyWithValue("location.lon", geo.getCoordinates().getLongitude().doubleValue());
-        }
-    }
-
-    public static List<VkUpdate> testMapFromVkObject(){
+    public static List<VkUpdate> testMapFromVkObject() {
         Geo geo = new Geo();
         GeoCoordinates coordinates = new GeoCoordinates();
         coordinates.setLongitude(123.2F);
@@ -69,4 +49,22 @@ public class DtoMapperTest {
         );
     }
 
+    @ParameterizedTest
+    @MethodSource
+    public void testMapFromVkObject(VkUpdate dto) {
+        SessionRequest request = botDtoMapper.mapDto(dto);
+        Geo geo = dto.getObject().getMessage().getGeo();
+        assertThat(request)
+            .hasFieldOrPropertyWithValue("message", dto.getObject().getMessage().getText().toLowerCase(Locale.ROOT))
+            .hasFieldOrPropertyWithValue("from.id", (long) dto.getObject().getMessage().getFrom_id());
+
+        if (geo == null || geo.getCoordinates() == null) {
+            assertThat(request.getLocation())
+                .isNull();
+        } else {
+            assertThat(request)
+                .hasFieldOrPropertyWithValue("location.lat", geo.getCoordinates().getLatitude().doubleValue())
+                .hasFieldOrPropertyWithValue("location.lon", geo.getCoordinates().getLongitude().doubleValue());
+        }
+    }
 }

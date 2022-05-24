@@ -25,13 +25,11 @@ import static ru.rassafel.bot.session.util.GeoButtonsUtil.GEO_MAIN_BUTTONS;
 @Component("geo-1")
 @RequiredArgsConstructor
 public class ChooseOperationGeoStep implements Step {
-
     public static final int STEP_INDEX = 1;
 
     private final PlaceService placeService;
     private final UserService userService;
     private final TemplateEngine templateEngine;
-
     @Value("${bot-config.max-places-count:10}")
     private Integer maxPlacesCount;
 
@@ -55,7 +53,7 @@ public class ChooseOperationGeoStep implements Step {
             responseButtons.addAll(GEO_MAIN_BUTTONS);
 
         } else if (message.equals("добавить место")) {
-            if(points.size() >= maxPlacesCount){
+            if (points.size() >= maxPlacesCount) {
                 throw new BotException(user.getId(), templateEngine.compileTemplate(PlaceTemplates.TOO_MANY_PLACES,
                     Map.of("count", maxPlacesCount)));
             }

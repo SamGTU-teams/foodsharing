@@ -31,6 +31,7 @@ import ru.rassafel.bot.session.model.entity.Place;
 @EntityScan(basePackages = "ru.rassafel.bot.session.model.entity")
 public class SessionAutoConfiguration {
     public SessionProperties properties;
+
     @Bean
     public MessageSource botMessagesSource() {
         ReloadableResourceBundleMessageSource messageSource =

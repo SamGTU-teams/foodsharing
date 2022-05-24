@@ -25,13 +25,11 @@ import static ru.rassafel.bot.session.util.ButtonsUtil.DEFAULT_BUTTONS;
 @Component("geo-3")
 @RequiredArgsConstructor
 public class SetNameGeoStep implements Step {
-
     public static final int STEP_INDEX = 3;
 
     private final Cache<Long, Place> geoPointCache;
     private final PlaceService placeService;
     private final UserService userService;
-
     private final TemplateEngine templateEngine;
 
     @Override
@@ -48,7 +46,7 @@ public class SetNameGeoStep implements Step {
             return;
         }
 
-        if(message.length() > 63){
+        if (message.length() > 63) {
             throw new BotException(user.getId(), templateEngine.compileTemplate(PlaceTemplates.TOO_MANY_PLACE_NAME));
         }
 

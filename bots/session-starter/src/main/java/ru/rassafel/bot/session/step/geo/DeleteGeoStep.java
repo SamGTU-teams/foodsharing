@@ -25,12 +25,10 @@ import java.util.Set;
 @Component("geo-5")
 @RequiredArgsConstructor
 public class DeleteGeoStep implements Step {
-
     public static final int STEP_INDEX = 5;
 
     private final PlaceService placeService;
     private final UserService userService;
-
     private final TemplateEngine templateEngine;
 
     @Override
@@ -40,14 +38,14 @@ public class DeleteGeoStep implements Step {
         EmbeddedUserSession userSession = user.getUserSession();
         BotButtons responseButtons = new BotButtons();
 
-        if(message.equalsIgnoreCase("удалить все")){
+        if (message.equalsIgnoreCase("удалить все")) {
             placeService.deleteAllByUserId(user.getId());
             userService.saveUser(user);
 
             responseButtons.addAll(GeoButtonsUtil.GEO_MAIN_BUTTONS);
             userSession.setSessionStep(ChooseOperationGeoStep.STEP_INDEX);
             sessionResponse.setMessage(templateEngine.compileTemplate(PlaceTemplates.EMPTY_PLACES_AFTER_DELETE));
-        }else {
+        } else {
 
             Map<Integer, String> usersPlacesNamesMap = placeService.getUsersPlacesNamesMap(user);
             Set<String> placesNamesToDelete;

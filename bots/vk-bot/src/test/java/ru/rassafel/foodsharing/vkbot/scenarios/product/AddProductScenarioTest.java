@@ -25,12 +25,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static ru.rassafel.foodsharing.vkbot.Util.*;
 
 public class AddProductScenarioTest extends SpringCucumberSuperTest {
-
     @Autowired
     ProductAnalyzerControllerStub productAnalyzerControllerStub;
 
     @Then("user with id {long} wants to do some with products and types message {string}")
-    public void testSelectProductSession(long userId, String message){
+    public void testSelectProductSession(long userId, String message) {
         SessionRequest request = SessionRequest.builder()
             .from(From.builder()
                 .id(userId)
@@ -52,7 +51,7 @@ public class AddProductScenarioTest extends SpringCucumberSuperTest {
     }
 
     @Then("user with id {long} wants to add product and types message {string}")
-    public void testSelectAddProductStep(long userId, String message){
+    public void testSelectAddProductStep(long userId, String message) {
         SessionRequest request = SessionRequest.builder()
             .from(From.builder()
                 .id(userId)
@@ -70,7 +69,7 @@ public class AddProductScenarioTest extends SpringCucumberSuperTest {
     }
 
     @Then("user with id {long} thinking and wants to add {string}")
-    public void testPutProductName(long userId,String message){
+    public void testPutProductName(long userId, String message) {
         SessionRequest request = SessionRequest.builder()
             .from(From.builder()
                 .id(userId)
@@ -94,7 +93,7 @@ public class AddProductScenarioTest extends SpringCucumberSuperTest {
     }
 
     @Then("user with id {long} get possible product list and choose to add {string}")
-    public void testFinallyAddProduct(long userId, String message){
+    public void testFinallyAddProduct(long userId, String message) {
         int oldProductSize = getCurrentUser(userId).getProducts().size();
         SessionRequest request = SessionRequest.builder()
             .from(From.builder()
@@ -116,7 +115,6 @@ public class AddProductScenarioTest extends SpringCucumberSuperTest {
             .extracting(p -> p.getName().toLowerCase())
             .containsExactly(message);
     }
-
 
 
     @Then("user with id {long} wants to get own products and types {string} and he want to see {int} products")

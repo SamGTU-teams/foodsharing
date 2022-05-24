@@ -20,14 +20,12 @@ import ru.rassafel.foodsharing.common.model.GeoPoint;
 @Component("geo-2")
 @RequiredArgsConstructor
 public class AddNewPlaceGeoStep implements Step {
-
     public static final int STEP_INDEX = 2;
 
     private final Cache<Long, Place> geoPointCache;
     private final UserService userService;
     private final PlaceService placeService;
     private final AddressService streetMapService;
-
     private final TemplateEngine templateEngine;
 
     @Override

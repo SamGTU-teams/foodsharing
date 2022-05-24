@@ -26,12 +26,12 @@ public class OpenStreetMapAddressService implements AddressService {
         String resultName = "Не определено";
         String response;
         try {
-             response = restTemplate.getForObject(OPEN_MAP_ROOT_PATH, String.class,
+            response = restTemplate.getForObject(OPEN_MAP_ROOT_PATH, String.class,
                 lat,
                 lon,
                 "geojson",
                 "ru");
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             log.warn("Place name not found by coordinates : {}, {}", lat, lon);
             return resultName;
         }
@@ -39,25 +39,25 @@ public class OpenStreetMapAddressService implements AddressService {
 
         JsonNode root;
         try {
-             root = objectMapper.readTree(response);
+            root = objectMapper.readTree(response);
         } catch (JsonProcessingException e) {
             log.warn("Place name not found by coordinates : {}, {}", lat, lon);
             return resultName;
         }
         JsonNode features = root.get("features");
-        if(features == null || !features.isArray()){
+        if (features == null || !features.isArray()) {
             log.warn("Place name not found by coordinates : {}, {}", lat, lon);
             return resultName;
         }
-        if(features.isEmpty()){
+        if (features.isEmpty()) {
             return resultName;
         }
         JsonNode firstFeature = features.get(0);
-        if(firstFeature != null){
+        if (firstFeature != null) {
             JsonNode properties = firstFeature.get("properties");
-            if(properties != null){
+            if (properties != null) {
                 JsonNode name = properties.get("display_name");
-                if(name == null){
+                if (name == null) {
                     return resultName;
                 }
                 List<String> splitted = Arrays.stream(name.asText().split(","))
@@ -68,5 +68,4 @@ public class OpenStreetMapAddressService implements AddressService {
         }
         return resultName;
     }
-
 }

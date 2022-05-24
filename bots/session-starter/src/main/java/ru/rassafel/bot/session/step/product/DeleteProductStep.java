@@ -26,17 +26,14 @@ import static ru.rassafel.bot.session.util.ProductButtonsUtil.PRODUCT_MAIN_BUTTO
 @Component("product-4")
 @RequiredArgsConstructor
 public class DeleteProductStep implements Step {
-
     public static final int STEP_INDEX = 4;
 
     private final ProductService productService;
     private final UserService userService;
-
     private final TemplateEngine templateEngine;
 
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
-
         String message = sessionRequest.getMessage();
 
         String responseMessage;
@@ -47,12 +44,12 @@ public class DeleteProductStep implements Step {
 
         EmbeddedUserSession userSession = user.getUserSession();
 
-        if("удалить все".equals(message)){
+        if ("удалить все".equals(message)) {
             user.getProducts().clear();
             responseMessage = templateEngine.compileTemplate(ProductTemplates.EMPTY_PRODUCTS_AFTER_DELETE);
             userSession.setSessionStep(ChooseOperationProductStep.STEP_INDEX);
             responseButtons.addAll(PRODUCT_MAIN_BUTTONS);
-        }else {
+        } else {
             Map<Integer, String> usersProductNamesMap = productService.getUsersProductNamesMap(user);
             Set<String> productNamesToDelete;
             try {

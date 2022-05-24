@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Data
 public class ProductService {
-
     private final ProductAnalyzerController productController;
     @Value("${session.productCountPerRequest:5}")
     private Long productCountPerRequest;

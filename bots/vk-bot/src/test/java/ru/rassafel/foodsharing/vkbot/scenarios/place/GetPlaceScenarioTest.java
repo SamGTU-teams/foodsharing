@@ -18,7 +18,6 @@ import java.util.List;
 import static ru.rassafel.foodsharing.vkbot.Util.*;
 
 public class GetPlaceScenarioTest extends SpringCucumberSuperTest {
-
     @Autowired
     PlaceService placeService;
 
@@ -42,5 +41,4 @@ public class GetPlaceScenarioTest extends SpringCucumberSuperTest {
         geoMainButtons.add(0, "На главную");
         assertButtons(response, geoMainButtons);
     }
-
 }

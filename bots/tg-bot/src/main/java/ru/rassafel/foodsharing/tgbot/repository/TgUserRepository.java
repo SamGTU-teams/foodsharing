@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TgUserRepository extends JpaRepository<TgUser, Long> {
-
     @Query(nativeQuery = true,
         value = "SELECT tu.id, tp.name AS place_name, prod.name AS product_name FROM tg_bot.tg_user tu " +
             "INNER JOIN tg_bot.tg_place tp ON tu.id = tp.user_id " +
@@ -22,5 +21,4 @@ public interface TgUserRepository extends JpaRepository<TgUser, Long> {
 
     @EntityGraph(attributePaths = "products")
     Optional<TgUser> findWithProductsById(Long id);
-
 }

@@ -13,7 +13,6 @@ import static ru.rassafel.foodsharing.vkbot.Util.assertButtons;
 import static ru.rassafel.foodsharing.vkbot.Util.assertResponse;
 
 public class CommonUserScenarioTest extends SpringCucumberSuperTest {
-
     @When("^new user with id (\\d+) prints message (.+)$")
     public void testFirstContact(Long userId, String message) {
         SessionRequest request = SessionRequest.builder()
@@ -54,5 +53,4 @@ public class CommonUserScenarioTest extends SpringCucumberSuperTest {
 
         assertButtons(response, ButtonsUtil.DEFAULT_BUTTONS);
     }
-
 }

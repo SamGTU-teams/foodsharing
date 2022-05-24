@@ -16,7 +16,6 @@ import java.util.Collection;
 @Service
 @RequiredArgsConstructor
 public class TgPlaceService implements PlaceService {
-
     private final TgPlaceRepository repository;
     private final GeoPointEmbeddableMapper mapper;
 

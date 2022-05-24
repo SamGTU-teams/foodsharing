@@ -19,13 +19,11 @@ import java.util.List;
 @Component("product-2")
 @RequiredArgsConstructor
 public class ChooseNewProductStep implements Step {
-
     public static final int STEP_INDEX = 2;
 
     private final ProductService productService;
     private final UserService userService;
     private final ProductRepository productRepository;
-
     private final TemplateEngine templateEngine;
 
     @Override

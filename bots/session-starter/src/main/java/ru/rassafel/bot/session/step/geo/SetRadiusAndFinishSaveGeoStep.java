@@ -26,14 +26,12 @@ import static ru.rassafel.bot.session.util.GeoButtonsUtil.GEO_MAIN_BUTTONS;
 @Component("geo-4")
 @RequiredArgsConstructor
 public class SetRadiusAndFinishSaveGeoStep implements Step {
-
     public static final int STEP_INDEX = 4;
 
     private final Cache<Long, Place> geoPointCache;
     private final PlaceService placeService;
     private final UserService userService;
     private final PlatformTransactionManager transactionManager;
-
     private final TemplateEngine templateEngine;
 
     @Override

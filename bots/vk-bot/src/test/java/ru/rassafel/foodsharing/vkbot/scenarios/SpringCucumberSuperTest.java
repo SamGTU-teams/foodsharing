@@ -11,18 +11,14 @@ import ru.rassafel.foodsharing.vkbot.repository.VkUserRepository;
 @CucumberContextConfiguration
 @SpringBootTest
 public class SpringCucumberSuperTest {
-
     @Autowired
     public SessionService service;
-
     @Autowired
     public TemplateEngine templateEngine;
-
     @Autowired
     public VkUserRepository vkUserRepository;
 
-    public VkUser getCurrentUser(long userId){
+    public VkUser getCurrentUser(long userId) {
         return vkUserRepository.findWithProductsById(userId).orElseThrow();
     }
-
 }

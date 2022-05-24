@@ -34,12 +34,7 @@ public enum PlaceTemplates implements Templates {
 
     private final String name;
 
-    @Override
-    public String getName() {
-        return getName(name);
-    }
-
-    public static Map<String, Object> buildMapOfPlaces(Collection<Place> places){
+    public static Map<String, Object> buildMapOfPlaces(Collection<Place> places) {
         AtomicInteger indexer = new AtomicInteger(1);
         return Map.of("places",
             places.stream().map(place ->
@@ -49,5 +44,10 @@ public enum PlaceTemplates implements Templates {
                     "radius", place.getRadius(),
                     "address", place.getAddress()
                 )).collect(Collectors.toList()));
+    }
+
+    @Override
+    public String getName() {
+        return getName(name);
     }
 }

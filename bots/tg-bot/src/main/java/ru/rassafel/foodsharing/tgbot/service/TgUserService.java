@@ -29,8 +29,8 @@ public class TgUserService implements UserService {
     }
 
     @Override
-    public Optional<User> getUser(Long id) {
-        return repository.findById(id).map(Function.identity());
+    public Optional<? extends User> getUser(Long id) {
+        return repository.findById(id);
     }
 
     @Override
