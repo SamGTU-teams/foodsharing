@@ -1,4 +1,4 @@
-package ru.rassafel.foodsharing.tgbot.model;
+package ru.rassafel.foodsharing.tgbot.model.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

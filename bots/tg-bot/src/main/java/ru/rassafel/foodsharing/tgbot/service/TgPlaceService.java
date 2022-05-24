@@ -7,7 +7,7 @@ import ru.rassafel.bot.session.model.entity.User;
 import ru.rassafel.bot.session.service.PlaceService;
 import ru.rassafel.foodsharing.common.model.GeoPoint;
 import ru.rassafel.foodsharing.common.model.mapper.GeoPointEmbeddableMapper;
-import ru.rassafel.foodsharing.tgbot.model.TgUserPlace;
+import ru.rassafel.foodsharing.tgbot.model.domain.TgUserPlace;
 import ru.rassafel.foodsharing.tgbot.repository.TgPlaceRepository;
 
 import java.util.ArrayList;

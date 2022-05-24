@@ -1,4 +1,4 @@
-package ru.rassafel.foodsharing.tgbot.model;
+package ru.rassafel.foodsharing.tgbot.model.domain;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;

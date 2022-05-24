@@ -3,7 +3,7 @@ package ru.rassafel.foodsharing.tgbot.repository;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import ru.rassafel.foodsharing.tgbot.model.TgUser;
+import ru.rassafel.foodsharing.tgbot.model.domain.TgUser;
 
 import java.util.List;
 import java.util.Optional;

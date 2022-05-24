@@ -1,4 +1,4 @@
-package ru.rassafel.foodsharing.tgbot.mapper;
+package ru.rassafel.foodsharing.tgbot.model.mapper;
 
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -15,7 +15,7 @@ import ru.rassafel.bot.session.model.dto.SessionResponse;
 import ru.rassafel.bot.session.model.mapper.UserDtoMapper;
 import ru.rassafel.bot.session.util.ButtonsUtil;
 import ru.rassafel.foodsharing.common.model.GeoPoint;
-import ru.rassafel.foodsharing.tgbot.model.TgUser;
+import ru.rassafel.foodsharing.tgbot.model.domain.TgUser;
 
 import java.util.Optional;
 import java.util.stream.Collectors;

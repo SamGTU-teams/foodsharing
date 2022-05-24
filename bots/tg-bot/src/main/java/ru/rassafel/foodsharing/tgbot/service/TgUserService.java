@@ -8,7 +8,7 @@ import ru.rassafel.bot.session.service.UserService;
 import ru.rassafel.foodsharing.analyzer.model.dto.FoodPostDto;
 import ru.rassafel.foodsharing.common.model.GeoPoint;
 import ru.rassafel.foodsharing.common.model.dto.ProductDto;
-import ru.rassafel.foodsharing.tgbot.model.TgUser;
+import ru.rassafel.foodsharing.tgbot.model.domain.TgUser;
 import ru.rassafel.foodsharing.tgbot.repository.TgUserRepository;
 
 import java.math.BigInteger;
