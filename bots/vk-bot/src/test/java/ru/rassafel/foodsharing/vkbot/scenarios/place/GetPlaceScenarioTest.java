@@ -9,6 +9,7 @@ import ru.rassafel.foodsharing.session.service.PlaceService;
 import ru.rassafel.foodsharing.session.service.session.SessionEnum;
 import ru.rassafel.foodsharing.session.step.geo.ChooseOperationGeoStep;
 import ru.rassafel.foodsharing.session.templates.PlaceTemplates;
+import ru.rassafel.foodsharing.session.util.ButtonsUtil;
 import ru.rassafel.foodsharing.session.util.GeoButtonsUtil;
 import ru.rassafel.foodsharing.vkbot.scenarios.SpringCucumberSuperTest;
 

@@ -13,6 +13,7 @@ import ru.rassafel.foodsharing.session.step.geo.ChooseOperationGeoStep;
 import ru.rassafel.foodsharing.session.step.geo.EditGeoStep;
 import ru.rassafel.foodsharing.session.step.geo.SetNewRadiusGeoStep;
 import ru.rassafel.foodsharing.session.templates.PlaceTemplates;
+import ru.rassafel.foodsharing.session.util.ButtonsUtil;
 import ru.rassafel.foodsharing.session.util.GeoButtonsUtil;
 import ru.rassafel.foodsharing.vkbot.scenarios.SpringCucumberSuperTest;
 

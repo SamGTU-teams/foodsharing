@@ -12,6 +12,7 @@ import ru.rassafel.foodsharing.session.step.product.AddNewProductStep;
 import ru.rassafel.foodsharing.session.step.product.ChooseNewProductStep;
 import ru.rassafel.foodsharing.session.step.product.ChooseOperationProductStep;
 import ru.rassafel.foodsharing.session.templates.ProductTemplates;
+import ru.rassafel.foodsharing.session.util.ButtonsUtil;
 import ru.rassafel.foodsharing.session.util.ProductButtonsUtil;
 import ru.rassafel.foodsharing.vkbot.model.domain.VkUser;
 import ru.rassafel.foodsharing.vkbot.scenarios.SpringCucumberSuperTest;
