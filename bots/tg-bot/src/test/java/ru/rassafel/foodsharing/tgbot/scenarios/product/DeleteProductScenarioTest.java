@@ -8,6 +8,7 @@ import ru.rassafel.bot.session.service.session.SessionEnum;
 import ru.rassafel.bot.session.step.product.ChooseOperationProductStep;
 import ru.rassafel.bot.session.step.product.DeleteProductStep;
 import ru.rassafel.bot.session.templates.ProductTemplates;
+import ru.rassafel.bot.session.util.ButtonsUtil;
 import ru.rassafel.bot.session.util.ProductButtonsUtil;
 import ru.rassafel.foodsharing.common.model.entity.product.Product;
 import ru.rassafel.foodsharing.tgbot.model.TgUser;
@@ -41,7 +42,7 @@ public class DeleteProductScenarioTest extends SpringCucumberSuperTest {
         assertResponse(request, response, templateEngine.compileTemplate(ProductTemplates.LIST_OF_PRODUCTS_TO_DELETE,
             ProductTemplates.buildMapOfProducts(currentUser.getProducts())));
 
-        assertButtons(response, List.of("На главную", "Удалить все"));
+        assertButtons(response, List.of(ButtonsUtil.BACK_TO_MAIN_MENU, ProductButtonsUtil.DELETE_ALL));
     }
 
     @Then("user with id {long} wants to delete product and types {string}")
@@ -69,7 +70,7 @@ public class DeleteProductScenarioTest extends SpringCucumberSuperTest {
         assertResponse(request, response, expectedMessage);
 
         List<String> productMainButtons = new ArrayList<>(ProductButtonsUtil.PRODUCT_MAIN_BUTTONS);
-        productMainButtons.add(0, "На главную");
+        productMainButtons.add(0, ButtonsUtil.BACK_TO_MAIN_MENU);
 
         assertButtons(response, productMainButtons);
     }

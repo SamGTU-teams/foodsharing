@@ -9,6 +9,7 @@ import ru.rassafel.bot.session.service.PlaceService;
 import ru.rassafel.bot.session.service.session.SessionEnum;
 import ru.rassafel.bot.session.step.geo.ChooseOperationGeoStep;
 import ru.rassafel.bot.session.templates.PlaceTemplates;
+import ru.rassafel.bot.session.util.ButtonsUtil;
 import ru.rassafel.bot.session.util.GeoButtonsUtil;
 import ru.rassafel.foodsharing.vkbot.scenarios.SpringCucumberSuperTest;
 
@@ -39,7 +40,7 @@ public class GetPlaceScenarioTest extends SpringCucumberSuperTest {
             PlaceTemplates.buildMapOfPlaces(placeService.findByUserId(userId))));
 
         List<String> geoMainButtons = new ArrayList<>(GeoButtonsUtil.GEO_MAIN_BUTTONS);
-        geoMainButtons.add(0, "На главную");
+        geoMainButtons.add(0, ButtonsUtil.BACK_TO_MAIN_MENU);
         assertButtons(response, geoMainButtons);
     }
 

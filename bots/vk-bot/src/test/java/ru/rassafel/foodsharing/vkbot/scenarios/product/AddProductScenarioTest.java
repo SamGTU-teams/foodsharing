@@ -10,6 +10,7 @@ import ru.rassafel.bot.session.step.product.AddNewProductStep;
 import ru.rassafel.bot.session.step.product.ChooseNewProductStep;
 import ru.rassafel.bot.session.step.product.ChooseOperationProductStep;
 import ru.rassafel.bot.session.templates.ProductTemplates;
+import ru.rassafel.bot.session.util.ButtonsUtil;
 import ru.rassafel.bot.session.util.ProductButtonsUtil;
 import ru.rassafel.foodsharing.analyzer.controller.stub.ProductAnalyzerControllerStub;
 import ru.rassafel.foodsharing.common.model.entity.product.Product;
@@ -19,6 +20,7 @@ import ru.rassafel.foodsharing.vkbot.scenarios.SpringCucumberSuperTest;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -43,7 +45,7 @@ public class AddProductScenarioTest extends SpringCucumberSuperTest {
         assertResponse(request, response, templateEngine.compileTemplate(ProductTemplates.CHOOSE_PRODUCT_OPERATION));
 
         List<String> expectedButtons = new ArrayList<>();
-        expectedButtons.add("На главную");
+        expectedButtons.add(ButtonsUtil.BACK_TO_MAIN_MENU);
         expectedButtons.addAll(ProductButtonsUtil.PRODUCT_MAIN_BUTTONS);
 
         assertButtons(response, expectedButtons);
@@ -64,7 +66,7 @@ public class AddProductScenarioTest extends SpringCucumberSuperTest {
 
         assertResponse(request, response, templateEngine.compileTemplate(ProductTemplates.PRODUCT_NAME_EXPECTATION));
 
-        assertButtons(response, List.of("На главную"));
+        assertButtons(response, List.of(ButtonsUtil.BACK_TO_MAIN_MENU));
 
         assertUserAndUserSession(getCurrentUser(userId), SessionEnum.PRODUCT.getBeanName(), ChooseNewProductStep.STEP_INDEX, true);
     }
@@ -83,8 +85,8 @@ public class AddProductScenarioTest extends SpringCucumberSuperTest {
         assertResponse(request, response, templateEngine.compileTemplate(ProductTemplates.POSSIBLE_PRODUCT_NAMES));
 
         ArrayList<String> buttonsList = new ArrayList<>();
-        buttonsList.add("На главную");
-        buttonsList.add("Попробовать еще");
+        buttonsList.add(ButtonsUtil.BACK_TO_MAIN_MENU);
+        buttonsList.add(ProductButtonsUtil.TRY_MORE);
         buttonsList.addAll(productAnalyzerControllerStub.parseProducts(null, null)
             .stream().map(p -> p.getProduct().getName()).collect(Collectors.toList()));
         assertButtons(response, buttonsList);
@@ -110,10 +112,12 @@ public class AddProductScenarioTest extends SpringCucumberSuperTest {
         assertUserAndUserSession(getCurrentUser(userId), SessionEnum.PRODUCT.getBeanName(),
             ChooseNewProductStep.STEP_INDEX, true);
 
+        assertButtons(response, List.of(ButtonsUtil.BACK_TO_MAIN_MENU));
+
         Collection<Product> products = getCurrentUser(userId).getProducts();
         assertThat(products)
             .hasSize(oldProductSize + 1)
-            .extracting(p -> p.getName().toLowerCase())
+            .extracting(p -> p.getName().toLowerCase(Locale.ROOT))
             .containsExactly(message);
     }
 
@@ -139,5 +143,9 @@ public class AddProductScenarioTest extends SpringCucumberSuperTest {
         int providedSize = currentUser.getProducts().size();
 
         assertThat(providedSize).isEqualTo(expectedCount);
+
+        List<String> productMainButtons = new ArrayList<>(ProductButtonsUtil.PRODUCT_MAIN_BUTTONS);
+        productMainButtons.add(0, ButtonsUtil.BACK_TO_MAIN_MENU);
+        assertButtons(response, productMainButtons);
     }
 }

@@ -13,6 +13,7 @@ import ru.rassafel.bot.session.step.geo.ChooseOperationGeoStep;
 import ru.rassafel.bot.session.step.geo.EditGeoStep;
 import ru.rassafel.bot.session.step.geo.SetNewRadiusGeoStep;
 import ru.rassafel.bot.session.templates.PlaceTemplates;
+import ru.rassafel.bot.session.util.ButtonsUtil;
 import ru.rassafel.bot.session.util.GeoButtonsUtil;
 import ru.rassafel.foodsharing.vkbot.scenarios.SpringCucumberSuperTest;
 
@@ -46,7 +47,7 @@ public class EditPlaceScenarioTest extends SpringCucumberSuperTest {
         assertResponse(request, response, templateEngine.compileTemplate(PlaceTemplates.PLACES_LIST_TO_EDIT,
             PlaceTemplates.buildMapOfPlaces(placeService.findByUserId(userId))));
 
-        assertButtons(response, List.of("На главную"));
+        assertButtons(response, List.of(ButtonsUtil.BACK_TO_MAIN_MENU));
     }
 
     @Then("user with id {long} types place name {string} he wants to edit")
@@ -64,7 +65,7 @@ public class EditPlaceScenarioTest extends SpringCucumberSuperTest {
 
         assertResponse(request, response, templateEngine.compileTemplate(PlaceTemplates.EXPECTATION_OF_NEW_RADIUS));
 
-        assertButtons(response, List.of("На главную"));
+        assertButtons(response, List.of(ButtonsUtil.BACK_TO_MAIN_MENU));
 
         Place singlePlace = placeService.findByUserId(userId).iterator().next();
 
@@ -90,7 +91,7 @@ public class EditPlaceScenarioTest extends SpringCucumberSuperTest {
         assertResponse(request, response, templateEngine.compileTemplate(PlaceTemplates.PLACE_EDIT_SUCCESS));
 
         List<String> geoMainButtons = new ArrayList<>(GeoButtonsUtil.GEO_MAIN_BUTTONS);
-        geoMainButtons.add(0, "На главную");
+        geoMainButtons.add(0, ButtonsUtil.BACK_TO_MAIN_MENU);
         assertButtons(response, geoMainButtons);
 
         assertThat(geoPointCache.getIfPresent(userId))

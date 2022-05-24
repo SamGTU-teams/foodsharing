@@ -11,6 +11,7 @@ import ru.rassafel.bot.session.service.session.SessionEnum;
 import ru.rassafel.bot.session.step.geo.ChooseOperationGeoStep;
 import ru.rassafel.bot.session.step.geo.DeleteGeoStep;
 import ru.rassafel.bot.session.templates.PlaceTemplates;
+import ru.rassafel.bot.session.util.ButtonsUtil;
 import ru.rassafel.bot.session.util.GeoButtonsUtil;
 import ru.rassafel.foodsharing.tgbot.scenarios.SpringCucumberSuperTest;
 
@@ -42,7 +43,7 @@ public class DeletePlaceScenarioTest extends SpringCucumberSuperTest {
 
         assertUserAndUserSession(getCurrentUser(userId), SessionEnum.GEO.getBeanName(), DeleteGeoStep.STEP_INDEX, true);
 
-        assertButtons(response, List.of("На главную", "Удалить все"));
+        assertButtons(response, List.of(ButtonsUtil.BACK_TO_MAIN_MENU, GeoButtonsUtil.DELETE_ALL));
     }
 
     @Then("user with id {long} types {string}")
@@ -61,7 +62,7 @@ public class DeletePlaceScenarioTest extends SpringCucumberSuperTest {
         assertResponse(request, response, templateEngine.compileTemplate(PlaceTemplates.EMPTY_PLACES_AFTER_DELETE));
 
         List<String> geoMainButtons = new ArrayList<>(GeoButtonsUtil.GEO_MAIN_BUTTONS);
-        geoMainButtons.add(0, "На главную");
+        geoMainButtons.add(0, ButtonsUtil.BACK_TO_MAIN_MENU);
         assertButtons(response, geoMainButtons);
 
         Collection<Place> afterDelete = placeService.findByUserId(userId);
