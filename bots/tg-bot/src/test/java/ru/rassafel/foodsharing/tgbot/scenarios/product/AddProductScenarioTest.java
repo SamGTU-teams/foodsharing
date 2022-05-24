@@ -2,6 +2,8 @@ package ru.rassafel.foodsharing.tgbot.scenarios.product;
 
 import io.cucumber.java.en.Then;
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.rassafel.foodsharing.analyzer.controller.stub.ProductAnalyzerControllerStub;
+import ru.rassafel.foodsharing.common.model.entity.product.Product;
 import ru.rassafel.foodsharing.session.model.dto.From;
 import ru.rassafel.foodsharing.session.model.dto.SessionRequest;
 import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
@@ -12,8 +14,6 @@ import ru.rassafel.foodsharing.session.step.product.ChooseOperationProductStep;
 import ru.rassafel.foodsharing.session.templates.ProductTemplates;
 import ru.rassafel.foodsharing.session.util.ButtonsUtil;
 import ru.rassafel.foodsharing.session.util.ProductButtonsUtil;
-import ru.rassafel.foodsharing.analyzer.controller.stub.ProductAnalyzerControllerStub;
-import ru.rassafel.foodsharing.common.model.entity.product.Product;
 import ru.rassafel.foodsharing.tgbot.model.domain.TgUser;
 import ru.rassafel.foodsharing.tgbot.scenarios.SpringCucumberSuperTest;
 

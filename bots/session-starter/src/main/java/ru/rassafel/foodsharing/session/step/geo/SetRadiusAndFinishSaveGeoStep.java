@@ -20,9 +20,9 @@ import ru.rassafel.foodsharing.session.step.Step;
 import ru.rassafel.foodsharing.session.templates.MainTemplates;
 import ru.rassafel.foodsharing.session.templates.PlaceTemplates;
 
-import static ru.rassafel.foodsharing.session.util.GeoButtonsUtil.LEAVE_RADIUS_AS_IS;
 import static ru.rassafel.foodsharing.session.util.ButtonsUtil.DEFAULT_BUTTONS;
 import static ru.rassafel.foodsharing.session.util.GeoButtonsUtil.GEO_MAIN_BUTTONS;
+import static ru.rassafel.foodsharing.session.util.GeoButtonsUtil.LEAVE_RADIUS_AS_IS;
 
 @Component("geo-4")
 @RequiredArgsConstructor

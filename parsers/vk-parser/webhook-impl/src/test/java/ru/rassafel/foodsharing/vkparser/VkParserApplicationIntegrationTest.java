@@ -9,5 +9,6 @@ import org.springframework.test.context.ActiveProfiles;
 class VkParserApplicationIntegrationTest {
     @Test
     void contextLoads() {
+        System.out.println("Context loaded.");
     }
 }

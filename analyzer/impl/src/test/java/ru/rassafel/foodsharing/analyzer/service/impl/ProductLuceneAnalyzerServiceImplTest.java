@@ -41,6 +41,7 @@ class ProductLuceneAnalyzerServiceImplTest {
     ProductLuceneAnalyzerServiceImpl service;
 
     @BeforeEach
+    @SuppressWarnings("deprecation")
     void setUp() throws IOException {
         luceneProperties = new LuceneProperties();
         Directory directory = new RAMDirectory();

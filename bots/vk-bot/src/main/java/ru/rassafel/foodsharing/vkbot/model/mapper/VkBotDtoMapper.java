@@ -16,7 +16,8 @@ public abstract class VkBotDtoMapper implements UserDtoMapper {
     @Mappings({
         @Mapping(source = "object.message.from_id", target = "from.id"),
         @Mapping(source = "object.message.geo.coordinates", target = "location"),
-        @Mapping(target = "from", ignore = true)
+        @Mapping(target = "from", ignore = true),
+        @Mapping(target = "message", ignore = true)
     })
     public abstract SessionRequest map(VkUpdate vkUpdate);
 
@@ -28,7 +29,9 @@ public abstract class VkBotDtoMapper implements UserDtoMapper {
 
     @Mappings({
         @Mapping(target = "places", ignore = true),
-        @Mapping(source = "from.id", target = "id")
+        @Mapping(source = "from.id", target = "id"),
+        @Mapping(target = "products", ignore = true),
+        @Mapping(target = "userSession", ignore = true)
     })
     public abstract VkUser map(SessionRequest rq);
 

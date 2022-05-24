@@ -5,13 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.rassafel.foodsharing.session.service.message.TemplateEngine;
 import ru.rassafel.foodsharing.session.service.session.SessionService;
-import ru.rassafel.foodsharing.tgbot.repository.TgUserRepository;
 import ru.rassafel.foodsharing.tgbot.model.domain.TgUser;
+import ru.rassafel.foodsharing.tgbot.repository.TgUserRepository;
 
 @CucumberContextConfiguration
 @SpringBootTest
 public class SpringCucumberSuperTest {
-
     @Autowired
     public SessionService service;
 

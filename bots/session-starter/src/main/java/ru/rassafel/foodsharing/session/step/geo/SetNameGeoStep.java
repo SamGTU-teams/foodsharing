@@ -3,7 +3,6 @@ package ru.rassafel.foodsharing.session.step.geo;
 import com.github.benmanes.caffeine.cache.Cache;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.rassafel.foodsharing.session.util.GeoButtonsUtil;
 import ru.rassafel.foodsharing.session.exception.BotException;
 import ru.rassafel.foodsharing.session.model.dto.BotButtons;
 import ru.rassafel.foodsharing.session.model.dto.SessionRequest;
@@ -17,6 +16,7 @@ import ru.rassafel.foodsharing.session.service.message.TemplateEngine;
 import ru.rassafel.foodsharing.session.step.Step;
 import ru.rassafel.foodsharing.session.templates.MainTemplates;
 import ru.rassafel.foodsharing.session.templates.PlaceTemplates;
+import ru.rassafel.foodsharing.session.util.GeoButtonsUtil;
 
 import java.util.Collection;
 import java.util.Map;

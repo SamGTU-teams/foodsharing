@@ -4,6 +4,7 @@ import com.github.benmanes.caffeine.cache.Cache;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.rassafel.foodsharing.common.model.GeoPoint;
 import ru.rassafel.foodsharing.session.model.dto.From;
 import ru.rassafel.foodsharing.session.model.dto.SessionRequest;
 import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
@@ -17,8 +18,7 @@ import ru.rassafel.foodsharing.session.step.geo.SetRadiusAndFinishSaveGeoStep;
 import ru.rassafel.foodsharing.session.templates.PlaceTemplates;
 import ru.rassafel.foodsharing.session.util.ButtonsUtil;
 import ru.rassafel.foodsharing.session.util.GeoButtonsUtil;
-import ru.rassafel.foodsharing.common.model.GeoPoint;
-import ru.rassafel.foodsharing.tgbot.model.TgUserPlace;
+import ru.rassafel.foodsharing.tgbot.model.domain.TgUserPlace;
 import ru.rassafel.foodsharing.tgbot.repository.TgPlaceRepository;
 import ru.rassafel.foodsharing.tgbot.scenarios.SpringCucumberSuperTest;
 
