@@ -22,6 +22,8 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import static ru.rassafel.bot.session.util.ProductButtonsUtil.TRY_MORE;
+
 @Component("product-3")
 @RequiredArgsConstructor
 public class AddNewProductStep implements Step {
@@ -43,8 +45,8 @@ public class AddNewProductStep implements Step {
         BotButtons responseButtons = new BotButtons();
 
         int resultSessionStep = ChooseNewProductStep.STEP_INDEX;
-        if (message.equals("попробовать еще")) {
-            responseMessage = "Введите продукт еще раз";
+        if (message.equalsIgnoreCase(TRY_MORE)) {
+            responseMessage = templateEngine.compileTemplate(ProductTemplates.TRY_CHOOSE_PRODUCT_MORE);
         } else {
             Optional<Product> byName = productRepository.findByNameEqualsIgnoreCase(message);
             if (byName.isEmpty()) {

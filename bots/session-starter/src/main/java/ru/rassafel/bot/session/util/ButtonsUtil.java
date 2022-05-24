@@ -1,25 +1,11 @@
 package ru.rassafel.bot.session.util;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class ButtonsUtil {
-    public static final List<String> DEFAULT_BUTTONS = List.of("Продукты", "Места");
+public interface ButtonsUtil {
 
-    public static final List<String> BACK_TO_MAIN = List.of("На главную");
-
-    public static List<String> addBackToMainButton(List<String> buttons) {
-        buttons.add(0, "На главную");
-        return buttons;
-    }
-
-    public static List<String> getModifiableList(List<String> buttons) {
-        return new ArrayList<>(buttons);
-    }
-
-    public static List<String> withBackToMain(List<String> buttons) {
-        List<String> modifiableList = getModifiableList(buttons);
-        modifiableList.add(0, "На главную");
-        return modifiableList;
-    }
+    String BACK_TO_MAIN_MENU = "На главную",
+        PRODUCTS = "Продукты",
+        PLACES = "Места";
+    List<String> DEFAULT_BUTTONS = List.of(PRODUCTS, PLACES);
 }

@@ -15,7 +15,9 @@ import ru.rassafel.bot.session.service.UserService;
 import ru.rassafel.bot.session.service.message.TemplateEngine;
 import ru.rassafel.bot.session.templates.MainTemplates;
 import ru.rassafel.bot.session.type.BotSession;
-import ru.rassafel.bot.session.util.ButtonsUtil;
+
+import static ru.rassafel.bot.session.util.ButtonsUtil.BACK_TO_MAIN_MENU;
+import static ru.rassafel.bot.session.util.ButtonsUtil.DEFAULT_BUTTONS;
 
 @Component
 @RequiredArgsConstructor
@@ -29,7 +31,7 @@ public class ExitSessionInterceptor implements SessionInterceptor {
         final String userMsg = request.getMessage();
 
         EmbeddedUserSession userSession = user.getUserSession();
-        if (userMsg != null && userMsg.equalsIgnoreCase("На главную") && userSession != null) {
+        if (userMsg != null && userMsg.equalsIgnoreCase(BACK_TO_MAIN_MENU) && userSession != null) {
             geoPointCache.invalidate(user.getId());
 
             userSession.setSessionActive(false);
@@ -37,7 +39,7 @@ public class ExitSessionInterceptor implements SessionInterceptor {
             return SessionResponse.builder()
                 .message(templateEngine.compileTemplate(MainTemplates.BACK_TO_MAIN))
                 .sendTo(new To(user.getId()))
-                .buttons(new BotButtons(ButtonsUtil.DEFAULT_BUTTONS))
+                .buttons(new BotButtons(DEFAULT_BUTTONS))
                 .build();
         }
         return next.execute(request, user);

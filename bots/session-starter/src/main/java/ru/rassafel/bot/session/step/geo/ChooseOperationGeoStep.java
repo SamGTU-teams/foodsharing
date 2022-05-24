@@ -20,7 +20,7 @@ import ru.rassafel.bot.session.templates.PlaceTemplates;
 import java.util.Collection;
 import java.util.Map;
 
-import static ru.rassafel.bot.session.util.GeoButtonsUtil.GEO_MAIN_BUTTONS;
+import static ru.rassafel.bot.session.util.GeoButtonsUtil.*;
 
 @Component("geo-1")
 @RequiredArgsConstructor
@@ -42,7 +42,7 @@ public class ChooseOperationGeoStep implements Step {
         BotButtons responseButtons = new BotButtons();
 
         Collection<Place> points = placeService.findByUserId(user.getId());
-        if (message.equals("мои места")) {
+        if (message.equalsIgnoreCase(MY_PLACES)) {
             if (points.isEmpty()) {
                 responseMessage = templateEngine.compileTemplate(PlaceTemplates.EMPTY_PLACES);
             } else {
@@ -52,8 +52,8 @@ public class ChooseOperationGeoStep implements Step {
 
             responseButtons.addAll(GEO_MAIN_BUTTONS);
 
-        } else if (message.equals("добавить место")) {
-            if (points.size() >= maxPlacesCount) {
+        } else if (message.equalsIgnoreCase(ADD_PLACE)) {
+            if(points.size() >= maxPlacesCount){
                 throw new BotException(user.getId(), templateEngine.compileTemplate(PlaceTemplates.TOO_MANY_PLACES,
                     Map.of("count", maxPlacesCount)));
             }
@@ -61,7 +61,7 @@ public class ChooseOperationGeoStep implements Step {
             responseButtons.addButton(BotButtons.BotButton.GEO_BUTTON);
 
             userSession.setSessionStep(AddNewPlaceGeoStep.STEP_INDEX);
-        } else if (message.equals("удалить место")) {
+        } else if (message.equalsIgnoreCase(DELETE_PLACE)) {
             if (points.isEmpty()) {
 
                 responseMessage = templateEngine.compileTemplate(PlaceTemplates.EMPTY_PLACES);
@@ -71,10 +71,10 @@ public class ChooseOperationGeoStep implements Step {
                 responseMessage = templateEngine.compileTemplate(PlaceTemplates.PLACES_LIST_TO_DELETE,
                     PlaceTemplates.buildMapOfPlaces(points));
 
-                responseButtons.addButton(new BotButtons.BotButton("Удалить все"));
+                responseButtons.addButton(new BotButtons.BotButton(DELETE_ALL));
                 userSession.setSessionStep(DeleteGeoStep.STEP_INDEX);
             }
-        } else if (message.equals("редактирование места")) {
+        } else if (message.equalsIgnoreCase(EDIT_PLACE)) {
 
             if (points.isEmpty()) {
                 responseMessage = templateEngine.compileTemplate(PlaceTemplates.EMPTY_PLACES);

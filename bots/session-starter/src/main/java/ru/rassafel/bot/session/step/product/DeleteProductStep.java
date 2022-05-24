@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import static ru.rassafel.bot.session.util.ProductButtonsUtil.DELETE_ALL;
 import static ru.rassafel.bot.session.util.ProductButtonsUtil.PRODUCT_MAIN_BUTTONS;
 
 @Component("product-4")
@@ -44,7 +45,7 @@ public class DeleteProductStep implements Step {
 
         EmbeddedUserSession userSession = user.getUserSession();
 
-        if ("удалить все".equals(message)) {
+        if(DELETE_ALL.equalsIgnoreCase(message)){
             user.getProducts().clear();
             responseMessage = templateEngine.compileTemplate(ProductTemplates.EMPTY_PRODUCTS_AFTER_DELETE);
             userSession.setSessionStep(ChooseOperationProductStep.STEP_INDEX);
