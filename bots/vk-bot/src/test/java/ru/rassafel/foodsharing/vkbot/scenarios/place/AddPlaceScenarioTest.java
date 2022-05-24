@@ -15,6 +15,7 @@ import ru.rassafel.bot.session.step.geo.ChooseOperationGeoStep;
 import ru.rassafel.bot.session.step.geo.SetNameGeoStep;
 import ru.rassafel.bot.session.step.geo.SetRadiusAndFinishSaveGeoStep;
 import ru.rassafel.bot.session.templates.PlaceTemplates;
+import ru.rassafel.bot.session.util.ButtonsUtil;
 import ru.rassafel.bot.session.util.GeoButtonsUtil;
 import ru.rassafel.foodsharing.common.model.GeoPoint;
 import ru.rassafel.foodsharing.vkbot.model.domain.VkUserPlace;
@@ -53,7 +54,7 @@ public class AddPlaceScenarioTest extends SpringCucumberSuperTest {
         assertResponse(request, response, templateEngine.compileTemplate(PlaceTemplates.CHOOSE_GEO_OPERATION));
 
         ArrayList<String> buttons = new ArrayList<>(GeoButtonsUtil.GEO_MAIN_BUTTONS);
-        buttons.add(0, "На главную");
+        buttons.add(0, ButtonsUtil.BACK_TO_MAIN_MENU);
         assertButtons(response, buttons);
 
         assertUserAndUserSession(getCurrentUser(userId), SessionEnum.GEO.getBeanName(), ChooseOperationGeoStep.STEP_INDEX, true);
@@ -90,7 +91,7 @@ public class AddPlaceScenarioTest extends SpringCucumberSuperTest {
 
         assertUserAndUserSession(getCurrentUser(userId), SessionEnum.GEO.getBeanName(), SetNameGeoStep.STEP_INDEX, true);
 
-        assertButtons(response, List.of("На главную"));
+        assertButtons(response, List.of(ButtonsUtil.BACK_TO_MAIN_MENU));
 
         Place fromCache = geoPointCache.getIfPresent(userId);
 
@@ -118,7 +119,7 @@ public class AddPlaceScenarioTest extends SpringCucumberSuperTest {
 
         assertUserAndUserSession(getCurrentUser(userId), SessionEnum.GEO.getBeanName(), SetRadiusAndFinishSaveGeoStep.STEP_INDEX, true);
 
-        assertButtons(response, List.of("На главную", "Оставить как есть"));
+        assertButtons(response, List.of(ButtonsUtil.BACK_TO_MAIN_MENU, GeoButtonsUtil.LEAVE_RADIUS_AS_IS));
 
         Place fromCache = geoPointCache.getIfPresent(userId);
 
@@ -146,7 +147,7 @@ public class AddPlaceScenarioTest extends SpringCucumberSuperTest {
         assertUserAndUserSession(getCurrentUser(userId), SessionEnum.GEO.getBeanName(), ChooseOperationGeoStep.STEP_INDEX, true);
 
         ArrayList<String> buttons = new ArrayList<>(GeoButtonsUtil.GEO_MAIN_BUTTONS);
-        buttons.add(0, "На главную");
+        buttons.add(0, ButtonsUtil.BACK_TO_MAIN_MENU);
         assertButtons(response, buttons);
 
         Collection<VkUserPlace> places = placeRepository.findByUserId(userId);
