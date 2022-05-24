@@ -2,15 +2,14 @@ package ru.rassafel.foodsharing.vkbot.scenarios.place;
 
 import io.cucumber.java.en.Then;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.rassafel.bot.session.model.dto.From;
-import ru.rassafel.bot.session.model.dto.SessionRequest;
-import ru.rassafel.bot.session.model.dto.SessionResponse;
-import ru.rassafel.bot.session.service.PlaceService;
-import ru.rassafel.bot.session.service.session.SessionEnum;
-import ru.rassafel.bot.session.step.geo.ChooseOperationGeoStep;
-import ru.rassafel.bot.session.templates.PlaceTemplates;
-import ru.rassafel.bot.session.util.ButtonsUtil;
-import ru.rassafel.bot.session.util.GeoButtonsUtil;
+import ru.rassafel.foodsharing.session.model.dto.From;
+import ru.rassafel.foodsharing.session.model.dto.SessionRequest;
+import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
+import ru.rassafel.foodsharing.session.service.PlaceService;
+import ru.rassafel.foodsharing.session.service.session.SessionEnum;
+import ru.rassafel.foodsharing.session.step.geo.ChooseOperationGeoStep;
+import ru.rassafel.foodsharing.session.templates.PlaceTemplates;
+import ru.rassafel.foodsharing.session.util.GeoButtonsUtil;
 import ru.rassafel.foodsharing.vkbot.scenarios.SpringCucumberSuperTest;
 
 import java.util.ArrayList;
@@ -19,7 +18,6 @@ import java.util.List;
 import static ru.rassafel.foodsharing.vkbot.Util.*;
 
 public class GetPlaceScenarioTest extends SpringCucumberSuperTest {
-
     @Autowired
     PlaceService placeService;
 
@@ -43,5 +41,4 @@ public class GetPlaceScenarioTest extends SpringCucumberSuperTest {
         geoMainButtons.add(0, ButtonsUtil.BACK_TO_MAIN_MENU);
         assertButtons(response, geoMainButtons);
     }
-
 }

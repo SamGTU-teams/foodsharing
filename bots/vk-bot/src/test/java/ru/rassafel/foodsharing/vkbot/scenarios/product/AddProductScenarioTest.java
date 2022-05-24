@@ -2,18 +2,17 @@ package ru.rassafel.foodsharing.vkbot.scenarios.product;
 
 import io.cucumber.java.en.Then;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.rassafel.bot.session.model.dto.From;
-import ru.rassafel.bot.session.model.dto.SessionRequest;
-import ru.rassafel.bot.session.model.dto.SessionResponse;
-import ru.rassafel.bot.session.service.session.SessionEnum;
-import ru.rassafel.bot.session.step.product.AddNewProductStep;
-import ru.rassafel.bot.session.step.product.ChooseNewProductStep;
-import ru.rassafel.bot.session.step.product.ChooseOperationProductStep;
-import ru.rassafel.bot.session.templates.ProductTemplates;
-import ru.rassafel.bot.session.util.ButtonsUtil;
-import ru.rassafel.bot.session.util.ProductButtonsUtil;
 import ru.rassafel.foodsharing.analyzer.controller.stub.ProductAnalyzerControllerStub;
 import ru.rassafel.foodsharing.common.model.entity.product.Product;
+import ru.rassafel.foodsharing.session.model.dto.From;
+import ru.rassafel.foodsharing.session.model.dto.SessionRequest;
+import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
+import ru.rassafel.foodsharing.session.service.session.SessionEnum;
+import ru.rassafel.foodsharing.session.step.product.AddNewProductStep;
+import ru.rassafel.foodsharing.session.step.product.ChooseNewProductStep;
+import ru.rassafel.foodsharing.session.step.product.ChooseOperationProductStep;
+import ru.rassafel.foodsharing.session.templates.ProductTemplates;
+import ru.rassafel.foodsharing.session.util.ProductButtonsUtil;
 import ru.rassafel.foodsharing.vkbot.model.domain.VkUser;
 import ru.rassafel.foodsharing.vkbot.scenarios.SpringCucumberSuperTest;
 
@@ -27,12 +26,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static ru.rassafel.foodsharing.vkbot.Util.*;
 
 public class AddProductScenarioTest extends SpringCucumberSuperTest {
-
     @Autowired
     ProductAnalyzerControllerStub productAnalyzerControllerStub;
 
     @Then("user with id {long} wants to do some with products and types message {string}")
-    public void testSelectProductSession(long userId, String message){
+    public void testSelectProductSession(long userId, String message) {
         SessionRequest request = SessionRequest.builder()
             .from(From.builder()
                 .id(userId)
@@ -54,7 +52,7 @@ public class AddProductScenarioTest extends SpringCucumberSuperTest {
     }
 
     @Then("user with id {long} wants to add product and types message {string}")
-    public void testSelectAddProductStep(long userId, String message){
+    public void testSelectAddProductStep(long userId, String message) {
         SessionRequest request = SessionRequest.builder()
             .from(From.builder()
                 .id(userId)
@@ -72,7 +70,7 @@ public class AddProductScenarioTest extends SpringCucumberSuperTest {
     }
 
     @Then("user with id {long} thinking and wants to add {string}")
-    public void testPutProductName(long userId,String message){
+    public void testPutProductName(long userId, String message) {
         SessionRequest request = SessionRequest.builder()
             .from(From.builder()
                 .id(userId)
@@ -96,7 +94,7 @@ public class AddProductScenarioTest extends SpringCucumberSuperTest {
     }
 
     @Then("user with id {long} get possible product list and choose to add {string}")
-    public void testFinallyAddProduct(long userId, String message){
+    public void testFinallyAddProduct(long userId, String message) {
         int oldProductSize = getCurrentUser(userId).getProducts().size();
         SessionRequest request = SessionRequest.builder()
             .from(From.builder()
@@ -120,7 +118,6 @@ public class AddProductScenarioTest extends SpringCucumberSuperTest {
             .extracting(p -> p.getName().toLowerCase(Locale.ROOT))
             .containsExactly(message);
     }
-
 
 
     @Then("user with id {long} wants to get own products and types {string} and he want to see {int} products")

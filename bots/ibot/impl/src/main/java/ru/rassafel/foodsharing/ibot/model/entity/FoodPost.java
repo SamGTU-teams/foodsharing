@@ -24,7 +24,7 @@ public class FoodPost {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "url", nullable = false, length = 255)
+    @Column(name = "url", nullable = false)
     private String url;
 
     @Column(name = "date", nullable = false)

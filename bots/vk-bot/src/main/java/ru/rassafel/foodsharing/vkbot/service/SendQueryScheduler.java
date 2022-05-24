@@ -23,7 +23,6 @@ import static java.util.Optional.ofNullable;
 @Slf4j
 public class SendQueryScheduler {
     private final BlockingQueue<AbstractQueryBuilder> queue;
-
     private final VkApiClient vk;
     private final GroupActor groupActor;
     @Value("${vkBotConfiguration.properties.client.maxQuerySizeInBatch:25}")

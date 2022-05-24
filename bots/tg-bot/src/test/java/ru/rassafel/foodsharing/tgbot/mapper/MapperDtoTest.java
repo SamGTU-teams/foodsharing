@@ -11,10 +11,11 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
-import ru.rassafel.bot.session.model.dto.BotButtons;
-import ru.rassafel.bot.session.model.dto.SessionRequest;
-import ru.rassafel.bot.session.model.dto.SessionResponse;
-import ru.rassafel.bot.session.model.dto.To;
+import ru.rassafel.foodsharing.session.model.dto.BotButtons;
+import ru.rassafel.foodsharing.session.model.dto.SessionRequest;
+import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
+import ru.rassafel.foodsharing.session.model.dto.To;
+import ru.rassafel.foodsharing.tgbot.model.mapper.TgBotDtoMapper;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -26,47 +27,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class MapperDtoTest {
 
-    TgBotDtoMapper botDtoMapper = TgBotDtoMapper.INSTANCE;
+    final TgBotDtoMapper botDtoMapper = TgBotDtoMapper.INSTANCE;
 
-    @ParameterizedTest
-    @MethodSource
-    public void testFromUpdateToRequest(Update update) {
-        SessionRequest result = botDtoMapper.mapFromUpdate(update);
-
-        assertThat(result.getMessage()).isEqualTo(update.getMessage().getText().toLowerCase().trim());
-        ofNullable(update.getMessage().getLocation())
-            .ifPresentOrElse(l -> {
-                assertThat(result.getLocation().getLat()).isEqualTo(l.getLatitude().doubleValue());
-                assertThat(result.getLocation().getLon()).isEqualTo(l.getLongitude().doubleValue());
-            }, () -> assertThat(result.getLocation()).isNull());
-        assertThat(result.getFrom().getId()).isEqualTo(update.getMessage().getChatId());
-
-    }
-
-    @ParameterizedTest
-    @MethodSource
-    public void testFromResponseToSendMessage(SessionResponse response) {
-        SendMessage result = botDtoMapper.map(response);
-        assertThat(result.getChatId()).isEqualTo(response.getSendTo().getId().toString());
-        assertThat(result.getText()).isEqualTo(response.getMessage());
-        ReplyKeyboardMarkup replyMarkup = (ReplyKeyboardMarkup)result.getReplyMarkup();
-        List<KeyboardRow> keyboard = replyMarkup.getKeyboard();
-
-        assertThat(keyboard).hasSize(response.getButtons().getButtons().size());
-        Iterator<BotButtons.BotButton> iterator = response.getButtons().getButtons().iterator();
-        for (KeyboardRow keyboardButtons : keyboard) {
-            KeyboardButton button = keyboardButtons.get(0);
-            BotButtons.BotButton next = iterator.next();
-            if(next.isGeo()){
-                assertThat(button.getRequestLocation()).isTrue();
-                assertThat(button.getText()).isEqualTo(TgBotDtoMapper.LOCATION_BUTTON_TEXT);
-            }else {
-                assertThat(button.getText()).isEqualTo(next.getText());
-            }
-        }
-    }
-
-    public static List<SessionResponse> testFromResponseToSendMessage(){
+    public static List<SessionResponse> testFromResponseToSendMessage() {
         SessionResponse response1 = new SessionResponse();
         response1.setMessage("Message 1");
         response1.setSendTo(new To(12345L));
@@ -85,7 +48,7 @@ public class MapperDtoTest {
 
     public static List<Update> testFromUpdateToRequest() throws NoSuchFieldException, IllegalAccessException {
         List<Update> updates = new ArrayList<>();
-        for (Integer i = 0; i < 4; i++) {
+        for (long i = 0; i < 4; i++) {
             Update update = new Update();
             Message message = new Message();
             Chat chat = new Chat();
@@ -111,14 +74,14 @@ public class MapperDtoTest {
             Field idF = Chat.class.getDeclaredField("id");
             idF.setAccessible(true);
 
-            idF.set(chat, i.longValue());
+            idF.set(chat, i);
             chatF.set(message, chat);
             textF.set(message, "Hello bot from " + i);
 
             latitudeF.set(location, RandomUtils.nextFloat(0F, 150F));
             longitudeF.set(location, RandomUtils.nextFloat(0F, 150F));
 
-            if(i % 2 == 0) {
+            if (i % 2 == 0) {
                 locationF.set(message, location);
             }
 
@@ -129,4 +92,41 @@ public class MapperDtoTest {
         return updates;
     }
 
+    @ParameterizedTest
+    @MethodSource
+    public void testFromUpdateToRequest(Update update) {
+        SessionRequest result = botDtoMapper.mapFromUpdate(update);
+
+        assertThat(result.getMessage()).isEqualTo(update.getMessage().getText().toLowerCase().trim());
+        ofNullable(update.getMessage().getLocation())
+            .ifPresentOrElse(l -> {
+                assertThat(result.getLocation().getLat()).isEqualTo(l.getLatitude().doubleValue());
+                assertThat(result.getLocation().getLon()).isEqualTo(l.getLongitude().doubleValue());
+            }, () -> assertThat(result.getLocation()).isNull());
+        assertThat(result.getFrom().getId()).isEqualTo(update.getMessage().getChatId());
+
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    public void testFromResponseToSendMessage(SessionResponse response) {
+        SendMessage result = botDtoMapper.map(response);
+        assertThat(result.getChatId()).isEqualTo(response.getSendTo().getId().toString());
+        assertThat(result.getText()).isEqualTo(response.getMessage());
+        ReplyKeyboardMarkup replyMarkup = (ReplyKeyboardMarkup) result.getReplyMarkup();
+        List<KeyboardRow> keyboard = replyMarkup.getKeyboard();
+
+        assertThat(keyboard).hasSize(response.getButtons().getButtons().size());
+        Iterator<BotButtons.BotButton> iterator = response.getButtons().getButtons().iterator();
+        for (KeyboardRow keyboardButtons : keyboard) {
+            KeyboardButton button = keyboardButtons.get(0);
+            BotButtons.BotButton next = iterator.next();
+            if (next.isGeo()) {
+                assertThat(button.getRequestLocation()).isTrue();
+                assertThat(button.getText()).isEqualTo(TgBotDtoMapper.LOCATION_BUTTON_TEXT);
+            } else {
+                assertThat(button.getText()).isEqualTo(next.getText());
+            }
+        }
+    }
 }

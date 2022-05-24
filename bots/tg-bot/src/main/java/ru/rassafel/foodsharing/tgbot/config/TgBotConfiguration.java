@@ -5,12 +5,12 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import ru.rassafel.foodsharing.tgbot.mapper.TgBotDtoMapper;
+import ru.rassafel.foodsharing.tgbot.model.mapper.TgBotDtoMapper;
 import ru.rassafel.foodsharing.tgbot.service.TgBotHandlerService;
 
 @Configuration
 @EnableConfigurationProperties(TgBotProperties.class)
-@EntityScan(basePackages = "ru.rassafel.foodsharing.tgbot.model")
+@EntityScan(basePackages = "ru.rassafel.foodsharing.tgbot.model.domain")
 @EnableScheduling
 public class TgBotConfiguration {
     @Bean

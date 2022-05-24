@@ -43,12 +43,12 @@ public class LuceneConfiguration {
         Path path = Paths.get(luceneProperties.getPath());
         File file = path.toFile();
         file.mkdirs();
-        FSDirectory dir = FSDirectory.open(path);
-        return dir;
+        return FSDirectory.open(path);
     }
 
     @Bean
     @Profile("!docker")
+    @SuppressWarnings("deprecation")
     Directory luceneInMemoryDirectory() {
         return new RAMDirectory();
     }
@@ -56,8 +56,7 @@ public class LuceneConfiguration {
     @Bean
     IndexWriter luceneIndexWriter(Directory luceneDirectory, Analyzer luceneAnalyzer) throws IOException {
         IndexWriterConfig config = new IndexWriterConfig(luceneAnalyzer);
-        IndexWriter writer = new IndexWriter(luceneDirectory, config);
-        return writer;
+        return new IndexWriter(luceneDirectory, config);
     }
 
     @Bean

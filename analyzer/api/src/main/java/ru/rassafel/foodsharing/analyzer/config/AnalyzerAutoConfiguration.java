@@ -16,12 +16,10 @@ import ru.rassafel.foodsharing.analyzer.controller.stub.ProductAnalyzerControlle
 @EnableFeignClients
 @ComponentScan("ru.rassafel.foodsharing.analyzer.controller")
 public class AnalyzerAutoConfiguration {
-
     @Bean
     @ConditionalOnProperty(value = "product-analyzer.stub-mode", havingValue = "true")
     @Primary
-    public ProductAnalyzerControllerStub productAnalyzerControllerStub(){
+    public ProductAnalyzerControllerStub productAnalyzerControllerStub() {
         return new ProductAnalyzerControllerStub();
     }
-
 }

@@ -2,12 +2,12 @@ package ru.rassafel.foodsharing.tgbot.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.rassafel.bot.session.model.entity.Place;
-import ru.rassafel.bot.session.model.entity.User;
-import ru.rassafel.bot.session.service.PlaceService;
 import ru.rassafel.foodsharing.common.model.GeoPoint;
 import ru.rassafel.foodsharing.common.model.mapper.GeoPointEmbeddableMapper;
-import ru.rassafel.foodsharing.tgbot.model.TgUserPlace;
+import ru.rassafel.foodsharing.session.model.entity.Place;
+import ru.rassafel.foodsharing.session.model.entity.User;
+import ru.rassafel.foodsharing.session.service.PlaceService;
+import ru.rassafel.foodsharing.tgbot.model.domain.TgUserPlace;
 import ru.rassafel.foodsharing.tgbot.repository.TgPlaceRepository;
 
 import java.util.ArrayList;
@@ -16,7 +16,6 @@ import java.util.Collection;
 @Service
 @RequiredArgsConstructor
 public class TgPlaceService implements PlaceService {
-
     private final TgPlaceRepository repository;
     private final GeoPointEmbeddableMapper mapper;
 

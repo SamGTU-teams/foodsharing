@@ -1,9 +1,9 @@
 package ru.rassafel.foodsharing.tgbot;
 
-import ru.rassafel.bot.session.model.dto.BotButtons;
-import ru.rassafel.bot.session.model.dto.SessionRequest;
-import ru.rassafel.bot.session.model.dto.SessionResponse;
-import ru.rassafel.foodsharing.tgbot.model.TgUser;
+import ru.rassafel.foodsharing.session.model.dto.BotButtons;
+import ru.rassafel.foodsharing.session.model.dto.SessionRequest;
+import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
+import ru.rassafel.foodsharing.tgbot.model.domain.TgUser;
 
 import java.util.List;
 

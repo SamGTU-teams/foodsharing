@@ -8,12 +8,13 @@ import com.vk.api.sdk.queries.messages.MessagesSendQuery;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.rassafel.bot.session.model.dto.BotButtons;
-import ru.rassafel.bot.session.model.dto.SessionResponse;
-import ru.rassafel.bot.session.service.Messenger;
+import ru.rassafel.foodsharing.session.model.dto.BotButtons;
+import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
+import ru.rassafel.foodsharing.session.service.Messenger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 
@@ -21,7 +22,6 @@ import java.util.concurrent.BlockingQueue;
 @RequiredArgsConstructor
 @Slf4j
 public class VkMessenger implements Messenger {
-
     private final VkApiClient vk;
     private final GroupActor groupActor;
     private final BlockingQueue<AbstractQueryBuilder> queue;
@@ -53,7 +53,9 @@ public class VkMessenger implements Messenger {
             .message(message)
             .userIds(ids)
             .randomId(new Random().nextInt(500_000));
-        if (buttons != null && buttons.getButtons() != null && !buttons.getButtons().isEmpty()) {
+
+        if (Optional.of(buttons).map(BotButtons::getButtons)
+            .map(List::isEmpty).orElse(false)) {
             sendQuery.keyboard(createKeyboard(buttons));
         }
         return sendQuery;

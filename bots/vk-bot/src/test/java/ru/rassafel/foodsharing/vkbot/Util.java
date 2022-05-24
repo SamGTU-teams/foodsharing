@@ -1,8 +1,8 @@
 package ru.rassafel.foodsharing.vkbot;
 
-import ru.rassafel.bot.session.model.dto.BotButtons;
-import ru.rassafel.bot.session.model.dto.SessionRequest;
-import ru.rassafel.bot.session.model.dto.SessionResponse;
+import ru.rassafel.foodsharing.session.model.dto.BotButtons;
+import ru.rassafel.foodsharing.session.model.dto.SessionRequest;
+import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
 import ru.rassafel.foodsharing.vkbot.model.domain.VkUser;
 
 import java.util.List;
@@ -10,7 +10,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class Util {
-
     public static void assertButtons(SessionResponse response, List<String> expectedButtons) {
         assertThat(response.getButtons().getButtons())
             .hasSize(expectedButtons.size())
@@ -32,5 +31,4 @@ public class Util {
             .hasFieldOrPropertyWithValue("sessionStep", step)
             .hasFieldOrPropertyWithValue("sessionActive", active);
     }
-
 }

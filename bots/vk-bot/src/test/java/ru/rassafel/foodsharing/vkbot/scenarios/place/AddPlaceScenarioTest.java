@@ -4,20 +4,19 @@ import com.github.benmanes.caffeine.cache.Cache;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.rassafel.bot.session.model.dto.From;
-import ru.rassafel.bot.session.model.dto.SessionRequest;
-import ru.rassafel.bot.session.model.dto.SessionResponse;
-import ru.rassafel.bot.session.model.entity.Place;
-import ru.rassafel.bot.session.service.openmap.AddressService;
-import ru.rassafel.bot.session.service.session.SessionEnum;
-import ru.rassafel.bot.session.step.geo.AddNewPlaceGeoStep;
-import ru.rassafel.bot.session.step.geo.ChooseOperationGeoStep;
-import ru.rassafel.bot.session.step.geo.SetNameGeoStep;
-import ru.rassafel.bot.session.step.geo.SetRadiusAndFinishSaveGeoStep;
-import ru.rassafel.bot.session.templates.PlaceTemplates;
-import ru.rassafel.bot.session.util.ButtonsUtil;
-import ru.rassafel.bot.session.util.GeoButtonsUtil;
 import ru.rassafel.foodsharing.common.model.GeoPoint;
+import ru.rassafel.foodsharing.session.model.dto.From;
+import ru.rassafel.foodsharing.session.model.dto.SessionRequest;
+import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
+import ru.rassafel.foodsharing.session.model.entity.Place;
+import ru.rassafel.foodsharing.session.service.openmap.AddressService;
+import ru.rassafel.foodsharing.session.service.session.SessionEnum;
+import ru.rassafel.foodsharing.session.step.geo.AddNewPlaceGeoStep;
+import ru.rassafel.foodsharing.session.step.geo.ChooseOperationGeoStep;
+import ru.rassafel.foodsharing.session.step.geo.SetNameGeoStep;
+import ru.rassafel.foodsharing.session.step.geo.SetRadiusAndFinishSaveGeoStep;
+import ru.rassafel.foodsharing.session.templates.PlaceTemplates;
+import ru.rassafel.foodsharing.session.util.GeoButtonsUtil;
 import ru.rassafel.foodsharing.vkbot.model.domain.VkUserPlace;
 import ru.rassafel.foodsharing.vkbot.repository.VkUserPlaceRepository;
 import ru.rassafel.foodsharing.vkbot.scenarios.SpringCucumberSuperTest;
@@ -30,13 +29,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static ru.rassafel.foodsharing.vkbot.Util.*;
 
 public class AddPlaceScenarioTest extends SpringCucumberSuperTest {
-
     @Autowired
     Cache<Long, Place> geoPointCache;
-
     @Autowired
     AddressService openStreetMapService;
-
     @Autowired
     VkUserPlaceRepository placeRepository;
 

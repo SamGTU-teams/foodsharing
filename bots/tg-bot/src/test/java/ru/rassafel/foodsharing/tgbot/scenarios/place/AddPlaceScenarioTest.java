@@ -4,21 +4,21 @@ import com.github.benmanes.caffeine.cache.Cache;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.rassafel.bot.session.model.dto.From;
-import ru.rassafel.bot.session.model.dto.SessionRequest;
-import ru.rassafel.bot.session.model.dto.SessionResponse;
-import ru.rassafel.bot.session.model.entity.Place;
-import ru.rassafel.bot.session.service.openmap.AddressService;
-import ru.rassafel.bot.session.service.session.SessionEnum;
-import ru.rassafel.bot.session.step.geo.AddNewPlaceGeoStep;
-import ru.rassafel.bot.session.step.geo.ChooseOperationGeoStep;
-import ru.rassafel.bot.session.step.geo.SetNameGeoStep;
-import ru.rassafel.bot.session.step.geo.SetRadiusAndFinishSaveGeoStep;
-import ru.rassafel.bot.session.templates.PlaceTemplates;
-import ru.rassafel.bot.session.util.ButtonsUtil;
-import ru.rassafel.bot.session.util.GeoButtonsUtil;
 import ru.rassafel.foodsharing.common.model.GeoPoint;
-import ru.rassafel.foodsharing.tgbot.model.TgUserPlace;
+import ru.rassafel.foodsharing.session.model.dto.From;
+import ru.rassafel.foodsharing.session.model.dto.SessionRequest;
+import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
+import ru.rassafel.foodsharing.session.model.entity.Place;
+import ru.rassafel.foodsharing.session.service.openmap.AddressService;
+import ru.rassafel.foodsharing.session.service.session.SessionEnum;
+import ru.rassafel.foodsharing.session.step.geo.AddNewPlaceGeoStep;
+import ru.rassafel.foodsharing.session.step.geo.ChooseOperationGeoStep;
+import ru.rassafel.foodsharing.session.step.geo.SetNameGeoStep;
+import ru.rassafel.foodsharing.session.step.geo.SetRadiusAndFinishSaveGeoStep;
+import ru.rassafel.foodsharing.session.templates.PlaceTemplates;
+import ru.rassafel.foodsharing.session.util.ButtonsUtil;
+import ru.rassafel.foodsharing.session.util.GeoButtonsUtil;
+import ru.rassafel.foodsharing.tgbot.model.domain.TgUserPlace;
 import ru.rassafel.foodsharing.tgbot.repository.TgPlaceRepository;
 import ru.rassafel.foodsharing.tgbot.scenarios.SpringCucumberSuperTest;
 
@@ -59,6 +59,7 @@ public class AddPlaceScenarioTest extends SpringCucumberSuperTest {
 
         assertUserAndUserSession(getCurrentUser(userId), SessionEnum.GEO.getBeanName(), ChooseOperationGeoStep.STEP_INDEX, true);
     }
+
     @Then("user with id {long} wants to add a place and send {string}")
     public void user_wants_to_add_a_place_and_send(long userId, String message) {
         SessionRequest request = SessionRequest.builder()
@@ -74,6 +75,7 @@ public class AddPlaceScenarioTest extends SpringCucumberSuperTest {
 
         assertUserAndUserSession(getCurrentUser(userId), SessionEnum.GEO.getBeanName(), AddNewPlaceGeoStep.STEP_INDEX, true);
     }
+
     @Then("user with id {long} send location with latitude {double} and longitude {double}")
     public void user_send_location_with_latitude_and_longitude(long userId, Double lat, Double lon) {
 
@@ -103,6 +105,7 @@ public class AddPlaceScenarioTest extends SpringCucumberSuperTest {
             .hasFieldOrPropertyWithValue("userId", userId);
 
     }
+
     @Then("user with id {long} thinking and send place name {string}")
     public void user_thinking_and_send_place_name(long userId, String message) {
 
@@ -127,6 +130,7 @@ public class AddPlaceScenarioTest extends SpringCucumberSuperTest {
             .isNotNull()
             .hasFieldOrPropertyWithValue("name", message);
     }
+
     @Then("user with id {long} send radius {string}")
     public void user_send_radius(long userId, String message) {
         Place notYetSaved = geoPointCache.getIfPresent(userId);

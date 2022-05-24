@@ -9,9 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VkUpdate {
-
     private Type type;
-
     private VkUpdateObject object;
-
 }
