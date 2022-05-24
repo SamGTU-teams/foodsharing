@@ -14,7 +14,6 @@ import ru.rassafel.foodsharing.session.service.Messenger;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 
@@ -54,8 +53,7 @@ public class VkMessenger implements Messenger {
             .userIds(ids)
             .randomId(new Random().nextInt(500_000));
 
-        if (Optional.ofNullable(buttons).map(BotButtons::getButtons)
-            .map(List::isEmpty).orElse(false)) {
+        if (buttons != null && buttons.getButtons() != null && !buttons.getButtons().isEmpty()) {
             sendQuery.keyboard(createKeyboard(buttons));
         }
         return sendQuery;
