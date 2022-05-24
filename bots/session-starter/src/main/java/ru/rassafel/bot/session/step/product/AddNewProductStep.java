@@ -48,7 +48,7 @@ public class AddNewProductStep implements Step {
 
         int resultSessionStep = ChooseNewProductStep.STEP_INDEX;
         if (message.equalsIgnoreCase(TRY_MORE)) {
-            responseMessage = "Введите продукт еще раз";
+            responseMessage = templateEngine.compileTemplate(ProductTemplates.TRY_CHOOSE_PRODUCT_MORE);
         } else {
             Optional<Product> byName = productRepository.findByNameEqualsIgnoreCase(message);
             if(byName.isEmpty()){
