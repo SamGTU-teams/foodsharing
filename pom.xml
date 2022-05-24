@@ -27,11 +27,13 @@
         <vk.sdk.version>1.0.11</vk.sdk.version>
         <tg-bot.sdk.version>4.4.0.2</tg-bot.sdk.version>
         <lucene.version>8.11.1</lucene.version>
+        <geojson.version>1.14</geojson.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <lombok.mapstruct.binding.version>0.2.0
         </lombok.mapstruct.binding.version>
         <testcontainers.version>2.0.20</testcontainers.version>
 
+        <cucumber-version>6.8.0</cucumber-version>
         <jacoco.version>0.8.7</jacoco.version>
     </properties>
 
@@ -95,9 +97,20 @@
             <dependency>
                 <groupId>de.grundid.opendatalab</groupId>
                 <artifactId>geojson-jackson</artifactId>
-                <version>1.14</version>
+                <version>${geojson.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucene-analyzers-common</artifactId>
+                <version>${lucene.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucene-queryparser</artifactId>
+                <version>${lucene.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.playtika.testcontainers</groupId>
@@ -112,15 +125,21 @@
             </dependency>
 
             <dependency>
-                <groupId>org.apache.lucene</groupId>
-                <artifactId>lucene-analyzers-common</artifactId>
-                <version>${lucene.version}</version>
+                <groupId>io.cucumber</groupId>
+                <artifactId>cucumber-java</artifactId>
+                <version>${cucumber-version}</version>
             </dependency>
 
             <dependency>
-                <groupId>org.apache.lucene</groupId>
-                <artifactId>lucene-queryparser</artifactId>
-                <version>${lucene.version}</version>
+                <groupId>io.cucumber</groupId>
+                <artifactId>cucumber-junit</artifactId>
+                <version>${cucumber-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.cucumber</groupId>
+                <artifactId>cucumber-spring</artifactId>
+                <version>${cucumber-version}</version>
             </dependency>
 
 
@@ -189,12 +208,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
             <groupId>com.playtika.testcontainers</groupId>
             <artifactId>embedded-postgresql</artifactId>
             <scope>test</scope>
@@ -203,6 +216,12 @@
         <dependency>
             <groupId>com.playtika.testcontainers</groupId>
             <artifactId>embedded-rabbitmq</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
