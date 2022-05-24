@@ -54,7 +54,7 @@ public class VkMessenger implements Messenger {
             .userIds(ids)
             .randomId(new Random().nextInt(500_000));
 
-        if (Optional.of(buttons).map(BotButtons::getButtons)
+        if (Optional.ofNullable(buttons).map(BotButtons::getButtons)
             .map(List::isEmpty).orElse(false)) {
             sendQuery.keyboard(createKeyboard(buttons));
         }
