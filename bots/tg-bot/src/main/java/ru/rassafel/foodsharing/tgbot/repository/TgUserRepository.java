@@ -21,4 +21,7 @@ public interface TgUserRepository extends JpaRepository<TgUser, Long> {
 
     @EntityGraph(attributePaths = "products")
     Optional<TgUser> findWithProductsById(Long id);
+
+    @Query("SELECT t.id FROM TgUser t")
+    List<Long> findAllUserIds();
 }
