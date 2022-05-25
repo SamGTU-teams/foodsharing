@@ -16,9 +16,19 @@ public class SessionProperties {
 
     private Cache placesCache = new Cache();
     private boolean enabled = true;
+    private MessengerConfigs messenger = new MessengerConfigs();
 
     @Data
     public static class Cache {
         private Duration expirationTime = Duration.of(10, ChronoUnit.MINUTES);
+    }
+
+    @Data
+    public static class MessengerConfigs {
+        private int maxRequestQueueSize = 100;
+        private int maxThreadCountForSendQueries = 1;
+        private int maxTimeForSendSomeQueries = 1000;
+        private int maxQueryCountPerTime = 20;
+        private int maxQuerySizeInBatch = 25;
     }
 }
