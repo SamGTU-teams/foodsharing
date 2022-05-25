@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.rassafel.foodsharing.common.exception.ApiException;
 import ru.rassafel.foodsharing.common.model.dto.RegionDto;
 import ru.rassafel.foodsharing.common.model.mapper.RegionMapper;
-import ru.rassafel.foodsharing.parser.model.RawPost;
+import ru.rassafel.foodsharing.parser.model.dto.RawPostDto;
 import ru.rassafel.foodsharing.vkparser.model.entity.VkGroup;
 import ru.rassafel.foodsharing.vkparser.model.mapper.RawPostMapper;
 import ru.rassafel.foodsharing.vkparser.model.vk.Wallpost;
@@ -32,10 +32,10 @@ public class CallbackServiceImpl implements CallbackService {
     private final RegionMapper regionMapper;
 
     @Override
-    public RawPost wallpostNew(Integer groupId, Wallpost wallpost, String secret) {
+    public RawPostDto wallpostNew(Integer groupId, Wallpost wallpost, String secret) {
         VkGroup vkGroup = findGroup(groupId, secret);
 
-        RawPost postDto = rawPostMapper.map(wallpost);
+        RawPostDto postDto = rawPostMapper.map(wallpost);
         List<RegionDto> regions = regionMapper.entitiesToDtos(vkGroup.getRegions());
         postDto.getContext().setRegions(regions);
 

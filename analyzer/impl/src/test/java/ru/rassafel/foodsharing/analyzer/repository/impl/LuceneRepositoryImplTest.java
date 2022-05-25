@@ -28,6 +28,7 @@ class LuceneRepositoryImplTest {
     LuceneRepositoryImpl repository;
 
     @BeforeEach
+    @SuppressWarnings("deprecation")
     void setUp() throws IOException {
         Directory directory = new RAMDirectory();
         StandardAnalyzer analyzer = new StandardAnalyzer();

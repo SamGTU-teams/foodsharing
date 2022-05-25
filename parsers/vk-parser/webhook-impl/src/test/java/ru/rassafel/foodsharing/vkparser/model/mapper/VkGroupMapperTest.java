@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author rassafel
  */
 class VkGroupMapperTest {
-    VkGroupMapper mapper = VkGroupMapper.INSTANCE;
+    final VkGroupMapper mapper = VkGroupMapper.INSTANCE;
 
     @Test
     void mapFullAccess() {

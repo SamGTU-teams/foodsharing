@@ -17,4 +17,7 @@ spring:
         format_sql: true
   liquibase:
     enabled: true
-    change-log: classpath:init_foodsharing_db.sql
+  cloud:
+    config:
+      fail-fast: false
+      enabled: false

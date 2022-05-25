@@ -19,7 +19,7 @@ import ru.rassafel.foodsharing.analyzer.service.ProductLuceneAnalyzerService;
 import ru.rassafel.foodsharing.common.model.GeoPoint;
 import ru.rassafel.foodsharing.common.model.dto.ProductDto;
 import ru.rassafel.foodsharing.common.model.mapper.ProductMapper;
-import ru.rassafel.foodsharing.parser.model.RawPost;
+import ru.rassafel.foodsharing.parser.model.dto.RawPostDto;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -46,38 +46,38 @@ public class PostRabbitListener {
     private final Validator validator;
 
     @RabbitHandler
-    public void handle(RawPost rawPost) {
-        Set<ConstraintViolation<RawPost>> violations = validator.validate(rawPost);
+    public void handle(RawPostDto post) {
+        Set<ConstraintViolation<RawPostDto>> violations = validator.validate(post);
         if (!violations.isEmpty()) {
             log.debug("Validation exception", new ConstraintViolationException(violations));
             return;
         }
 
         FoodPostDto result = new FoodPostDto();
-        LuceneIndexedString postText = luceneRepository.add(rawPost.getText().toLowerCase());
+        LuceneIndexedString postText = luceneRepository.add(post.getText().toLowerCase());
         try {
             List<ProductDto> products = Streamable
-                .of(productService.parseProducts(rawPost, postText))
+                .of(productService.parseProducts(post, postText))
                 .map(ScoreProduct::getProduct)
                 .map(mapper::entityToDto)
                 .toList();
             if (products.isEmpty()) {
-                log.debug("Post does not contains products: {}", rawPost);
+                log.debug("Post does not contains products: {}", post);
                 throw new ProductParseException("Post does not contains products");
             }
             result.setProducts(products);
 
-            Optional<GeoPoint> geoPoint = geoAnalyzer.parseGeoPoint(rawPost, postText);
+            Optional<GeoPoint> geoPoint = geoAnalyzer.parseGeoPoint(post, postText);
             if (geoPoint.isEmpty()) {
-                log.debug("Post does not contains geopoint: {}", rawPost);
+                log.debug("Post does not contains geopoint: {}", post);
                 throw new GeoPointParseException("Post does not contains geopoint");
             }
             result.setPoint(geoPoint.get());
 
-            result.setText(rawPost.getText());
-            result.setUrl(rawPost.getUrl());
-            result.setAttachments(rawPost.getContext().getAttachments());
-            result.setDate(rawPost.getDate());
+            result.setText(post.getText());
+            result.setUrl(post.getUrl());
+            result.setAttachments(post.getContext().getAttachments());
+            result.setDate(post.getDate());
 
             template.convertAndSend(result);
         } catch (ParseException ex) {

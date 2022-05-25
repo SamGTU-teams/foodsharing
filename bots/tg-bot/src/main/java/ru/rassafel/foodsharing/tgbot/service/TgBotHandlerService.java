@@ -8,16 +8,15 @@ import org.telegram.telegrambots.bots.TelegramWebhookBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.rassafel.bot.session.dto.SessionRequest;
-import ru.rassafel.bot.session.dto.SessionResponse;
-import ru.rassafel.bot.session.exception.BotException;
-import ru.rassafel.bot.session.service.SessionService;
-import ru.rassafel.foodsharing.tgbot.mapper.TgBotDtoMapper;
+import ru.rassafel.foodsharing.session.exception.BotException;
+import ru.rassafel.foodsharing.session.model.dto.SessionRequest;
+import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
+import ru.rassafel.foodsharing.session.service.session.SessionService;
+import ru.rassafel.foodsharing.tgbot.model.mapper.TgBotDtoMapper;
 
 @RequiredArgsConstructor
 @Slf4j
 public class TgBotHandlerService extends TelegramWebhookBot {
-
     private final String botUsername;
     private final String botToken;
     private final String webHookPath;
@@ -36,10 +35,10 @@ public class TgBotHandlerService extends TelegramWebhookBot {
         } catch (BotException ex) {
             throw ex;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("Caught an exception with message {}", ex.getMessage());
             SendMessage ifException = new SendMessage();
             ifException.setChatId(update.getMessage().getChatId());
-            ifException.setText("Some exception");
+            ifException.setText("Возникла ошибка на сервере, попробуйте позднее");
             return ifException;
         }
         return mapper.map(sessionResponse);
