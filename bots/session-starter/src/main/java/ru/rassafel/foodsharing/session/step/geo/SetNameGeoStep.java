@@ -53,12 +53,13 @@ public class SetNameGeoStep implements Step {
 
         Collection<Place> usersPlaces = placeService.findByUserId(user.getId());
 
+        String upperedPlaceName = Character.toUpperCase(message.charAt(0)) + message.substring(1);
         if (usersPlaces.stream().anyMatch(p -> p.getName().equalsIgnoreCase(message))) {
             throw new BotException(user.getId(),
                 templateEngine.compileTemplate(PlaceTemplates.PLACE_ALREADY_EXISTS, Map.of("name", message)));
         }
 
-        place.setName(message);
+        place.setName(upperedPlaceName);
 
         sessionResponse.setMessage(templateEngine.compileTemplate(PlaceTemplates.EXPECTATION_OF_RADIUS));
         sessionResponse.setButtons(new BotButtons().addButton(new BotButtons.BotButton(GeoButtonsUtil.LEAVE_RADIUS_AS_IS)));
