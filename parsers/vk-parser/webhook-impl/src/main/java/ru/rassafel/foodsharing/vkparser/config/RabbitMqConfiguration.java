@@ -66,6 +66,7 @@ public class RabbitMqConfiguration {
         return QueueBuilder.durable(properties.getVkParserCallback().getQueue())
             .build();
     }
+
     @Bean
     FanoutExchange rawExchange(RabbitMqProperties properties) {
         return ExchangeBuilder.fanoutExchange(properties.getRawPost().getExchange())

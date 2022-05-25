@@ -23,8 +23,8 @@ public class RabbitMqConfiguration {
 
     @Bean
     RabbitTemplate callbackRabbitTemplate(ConnectionFactory connectionFactory,
-                                         MessageConverter jsonMessageConverter,
-                                         RabbitMqProperties properties) {
+                                          MessageConverter jsonMessageConverter,
+                                          RabbitMqProperties properties) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(jsonMessageConverter);
         rabbitTemplate.setExchange(properties.getTgBotCallback().getExchange());
