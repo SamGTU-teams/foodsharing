@@ -59,7 +59,7 @@ public class SetRadiusAndFinishSaveGeoStep implements Step {
         } else {
             try {
                 radius = Integer.parseInt(message);
-                if (radius >= 5000 || radius <= 0) {
+                if (radius > 5000 || radius <= 0) {
                     throw new BotException(user.getId(), templateEngine.compileTemplate(PlaceTemplates.INVALID_RADIUS_RANGE));
                 }
             } catch (NumberFormatException ex) {
