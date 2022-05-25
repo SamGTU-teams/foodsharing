@@ -2,6 +2,8 @@ package ru.rassafel.foodsharing.tgbot.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -17,6 +19,46 @@ public class RabbitMqConfiguration {
     @Bean
     MessageConverter jsonMessageConverter(ObjectMapper mapper) {
         return new Jackson2JsonMessageConverter(mapper);
+    }
+
+    @Bean
+    RabbitTemplate callbackRabbitTemplate(ConnectionFactory connectionFactory,
+                                         MessageConverter jsonMessageConverter,
+                                         RabbitMqProperties properties) {
+        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        rabbitTemplate.setMessageConverter(jsonMessageConverter);
+        rabbitTemplate.setExchange(properties.getTgBotCallback().getExchange());
+        return rabbitTemplate;
+    }
+
+    @Bean
+    FanoutExchange tgCallbackExchange(RabbitMqProperties properties) {
+        return ExchangeBuilder.fanoutExchange(properties.getTgBotCallback().getExchange())
+            .build();
+    }
+
+    @Bean
+    Queue tgCallbackStorageQueue(RabbitMqProperties properties) {
+        return QueueBuilder.durable(properties.getTgBotCallback().getStorage())
+            .build();
+    }
+
+    @Bean
+    Binding tgCallbackStorageBinding(RabbitMqProperties properties) {
+        return BindingBuilder.bind(tgCallbackStorageQueue(properties))
+            .to(tgCallbackExchange(properties));
+    }
+
+    @Bean
+    Queue tgCallbackQueue(RabbitMqProperties properties) {
+        return QueueBuilder.durable(properties.getTgBotCallback().getQueue())
+            .build();
+    }
+
+    @Bean
+    Binding tgCallbackBinding(RabbitMqProperties properties) {
+        return BindingBuilder.bind(tgCallbackQueue(properties))
+            .to(tgCallbackExchange(properties));
     }
 
     @Bean

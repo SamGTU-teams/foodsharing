@@ -15,6 +15,7 @@ public class RabbitMqProperties {
 
     private Declare readyPost;
     private Declare adPost;
+    private Declare tgBotCallback;
 
     @Getter
     @Setter
