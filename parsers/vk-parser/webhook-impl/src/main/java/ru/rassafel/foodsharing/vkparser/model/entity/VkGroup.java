@@ -10,7 +10,7 @@ import java.util.List;
  * @author rassafel
  */
 @Entity
-@Table(schema = "vk_parser", name = "group")
+@Table(schema = "vk_parser", name = "registered_group")
 @Getter
 @Setter
 @RequiredArgsConstructor
