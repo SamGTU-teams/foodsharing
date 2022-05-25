@@ -27,7 +27,7 @@ import static ru.rassafel.foodsharing.vkparser.util.GroupUtil.throwIfSecretKeyNo
 @Service
 public class CallbackServiceImpl implements CallbackService {
     private final GroupRepository repository;
-    private final RabbitTemplate template;
+    private final RabbitTemplate rawRabbitTemplate;
     private final RawPostMapper rawPostMapper;
     private final RegionMapper regionMapper;
 
@@ -39,8 +39,7 @@ public class CallbackServiceImpl implements CallbackService {
         List<RegionDto> regions = regionMapper.entitiesToDtos(vkGroup.getRegions());
         postDto.getContext().setRegions(regions);
 
-        template.convertAndSend(postDto);
-
+        rawRabbitTemplate.convertAndSend(postDto);
         return postDto;
     }
 
