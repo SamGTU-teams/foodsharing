@@ -5,8 +5,12 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
+import ru.rassafel.foodsharing.session.service.message.TemplateEngine;
 import ru.rassafel.foodsharing.tgbot.model.mapper.TgBotDtoMapper;
 import ru.rassafel.foodsharing.tgbot.service.TgBotHandlerService;
+
+import java.util.concurrent.BlockingQueue;
 
 @Configuration
 @EnableConfigurationProperties(TgBotProperties.class)
@@ -19,9 +23,11 @@ public class TgBotConfiguration {
     }
 
     @Bean
-    public TgBotHandlerService foodSharingWebHookBot(TgBotProperties properties) {
+    public TgBotHandlerService foodSharingWebHookBot(TgBotProperties properties,
+                                                     BlockingQueue<SessionResponse> queue,
+                                                     TemplateEngine templateEngine) {
         return new TgBotHandlerService(properties.getBotUsername(),
             properties.getToken(),
-            properties.getWebHookPath());
+            properties.getWebHookPath(), queue, templateEngine);
     }
 }
