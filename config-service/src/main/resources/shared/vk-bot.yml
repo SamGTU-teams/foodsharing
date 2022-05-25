@@ -6,6 +6,10 @@ spring:
     ad-post:
       queue: post.ad.vk
       dlq: post.ad.dlq.vk
+      
+    vk-bot-callback:
+      queue: callback.vk.bot.current
+      dlq: callback.vk.bot.dlq.current
   liquibase:
     contexts: vk-bot,data
 
