@@ -78,8 +78,8 @@ public class MapperDtoTest {
             chatF.set(message, chat);
             textF.set(message, "Hello bot from " + i);
 
-            latitudeF.set(location, RandomUtils.nextFloat(0F, 150F));
-            longitudeF.set(location, RandomUtils.nextFloat(0F, 150F));
+            latitudeF.set(location, RandomUtils.nextDouble(0, 150));
+            longitudeF.set(location, RandomUtils.nextDouble(0, 150));
 
             if (i % 2 == 0) {
                 locationF.set(message, location);
@@ -110,7 +110,7 @@ public class MapperDtoTest {
     @ParameterizedTest
     @MethodSource
     public void testFromResponseToSendMessage(SessionResponse response) {
-        SendMessage result = botDtoMapper.map(response);
+        SendMessage result = botDtoMapper.mapToSendMessage(response);
         assertThat(result.getChatId()).isEqualTo(response.getSendTo().getId().toString());
         assertThat(result.getText()).isEqualTo(response.getMessage());
         ReplyKeyboardMarkup replyMarkup = (ReplyKeyboardMarkup) result.getReplyMarkup();
