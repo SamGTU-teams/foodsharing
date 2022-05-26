@@ -33,7 +33,7 @@ public class VkParserConfiguration {
     }
 
     @Bean
-    public Cache<Long, MutablePair<Long, Boolean>> callbackCache(VkParserProperties properties) {
+    public Cache<Integer, Integer> callbackCache(VkParserProperties properties) {
         return Caffeine.newBuilder()
             .expireAfterWrite(properties.getCallback().getCache().getExpirationTime())
             .build();
