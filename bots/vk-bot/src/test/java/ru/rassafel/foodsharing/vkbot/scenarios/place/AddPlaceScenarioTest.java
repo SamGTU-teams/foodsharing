@@ -123,6 +123,7 @@ public class AddPlaceScenarioTest extends SpringCucumberSuperTest {
 
         Place fromCache = geoPointCache.getIfPresent(userId);
 
+        message = Character.toUpperCase(message.charAt(0)) + message.substring(1);
         assertThat(fromCache)
             .isNotNull()
             .hasFieldOrPropertyWithValue("name", message);
