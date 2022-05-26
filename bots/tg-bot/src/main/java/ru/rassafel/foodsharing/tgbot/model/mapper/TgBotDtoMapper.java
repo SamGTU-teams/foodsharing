@@ -64,18 +64,18 @@ public abstract class TgBotDtoMapper implements UserDtoMapper {
 
     @Mappings({
         @Mapping(source = "message", target = "text"),
-        @Mapping(target = "enableHtml", ignore = true),
-        @Mapping(target = "enableMarkdown", ignore = true),
-        @Mapping(target = "parseMode", ignore = true),
-        @Mapping(target = "replyMarkup", ignore = true),
-        @Mapping(target = "replyToMessageId", ignore = true),
-        @Mapping(target = "chatId", ignore = true)
+        @Mapping(target = "chatId", expression = "java(response.getSendTo().getId().toString())")
     })
     public abstract SendMessage map(SessionResponse response);
 
+    public SendMessage mapToSendMessage(SessionResponse response){
+        SendMessage map = map(response);
+        mapButtons(response, map);
+        return map;
+    }
+
     @AfterMapping
-    protected void map(SessionResponse response, @MappingTarget SendMessage sendMessage) {
-        sendMessage.setChatId(response.getSendTo().getId());
+    protected void mapButtons(SessionResponse response, @MappingTarget SendMessage sendMessage) {
         if(response.getButtons() != null) {
             BotButtons buttons = response.getButtons();
             ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();

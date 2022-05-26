@@ -44,7 +44,7 @@ public class ChooseNewProductStep implements Step {
             responseMessage = templateEngine.compileTemplate(ProductTemplates.BACK_TO_PRODUCTS);
             responseButtons.addAll(ProductButtonsUtil.PRODUCT_MAIN_BUTTONS);
         }else {
-            if("".equals(message)){
+            if(message.isEmpty()){
                 throw new BotException(user.getId(), templateEngine.compileTemplate(ProductTemplates.PRODUCT_NAME_IS_EMPTY));
             }
             responseButtons.addButton(new BotButtons.BotButton(BACK_TO_PRODUCTS));

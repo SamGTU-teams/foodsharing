@@ -22,7 +22,7 @@ public class TgMessenger implements Messenger {
     @Override
     public void sendBatch(List<SessionResponse> responses) {
         for (SessionResponse response : responses) {
-            SendMessage sendMessage = mapper.map(response);
+            SendMessage sendMessage = mapper.mapToSendMessage(response);
             sendMessage.enableWebPagePreview();
             try {
                 service.execute(sendMessage);

@@ -43,6 +43,7 @@ public class AddNewPlaceGeoStep implements Step {
             responseButtons.addAll(GeoButtonsUtil.GEO_MAIN_BUTTONS);
         } else if (location == null) {
             responseMessage = templateEngine.compileTemplate(PlaceTemplates.NO_GEOLOCATION_PROVIDED);
+            responseButtons.addButton(new BotButtons.BotButton(BACK_TO_PLACES));
             responseButtons.addButton(BotButtons.BotButton.GEO_BUTTON);
         } else {
             String address =

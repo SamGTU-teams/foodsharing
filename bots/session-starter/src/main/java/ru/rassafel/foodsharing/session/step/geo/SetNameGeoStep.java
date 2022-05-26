@@ -2,6 +2,7 @@ package ru.rassafel.foodsharing.session.step.geo;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import ru.rassafel.foodsharing.session.exception.BotException;
 import ru.rassafel.foodsharing.session.model.dto.BotButtons;
@@ -66,7 +67,7 @@ public class  SetNameGeoStep implements Step {
         if(message.isEmpty()){
             throw new BotException(user.getId(), templateEngine.compileTemplate(PlaceTemplates.PLACE_NAME_IS_EMPTY));
         }
-        String upperedPlaceName = Character.toUpperCase(message.charAt(0)) + message.substring(1);
+        String upperedPlaceName = StringUtils.capitalize(message);
         if (usersPlaces.stream().anyMatch(p -> p.getName().equalsIgnoreCase(message))) {
             throw new BotException(user.getId(),
                 templateEngine.compileTemplate(PlaceTemplates.PLACE_ALREADY_EXISTS, Map.of("name", message)));
