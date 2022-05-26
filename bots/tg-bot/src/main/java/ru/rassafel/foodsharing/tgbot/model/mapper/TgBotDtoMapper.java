@@ -14,10 +14,8 @@ import ru.rassafel.foodsharing.session.model.dto.BotButtons;
 import ru.rassafel.foodsharing.session.model.dto.SessionRequest;
 import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
 import ru.rassafel.foodsharing.session.model.mapper.UserDtoMapper;
-import ru.rassafel.foodsharing.session.util.ButtonsUtil;
 import ru.rassafel.foodsharing.tgbot.model.domain.TgUser;
 
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.util.Optional.ofNullable;
@@ -78,21 +76,24 @@ public abstract class TgBotDtoMapper implements UserDtoMapper {
     @AfterMapping
     protected void map(SessionResponse response, @MappingTarget SendMessage sendMessage) {
         sendMessage.setChatId(response.getSendTo().getId());
-        BotButtons buttons = Optional.ofNullable(response.getButtons()).orElse(new BotButtons(ButtonsUtil.DEFAULT_BUTTONS));
-        ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
-        keyboardMarkup.setKeyboard(buttons.getButtons().stream().map(o -> {
-            KeyboardRow buttonRow = new KeyboardRow();
-            if (o.isGeo()) {
-                KeyboardButton button = new KeyboardButton();
-                button.setRequestLocation(true);
-                button.setText(LOCATION_BUTTON_TEXT);
-                buttonRow.add(button);
-            } else {
-                buttonRow.add(o.getText());
-            }
-            return buttonRow;
-        }).collect(Collectors.toList()));
-        keyboardMarkup.setResizeKeyboard(true);
-        sendMessage.setReplyMarkup(keyboardMarkup);
+        if(response.getButtons() != null) {
+            BotButtons buttons = response.getButtons();
+            ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
+            keyboardMarkup.setKeyboard(buttons.getButtons().stream().map(o -> {
+                KeyboardRow buttonRow = new KeyboardRow();
+                if (o.isGeo()) {
+                    KeyboardButton button = new KeyboardButton();
+                    button.setRequestLocation(true);
+                    button.setText(LOCATION_BUTTON_TEXT);
+                    buttonRow.add(button);
+                } else {
+                    buttonRow.add(o.getText());
+                }
+                return buttonRow;
+            }).collect(Collectors.toList()));
+            keyboardMarkup.setResizeKeyboard(true);
+
+            sendMessage.setReplyMarkup(keyboardMarkup);
+        }
     }
 }
