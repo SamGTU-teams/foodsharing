@@ -19,10 +19,10 @@ import ru.rassafel.foodsharing.session.service.message.TemplateEngine;
 import ru.rassafel.foodsharing.session.step.Step;
 import ru.rassafel.foodsharing.session.templates.MainTemplates;
 import ru.rassafel.foodsharing.session.templates.PlaceTemplates;
+import ru.rassafel.foodsharing.session.util.GeoButtonsUtil;
 
 import static ru.rassafel.foodsharing.session.util.ButtonsUtil.DEFAULT_BUTTONS;
-import static ru.rassafel.foodsharing.session.util.GeoButtonsUtil.GEO_MAIN_BUTTONS;
-import static ru.rassafel.foodsharing.session.util.GeoButtonsUtil.LEAVE_RADIUS_AS_IS;
+import static ru.rassafel.foodsharing.session.util.GeoButtonsUtil.*;
 
 @Component("geo-4")
 @RequiredArgsConstructor
@@ -39,6 +39,15 @@ public class SetRadiusAndFinishSaveGeoStep implements Step {
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
         EmbeddedUserSession userSession = user.getUserSession();
         String message = sessionRequest.getMessage();
+
+        if (BACK_TO_PLACES.equalsIgnoreCase(sessionRequest.getMessage())) {
+            userSession.setSessionStep(ChooseOperationGeoStep.STEP_INDEX);
+            sessionResponse.setMessage(templateEngine.compileTemplate(PlaceTemplates.BACK_TO_PLACES));
+            sessionResponse.setButtons(new BotButtons().addAll(GeoButtonsUtil.GEO_MAIN_BUTTONS));
+            geoPointCache.invalidate(user.getId());
+            userService.saveUser(user);
+            return;
+        }
 
         Place place = geoPointCache.getIfPresent(user.getId());
 

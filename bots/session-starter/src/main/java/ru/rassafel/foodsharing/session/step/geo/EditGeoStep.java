@@ -16,9 +16,12 @@ import ru.rassafel.foodsharing.session.service.UserService;
 import ru.rassafel.foodsharing.session.service.message.TemplateEngine;
 import ru.rassafel.foodsharing.session.step.Step;
 import ru.rassafel.foodsharing.session.templates.PlaceTemplates;
+import ru.rassafel.foodsharing.session.util.GeoButtonsUtil;
 
 import java.util.Collection;
 import java.util.Map;
+
+import static ru.rassafel.foodsharing.session.util.GeoButtonsUtil.BACK_TO_PLACES;
 
 @Component("geo-6")
 @RequiredArgsConstructor
@@ -36,6 +39,14 @@ public class EditGeoStep implements Step {
         EmbeddedUserSession userSession = user.getUserSession();
         Collection<Place> usersPoints = placeService.findByUserId(user.getId());
         Place point;
+        if (BACK_TO_PLACES.equalsIgnoreCase(sessionRequest.getMessage())) {
+            userSession.setSessionStep(ChooseOperationGeoStep.STEP_INDEX);
+            sessionResponse.setMessage(templateEngine.compileTemplate(PlaceTemplates.BACK_TO_PLACES));
+            sessionResponse.setButtons(new BotButtons().addAll(GeoButtonsUtil.GEO_MAIN_BUTTONS));
+            geoPointCache.invalidate(user.getId());
+            userService.saveUser(user);
+            return;
+        }
         if (message.matches("^\\d+$")) {
             Map<Integer, String> usersPlacesNamesMap = placeService.getUsersPlacesNamesMap(usersPoints);
             String placeNameToEdit = usersPlacesNamesMap.get(Integer.parseInt(message));
@@ -52,7 +63,7 @@ public class EditGeoStep implements Step {
         }
         geoPointCache.put(user.getId(), point);
         sessionResponse.setMessage(templateEngine.compileTemplate(PlaceTemplates.EXPECTATION_OF_NEW_RADIUS));
-        sessionResponse.setButtons(new BotButtons());
+        sessionResponse.setButtons(new BotButtons().addButton(new BotButtons.BotButton(BACK_TO_PLACES)));
         userSession.setSessionStep(SetNewRadiusGeoStep.STEP_INDEX);
 
         userService.saveUser(user);

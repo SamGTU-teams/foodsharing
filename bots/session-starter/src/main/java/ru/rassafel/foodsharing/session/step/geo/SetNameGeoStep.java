@@ -22,10 +22,11 @@ import java.util.Collection;
 import java.util.Map;
 
 import static ru.rassafel.foodsharing.session.util.ButtonsUtil.DEFAULT_BUTTONS;
+import static ru.rassafel.foodsharing.session.util.GeoButtonsUtil.BACK_TO_PLACES;
 
 @Component("geo-3")
 @RequiredArgsConstructor
-public class SetNameGeoStep implements Step {
+public class  SetNameGeoStep implements Step {
     public static final int STEP_INDEX = 3;
 
     private final Cache<Long, Place> geoPointCache;
@@ -38,6 +39,15 @@ public class SetNameGeoStep implements Step {
         EmbeddedUserSession userSession = user.getUserSession();
         String message = sessionRequest.getMessage();
         Place place = geoPointCache.getIfPresent(user.getId());
+
+        if (BACK_TO_PLACES.equalsIgnoreCase(sessionRequest.getMessage())) {
+            userSession.setSessionStep(ChooseOperationGeoStep.STEP_INDEX);
+            sessionResponse.setMessage(templateEngine.compileTemplate(PlaceTemplates.BACK_TO_PLACES));
+            sessionResponse.setButtons(new BotButtons().addAll(GeoButtonsUtil.GEO_MAIN_BUTTONS));
+            geoPointCache.invalidate(user.getId());
+            userService.saveUser(user);
+            return;
+        }
 
         if (place == null) {
             userSession.setSessionActive(false);
@@ -53,6 +63,9 @@ public class SetNameGeoStep implements Step {
 
         Collection<Place> usersPlaces = placeService.findByUserId(user.getId());
 
+        if(message.isEmpty()){
+            throw new BotException(user.getId(), templateEngine.compileTemplate(PlaceTemplates.PLACE_NAME_IS_EMPTY));
+        }
         String upperedPlaceName = Character.toUpperCase(message.charAt(0)) + message.substring(1);
         if (usersPlaces.stream().anyMatch(p -> p.getName().equalsIgnoreCase(message))) {
             throw new BotException(user.getId(),
@@ -62,7 +75,8 @@ public class SetNameGeoStep implements Step {
         place.setName(upperedPlaceName);
 
         sessionResponse.setMessage(templateEngine.compileTemplate(PlaceTemplates.EXPECTATION_OF_RADIUS));
-        sessionResponse.setButtons(new BotButtons().addButton(new BotButtons.BotButton(GeoButtonsUtil.LEAVE_RADIUS_AS_IS)));
+        sessionResponse.setButtons(new BotButtons().addButton(new BotButtons.BotButton(BACK_TO_PLACES))
+            .addButton(new BotButtons.BotButton(GeoButtonsUtil.LEAVE_RADIUS_AS_IS)));
         userSession.setSessionStep(SetRadiusAndFinishSaveGeoStep.STEP_INDEX);
 
         userService.saveUser(user);

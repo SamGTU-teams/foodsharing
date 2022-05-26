@@ -1,5 +1,6 @@
 package ru.rassafel.foodsharing.session.step.geo;
 
+import com.github.benmanes.caffeine.cache.Cache;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,8 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
+import static ru.rassafel.foodsharing.session.util.GeoButtonsUtil.BACK_TO_PLACES;
+
 @Component("geo-5")
 @RequiredArgsConstructor
 public class DeleteGeoStep implements Step {
@@ -30,6 +33,7 @@ public class DeleteGeoStep implements Step {
     private final PlaceService placeService;
     private final UserService userService;
     private final TemplateEngine templateEngine;
+    private final Cache<Long, Place> geoPointCache;
 
     @Override
     @Transactional
@@ -38,13 +42,19 @@ public class DeleteGeoStep implements Step {
         EmbeddedUserSession userSession = user.getUserSession();
         BotButtons responseButtons = new BotButtons();
 
-        if (message.equalsIgnoreCase(GeoButtonsUtil.DELETE_ALL)) {
-            placeService.deleteAllByUserId(user.getId());
+        if (BACK_TO_PLACES.equalsIgnoreCase(sessionRequest.getMessage())) {
+            userSession.setSessionStep(ChooseOperationGeoStep.STEP_INDEX);
+            sessionResponse.setMessage(templateEngine.compileTemplate(PlaceTemplates.BACK_TO_PLACES));
+            responseButtons.addAll(GeoButtonsUtil.GEO_MAIN_BUTTONS);
+            geoPointCache.invalidate(user.getId());
             userService.saveUser(user);
+        } else if (message.equalsIgnoreCase(GeoButtonsUtil.DELETE_ALL)) {
+            placeService.deleteAllByUserId(user.getId());
 
             responseButtons.addAll(GeoButtonsUtil.GEO_MAIN_BUTTONS);
             userSession.setSessionStep(ChooseOperationGeoStep.STEP_INDEX);
             sessionResponse.setMessage(templateEngine.compileTemplate(PlaceTemplates.EMPTY_PLACES_AFTER_DELETE));
+            userService.saveUser(user);
         } else {
 
             Map<Integer, String> usersPlacesNamesMap = placeService.getUsersPlacesNamesMap(user);
@@ -70,6 +80,7 @@ public class DeleteGeoStep implements Step {
             } else {
                 sessionResponse.setMessage(templateEngine.compileTemplate(PlaceTemplates.PLACES_LIST_AFTER_DELETE,
                     PlaceTemplates.buildMapOfPlaces(usersPlaces)));
+                responseButtons.addButton(new BotButtons.BotButton(GeoButtonsUtil.BACK_TO_PLACES));
             }
         }
         sessionResponse.setButtons(responseButtons);

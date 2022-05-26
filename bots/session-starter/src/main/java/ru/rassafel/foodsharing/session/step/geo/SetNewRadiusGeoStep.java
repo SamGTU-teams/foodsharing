@@ -21,6 +21,7 @@ import ru.rassafel.foodsharing.session.templates.PlaceTemplates;
 import ru.rassafel.foodsharing.session.util.GeoButtonsUtil;
 
 import static ru.rassafel.foodsharing.session.util.ButtonsUtil.DEFAULT_BUTTONS;
+import static ru.rassafel.foodsharing.session.util.GeoButtonsUtil.BACK_TO_PLACES;
 
 @Component("geo-7")
 @RequiredArgsConstructor
@@ -37,6 +38,15 @@ public class SetNewRadiusGeoStep implements Step {
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
         String message = sessionRequest.getMessage();
         EmbeddedUserSession userSession = user.getUserSession();
+
+        if (BACK_TO_PLACES.equalsIgnoreCase(sessionRequest.getMessage())) {
+            userSession.setSessionStep(ChooseOperationGeoStep.STEP_INDEX);
+            sessionResponse.setMessage(templateEngine.compileTemplate(PlaceTemplates.BACK_TO_PLACES));
+            sessionResponse.setButtons(new BotButtons().addAll(GeoButtonsUtil.GEO_MAIN_BUTTONS));
+            geoPointCache.invalidate(user.getId());
+            userService.saveUser(user);
+            return;
+        }
 
         Place editable = geoPointCache.getIfPresent(user.getId());
 

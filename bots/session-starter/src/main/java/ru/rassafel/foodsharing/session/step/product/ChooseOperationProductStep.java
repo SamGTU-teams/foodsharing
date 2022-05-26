@@ -52,6 +52,7 @@ public class ChooseOperationProductStep implements Step {
             responseMessage = templateEngine.compileTemplate(ProductTemplates.PRODUCT_NAME_EXPECTATION);
 
             userSession.setSessionStep(ChooseNewProductStep.STEP_INDEX);
+            responseButtons.addButton(new BotButtons.BotButton(BACK_TO_PRODUCTS));
         } else if (message.equalsIgnoreCase(DELETE_PRODUCT)) {
 
             if (user.getProducts().isEmpty()) {
@@ -60,6 +61,7 @@ public class ChooseOperationProductStep implements Step {
             } else {
                 responseMessage = templateEngine.compileTemplate(ProductTemplates.LIST_OF_PRODUCTS_TO_DELETE,
                     ProductTemplates.buildMapOfProducts(user.getProducts()));
+                responseButtons.addButton(new BotButtons.BotButton(BACK_TO_PRODUCTS));
                 responseButtons.addButton(new BotButtons.BotButton(DELETE_ALL));
                 userSession.setSessionStep(DeleteProductStep.STEP_INDEX);
             }

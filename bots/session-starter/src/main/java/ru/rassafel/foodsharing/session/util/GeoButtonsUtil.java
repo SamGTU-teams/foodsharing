@@ -10,7 +10,8 @@ public interface GeoButtonsUtil {
         DELETE_PLACE = "Удалить место",
         EDIT_PLACE = "Редактировать место",
         DELETE_ALL = "Удалить все",
-        LEAVE_RADIUS_AS_IS = "Оставить как есть";
+        LEAVE_RADIUS_AS_IS = "Оставить как есть",
+        BACK_TO_PLACES = "Назад к местам";
 
     List<String> GEO_MAIN_BUTTONS = List.of(
         MY_PLACES,

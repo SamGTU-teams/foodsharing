@@ -23,6 +23,7 @@ public class TgMessenger implements Messenger {
     public void sendBatch(List<SessionResponse> responses) {
         for (SessionResponse response : responses) {
             SendMessage sendMessage = mapper.map(response);
+            sendMessage.enableWebPagePreview();
             try {
                 service.execute(sendMessage);
             } catch (TelegramApiException e) {

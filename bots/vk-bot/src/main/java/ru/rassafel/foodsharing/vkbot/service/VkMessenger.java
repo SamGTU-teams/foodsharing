@@ -32,7 +32,8 @@ public class VkMessenger implements Messenger {
         MessagesSendQuery sendQuery = vk.messages().send(groupActor)
             .message(message)
             .userIds(ids)
-            .randomId(new Random().nextInt(500_000));
+            .randomId(new Random().nextInt(500_000))
+            .dontParseLinks(false);
 
         if (buttons != null && buttons.getButtons() != null && !buttons.getButtons().isEmpty()) {
             sendQuery.keyboard(createKeyboard(buttons));

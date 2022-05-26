@@ -14,6 +14,7 @@ import ru.rassafel.foodsharing.session.service.UserService;
 import ru.rassafel.foodsharing.session.service.message.TemplateEngine;
 import ru.rassafel.foodsharing.session.step.Step;
 import ru.rassafel.foodsharing.session.templates.ProductTemplates;
+import ru.rassafel.foodsharing.session.util.ProductButtonsUtil;
 import ru.rassafel.foodsharing.session.util.SessionUtil;
 
 import java.util.Collection;
@@ -21,8 +22,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import static ru.rassafel.foodsharing.session.util.ProductButtonsUtil.DELETE_ALL;
-import static ru.rassafel.foodsharing.session.util.ProductButtonsUtil.PRODUCT_MAIN_BUTTONS;
+import static ru.rassafel.foodsharing.session.util.ProductButtonsUtil.*;
 
 @Component("product-4")
 @RequiredArgsConstructor
@@ -50,7 +50,11 @@ public class DeleteProductStep implements Step {
             responseMessage = templateEngine.compileTemplate(ProductTemplates.EMPTY_PRODUCTS_AFTER_DELETE);
             userSession.setSessionStep(ChooseOperationProductStep.STEP_INDEX);
             responseButtons.addAll(PRODUCT_MAIN_BUTTONS);
-        } else {
+        } else if (BACK_TO_PRODUCTS.equalsIgnoreCase(message)) {
+            responseMessage = templateEngine.compileTemplate(ProductTemplates.BACK_TO_PRODUCTS);
+            responseButtons.addAll(ProductButtonsUtil.PRODUCT_MAIN_BUTTONS);
+            userSession.setSessionStep(ChooseOperationProductStep.STEP_INDEX);
+        }else {
             Map<Integer, String> usersProductNamesMap = productService.getUsersProductNamesMap(user);
             Set<String> productNamesToDelete;
             try {
@@ -68,6 +72,7 @@ public class DeleteProductStep implements Step {
             } else {
                 responseMessage = templateEngine.compileTemplate(ProductTemplates.LIST_OF_PRODUCTS_AFTER_DELETE,
                     ProductTemplates.buildMapOfProducts(products));
+                responseButtons.addButton(new BotButtons.BotButton(BACK_TO_PRODUCTS));
             }
         }
 
