@@ -65,7 +65,7 @@ public class AddProductScenarioTest extends SpringCucumberSuperTest {
 
         assertResponse(request, response, templateEngine.compileTemplate(ProductTemplates.PRODUCT_NAME_EXPECTATION));
 
-        assertButtons(response, List.of(ButtonsUtil.BACK_TO_MAIN_MENU));
+        assertButtons(response, List.of(ButtonsUtil.BACK_TO_MAIN_MENU, ProductButtonsUtil.BACK_TO_PRODUCTS));
 
         assertUserAndUserSession(getCurrentUser(userId), SessionEnum.PRODUCT.getBeanName(), ChooseNewProductStep.STEP_INDEX, true);
     }
@@ -85,6 +85,7 @@ public class AddProductScenarioTest extends SpringCucumberSuperTest {
 
         ArrayList<String> buttonsList = new ArrayList<>();
         buttonsList.add(ButtonsUtil.BACK_TO_MAIN_MENU);
+        buttonsList.add(ProductButtonsUtil.BACK_TO_PRODUCTS);
         buttonsList.add(ProductButtonsUtil.TRY_MORE);
         buttonsList.addAll(productAnalyzerControllerStub.parseProducts(null, null)
             .stream().map(p -> p.getProduct().getName()).collect(Collectors.toList()));
@@ -111,7 +112,7 @@ public class AddProductScenarioTest extends SpringCucumberSuperTest {
         assertUserAndUserSession(getCurrentUser(userId), SessionEnum.PRODUCT.getBeanName(),
             ChooseNewProductStep.STEP_INDEX, true);
 
-        assertButtons(response, List.of(ButtonsUtil.BACK_TO_MAIN_MENU));
+        assertButtons(response, List.of(ButtonsUtil.BACK_TO_MAIN_MENU, ProductButtonsUtil.BACK_TO_PRODUCTS));
 
         Collection<Product> products = getCurrentUser(userId).getProducts();
         assertThat(products)

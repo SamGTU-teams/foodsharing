@@ -93,7 +93,7 @@ public class AddPlaceScenarioTest extends SpringCucumberSuperTest {
 
         assertUserAndUserSession(getCurrentUser(userId), SessionEnum.GEO.getBeanName(), SetNameGeoStep.STEP_INDEX, true);
 
-        assertButtons(response, List.of(ButtonsUtil.BACK_TO_MAIN_MENU));
+        assertButtons(response, List.of(ButtonsUtil.BACK_TO_MAIN_MENU, GeoButtonsUtil.BACK_TO_PLACES));
 
         Place fromCache = geoPointCache.getIfPresent(userId);
 
@@ -122,7 +122,7 @@ public class AddPlaceScenarioTest extends SpringCucumberSuperTest {
 
         assertUserAndUserSession(getCurrentUser(userId), SessionEnum.GEO.getBeanName(), SetRadiusAndFinishSaveGeoStep.STEP_INDEX, true);
 
-        assertButtons(response, List.of(ButtonsUtil.BACK_TO_MAIN_MENU, GeoButtonsUtil.LEAVE_RADIUS_AS_IS));
+        assertButtons(response, List.of(ButtonsUtil.BACK_TO_MAIN_MENU, GeoButtonsUtil.BACK_TO_PLACES, GeoButtonsUtil.LEAVE_RADIUS_AS_IS));
 
         Place fromCache = geoPointCache.getIfPresent(userId);
 
