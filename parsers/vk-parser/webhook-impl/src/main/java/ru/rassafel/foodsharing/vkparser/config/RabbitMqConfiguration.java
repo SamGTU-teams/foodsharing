@@ -68,6 +68,12 @@ public class RabbitMqConfiguration {
     }
 
     @Bean
+    Binding vkCallbackBinding(RabbitMqProperties properties) {
+        return BindingBuilder.bind(vkCallbackQueue(properties))
+            .to(vkCallbackExchange(properties));
+    }
+
+    @Bean
     FanoutExchange rawExchange(RabbitMqProperties properties) {
         return ExchangeBuilder.fanoutExchange(properties.getRawPost().getExchange())
             .durable(true)
