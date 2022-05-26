@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.rassafel.foodsharing.vkparser.controller.CallbackController;
 import ru.rassafel.foodsharing.vkparser.model.vk.CallbackMessage;
+import ru.rassafel.foodsharing.vkparser.repository.GroupCallbackRepository;
 import ru.rassafel.foodsharing.vkparser.service.CallbackService;
 
 /**
@@ -19,15 +20,22 @@ import ru.rassafel.foodsharing.vkparser.service.CallbackService;
 public class CallbackControllerImpl implements CallbackController {
     private final CallbackService service;
     private final RabbitTemplate callbackRabbitTemplate;
+    private final GroupCallbackRepository callbackRepository;
 
     @Override
-    public ResponseEntity<?> acceptUpdate(CallbackMessage message) {
-        log.debug("Accepted message with type: {}", message.getType().name());
+    public ResponseEntity<String> acceptUpdate(CallbackMessage message) {
+        Integer groupId = message.getGroupId();
+        Integer postId = message.getWallpost().getId();
+        log.debug("Accepted post ({}) from group ({}) with type = {}", postId, groupId, message.getType().name());
         if (Events.CONFIRMATION.equals(message.getType())) {
-            String conformation = service.confirmation(message.getGroupId());
-            return ResponseEntity.ok(conformation);
+            String confirmation = service.confirmation(groupId);
+            return ResponseEntity.ok(confirmation);
+        }
+        if (!callbackRepository.registerPost(groupId, postId)) {
+            log.debug("Skip post ({}) from group with id = {}", postId, groupId);
+            return ResponseEntity.ok(OK_MESSAGE);
         }
         callbackRabbitTemplate.convertAndSend(message);
-        return ResponseEntity.ok("ok");
+        return ResponseEntity.ok(OK_MESSAGE);
     }
 }
