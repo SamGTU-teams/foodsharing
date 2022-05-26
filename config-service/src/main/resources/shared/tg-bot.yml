@@ -6,6 +6,10 @@ spring:
     ad-post:
       queue: post.ad.tg
       dlq: post.ad.dlq.tg
+
+    tg-bot-callback:
+      queue: callback.tg.bot.current
+      dlq: callback.tg.bot.dlq.current
   liquibase:
     contexts: tg-bot,data
 
