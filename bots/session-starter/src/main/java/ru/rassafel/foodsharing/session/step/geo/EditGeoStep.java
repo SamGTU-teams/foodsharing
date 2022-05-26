@@ -38,7 +38,6 @@ public class EditGeoStep implements Step {
         final String message = sessionRequest.getMessage();
         EmbeddedUserSession userSession = user.getUserSession();
         Collection<Place> usersPoints = placeService.findByUserId(user.getId());
-        Place point;
         if (BACK_TO_PLACES.equalsIgnoreCase(sessionRequest.getMessage())) {
             userSession.setSessionStep(ChooseOperationGeoStep.STEP_INDEX);
             sessionResponse.setMessage(templateEngine.compileTemplate(PlaceTemplates.BACK_TO_PLACES));
@@ -47,6 +46,7 @@ public class EditGeoStep implements Step {
             userService.saveUser(user);
             return;
         }
+        Place point;
         if (message.matches("^\\d+$")) {
             Map<Integer, String> usersPlacesNamesMap = placeService.getUsersPlacesNamesMap(usersPoints);
             String placeNameToEdit = usersPlacesNamesMap.get(Integer.parseInt(message));

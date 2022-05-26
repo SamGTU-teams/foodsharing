@@ -58,15 +58,15 @@ public class  SetNameGeoStep implements Step {
             return;
         }
 
+        if(message.isEmpty()){
+            throw new BotException(user.getId(), templateEngine.compileTemplate(PlaceTemplates.PLACE_NAME_IS_EMPTY));
+        }
+
         if (message.length() > 63) {
             throw new BotException(user.getId(), templateEngine.compileTemplate(PlaceTemplates.TOO_MANY_PLACE_NAME));
         }
 
         Collection<Place> usersPlaces = placeService.findByUserId(user.getId());
-
-        if(message.isEmpty()){
-            throw new BotException(user.getId(), templateEngine.compileTemplate(PlaceTemplates.PLACE_NAME_IS_EMPTY));
-        }
         String upperedPlaceName = StringUtils.capitalize(message);
         if (usersPlaces.stream().anyMatch(p -> p.getName().equalsIgnoreCase(message))) {
             throw new BotException(user.getId(),
