@@ -1,14 +1,20 @@
 package ru.rassafel.foodsharing.vkbot.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.ArrayList;
 
 @Data
 public class ClientInfo {
-    public ArrayList<String> button_actions;
+    @JsonProperty("button_actions")
+    public ArrayList<String> buttonActions;
+    @JsonProperty("keyboard")
     public boolean keyboard;
-    public boolean inline_keyboard;
+    @JsonProperty("inline_keyboard")
+    public boolean inlineKeyboard;
+    @JsonProperty("carousel")
     public boolean carousel;
-    public int lang_id;
+    @JsonProperty("lang_id")
+    public int langId;
 }

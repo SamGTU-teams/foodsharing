@@ -1,5 +1,6 @@
 package ru.rassafel.foodsharing.vkbot.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vk.api.sdk.objects.base.Geo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +12,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class VkMessage {
-    private int from_id;
+    @JsonProperty("id")
+    private int id;
+    @JsonProperty("from_id")
+    private int fromId;
+    @JsonProperty("text")
     private String text;
+    @JsonProperty("geo")
     private Geo geo;
 }
