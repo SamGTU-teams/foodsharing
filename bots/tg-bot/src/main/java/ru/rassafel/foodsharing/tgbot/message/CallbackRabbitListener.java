@@ -6,6 +6,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import ru.rassafel.foodsharing.session.repository.CallbackLockRepository;
 import ru.rassafel.foodsharing.tgbot.service.TgBotHandlerService;
 
 /**
@@ -16,11 +17,18 @@ import ru.rassafel.foodsharing.tgbot.service.TgBotHandlerService;
 @Component
 @RabbitListener(queues = {"${spring.rabbitmq.tg-bot-callback.queue}"})
 public class CallbackRabbitListener {
+    private final CallbackLockRepository lockRepository;
     private final TgBotHandlerService tgBotHandlerService;
 
     @RabbitHandler
     public void receiveMessage(Update update) {
-        log.debug("Received object: {}", update);
-        tgBotHandlerService.onWebhookUpdateReceived(update);
+        if (update.hasMessage()) {
+            Long chatId = update.getMessage().getChatId();
+            log.debug("Receive message from chat with id = {}", chatId);
+            tgBotHandlerService.onWebhookUpdateReceived(update);
+            log.debug("Release lock for chat with id = {}", chatId);
+            lockRepository.unlock(chatId);
+        }
+//        ToDo: add handler for other types
     }
 }
