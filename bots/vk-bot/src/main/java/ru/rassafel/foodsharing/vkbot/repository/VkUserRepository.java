@@ -1,5 +1,7 @@
 package ru.rassafel.foodsharing.vkbot.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -10,7 +12,7 @@ import java.util.Optional;
 
 public interface VkUserRepository extends CrudRepository<VkUser, Long> {
     @Query("select u.id from VkUser u")
-    List<Long> findUserIds();
+    Page<Long> findAllUserIds(Pageable page);
 
     @Query(nativeQuery = true,
         value = "SELECT us.id, vp.name AS place_name, prod.name AS product_name FROM vk_bot.vk_user us " +
