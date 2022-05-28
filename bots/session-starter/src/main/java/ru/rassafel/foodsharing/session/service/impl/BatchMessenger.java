@@ -1,25 +1,22 @@
-package ru.rassafel.foodsharing.session.service;
+package ru.rassafel.foodsharing.session.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
 import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
+import ru.rassafel.foodsharing.session.service.Messenger;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
-@Service
 @RequiredArgsConstructor
-public class QueueMessenger {
-
+@Slf4j
+public class BatchMessenger implements Messenger {
     private final Messenger messenger;
-
     private final BlockingQueue<SessionResponse> queue;
-    @Value("${botConfig.properties.client.maxQuerySizeInBatch:25}")
-    private int maxQuerySizeInBatch;
+    private final int maxQuerySizeInBatch;
 
     @Async("sendQueryTaskScheduler")
     @Scheduled(fixedRateString =
@@ -27,11 +24,23 @@ public class QueueMessenger {
             "sessionConfig.properties.messenger.maxQueryCountPerTime}")
     public void sendScheduled() {
         List<SessionResponse> requests = new ArrayList<>();
-        queue.drainTo(requests, maxQuerySizeInBatch);
-        if (requests.isEmpty()) {
+        if (queue.drainTo(requests, maxQuerySizeInBatch) < 1) {
             return;
         }
-        messenger.sendBatch(requests);
+        messenger.send(requests);
     }
 
+    @Override
+    public final void send(SessionResponse response) {
+        try {
+            queue.put(response);
+        } catch (InterruptedException e) {
+            log.error("", e);
+        }
+    }
+
+    @Override
+    public final void send(List<SessionResponse> responses) {
+        Messenger.super.send(responses);
+    }
 }

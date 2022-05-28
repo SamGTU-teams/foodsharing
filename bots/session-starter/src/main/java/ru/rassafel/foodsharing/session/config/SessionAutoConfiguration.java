@@ -22,9 +22,10 @@ import org.springframework.web.client.RestTemplate;
 import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
 import ru.rassafel.foodsharing.session.model.entity.Place;
 import ru.rassafel.foodsharing.session.repository.CallbackLockRepository;
+import ru.rassafel.foodsharing.session.service.Messenger;
+import ru.rassafel.foodsharing.session.service.impl.BatchMessenger;
 
 import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
 
 import static java.util.Objects.nonNull;
 
@@ -58,8 +59,12 @@ public class SessionAutoConfiguration {
     }
 
     @Bean
-    public BlockingQueue<SessionResponse> queryQueue() {
-        return new ArrayBlockingQueue<>(properties.getMessenger().getMaxRequestQueueSize());
+    @Primary
+    Messenger batchMessenger(SessionProperties properties,
+                             Messenger messenger) {
+        SessionProperties.MessengerConfigs configs = properties.getMessenger();
+        ArrayBlockingQueue<SessionResponse> queue = new ArrayBlockingQueue<>(configs.getMaxRequestQueueSize());
+        return new BatchMessenger(messenger, queue, configs.getMaxQuerySizeInBatch());
     }
 
     @Bean

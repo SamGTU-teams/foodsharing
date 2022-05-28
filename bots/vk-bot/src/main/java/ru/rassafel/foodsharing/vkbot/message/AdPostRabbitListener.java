@@ -10,13 +10,13 @@ import org.springframework.stereotype.Component;
 import ru.rassafel.foodsharing.ad.model.dto.AdPostDto;
 import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
 import ru.rassafel.foodsharing.session.model.dto.To;
+import ru.rassafel.foodsharing.session.service.Messenger;
 import ru.rassafel.foodsharing.vkbot.repository.VkUserRepository;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 import java.util.Set;
-import java.util.concurrent.BlockingQueue;
 
 /**
  * @author rassafel
@@ -29,7 +29,7 @@ public class AdPostRabbitListener {
     private static final int PAGE_SIZE = 100;
     private final Validator validator;
     private final VkUserRepository vkUserRepository;
-    private final BlockingQueue<SessionResponse> queue;
+    private final Messenger messenger;
 
     @RabbitHandler
     public void receiveMessage(AdPostDto adPostDto) {
@@ -41,14 +41,11 @@ public class AdPostRabbitListener {
         int pageNum = 0;
         Page<Long> userIds;
         while ((userIds = vkUserRepository.findAllUserIds(PageRequest.of(pageNum++, PAGE_SIZE))).hasContent()) {
-            try {
-                queue.put(SessionResponse.builder()
-                    .sendTo(new To(userIds.getContent()))
-                    .message(adPostDto.getMessage())
-                    .build());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            SessionResponse response = SessionResponse.builder()
+                .sendTo(new To(userIds.getContent()))
+                .message(adPostDto.getMessage())
+                .build();
+            messenger.send(response);
         }
     }
 }
