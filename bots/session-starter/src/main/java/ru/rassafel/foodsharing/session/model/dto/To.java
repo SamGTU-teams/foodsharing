@@ -11,14 +11,13 @@ import java.util.List;
 @AllArgsConstructor
 public class To {
 
+    private Long id;
+    private List<Long> userIds;
+
     public To(Long id) {
         this.id = id;
     }
-
     public To(List<Long> userIds) {
         this.userIds = userIds;
     }
-
-    private Long id;
-    private List<Long> userIds;
 }

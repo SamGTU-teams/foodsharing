@@ -27,7 +27,7 @@ import static ru.rassafel.foodsharing.session.util.GeoButtonsUtil.BACK_TO_PLACES
 
 @Component("geo-3")
 @RequiredArgsConstructor
-public class  SetNameGeoStep implements Step {
+public class SetNameGeoStep implements Step {
     public static final int STEP_INDEX = 3;
 
     private final Cache<Long, Place> geoPointCache;
@@ -58,7 +58,7 @@ public class  SetNameGeoStep implements Step {
             return;
         }
 
-        if(message.isEmpty()){
+        if (message.isEmpty()) {
             throw new BotException(user.getId(), templateEngine.compileTemplate(PlaceTemplates.PLACE_NAME_IS_EMPTY));
         }
 

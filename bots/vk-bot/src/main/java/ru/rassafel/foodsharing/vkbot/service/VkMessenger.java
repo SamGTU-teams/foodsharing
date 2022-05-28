@@ -26,6 +26,8 @@ import static java.util.Optional.ofNullable;
 @RequiredArgsConstructor
 @Slf4j
 public class VkMessenger implements Messenger {
+    public static final KeyboardButtonAction GEO_ACTION = new KeyboardButtonAction()
+        .setType(TemplateActionTypeNames.LOCATION);
     private final VkApiClient vk;
     private final GroupActor groupActor;
 
@@ -47,7 +49,7 @@ public class VkMessenger implements Messenger {
         for (BotButtons.BotButton rawKey : rawKeys.getButtons()) {
             KeyboardButton button = new KeyboardButton();
             if (rawKey.isGeo()) {
-                button.setAction(new KeyboardButtonAction().setType(TemplateActionTypeNames.LOCATION));
+                button.setAction(GEO_ACTION);
             } else {
                 button.setAction(new KeyboardButtonAction()
                         .setLabel(rawKey.getText())
@@ -57,9 +59,7 @@ public class VkMessenger implements Messenger {
             List<KeyboardButton> line = List.of(button);
             keyboardButtons.add(line);
         }
-        Keyboard keyboard = new Keyboard();
-        keyboard.setButtons(keyboardButtons);
-        return keyboard;
+        return new Keyboard().setButtons(keyboardButtons);
     }
 
     @Override
@@ -67,15 +67,14 @@ public class VkMessenger implements Messenger {
         List<AbstractQueryBuilder> queries = responses.stream()
             .map(response -> {
                 To sendTo = response.getSendTo();
-                List<Integer> ids;
-                if(sendTo.getId() == null){
-                    ids = sendTo.getUserIds().stream().map(Long::intValue).collect(Collectors.toList());
-                }else {
-                    ids = List.of(sendTo.getId().intValue());
-                }
+                List<Integer> ids = ofNullable(sendTo.getId())
+                    .map(List::of)
+                    .orElse(sendTo.getUserIds())
+                    .stream()
+                    .map(Long::intValue)
+                    .collect(Collectors.toList());
                 return createQuery(response.getMessage(),
-                    response.getButtons(),
-                    ids);
+                    response.getButtons(), ids);
             }).collect(Collectors.toList());
         try {
             ClientResponse clientRs = vk.execute()
@@ -84,7 +83,7 @@ public class VkMessenger implements Messenger {
             ofNullable(clientRs)
                 .ifPresent(rs -> {
                     log.debug("Sent event to VK with response code : {} and body : {}",
-                        clientRs.getStatusCode(), clientRs.getContent());
+                        rs.getStatusCode(), rs.getContent());
                 });
         } catch (ClientException e) {
             log.error("Caught an exception while sending message with error message : {}", e.getMessage());

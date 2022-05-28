@@ -37,12 +37,12 @@ public class ChooseNewProductStep implements Step {
         String responseMessage;
         BotButtons responseButtons = new BotButtons();
 
-        if(BACK_TO_PRODUCTS.equalsIgnoreCase(message)){
+        if (BACK_TO_PRODUCTS.equalsIgnoreCase(message)) {
             userSession.setSessionStep(ChooseOperationProductStep.STEP_INDEX);
             responseMessage = templateEngine.compileTemplate(ProductTemplates.BACK_TO_PRODUCTS);
             responseButtons.addAll(ProductButtonsUtil.PRODUCT_MAIN_BUTTONS);
-        }else {
-            if(message.isEmpty()){
+        } else {
+            if (message.isEmpty()) {
                 throw new BotException(user.getId(), templateEngine.compileTemplate(ProductTemplates.PRODUCT_NAME_IS_EMPTY));
             }
             responseButtons.addButton(new BotButtons.BotButton(BACK_TO_PRODUCTS));

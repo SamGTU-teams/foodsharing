@@ -78,7 +78,7 @@ public class SessionAutoConfiguration {
         }
 
         @Bean
-        public DefaultCallbackLockRepository defaultCallbackLockRepository(Cache<Long, MutablePair<Long, Boolean>> callbackCache){
+        public DefaultCallbackLockRepository defaultCallbackLockRepository(Cache<Long, MutablePair<Long, Boolean>> callbackCache) {
             return new DefaultCallbackLockRepository(callbackCache);
         }
 

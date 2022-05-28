@@ -54,7 +54,7 @@ public class DeleteProductStep implements Step {
             responseMessage = templateEngine.compileTemplate(ProductTemplates.BACK_TO_PRODUCTS);
             responseButtons.addAll(ProductButtonsUtil.PRODUCT_MAIN_BUTTONS);
             userSession.setSessionStep(ChooseOperationProductStep.STEP_INDEX);
-        }else {
+        } else {
             Map<Integer, String> usersProductNamesMap = productService.getUsersProductNamesMap(user);
             Set<String> productNamesToDelete;
             try {

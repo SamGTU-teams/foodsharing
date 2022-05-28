@@ -43,8 +43,8 @@ public class AdPostRabbitListener {
         while ((userIds = vkUserRepository.findAllUserIds(PageRequest.of(pageNum++, PAGE_SIZE))).hasContent()) {
             try {
                 queue.put(SessionResponse.builder()
-                        .sendTo(new To(userIds.getContent()))
-                        .message(adPostDto.getMessage())
+                    .sendTo(new To(userIds.getContent()))
+                    .message(adPostDto.getMessage())
                     .build());
             } catch (InterruptedException e) {
                 e.printStackTrace();

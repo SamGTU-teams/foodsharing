@@ -5,7 +5,6 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import com.google.gson.GsonBuilder;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
-import org.apache.commons.lang3.tuple.MutablePair;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

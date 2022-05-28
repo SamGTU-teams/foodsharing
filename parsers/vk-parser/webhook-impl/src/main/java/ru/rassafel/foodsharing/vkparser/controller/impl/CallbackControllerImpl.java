@@ -31,7 +31,7 @@ public class CallbackControllerImpl implements CallbackController {
             String confirmation = service.confirmation(groupId);
             return ResponseEntity.ok(confirmation);
         }
-        if(!Events.WALL_POST_NEW.equals(messageType)) {
+        if (!Events.WALL_POST_NEW.equals(messageType)) {
             return ResponseEntity.ok(OK_MESSAGE);
         }
         Integer postId = message.getWallpost().getId();

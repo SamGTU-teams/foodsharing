@@ -2,7 +2,6 @@ package ru.rassafel.foodsharing.tgbot.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.bots.TelegramWebhookBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -23,13 +22,10 @@ public class TgBotHandlerService extends TelegramWebhookBot {
     private final String botUsername;
     private final String botToken;
     private final String webHookPath;
-    @Autowired
-    private SessionService service;
-    @Autowired
-    private TgBotDtoMapper mapper;
     private final BlockingQueue<SessionResponse> queue;
     private final TemplateEngine templateEngine;
-
+    private final TgBotDtoMapper mapper;
+    private final SessionService service;
 
     @Override
     public SendMessage onWebhookUpdateReceived(Update update) {

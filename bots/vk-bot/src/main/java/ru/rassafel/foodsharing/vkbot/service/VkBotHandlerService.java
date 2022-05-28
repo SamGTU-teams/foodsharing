@@ -23,10 +23,10 @@ import java.util.concurrent.BlockingQueue;
 public class VkBotHandlerService {
     private final VkBotDtoMapper mapper;
     private final SessionService sessionService;
-    @Value("${vk.bot.confirm_code}")
-    private String confirmCode;
     private final BlockingQueue<SessionResponse> queue;
     private final TemplateEngine templateEngine;
+    @Value("${vk.bot.confirm_code}")
+    private String confirmCode;
 
     public String handleUpdate(VkUpdate update) {
         if (update.getType() == Type.MESSAGE_NEW) {

@@ -31,8 +31,8 @@ public class FoodPostHandlerService {
                 ));
             try {
                 queue.put(SessionResponse.builder()
-                        .message(resultMessage)
-                        .sendTo(new To(result.getUserId()))
+                    .message(resultMessage)
+                    .sendTo(new To(result.getUserId()))
                     .build());
             } catch (InterruptedException e) {
                 e.printStackTrace();

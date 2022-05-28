@@ -26,10 +26,10 @@ import java.util.concurrent.BlockingQueue;
 @Component
 @RabbitListener(queues = {"${spring.rabbitmq.ad-post.queue}"})
 public class AdPostRabbitListener {
+    private static final int PAGE_SIZE = 50;
     private final Validator validator;
     private final BlockingQueue<SessionResponse> queue;
     private final TgUserRepository tgUserRepository;
-    private static final int PAGE_SIZE = 50;
 
     @RabbitHandler
     public void receiveMessage(AdPostDto adPostDto) {
