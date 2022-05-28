@@ -4,10 +4,13 @@ spring:
   cloud:
     config:
       uri: ${CONFIG_SERVER_URL:http://localhost:8888/}
+      fail-fast: true
+      enabled: true
   profiles:
     active: ${spring_profiles_active:default}
   liquibase:
     change-log: classpath:/db/changelog/master-changelog.xml
+    enabled: true
 
 server:
   port: ${SERVER_PORT:8010}
