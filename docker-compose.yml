@@ -105,6 +105,8 @@ services:
       TG_BOT_WEB_HOOK_PATH: $TG_BOT_WEB_HOOK_PATH
       TG_BOT_USERNAME: $TG_BOT_USERNAME
       TG_BOT_TOKEN: $TG_BOT_TOKEN
+    volumes:
+      - ./bots/session-starter/src/main/resources/templates:/app/templates
     depends_on:
       config:
         condition: service_healthy
@@ -120,6 +122,8 @@ services:
       VK_BOT_GROUP_ID: $VK_BOT_GROUP_ID
       VK_BOT_ACCESS_TOKEN: $VK_BOT_ACCESS_TOKEN
       VK_CONFIRM_CODE: $VK_CONFIRM_CODE
+    volumes:
+      - ./bots/session-starter/src/main/resources/templates:/app/templates
     depends_on:
       config:
         condition: service_healthy
