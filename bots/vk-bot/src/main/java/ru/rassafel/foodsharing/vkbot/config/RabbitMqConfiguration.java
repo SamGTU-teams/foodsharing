@@ -44,15 +44,15 @@ public class RabbitMqConfiguration {
     }
 
     @Bean
-    Binding vkCallbackStorageBinding(RabbitMqProperties properties) {
-        return BindingBuilder.bind(vkCallbackStorageQueue(properties))
-            .to(vkCallbackExchange(properties));
-    }
-
-    @Bean
     Queue vkCallbackQueue(RabbitMqProperties properties) {
         return QueueBuilder.durable(properties.getVkBotCallback().getQueue())
             .build();
+    }
+
+    @Bean
+    Binding vkCallbackBinding(RabbitMqProperties properties) {
+        return BindingBuilder.bind(vkCallbackQueue(properties))
+            .to(vkCallbackExchange(properties));
     }
 
     @Bean

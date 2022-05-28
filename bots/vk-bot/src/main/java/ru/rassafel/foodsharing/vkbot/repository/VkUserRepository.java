@@ -12,13 +12,6 @@ public interface VkUserRepository extends CrudRepository<VkUser, Long> {
     @Query("select u.id from VkUser u")
     List<Long> findUserIds();
 
-    /*
-     * 10, дом, яблоко
-     * 10, дом,апельсин
-     * 10, работа, яблоко
-     * 10, работа, апельсин
-     * 11, уник, квас
-     */
     @Query(nativeQuery = true,
         value = "SELECT us.id, vp.name AS place_name, prod.name AS product_name FROM vk_bot.vk_user us " +
             "INNER JOIN vk_bot.vk_place vp ON us.id = vp.user_id " +
