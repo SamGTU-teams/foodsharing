@@ -1,7 +1,6 @@
 package ru.rassafel.foodsharing.tgbot.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.bots.TelegramWebhookBot;
@@ -32,7 +31,6 @@ public class TgBotHandlerService extends TelegramWebhookBot {
     private final TemplateEngine templateEngine;
 
 
-    @SneakyThrows
     @Override
     public SendMessage onWebhookUpdateReceived(Update update) {
         SessionRequest request = mapper.mapFromUpdate(update);
@@ -51,7 +49,11 @@ public class TgBotHandlerService extends TelegramWebhookBot {
                 .message(templateEngine.compileTemplate(MainTemplates.ERROR_ON_SERVER))
                 .build();
         }
-        queue.put(sessionResponse);
+        try {
+            queue.put(sessionResponse);
+        } catch (InterruptedException e) {
+            log.error("Caught an exception while put to queue : {}", e.getMessage());
+        }
         return mapper.map(sessionResponse);
     }
 
