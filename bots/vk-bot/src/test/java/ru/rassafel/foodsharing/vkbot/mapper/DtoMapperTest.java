@@ -36,13 +36,13 @@ public class DtoMapperTest {
             new VkUpdate(
                 Type.CONFIRMATION,
                 new VkUpdateObject(
-                    new VkMessage(12345, "Привет Я новый пользователЬ", new Geo())
+                    new VkMessage(1, 12345, "Привет Я новый пользователЬ", new Geo())
                 )
             ),
             new VkUpdate(
                 Type.CONFIRMATION,
                 new VkUpdateObject(
-                    new VkMessage(12345, "Привет Я новый пользователЬ и шлю сообщение с координатами",
+                    new VkMessage(1, 12345, "Привет Я новый пользователЬ и шлю сообщение с координатами",
                         geo)
                 )
             )

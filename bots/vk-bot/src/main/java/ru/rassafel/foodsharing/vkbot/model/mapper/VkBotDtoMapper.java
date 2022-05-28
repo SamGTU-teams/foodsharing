@@ -14,7 +14,7 @@ public abstract class VkBotDtoMapper implements UserDtoMapper {
     public static final VkBotDtoMapper INSTANCE = Mappers.getMapper(VkBotDtoMapper.class);
 
     @Mappings({
-        @Mapping(source = "object.message.from_id", target = "from.id"),
+        @Mapping(source = "object.message.fromId", target = "from.id"),
         @Mapping(source = "object.message.geo.coordinates", target = "location"),
         @Mapping(target = "from", ignore = true),
         @Mapping(target = "message", ignore = true)

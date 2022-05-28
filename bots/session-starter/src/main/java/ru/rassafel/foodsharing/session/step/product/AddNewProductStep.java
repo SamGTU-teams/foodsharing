@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import static ru.rassafel.foodsharing.session.util.ProductButtonsUtil.BACK_TO_PRODUCTS;
 import static ru.rassafel.foodsharing.session.util.ProductButtonsUtil.TRY_MORE;
 
 @Component("product-3")
@@ -47,6 +48,11 @@ public class AddNewProductStep implements Step {
         int resultSessionStep = ChooseNewProductStep.STEP_INDEX;
         if (message.equalsIgnoreCase(TRY_MORE)) {
             responseMessage = templateEngine.compileTemplate(ProductTemplates.TRY_CHOOSE_PRODUCT_MORE);
+            responseButtons.addButton(new BotButtons.BotButton(BACK_TO_PRODUCTS));
+        } else if (BACK_TO_PRODUCTS.equalsIgnoreCase(message)) {
+            resultSessionStep = ChooseOperationProductStep.STEP_INDEX;
+            responseMessage = templateEngine.compileTemplate(ProductTemplates.BACK_TO_PRODUCTS);
+            responseButtons.addAll(ProductButtonsUtil.PRODUCT_MAIN_BUTTONS);
         } else {
             Optional<Product> byName = productRepository.findByNameEqualsIgnoreCase(message);
             if (byName.isEmpty()) {
@@ -63,6 +69,7 @@ public class AddNewProductStep implements Step {
             boolean contains = productService.getUsersProductNames(user).contains(productByName.getName());
             if (contains) {
                 responseMessage = templateEngine.compileTemplate(ProductTemplates.PRODUCT_ALREADY_EXISTS);
+                responseButtons.addButton(new BotButtons.BotButton(BACK_TO_PRODUCTS));
             } else {
                 user.addProduct(productByName);
 
@@ -74,8 +81,10 @@ public class AddNewProductStep implements Step {
                         Map.of("maxProductCount", maxProductCount));
                 } else {
                     responseMessage = templateEngine.compileTemplate(ProductTemplates.SUCCESS_ADD_PRODUCT);
+                    responseButtons.addButton(new BotButtons.BotButton(BACK_TO_PRODUCTS));
                 }
             }
+
         }
         userSession.setSessionStep(resultSessionStep);
 

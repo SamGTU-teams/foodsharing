@@ -5,27 +5,30 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
 import ru.rassafel.foodsharing.session.service.Messenger;
+import ru.rassafel.foodsharing.tgbot.model.mapper.TgBotDtoMapper;
 
-import java.util.Arrays;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class TgMessenger implements Messenger {
+
     private final TgBotHandlerService service;
+    private final TgBotDtoMapper mapper;
 
     @Override
-    public void send(String message, Integer... userId) {
-        Arrays.stream(userId).forEach(id -> {
-            SendMessage sendMessage = new SendMessage(id.longValue(), message);
+    public void sendBatch(List<SessionResponse> responses) {
+        for (SessionResponse response : responses) {
+            SendMessage sendMessage = mapper.mapToSendMessage(response);
+            sendMessage.enableWebPagePreview();
             try {
                 service.execute(sendMessage);
-                log.debug("Successfully sent message {userId={}, message={}}", userId, message);
             } catch (TelegramApiException e) {
-                log.error("Caught an exception while sending message to user with id = {} and text = {}, errorMessage = {}",
-                    id, message, e.getMessage());
+                log.error("Caught exception while sending message : {}", e.getMessage());
             }
-        });
+        }
     }
 }

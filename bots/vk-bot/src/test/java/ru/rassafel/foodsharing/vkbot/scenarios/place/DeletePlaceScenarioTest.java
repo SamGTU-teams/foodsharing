@@ -42,7 +42,7 @@ public class DeletePlaceScenarioTest extends SpringCucumberSuperTest {
 
         assertUserAndUserSession(getCurrentUser(userId), SessionEnum.GEO.getBeanName(), DeleteGeoStep.STEP_INDEX, true);
 
-        assertButtons(response, List.of(ButtonsUtil.BACK_TO_MAIN_MENU, GeoButtonsUtil.DELETE_ALL));
+        assertButtons(response, List.of(ButtonsUtil.BACK_TO_MAIN_MENU, GeoButtonsUtil.BACK_TO_PLACES, GeoButtonsUtil.DELETE_ALL));
     }
 
     @Then("user with id {long} types {string}")

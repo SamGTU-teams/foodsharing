@@ -30,6 +30,8 @@ public enum ProductTemplates implements Templates {
     INVALID_PRODUCT_NAME("products/invalid-product-name"),
     SUCCESS_ADD_PRODUCT_AND_QUIT("products/success-add-product-and-quit"),
     TRY_CHOOSE_PRODUCT_MORE("products/try-choose-product-more"),
+    BACK_TO_PRODUCTS("products/back-to-products"),
+    PRODUCT_NAME_IS_EMPTY("products/product-name-is-empty"),
     PRODUCT_ALREADY_EXISTS("products/product-already-exists");
 
     private final String name;

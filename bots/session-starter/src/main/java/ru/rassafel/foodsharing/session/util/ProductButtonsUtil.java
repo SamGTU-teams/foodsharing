@@ -8,7 +8,8 @@ public interface ProductButtonsUtil {
         DELETE_PRODUCT = "Удалить продукт",
         MY_PRODUCTS = "Мои продукты",
         DELETE_ALL = "Удалить все",
-        TRY_MORE = "Попробовать еще";
+        TRY_MORE = "Попробовать еще",
+        BACK_TO_PRODUCTS = "Назад к продуктам";
 
     List<String> PRODUCT_MAIN_BUTTONS = List.of(
         ADD_PRODUCT,

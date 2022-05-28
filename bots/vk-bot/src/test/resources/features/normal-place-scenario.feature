@@ -9,7 +9,7 @@ Feature: Place session feature
         Then user with id 146072346 wants to go to main menu and send "на главную"
     Scenario: Describes how user can edit places
         When user with id 146072346 wants to do some with places and types message "места"
-        Then user with id 146072346 wants to edit place and types "редактирование места"
+        Then user with id 146072346 wants to edit place and types "редактировать место"
         Then user with id 146072346 types place name "дом" he wants to edit
         Then user with id 146072346 types new radius for editable place "4000"
         Then user with id 146072346 wants to go to main menu and send "на главную"

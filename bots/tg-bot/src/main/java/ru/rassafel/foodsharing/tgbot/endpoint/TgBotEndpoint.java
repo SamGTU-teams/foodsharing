@@ -4,10 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.annotation.*;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.rassafel.foodsharing.session.repository.CallbackLockRepository;
 
@@ -34,5 +32,11 @@ public class TgBotEndpoint {
 
         template.convertAndSend(update);
         return ResponseEntity.ok(OK_MESSAGE);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<?> handle(HttpMessageNotReadableException ex){
+        log.error("Exception during reading message: {}", ex.getMessage());
+        return ResponseEntity.ok("OK");
     }
 }

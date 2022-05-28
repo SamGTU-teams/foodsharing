@@ -1,5 +1,7 @@
 package ru.rassafel.foodsharing.tgbot.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,4 +23,7 @@ public interface TgUserRepository extends JpaRepository<TgUser, Long> {
 
     @EntityGraph(attributePaths = "products")
     Optional<TgUser> findWithProductsById(Long id);
+
+    @Query("SELECT t.id FROM TgUser t")
+    Page<Long> findAllUserIds(Pageable page);
 }

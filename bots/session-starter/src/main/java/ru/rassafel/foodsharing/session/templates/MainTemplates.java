@@ -11,6 +11,7 @@ public enum MainTemplates implements Templates {
     INVALID_OPERATION("invalid-operation-name"),
     OPERATION_TIMEOUT("operation-timeout"),
     POST_INFO("food-post-info"),
+    ERROR_ON_SERVER("error-on-server"),
     BACK_TO_MAIN("back-to-main");
 
     private final String name;

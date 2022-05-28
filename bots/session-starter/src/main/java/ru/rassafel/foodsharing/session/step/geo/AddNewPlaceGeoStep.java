@@ -16,6 +16,9 @@ import ru.rassafel.foodsharing.session.service.message.TemplateEngine;
 import ru.rassafel.foodsharing.session.service.openmap.AddressService;
 import ru.rassafel.foodsharing.session.step.Step;
 import ru.rassafel.foodsharing.session.templates.PlaceTemplates;
+import ru.rassafel.foodsharing.session.util.GeoButtonsUtil;
+
+import static ru.rassafel.foodsharing.session.util.GeoButtonsUtil.BACK_TO_PLACES;
 
 @Component("geo-2")
 @RequiredArgsConstructor
@@ -33,8 +36,14 @@ public class AddNewPlaceGeoStep implements Step {
         EmbeddedUserSession userSession = user.getUserSession();
         BotButtons responseButtons = new BotButtons();
         GeoPoint location = sessionRequest.getLocation();
-        if (location == null) {
-            sessionResponse.setMessage(templateEngine.compileTemplate(PlaceTemplates.NO_GEOLOCATION_PROVIDED));
+        String responseMessage;
+        if (BACK_TO_PLACES.equalsIgnoreCase(sessionRequest.getMessage())) {
+            userSession.setSessionStep(ChooseOperationGeoStep.STEP_INDEX);
+            responseMessage = templateEngine.compileTemplate(PlaceTemplates.BACK_TO_PLACES);
+            responseButtons.addAll(GeoButtonsUtil.GEO_MAIN_BUTTONS);
+        } else if (location == null) {
+            responseMessage = templateEngine.compileTemplate(PlaceTemplates.NO_GEOLOCATION_PROVIDED);
+            responseButtons.addButton(new BotButtons.BotButton(BACK_TO_PLACES));
             responseButtons.addButton(BotButtons.BotButton.GEO_BUTTON);
         } else {
             String address =
@@ -44,13 +53,16 @@ public class AddNewPlaceGeoStep implements Step {
 
             geoPointCache.put(user.getId(), place);
 
-            sessionResponse.setMessage(templateEngine.compileTemplate(PlaceTemplates.EXPECTATION_OF_GEO_NAME));
+            responseMessage = templateEngine.compileTemplate(PlaceTemplates.EXPECTATION_OF_GEO_NAME);
 
             userSession.setSessionStep(SetNameGeoStep.STEP_INDEX);
 
-            userService.saveUser(user);
+            responseButtons.addButton(new BotButtons.BotButton(BACK_TO_PLACES));
         }
 
         sessionResponse.setButtons(responseButtons);
+        sessionResponse.setMessage(responseMessage);
+
+        userService.saveUser(user);
     }
 }

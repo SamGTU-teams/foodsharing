@@ -45,7 +45,7 @@ public class EditPlaceScenarioTest extends SpringCucumberSuperTest {
         assertResponse(request, response, templateEngine.compileTemplate(PlaceTemplates.PLACES_LIST_TO_EDIT,
             PlaceTemplates.buildMapOfPlaces(placeService.findByUserId(userId))));
 
-        assertButtons(response, List.of(ButtonsUtil.BACK_TO_MAIN_MENU));
+        assertButtons(response, List.of(ButtonsUtil.BACK_TO_MAIN_MENU, GeoButtonsUtil.BACK_TO_PLACES));
     }
 
     @Then("user with id {long} types place name {string} he wants to edit")
@@ -63,7 +63,7 @@ public class EditPlaceScenarioTest extends SpringCucumberSuperTest {
 
         assertResponse(request, response, templateEngine.compileTemplate(PlaceTemplates.EXPECTATION_OF_NEW_RADIUS));
 
-        assertButtons(response, List.of(ButtonsUtil.BACK_TO_MAIN_MENU));
+        assertButtons(response, List.of(ButtonsUtil.BACK_TO_MAIN_MENU, GeoButtonsUtil.BACK_TO_PLACES));
 
         Place singlePlace = placeService.findByUserId(userId).iterator().next();
 

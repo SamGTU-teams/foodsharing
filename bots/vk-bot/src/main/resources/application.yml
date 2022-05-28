@@ -1,9 +1,16 @@
 spring:
   rabbitmq:
     enabled: false
-    host: ${RABBITMQ_HOST}
-    username: ${RABBITMQ_USER}
-    password: ${RABBITMQ_PASS}
+    host: 80.78.247.178
+    username: guest
+    password: guest
+    vk-bot-callback:
+      exchange: callback-vk-bot-exchange
+      storage: callback.vk.bot.storage
+      dlx: callback-vk-bot-dlx
+      dlq-storage: callback.vk.bot.dlq.storage
+      queue: callback.vk.bot.current
+      dlq: callback.vk.bot.dlq.current
     ready-post:
       exchange: post-ready-exchange
       storage: post.ready.storage
@@ -36,5 +43,6 @@ vk:
       maxQuerySizeInBatch: 25
 feign:
   analyzer:
-    url: http://localhost:8081/
-
+    url: http://80.78.247.178:8010
+product-analyzer:
+  stub-mode: true

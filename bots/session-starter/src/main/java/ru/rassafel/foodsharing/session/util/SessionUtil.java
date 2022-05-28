@@ -14,7 +14,7 @@ public class SessionUtil {
         if (!matcher.matches()) {
             Optional<String> first = objectMap.values().stream().filter(entry -> entry.equalsIgnoreCase(message)).findFirst();
             if (first.isEmpty()) {
-                throw new IllegalArgumentException(String.format("Названия %s в списке нет, повторите попытку", message));
+                throw new IllegalArgumentException(String.format("Названия %s в списке нет, повторите попытку.", message));
             }
             return Set.of(first.get());
         }
@@ -26,7 +26,7 @@ public class SessionUtil {
         while (matcher.find()) {
             int num = Integer.parseInt(matcher.group());
             if (!objectMap.containsKey(num)) {
-                throw new IllegalArgumentException(String.format("Номера %d в списке нет, повторите попытку", num));
+                throw new IllegalArgumentException(String.format("Номера %d в списке нет, повторите попытку.", num));
             }
             nums.add(num);
         }

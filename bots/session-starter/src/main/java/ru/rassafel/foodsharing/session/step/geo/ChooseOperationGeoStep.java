@@ -58,6 +58,7 @@ public class ChooseOperationGeoStep implements Step {
                     Map.of("count", maxPlacesCount)));
             }
             responseMessage = templateEngine.compileTemplate(PlaceTemplates.EXPECTATION_OF_GEO);
+            responseButtons.addButton(new BotButtons.BotButton(BACK_TO_PLACES));
             responseButtons.addButton(BotButtons.BotButton.GEO_BUTTON);
 
             userSession.setSessionStep(AddNewPlaceGeoStep.STEP_INDEX);
@@ -71,6 +72,7 @@ public class ChooseOperationGeoStep implements Step {
                 responseMessage = templateEngine.compileTemplate(PlaceTemplates.PLACES_LIST_TO_DELETE,
                     PlaceTemplates.buildMapOfPlaces(points));
 
+                responseButtons.addButton(new BotButtons.BotButton(BACK_TO_PLACES));
                 responseButtons.addButton(new BotButtons.BotButton(DELETE_ALL));
                 userSession.setSessionStep(DeleteGeoStep.STEP_INDEX);
             }
@@ -83,6 +85,7 @@ public class ChooseOperationGeoStep implements Step {
                 responseMessage = templateEngine.compileTemplate(PlaceTemplates.PLACES_LIST_TO_EDIT,
                     PlaceTemplates.buildMapOfPlaces(placeService.findByUserId(user.getId())));
 
+                responseButtons.addButton(new BotButtons.BotButton(BACK_TO_PLACES));
                 userSession.setSessionStep(EditGeoStep.STEP_INDEX);
             }
         } else {

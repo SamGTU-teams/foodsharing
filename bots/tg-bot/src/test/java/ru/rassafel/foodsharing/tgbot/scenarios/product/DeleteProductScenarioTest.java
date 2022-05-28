@@ -42,7 +42,7 @@ public class DeleteProductScenarioTest extends SpringCucumberSuperTest {
         assertResponse(request, response, templateEngine.compileTemplate(ProductTemplates.LIST_OF_PRODUCTS_TO_DELETE,
             ProductTemplates.buildMapOfProducts(currentUser.getProducts())));
 
-        assertButtons(response, List.of(ButtonsUtil.BACK_TO_MAIN_MENU, ProductButtonsUtil.DELETE_ALL));
+        assertButtons(response, List.of(ButtonsUtil.BACK_TO_MAIN_MENU, ProductButtonsUtil.BACK_TO_PRODUCTS, ProductButtonsUtil.DELETE_ALL));
     }
 
     @Then("user with id {long} wants to delete product and types {string}")

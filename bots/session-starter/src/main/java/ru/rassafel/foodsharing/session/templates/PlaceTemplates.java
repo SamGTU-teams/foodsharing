@@ -30,6 +30,8 @@ public enum PlaceTemplates implements Templates {
     PLACE_ALREADY_EXISTS("places/place-already-exists"),
     INVALID_RADIUS_FORMAT("places/invalid-radius-format"),
     PLACE_WITH_NAME_NOT_FOUND("places/place-with-name-not-found"),
+    BACK_TO_PLACES("places/back-to-places"),
+    PLACE_NAME_IS_EMPTY("places/place-name-is-empty"),
     PLACE_BY_NUM_NOT_FOUND("places/place-by-num-not-found");
 
     private final String name;

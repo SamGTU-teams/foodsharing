@@ -14,10 +14,8 @@ import ru.rassafel.foodsharing.session.model.dto.BotButtons;
 import ru.rassafel.foodsharing.session.model.dto.SessionRequest;
 import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
 import ru.rassafel.foodsharing.session.model.mapper.UserDtoMapper;
-import ru.rassafel.foodsharing.session.util.ButtonsUtil;
 import ru.rassafel.foodsharing.tgbot.model.domain.TgUser;
 
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.util.Optional.ofNullable;
@@ -66,33 +64,36 @@ public abstract class TgBotDtoMapper implements UserDtoMapper {
 
     @Mappings({
         @Mapping(source = "message", target = "text"),
-        @Mapping(target = "enableHtml", ignore = true),
-        @Mapping(target = "enableMarkdown", ignore = true),
-        @Mapping(target = "parseMode", ignore = true),
-        @Mapping(target = "replyMarkup", ignore = true),
-        @Mapping(target = "replyToMessageId", ignore = true),
-        @Mapping(target = "chatId", ignore = true)
+        @Mapping(target = "chatId", expression = "java(response.getSendTo().getId().toString())")
     })
     public abstract SendMessage map(SessionResponse response);
 
+    public SendMessage mapToSendMessage(SessionResponse response){
+        SendMessage map = map(response);
+        mapButtons(response, map);
+        return map;
+    }
+
     @AfterMapping
-    protected void map(SessionResponse response, @MappingTarget SendMessage sendMessage) {
-        sendMessage.setChatId(response.getSendTo().getId());
-        BotButtons buttons = Optional.ofNullable(response.getButtons()).orElse(new BotButtons(ButtonsUtil.DEFAULT_BUTTONS));
-        ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
-        keyboardMarkup.setKeyboard(buttons.getButtons().stream().map(o -> {
-            KeyboardRow buttonRow = new KeyboardRow();
-            if (o.isGeo()) {
-                KeyboardButton button = new KeyboardButton();
-                button.setRequestLocation(true);
-                button.setText(LOCATION_BUTTON_TEXT);
-                buttonRow.add(button);
-            } else {
-                buttonRow.add(o.getText());
-            }
-            return buttonRow;
-        }).collect(Collectors.toList()));
-        keyboardMarkup.setResizeKeyboard(true);
-        sendMessage.setReplyMarkup(keyboardMarkup);
+    protected void mapButtons(SessionResponse response, @MappingTarget SendMessage sendMessage) {
+        if(response.getButtons() != null) {
+            BotButtons buttons = response.getButtons();
+            ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
+            keyboardMarkup.setKeyboard(buttons.getButtons().stream().map(o -> {
+                KeyboardRow buttonRow = new KeyboardRow();
+                if (o.isGeo()) {
+                    KeyboardButton button = new KeyboardButton();
+                    button.setRequestLocation(true);
+                    button.setText(LOCATION_BUTTON_TEXT);
+                    buttonRow.add(button);
+                } else {
+                    buttonRow.add(o.getText());
+                }
+                return buttonRow;
+            }).collect(Collectors.toList()));
+            keyboardMarkup.setResizeKeyboard(true);
+
+            sendMessage.setReplyMarkup(keyboardMarkup);
+        }
     }
 }
