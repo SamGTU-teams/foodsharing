@@ -13,6 +13,8 @@ import ru.rassafel.foodsharing.parser.model.dto.RawPostDto;
 import ru.rassafel.foodsharing.vkparser.model.entity.VkGroup;
 import ru.rassafel.foodsharing.vkparser.model.mapper.RawPostMapper;
 import ru.rassafel.foodsharing.vkparser.model.vk.Wallpost;
+import ru.rassafel.foodsharing.vkparser.model.vk.group.validator.SecretKeyValidator;
+import ru.rassafel.foodsharing.vkparser.model.vk.group.validator.impl.SecretKeyValidatorImpl;
 import ru.rassafel.foodsharing.vkparser.repository.GroupRepository;
 
 import java.time.LocalDateTime;
@@ -32,16 +34,14 @@ import static org.mockito.Mockito.when;
 class CallbackServiceImplTest {
     @InjectMocks
     CallbackServiceImpl service;
-
     @Mock
     GroupRepository repository;
-
     @Mock
     RabbitTemplate template;
-
+    @Spy
+    SecretKeyValidator validator = new SecretKeyValidatorImpl();
     @Spy
     RawPostMapper rawPostMapper = RawPostMapper.INSTANCE;
-
     @Spy
     RegionMapper regionMapper = RegionMapper.INSTANCE;
 
