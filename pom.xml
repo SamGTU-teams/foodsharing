@@ -25,7 +25,7 @@
 
         <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
         <vk.sdk.version>1.0.11</vk.sdk.version>
-        <tg-bot.sdk.version>6.0.1</tg-bot.sdk.version>
+        <tg-bot.sdk.version>4.4.0.2</tg-bot.sdk.version>
         <lucene.version>8.11.1</lucene.version>
         <geojson.version>1.14</geojson.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
