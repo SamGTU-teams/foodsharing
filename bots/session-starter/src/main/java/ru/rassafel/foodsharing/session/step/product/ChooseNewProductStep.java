@@ -8,7 +8,6 @@ import ru.rassafel.foodsharing.session.model.dto.SessionRequest;
 import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
 import ru.rassafel.foodsharing.session.model.entity.EmbeddedUserSession;
 import ru.rassafel.foodsharing.session.model.entity.User;
-import ru.rassafel.foodsharing.session.repository.ProductRepository;
 import ru.rassafel.foodsharing.session.service.ProductService;
 import ru.rassafel.foodsharing.session.service.UserService;
 import ru.rassafel.foodsharing.session.service.message.TemplateEngine;
@@ -28,7 +27,6 @@ public class ChooseNewProductStep implements Step {
 
     private final ProductService productService;
     private final UserService userService;
-    private final ProductRepository productRepository;
     private final TemplateEngine templateEngine;
 
     @Override
