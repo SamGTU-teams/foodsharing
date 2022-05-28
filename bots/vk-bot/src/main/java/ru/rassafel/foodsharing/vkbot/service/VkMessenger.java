@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.rassafel.foodsharing.session.model.dto.BotButtons;
 import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
+import ru.rassafel.foodsharing.session.model.dto.To;
 import ru.rassafel.foodsharing.session.service.Messenger;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class VkMessenger implements Messenger {
     private final VkApiClient vk;
     private final GroupActor groupActor;
 
-    private MessagesSendQuery createQuery(String message, BotButtons buttons, Integer... ids) {
+    private MessagesSendQuery createQuery(String message, BotButtons buttons, List<Integer> ids) {
         MessagesSendQuery sendQuery = vk.messages().send(groupActor)
             .message(message)
             .userIds(ids)
@@ -64,10 +65,18 @@ public class VkMessenger implements Messenger {
     @Override
     public void sendBatch(List<SessionResponse> responses) {
         List<AbstractQueryBuilder> queries = responses.stream()
-            .map(response ->
-                createQuery(response.getMessage(),
+            .map(response -> {
+                To sendTo = response.getSendTo();
+                List<Integer> ids;
+                if(sendTo.getId() == null){
+                    ids = sendTo.getUserIds().stream().map(Long::intValue).collect(Collectors.toList());
+                }else {
+                    ids = List.of(sendTo.getId().intValue());
+                }
+                return createQuery(response.getMessage(),
                     response.getButtons(),
-                    response.getSendTo().getId().intValue())).collect(Collectors.toList());
+                    ids);
+            }).collect(Collectors.toList());
         try {
             ClientResponse clientRs = vk.execute()
                 .batch(groupActor, queries)
