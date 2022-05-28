@@ -1,30 +1,29 @@
-package ru.rassafel.foodsharing.vkbot.endpoint;
+package ru.rassafel.foodsharing.vkbot.controller.impl;
 
 import com.vk.api.sdk.objects.callback.Type;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.rassafel.foodsharing.session.repository.CallbackLockRepository;
-import ru.rassafel.foodsharing.vkbot.model.dto.VkUpdate;
+import ru.rassafel.foodsharing.vkbot.controller.CallbackController;
+import ru.rassafel.foodsharing.vkbot.model.vk.VkUpdate;
 import ru.rassafel.foodsharing.vkbot.service.VkBotHandlerService;
 
+/**
+ * @author rassafel
+ */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/callback")
 @Slf4j
-public class VkBotEndpoint {
-    public static final String OK_MESSAGE = "ok";
+public class CallbackControllerImpl implements CallbackController {
     private final CallbackLockRepository lockRepository;
     private final VkBotHandlerService vkBotHandlerService;
     private final RabbitTemplate template;
 
-    @PostMapping
-    public ResponseEntity<String> handle(@RequestBody VkUpdate update) {
+    @Override
+    public ResponseEntity<String> acceptUpdate(VkUpdate update) {
         log.debug("Got request from VK : {}", update);
         if (Type.CONFIRMATION.equals(update.getType())) {
             return ResponseEntity.ok(vkBotHandlerService.handleUpdate(update));

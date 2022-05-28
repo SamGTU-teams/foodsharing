@@ -1,25 +1,28 @@
-package ru.rassafel.foodsharing.tgbot.endpoint;
+package ru.rassafel.foodsharing.tgbot.controller.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestController;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.rassafel.foodsharing.session.repository.CallbackLockRepository;
+import ru.rassafel.foodsharing.tgbot.controller.CallbackController;
 
+/**
+ * @author rassafel
+ */
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/callback")
-public class TgBotEndpoint {
-    public static final String OK_MESSAGE = "{}";
+public class CallbackControllerImpl implements CallbackController {
     private final CallbackLockRepository lockRepository;
     private final RabbitTemplate template;
 
-    @PostMapping
-    public ResponseEntity<?> handleUpdate(@RequestBody Update update) {
+    @Override
+    public ResponseEntity<String> acceptUpdate(Update update) {
         log.debug("Got request from TG: {}", update);
         if (update.hasMessage()) {
             Long chatId = update.getMessage().getChatId();
@@ -35,7 +38,7 @@ public class TgBotEndpoint {
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<?> handle(HttpMessageNotReadableException ex){
+    public ResponseEntity<?> handle(HttpMessageNotReadableException ex) {
         log.error("Exception during reading message: {}", ex.getMessage());
         return ResponseEntity.ok("OK");
     }
