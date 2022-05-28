@@ -112,17 +112,17 @@
                 <version>${lucene.version}</version>
             </dependency>
 
-<!--            <dependency>-->
-<!--                <groupId>com.playtika.testcontainers</groupId>-->
-<!--                <artifactId>embedded-postgresql</artifactId>-->
-<!--                <version>${testcontainers.version}</version>-->
-<!--            </dependency>-->
+            <dependency>
+                <groupId>com.playtika.testcontainers</groupId>
+                <artifactId>embedded-postgresql</artifactId>
+                <version>${testcontainers.version}</version>
+            </dependency>
 
-<!--            <dependency>-->
-<!--                <groupId>com.playtika.testcontainers</groupId>-->
-<!--                <artifactId>embedded-rabbitmq</artifactId>-->
-<!--                <version>${testcontainers.version}</version>-->
-<!--            </dependency>-->
+            <dependency>
+                <groupId>com.playtika.testcontainers</groupId>
+                <artifactId>embedded-rabbitmq</artifactId>
+                <version>${testcontainers.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>io.cucumber</groupId>
@@ -207,17 +207,17 @@
             <scope>test</scope>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>com.playtika.testcontainers</groupId>-->
-<!--            <artifactId>embedded-postgresql</artifactId>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.playtika.testcontainers</groupId>
+            <artifactId>embedded-postgresql</artifactId>
+            <scope>test</scope>
+        </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>com.playtika.testcontainers</groupId>-->
-<!--            <artifactId>embedded-rabbitmq</artifactId>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.playtika.testcontainers</groupId>
+            <artifactId>embedded-rabbitmq</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.assertj</groupId>
