@@ -15,11 +15,12 @@ import ru.rassafel.foodsharing.session.service.session.SessionService;
 import ru.rassafel.foodsharing.session.templates.MainTemplates;
 import ru.rassafel.foodsharing.vkbot.model.mapper.VkBotDtoMapper;
 import ru.rassafel.foodsharing.vkbot.model.vk.VkUpdate;
+import ru.rassafel.foodsharing.vkbot.service.VkBotHandler;
 
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class VkBotHandlerService {
+public class VkBotHandlerImpl implements VkBotHandler {
     private final VkBotDtoMapper mapper;
     private final SessionService sessionService;
     private final Messenger messenger;
@@ -27,8 +28,9 @@ public class VkBotHandlerService {
     @Value("${vk.bot.confirm_code}")
     private String confirmCode;
 
-    public String handleUpdate(VkUpdate update) {
-        if (update.getType() == Type.MESSAGE_NEW) {
+    @Override
+    public String handle(VkUpdate update) {
+        if (Type.MESSAGE_NEW.equals(update.getType())) {
             SessionRequest request = mapper.mapDto(update);
             SessionResponse response;
             try {

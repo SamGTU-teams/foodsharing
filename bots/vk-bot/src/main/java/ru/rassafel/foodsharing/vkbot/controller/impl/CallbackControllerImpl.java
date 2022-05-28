@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.rassafel.foodsharing.session.repository.CallbackLockRepository;
 import ru.rassafel.foodsharing.vkbot.controller.CallbackController;
 import ru.rassafel.foodsharing.vkbot.model.vk.VkUpdate;
-import ru.rassafel.foodsharing.vkbot.service.VkBotHandlerService;
+import ru.rassafel.foodsharing.vkbot.service.VkBotHandler;
 
 /**
  * @author rassafel
@@ -19,14 +19,14 @@ import ru.rassafel.foodsharing.vkbot.service.VkBotHandlerService;
 @Slf4j
 public class CallbackControllerImpl implements CallbackController {
     private final CallbackLockRepository lockRepository;
-    private final VkBotHandlerService vkBotHandlerService;
+    private final VkBotHandler vkBotHandlerService;
     private final RabbitTemplate template;
 
     @Override
     public ResponseEntity<String> acceptUpdate(VkUpdate update) {
         log.debug("Got request from VK : {}", update);
         if (Type.CONFIRMATION.equals(update.getType())) {
-            return ResponseEntity.ok(vkBotHandlerService.handleUpdate(update));
+            return ResponseEntity.ok(vkBotHandlerService.handle(update));
         }
 
         Long chatId = (long) update.getObject().getMessage().getFromId();
