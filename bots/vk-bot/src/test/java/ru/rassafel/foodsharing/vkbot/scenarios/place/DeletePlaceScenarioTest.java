@@ -64,7 +64,7 @@ public class DeletePlaceScenarioTest extends SpringCucumberSuperTest {
         geoMainButtons.add(0, ButtonsUtil.BACK_TO_MAIN_MENU);
         assertButtons(response, geoMainButtons);
 
-        Collection<Place> afterDelete = placeService.findByUserId(userId);
+        Collection<? extends Place> afterDelete = placeService.findByUserId(userId);
 
         assertThat(afterDelete)
             .isEmpty();
