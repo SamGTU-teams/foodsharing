@@ -1,8 +1,8 @@
 spring:
   rabbitmq:
-    host: 80.78.247.178
-    username: guest
-    password: guest
+    host: ${RABBITMQ_HOST:localhost}
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASS:guest}
     tg-bot-callback:
       exchange: callback-tg-bot-exchange
       storage: callback.tg.bot.storage
@@ -26,6 +26,8 @@ spring:
       dlq: post.ad.dlq.tg
   liquibase:
     contexts: tg-bot,data
+  jpa:
+    hibernate.ddl-auto: validate
 tg:
   bot:
     webHookPath: ${TG_BOT_WEB_HOOK_PATH}
@@ -33,4 +35,4 @@ tg:
     token: ${TG_BOT_TOKEN}
 feign:
   analyzer:
-    url: http://80.78.247.178:8010
+    url: ${ANALYZER_URL:localhost}:8010
