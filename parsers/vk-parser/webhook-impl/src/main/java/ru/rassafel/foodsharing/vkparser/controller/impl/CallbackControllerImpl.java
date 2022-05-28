@@ -25,12 +25,17 @@ public class CallbackControllerImpl implements CallbackController {
     @Override
     public ResponseEntity<String> acceptUpdate(CallbackMessage message) {
         Integer groupId = message.getGroupId();
-        Integer postId = message.getWallpost().getId();
-        log.debug("Accepted post ({}) from group ({}) with type = {}", postId, groupId, message.getType().name());
-        if (Events.CONFIRMATION.equals(message.getType())) {
+        Events messageType = message.getType();
+        log.debug("Accepted message ({}) from group ({})", messageType, groupId);
+        if (Events.CONFIRMATION.equals(messageType)) {
             String confirmation = service.confirmation(groupId);
             return ResponseEntity.ok(confirmation);
         }
+        if(!Events.WALL_POST_NEW.equals(messageType)) {
+            return ResponseEntity.ok(OK_MESSAGE);
+        }
+        Integer postId = message.getWallpost().getId();
+        log.debug("Accepted post ({}) from group ({}) with type = {}", postId, groupId, messageType.name());
         if (!callbackRepository.registerPost(groupId, postId)) {
             log.debug("Skip post ({}) from group with id = {}", postId, groupId);
             return ResponseEntity.ok(OK_MESSAGE);
