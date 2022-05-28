@@ -78,8 +78,8 @@ public class MapperDtoTest {
             chatF.set(message, chat);
             textF.set(message, "Hello bot from " + i);
 
-            latitudeF.set(location, RandomUtils.nextDouble(0, 150));
-            longitudeF.set(location, RandomUtils.nextDouble(0, 150));
+            latitudeF.set(location, RandomUtils.nextFloat(0f, 150f));
+            longitudeF.set(location, RandomUtils.nextFloat(0f, 150f));
 
             if (i % 2 == 0) {
                 locationF.set(message, location);
