@@ -56,5 +56,5 @@ open-street-map-service:
 tg:
   bot:
     webHookPath: localhost:${server.port:8080}/callback
-    username: GetFood
+    botUsername: GetFood
     token: TOKEN
