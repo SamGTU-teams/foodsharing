@@ -12,7 +12,7 @@ import ru.rassafel.foodsharing.session.model.dto.To;
 import ru.rassafel.foodsharing.session.service.message.TemplateEngine;
 import ru.rassafel.foodsharing.session.service.session.SessionService;
 import ru.rassafel.foodsharing.session.templates.MainTemplates;
-import ru.rassafel.foodsharing.vkbot.model.dto.VkUpdate;
+import ru.rassafel.foodsharing.vkbot.model.vk.VkUpdate;
 import ru.rassafel.foodsharing.vkbot.model.mapper.VkBotDtoMapper;
 
 import java.util.concurrent.BlockingQueue;

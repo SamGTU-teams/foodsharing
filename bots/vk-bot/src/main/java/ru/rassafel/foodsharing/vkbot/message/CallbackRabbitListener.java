@@ -6,7 +6,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 import ru.rassafel.foodsharing.session.repository.CallbackLockRepository;
-import ru.rassafel.foodsharing.vkbot.model.dto.VkUpdate;
+import ru.rassafel.foodsharing.vkbot.model.vk.VkUpdate;
 import ru.rassafel.foodsharing.vkbot.service.VkBotHandlerService;
 
 /**

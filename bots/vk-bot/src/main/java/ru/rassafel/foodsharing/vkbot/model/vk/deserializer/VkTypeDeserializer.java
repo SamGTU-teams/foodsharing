@@ -1,4 +1,4 @@
-package ru.rassafel.foodsharing.vkbot.deserializer;
+package ru.rassafel.foodsharing.vkbot.model.vk.deserializer;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;

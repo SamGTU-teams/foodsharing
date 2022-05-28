@@ -1,4 +1,4 @@
-package ru.rassafel.foodsharing.vkbot.model.dto;
+package ru.rassafel.foodsharing.vkbot.model.vk;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vk.api.sdk.objects.callback.Type;
