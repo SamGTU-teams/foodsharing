@@ -1,6 +1,7 @@
 package ru.rassafel.foodsharing.analyzer.repository.impl;
 
 import lombok.SneakyThrows;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
@@ -11,7 +12,6 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.data.util.Pair;
 import org.testcontainers.shaded.org.apache.commons.lang.RandomStringUtils;
 import ru.rassafel.foodsharing.analyzer.model.LuceneIndexedString;
 
@@ -87,7 +87,7 @@ class LuceneRepositoryImplTest {
         assertThat(result)
             .hasSize(1);
 
-        LuceneIndexedString actual = result.get(0).getFirst();
+        LuceneIndexedString actual = result.get(0).getLeft();
 
         assertThat(actual)
             .isNotNull();
