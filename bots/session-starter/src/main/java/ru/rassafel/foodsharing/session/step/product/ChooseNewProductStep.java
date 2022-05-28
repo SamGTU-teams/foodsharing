@@ -48,13 +48,13 @@ public class ChooseNewProductStep implements Step {
             responseButtons.addButton(new BotButtons.BotButton(BACK_TO_PRODUCTS));
 
             //Поиск подходящих продуктов
-            List<String> similarProducts = productService.getSimilarToTextProducts(message);
+            List<String> products = productService.findProducts(message);
 
-            if (similarProducts.isEmpty()) {
+            if (products.isEmpty()) {
                 responseMessage = templateEngine.compileTemplate(ProductTemplates.PRODUCT_NOT_FOUND);
             } else {
                 responseMessage = templateEngine.compileTemplate(ProductTemplates.POSSIBLE_PRODUCT_NAMES);
-                responseButtons.addButton(new BotButtons.BotButton(TRY_MORE)).addAll(similarProducts);
+                responseButtons.addButton(new BotButtons.BotButton(TRY_MORE)).addAll(products);
 
                 userSession.setSessionStep(AddNewProductStep.STEP_INDEX);
             }

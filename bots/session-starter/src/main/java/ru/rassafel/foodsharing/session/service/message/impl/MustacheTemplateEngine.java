@@ -13,7 +13,8 @@ public class MustacheTemplateEngine implements TemplateEngine {
 
     @Override
     public String compileTemplate(Templates template, Object context) {
-        return mustacheEngine.compile(template.getName()).execute(context);
+        String templateName = String.format("{{>%s}}", template.getName());
+        return mustacheEngine.compile(templateName).execute(context);
     }
 
     @Override

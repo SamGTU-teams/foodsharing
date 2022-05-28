@@ -1,4 +1,4 @@
-package ru.rassafel.foodsharing.tgbot.service;
+package ru.rassafel.foodsharing.tgbot.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class TgPlaceService implements PlaceService {
     private final GeoPointEmbeddableMapper mapper;
 
     @Override
-    public Collection<Place> findByUserId(Long id) {
+    public Collection<TgUserPlace> findByUserId(Long id) {
         return new ArrayList<>(repository.findByUserId(id));
     }
 
@@ -43,15 +43,16 @@ public class TgPlaceService implements PlaceService {
     }
 
     @Override
-    public Place createPlace(User linkWith, GeoPoint geoPoint) {
-        return new TgUserPlace()
-            .withUser(linkWith)
+    public TgUserPlace createPlace(User linkWith, GeoPoint geoPoint) {
+        TgUserPlace place = new TgUserPlace();
+        place.withUser(linkWith)
             .withGeo(mapper.dtoToEntity(geoPoint));
+        return place;
     }
 
     @Override
-    public Place createPlace(User linkWith, GeoPoint geoPoint, String address) {
-        Place place = createPlace(linkWith, geoPoint);
+    public TgUserPlace createPlace(User linkWith, GeoPoint geoPoint, String address) {
+        TgUserPlace place = createPlace(linkWith, geoPoint);
         place.setAddress(address);
         return place;
     }

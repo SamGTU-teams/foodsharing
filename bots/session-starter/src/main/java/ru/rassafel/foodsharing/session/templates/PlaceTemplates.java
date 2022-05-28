@@ -36,7 +36,7 @@ public enum PlaceTemplates implements Templates {
 
     private final String name;
 
-    public static Map<String, Object> buildMapOfPlaces(Collection<Place> places) {
+    public static Map<String, Object> buildMapOfPlaces(Collection<? extends Place> places) {
         AtomicInteger indexer = new AtomicInteger(1);
         return Map.of("places",
             places.stream().map(place ->
@@ -50,6 +50,6 @@ public enum PlaceTemplates implements Templates {
 
     @Override
     public String getName() {
-        return getName(name);
+        return name;
     }
 }

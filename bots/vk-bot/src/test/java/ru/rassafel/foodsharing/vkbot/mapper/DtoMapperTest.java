@@ -6,10 +6,10 @@ import com.vk.api.sdk.objects.callback.Type;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.rassafel.foodsharing.session.model.dto.SessionRequest;
+import ru.rassafel.foodsharing.vkbot.model.mapper.VkBotDtoMapper;
 import ru.rassafel.foodsharing.vkbot.model.vk.VkMessage;
 import ru.rassafel.foodsharing.vkbot.model.vk.VkUpdate;
 import ru.rassafel.foodsharing.vkbot.model.vk.VkUpdateObject;
-import ru.rassafel.foodsharing.vkbot.model.mapper.VkBotDtoMapper;
 
 import java.util.List;
 import java.util.Locale;

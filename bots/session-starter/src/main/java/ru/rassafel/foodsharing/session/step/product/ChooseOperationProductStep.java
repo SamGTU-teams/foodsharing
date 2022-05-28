@@ -3,6 +3,7 @@ package ru.rassafel.foodsharing.session.step.product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import ru.rassafel.foodsharing.common.model.entity.product.Product;
 import ru.rassafel.foodsharing.session.exception.BotException;
 import ru.rassafel.foodsharing.session.model.dto.BotButtons;
 import ru.rassafel.foodsharing.session.model.dto.SessionRequest;
@@ -15,6 +16,7 @@ import ru.rassafel.foodsharing.session.step.Step;
 import ru.rassafel.foodsharing.session.templates.MainTemplates;
 import ru.rassafel.foodsharing.session.templates.ProductTemplates;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -32,21 +34,22 @@ public class ChooseOperationProductStep implements Step {
 
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
-
         String message = sessionRequest.getMessage();
+        Long userId = sessionRequest.getFrom().getId();
 
         String responseMessage;
         BotButtons responseButtons = new BotButtons();
 
-        user = userService.getUserWithProducts(sessionRequest.getFrom().getId()).orElseThrow(() ->
+        user = userService.getUserWithProducts(userId).orElseThrow(() ->
             new NoSuchElementException("Повторный запрос пользователя с продуктами не дал результата"));
 
         EmbeddedUserSession userSession = user.getUserSession();
+        Collection<Product> products = user.getProducts();
 
         if (message.equalsIgnoreCase(ADD_PRODUCT)) {
-            int productCount = user.getProducts().size();
+            int productCount = products.size();
             if (productCount >= maxProductCount) {
-                throw new BotException(user.getId(), templateEngine.compileTemplate(ProductTemplates.TOO_MANY_PRODUCTS,
+                throw new BotException(userId, templateEngine.compileTemplate(ProductTemplates.TOO_MANY_PRODUCTS,
                     Map.of("count", maxProductCount)));
             }
             responseMessage = templateEngine.compileTemplate(ProductTemplates.PRODUCT_NAME_EXPECTATION);
@@ -54,27 +57,26 @@ public class ChooseOperationProductStep implements Step {
             userSession.setSessionStep(ChooseNewProductStep.STEP_INDEX);
             responseButtons.addButton(new BotButtons.BotButton(BACK_TO_PRODUCTS));
         } else if (message.equalsIgnoreCase(DELETE_PRODUCT)) {
-
-            if (user.getProducts().isEmpty()) {
+            if (products.isEmpty()) {
                 responseMessage = templateEngine.compileTemplate(ProductTemplates.EMPTY_PRODUCTS);
                 responseButtons.addAll(PRODUCT_MAIN_BUTTONS);
             } else {
                 responseMessage = templateEngine.compileTemplate(ProductTemplates.LIST_OF_PRODUCTS_TO_DELETE,
-                    ProductTemplates.buildMapOfProducts(user.getProducts()));
+                    ProductTemplates.buildMapOfProducts(products));
                 responseButtons.addButton(new BotButtons.BotButton(BACK_TO_PRODUCTS));
                 responseButtons.addButton(new BotButtons.BotButton(DELETE_ALL));
                 userSession.setSessionStep(DeleteProductStep.STEP_INDEX);
             }
         } else if (message.equalsIgnoreCase(MY_PRODUCTS)) {
-            if (user.getProducts().isEmpty()) {
+            if (products.isEmpty()) {
                 responseMessage = templateEngine.compileTemplate(ProductTemplates.EMPTY_PRODUCTS);
             } else {
                 responseMessage = templateEngine.compileTemplate(ProductTemplates.LIST_OF_PRODUCTS,
-                    ProductTemplates.buildMapOfProducts(user.getProducts()));
+                    ProductTemplates.buildMapOfProducts(products));
             }
             responseButtons.addAll(PRODUCT_MAIN_BUTTONS);
         } else {
-            throw new BotException(user.getId(),
+            throw new BotException(userId,
                 templateEngine.compileTemplate(MainTemplates.INVALID_OPERATION,
                     MainTemplates.buildMapOfOperations(PRODUCT_MAIN_BUTTONS)));
         }

@@ -36,11 +36,12 @@ public class DeleteProductStep implements Step {
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
         String message = sessionRequest.getMessage();
+        Long userId = sessionRequest.getFrom().getId();
 
         String responseMessage;
         BotButtons responseButtons = new BotButtons();
 
-        user = userService.getUserWithProducts(sessionRequest.getFrom().getId()).orElseThrow(() ->
+        user = userService.getUserWithProducts(userId).orElseThrow(() ->
             new NoSuchElementException("Повторный запрос пользователя с продуктами не дал результата"));
 
         EmbeddedUserSession userSession = user.getUserSession();
@@ -60,7 +61,7 @@ public class DeleteProductStep implements Step {
             try {
                 productNamesToDelete = SessionUtil.findValuesByMessage(usersProductNamesMap, message);
             } catch (IllegalArgumentException ex) {
-                throw new BotException(user.getId(), ex.getMessage());
+                throw new BotException(userId, ex.getMessage());
             }
             Collection<Product> products = user.getProducts();
             products.removeIf(p -> productNamesToDelete.contains(p.getName()));

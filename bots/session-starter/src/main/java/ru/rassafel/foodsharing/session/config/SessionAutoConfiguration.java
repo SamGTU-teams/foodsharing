@@ -13,8 +13,10 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.web.client.RestTemplate;
 import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
@@ -38,17 +40,18 @@ import static java.util.Objects.nonNull;
 @ComponentScan(basePackages = "ru.rassafel.foodsharing.session")
 @EnableJpaRepositories(basePackages = "ru.rassafel.foodsharing.session.repository")
 @EntityScan(basePackages = "ru.rassafel.foodsharing.session.model.entity")
+@EnableScheduling
 public class SessionAutoConfiguration {
     public final SessionProperties properties;
 
     @Bean
-    public RestTemplate restTemplate() {
+    RestTemplate restTemplate() {
         return new RestTemplateBuilder()
             .build();
     }
 
     @Bean
-    public Cache<Long, Place> geoPointCache(SessionProperties properties) {
+    Cache<Long, Place> geoPointCache(SessionProperties properties) {
         return Caffeine.newBuilder()
             .expireAfterWrite(properties.getPlace().getCache().getExpirationTime())
             .build();
@@ -60,7 +63,7 @@ public class SessionAutoConfiguration {
     }
 
     @Bean
-    public TaskScheduler sendQueryTaskScheduler() {
+    TaskScheduler sendQueryTaskScheduler() {
         ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
         threadPoolTaskScheduler.setPoolSize(properties.getMessenger().getMaxThreadCountForSendQueries());
         threadPoolTaskScheduler.setThreadNamePrefix("SendQueryTaskScheduler-");
@@ -71,19 +74,19 @@ public class SessionAutoConfiguration {
     @ConditionalOnMissingBean(CallbackLockRepository.class)
     protected static class DefaultCallbackLockRepositoryConfiguration {
         @Bean
-        public Cache<Long, MutablePair<Long, Boolean>> callbackCache(SessionProperties properties) {
+        Cache<Long, MutablePair<Long, Boolean>> callbackCache(SessionProperties properties) {
             return Caffeine.newBuilder()
                 .expireAfterWrite(properties.getCallback().getCache().getExpirationTime())
                 .build();
         }
 
         @Bean
-        public DefaultCallbackLockRepository defaultCallbackLockRepository(Cache<Long, MutablePair<Long, Boolean>> callbackCache) {
+        DefaultCallbackLockRepository defaultCallbackLockRepository(Cache<Long, MutablePair<Long, Boolean>> callbackCache) {
             return new DefaultCallbackLockRepository(callbackCache);
         }
 
         @RequiredArgsConstructor
-        public static class DefaultCallbackLockRepository implements CallbackLockRepository {
+        static class DefaultCallbackLockRepository implements CallbackLockRepository {
             private final Cache<Long, MutablePair<Long, Boolean>> callbackCache;
 
             // ToDo: synchronise method

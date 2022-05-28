@@ -17,6 +17,7 @@ public class To {
     public To(Long id) {
         this.id = id;
     }
+
     public To(List<Long> userIds) {
         this.userIds = userIds;
     }

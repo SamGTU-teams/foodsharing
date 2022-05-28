@@ -1,4 +1,4 @@
-package ru.rassafel.foodsharing.session.service.openmap;
+package ru.rassafel.foodsharing.session.service;
 
 public interface AddressService {
 

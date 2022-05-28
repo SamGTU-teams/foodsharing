@@ -66,7 +66,7 @@ public class SetNameGeoStep implements Step {
             throw new BotException(user.getId(), templateEngine.compileTemplate(PlaceTemplates.TOO_MANY_PLACE_NAME));
         }
 
-        Collection<Place> usersPlaces = placeService.findByUserId(user.getId());
+        Collection<? extends Place> usersPlaces = placeService.findByUserId(user.getId());
         String upperedPlaceName = StringUtils.capitalize(message);
         if (usersPlaces.stream().anyMatch(p -> p.getName().equalsIgnoreCase(message))) {
             throw new BotException(user.getId(),

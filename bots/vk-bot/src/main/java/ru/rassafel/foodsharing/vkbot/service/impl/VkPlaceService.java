@@ -1,4 +1,4 @@
-package ru.rassafel.foodsharing.vkbot.service;
+package ru.rassafel.foodsharing.vkbot.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class VkPlaceService implements PlaceService {
     private final GeoPointEmbeddableMapper mapper;
 
     @Override
-    public Collection<Place> findByUserId(Long id) {
+    public Collection<VkUserPlace> findByUserId(Long id) {
         return new ArrayList<>(repository.findByUserId(id));
     }
 
@@ -43,15 +43,16 @@ public class VkPlaceService implements PlaceService {
     }
 
     @Override
-    public Place createPlace(User linkWith, GeoPoint location) {
-        return new VkUserPlace()
-            .withUser(linkWith)
+    public VkUserPlace createPlace(User linkWith, GeoPoint location) {
+        VkUserPlace place = new VkUserPlace();
+        place.withUser(linkWith)
             .withGeo(mapper.dtoToEntity(location));
+        return place;
     }
 
     @Override
     public Place createPlace(User linkWith, GeoPoint geoPoint, String address) {
-        Place place = createPlace(linkWith, geoPoint);
+        VkUserPlace place = createPlace(linkWith, geoPoint);
         place.setAddress(address);
         return place;
     }

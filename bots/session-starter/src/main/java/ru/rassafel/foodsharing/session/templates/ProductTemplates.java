@@ -47,6 +47,6 @@ public enum ProductTemplates implements Templates {
 
     @Override
     public String getName() {
-        return getName(name);
+        return name;
     }
 }

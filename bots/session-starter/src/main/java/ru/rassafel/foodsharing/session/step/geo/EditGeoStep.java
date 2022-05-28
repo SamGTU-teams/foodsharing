@@ -37,7 +37,7 @@ public class EditGeoStep implements Step {
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
         final String message = sessionRequest.getMessage();
         EmbeddedUserSession userSession = user.getUserSession();
-        Collection<Place> usersPoints = placeService.findByUserId(user.getId());
+        Collection<? extends Place> usersPoints = placeService.findByUserId(user.getId());
         if (BACK_TO_PLACES.equalsIgnoreCase(sessionRequest.getMessage())) {
             userSession.setSessionStep(ChooseOperationGeoStep.STEP_INDEX);
             sessionResponse.setMessage(templateEngine.compileTemplate(PlaceTemplates.BACK_TO_PLACES));

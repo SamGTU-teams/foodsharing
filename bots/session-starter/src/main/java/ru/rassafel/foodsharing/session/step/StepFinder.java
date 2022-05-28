@@ -14,8 +14,11 @@ import java.util.Optional;
 public class StepFinder {
     private final Map<String, Step> stepMap;
 
-    public void execute(Integer step, SessionRequest request, SessionResponse sessionResponse, User user, String stepPrefix) {
-        Optional.ofNullable(stepMap.get(stepPrefix + "-" + step)).orElseThrow(() -> new IllegalStateException("Can't find step bean!"))
-            .executeStep(request, sessionResponse, user);
+    public void execute(Integer step, SessionRequest request,
+                        SessionResponse sessionResponse,
+                        User user, String stepPrefix) {
+        Optional.ofNullable(stepMap.get(stepPrefix + "-" + step))
+            .orElseThrow(() -> new IllegalStateException("Can't find step bean!")
+            ).executeStep(request, sessionResponse, user);
     }
 }

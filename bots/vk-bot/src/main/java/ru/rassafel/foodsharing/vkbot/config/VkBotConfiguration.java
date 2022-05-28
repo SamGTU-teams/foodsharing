@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import ru.rassafel.foodsharing.vkbot.model.mapper.VkBotDtoMapper;
 
 /**
@@ -17,7 +16,6 @@ import ru.rassafel.foodsharing.vkbot.model.mapper.VkBotDtoMapper;
  */
 @Configuration
 @EnableConfigurationProperties(VkBotProperties.class)
-@EnableScheduling
 @AllArgsConstructor
 @EntityScan(basePackages = "ru.rassafel.foodsharing.vkbot.model.domain")
 public class VkBotConfiguration {
@@ -39,7 +37,7 @@ public class VkBotConfiguration {
     }
 
     @Bean
-    public GroupActor groupActor(VkBotProperties properties) {
+    GroupActor groupActor(VkBotProperties properties) {
         return new GroupActor(properties.getGroupId(), properties.getAccessToken());
     }
 }

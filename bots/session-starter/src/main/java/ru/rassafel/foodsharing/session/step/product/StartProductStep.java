@@ -23,9 +23,10 @@ public class StartProductStep implements Step {
     @Override
     public void executeStep(SessionRequest sessionRequest, SessionResponse sessionResponse, User user) {
         EmbeddedUserSession userSession = user.getUserSession();
-        sessionResponse.setMessage(templateEngine.compileTemplate(ProductTemplates.CHOOSE_PRODUCT_OPERATION));
-        BotButtons responseButtons = new BotButtons();
-        sessionResponse.setButtons(responseButtons.addAll(PRODUCT_MAIN_BUTTONS));
+        String message = templateEngine.compileTemplate(ProductTemplates.CHOOSE_PRODUCT_OPERATION);
+        sessionResponse.setMessage(message);
+        BotButtons responseButtons = new BotButtons(PRODUCT_MAIN_BUTTONS);
+        sessionResponse.setButtons(responseButtons);
         userSession.setSessionStep(ChooseOperationProductStep.STEP_INDEX);
         userService.saveUser(user);
     }

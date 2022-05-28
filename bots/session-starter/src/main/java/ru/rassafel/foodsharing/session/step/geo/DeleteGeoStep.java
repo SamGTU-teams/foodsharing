@@ -64,7 +64,7 @@ public class DeleteGeoStep implements Step {
             } catch (IllegalArgumentException ex) {
                 throw new BotException(user.getId(), ex.getMessage());
             }
-            Collection<Place> usersPlaces = placeService.findByUserId(user.getId());
+            Collection<? extends Place> usersPlaces = placeService.findByUserId(user.getId());
             for (String placeName : placesNamesToDelete) {
                 Place place = usersPlaces.stream().filter(p -> p.getName().equalsIgnoreCase(placeName)).findFirst()
                     .orElseThrow(() -> new RuntimeException("Uncaught error! Place name not found"));

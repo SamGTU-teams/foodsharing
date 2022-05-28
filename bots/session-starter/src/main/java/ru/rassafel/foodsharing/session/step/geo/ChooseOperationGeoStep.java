@@ -41,7 +41,7 @@ public class ChooseOperationGeoStep implements Step {
         String responseMessage;
         BotButtons responseButtons = new BotButtons();
 
-        Collection<Place> points = placeService.findByUserId(user.getId());
+        Collection<? extends Place> points = placeService.findByUserId(user.getId());
         if (message.equalsIgnoreCase(MY_PLACES)) {
             if (points.isEmpty()) {
                 responseMessage = templateEngine.compileTemplate(PlaceTemplates.EMPTY_PLACES);

@@ -11,8 +11,8 @@ import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
 import ru.rassafel.foodsharing.session.model.entity.EmbeddedUserSession;
 import ru.rassafel.foodsharing.session.model.entity.User;
 import ru.rassafel.foodsharing.session.repository.ProductRepository;
-import ru.rassafel.foodsharing.session.service.ProductService;
 import ru.rassafel.foodsharing.session.service.UserService;
+import ru.rassafel.foodsharing.session.service.impl.ProductServiceImpl;
 import ru.rassafel.foodsharing.session.service.message.TemplateEngine;
 import ru.rassafel.foodsharing.session.step.Step;
 import ru.rassafel.foodsharing.session.templates.ProductTemplates;
@@ -30,7 +30,7 @@ import static ru.rassafel.foodsharing.session.util.ProductButtonsUtil.TRY_MORE;
 public class AddNewProductStep implements Step {
     public static final int STEP_INDEX = 3;
 
-    private final ProductService productService;
+    private final ProductServiceImpl productService;
     private final ProductRepository productRepository;
     private final UserService userService;
     private final TemplateEngine templateEngine;

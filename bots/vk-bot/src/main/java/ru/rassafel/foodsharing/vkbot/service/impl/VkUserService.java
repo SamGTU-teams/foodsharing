@@ -1,4 +1,4 @@
-package ru.rassafel.foodsharing.vkbot.service;
+package ru.rassafel.foodsharing.vkbot.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.tuple.Pair;
@@ -31,7 +31,7 @@ public class VkUserService implements UserService {
     }
 
     @Override
-    public Optional<? extends User> getUser(Long id) {
+    public Optional<? extends VkUser> getUser(Long id) {
         return repository.findById(id);
     }
 
@@ -62,7 +62,7 @@ public class VkUserService implements UserService {
     }
 
     @Override
-    public Optional<? extends User> getUserWithProducts(Long id) {
+    public Optional<? extends VkUser> getUserWithProducts(Long id) {
         return repository.findWithProductsById(id);
     }
 }

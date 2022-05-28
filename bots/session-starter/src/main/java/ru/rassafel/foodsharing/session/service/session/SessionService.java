@@ -28,13 +28,13 @@ public class SessionService {
     private final TemplateEngine templateEngine;
 
     public SessionResponse handle(SessionRequest request) {
-
         String userMessage = request.getMessage();
 
         BotSession botSession;
         User user;
+        Long userId = request.getFrom().getId();
 
-        Optional<? extends User> userOptional = userService.getUser(request.getFrom().getId());
+        Optional<? extends User> userOptional = userService.getUser(userId);
 
         if (userOptional.isEmpty()) {
             botSession = welcomeSessionProducer.getWelcome();
@@ -48,7 +48,7 @@ public class SessionService {
                 try {
                     botSession = factory.getSession(userMessage);
                 } catch (IllegalArgumentException ex) {
-                    throw new BotException(user.getId(),
+                    throw new BotException(userId,
                         templateEngine.compileTemplate(MainTemplates.INVALID_OPERATION,
                             MainTemplates.buildMapOfOperations(ButtonsUtil.DEFAULT_BUTTONS)));
                 }

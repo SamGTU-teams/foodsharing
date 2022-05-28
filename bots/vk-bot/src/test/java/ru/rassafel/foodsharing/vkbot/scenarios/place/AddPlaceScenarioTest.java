@@ -9,7 +9,7 @@ import ru.rassafel.foodsharing.session.model.dto.From;
 import ru.rassafel.foodsharing.session.model.dto.SessionRequest;
 import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
 import ru.rassafel.foodsharing.session.model.entity.Place;
-import ru.rassafel.foodsharing.session.service.openmap.AddressService;
+import ru.rassafel.foodsharing.session.service.AddressService;
 import ru.rassafel.foodsharing.session.service.session.SessionEnum;
 import ru.rassafel.foodsharing.session.step.geo.AddNewPlaceGeoStep;
 import ru.rassafel.foodsharing.session.step.geo.ChooseOperationGeoStep;
