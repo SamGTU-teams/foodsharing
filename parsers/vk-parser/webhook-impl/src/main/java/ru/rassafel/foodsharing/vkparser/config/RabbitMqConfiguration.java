@@ -19,37 +19,77 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties(RabbitMqProperties.class)
 public class RabbitMqConfiguration {
     @Bean
-    FanoutExchange fanoutExchange(RabbitMqProperties properties) {
+    MessageConverter jsonMessageConverter(ObjectMapper mapper) {
+        return new Jackson2JsonMessageConverter(mapper);
+    }
+
+    @Bean
+    RabbitTemplate callbackRabbitTemplate(ConnectionFactory connectionFactory,
+                                          MessageConverter jsonMessageConverter,
+                                          RabbitMqProperties properties) {
+        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        rabbitTemplate.setMessageConverter(jsonMessageConverter);
+        rabbitTemplate.setExchange(properties.getVkParserCallback().getExchange());
+        return rabbitTemplate;
+    }
+
+    @Bean
+    RabbitTemplate rawRabbitTemplate(ConnectionFactory connectionFactory,
+                                     MessageConverter jsonMessageConverter,
+                                     RabbitMqProperties properties) {
+        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        rabbitTemplate.setMessageConverter(jsonMessageConverter);
+        rabbitTemplate.setExchange(properties.getRawPost().getExchange());
+        return rabbitTemplate;
+    }
+
+    @Bean
+    FanoutExchange vkCallbackExchange(RabbitMqProperties properties) {
+        return ExchangeBuilder.fanoutExchange(properties.getVkParserCallback().getExchange())
+            .build();
+    }
+
+    @Bean
+    Queue vkCallbackStorageQueue(RabbitMqProperties properties) {
+        return QueueBuilder.durable(properties.getVkParserCallback().getStorage())
+            .build();
+    }
+
+    @Bean
+    Binding vkCallbackStorageBinding(RabbitMqProperties properties) {
+        return BindingBuilder.bind(vkCallbackStorageQueue(properties))
+            .to(vkCallbackExchange(properties));
+    }
+
+    @Bean
+    Queue vkCallbackQueue(RabbitMqProperties properties) {
+        return QueueBuilder.durable(properties.getVkParserCallback().getQueue())
+            .build();
+    }
+
+    @Bean
+    Binding vkCallbackBinding(RabbitMqProperties properties) {
+        return BindingBuilder.bind(vkCallbackQueue(properties))
+            .to(vkCallbackExchange(properties));
+    }
+
+    @Bean
+    FanoutExchange rawExchange(RabbitMqProperties properties) {
         return ExchangeBuilder.fanoutExchange(properties.getRawPost().getExchange())
             .durable(true)
             .build();
     }
 
     @Bean
-    Queue storageQueue(RabbitMqProperties properties) {
+    Queue rawStorageQueue(RabbitMqProperties properties) {
         return QueueBuilder.durable(properties.getRawPost().getStorage())
             .build();
     }
 
     @Bean
-    Binding bindingMessages(RabbitMqProperties properties) {
+    Binding rawStorageBinding(RabbitMqProperties properties) {
         return BindingBuilder
-            .bind(storageQueue(properties))
-            .to(fanoutExchange(properties));
-    }
-
-    @Bean
-    MessageConverter jsonMessageConverter(ObjectMapper mapper) {
-        return new Jackson2JsonMessageConverter(mapper);
-    }
-
-    @Bean
-    RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory,
-                                  MessageConverter jsonMessageConverter,
-                                  RabbitMqProperties properties) {
-        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setMessageConverter(jsonMessageConverter);
-        rabbitTemplate.setExchange(properties.getRawPost().getExchange());
-        return rabbitTemplate;
+            .bind(rawStorageQueue(properties))
+            .to(rawExchange(properties));
     }
 }

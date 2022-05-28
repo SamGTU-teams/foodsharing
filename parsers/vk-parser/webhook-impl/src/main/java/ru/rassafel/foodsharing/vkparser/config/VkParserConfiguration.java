@@ -1,8 +1,11 @@
 package ru.rassafel.foodsharing.vkparser.config;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import com.google.gson.GsonBuilder;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
+import org.apache.commons.lang3.tuple.MutablePair;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -22,11 +25,18 @@ public class VkParserConfiguration {
     @Bean
     VkApiClient vkApiClient(VkParserProperties properties) {
         HttpTransportClient instance = new HttpTransportClient(
-            properties.getRetryAttemptsNetworkErrorCount(),
-            properties.getRetryAttemptsInvalidStatusCount());
+            properties.getClient().getRetryAttemptsNetworkErrorCount(),
+            properties.getClient().getRetryAttemptsInvalidStatusCount());
         return new VkApiClient(instance,
             new GsonBuilder().disableHtmlEscaping().create(),
-            properties.getRetryAttemptsInternalServerErrorCount());
+            properties.getClient().getRetryAttemptsInternalServerErrorCount());
+    }
+
+    @Bean
+    public Cache<Integer, Integer> callbackCache(VkParserProperties properties) {
+        return Caffeine.newBuilder()
+            .expireAfterWrite(properties.getCallback().getCache().getExpirationTime())
+            .build();
     }
 
     @Bean

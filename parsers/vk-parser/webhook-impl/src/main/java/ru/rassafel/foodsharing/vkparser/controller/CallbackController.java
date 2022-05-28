@@ -12,7 +12,8 @@ import ru.rassafel.foodsharing.vkparser.model.vk.CallbackMessage;
 @RequestMapping(CallbackController.MAPPING)
 public interface CallbackController {
     String MAPPING = "/callback";
+    String OK_MESSAGE = "ok";
 
     @PostMapping
-    ResponseEntity<?> acceptUpdate(@RequestBody CallbackMessage message);
+    ResponseEntity<String> acceptUpdate(@RequestBody CallbackMessage message);
 }

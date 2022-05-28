@@ -2,9 +2,10 @@ package ru.rassafel.foodsharing.analyzer.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.search.*;
-import org.springframework.data.util.Pair;
+import org.apache.lucene.search.FuzzyQuery;
+import org.apache.lucene.search.Query;
 import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
 import ru.rassafel.foodsharing.analyzer.config.LuceneProperties;
@@ -17,6 +18,7 @@ import ru.rassafel.foodsharing.common.model.entity.product.Product;
 import ru.rassafel.foodsharing.parser.model.dto.RawPostDto;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -53,39 +55,26 @@ public class ProductLuceneAnalyzerServiceImpl implements ProductLuceneAnalyzerSe
 
     @Override
     public List<ScoreProduct> parseProducts(LuceneIndexedString... indexedStrings) {
-        Query byIdQuery = findByIdQuery(indexedStrings);
-
+        List<String> ids = Streamable.of(indexedStrings)
+            .map(LuceneIndexedString::getId)
+            .toList();
         return productRepository.findAll()
-            .map(product -> parseProduct(product, byIdQuery))
-            .filter(pair -> pair.getScore() > 0f)
+            .map(this::parseProduct)
+            .flatMap(Collection::stream)
+            .filter(pair -> ids.contains(pair.getLeft().getId()))
+            .filter(pair -> pair.getRight().getScore() > 0)
+            .map(Pair::getRight)
             .toList();
     }
 
-    ScoreProduct parseProduct(Product product, Query findByIdQuery) {
-        Query fizzyQuery = fizzyQuery(product.getName());
-        BooleanQuery query = new BooleanQuery.Builder()
-            .add(fizzyQuery, BooleanClause.Occur.MUST)
-            .add(findByIdQuery, BooleanClause.Occur.MUST)
-            .build();
+    List<Pair<LuceneIndexedString, ScoreProduct>> parseProduct(Product product) {
+        Query query = fizzyQuery(product.getName());
 
         int maxResults = params.getLuceneMaxResults();
 
         return Streamable.of(luceneRepository.search(query, maxResults))
-            .map(Pair::getSecond)
-            .stream()
-            .max(Float::compare)
-            .map(f -> new ScoreProduct(f, product))
-            .orElseGet(() -> new ScoreProduct(0f, product));
-    }
-
-    BooleanQuery findByIdQuery(LuceneIndexedString... indexedStrings) {
-        BooleanQuery.Builder findByIdBuilder = new BooleanQuery.Builder();
-        Arrays.stream(indexedStrings)
-            .map(s -> new Term(LuceneRepository.FIELD_ID, s.getId()))
-            .map(TermQuery::new)
-            .map(q -> new BooleanClause(q, BooleanClause.Occur.SHOULD))
-            .forEachOrdered(findByIdBuilder::add);
-        return findByIdBuilder.build();
+            .map(pair -> Pair.of(pair.getLeft(), new ScoreProduct(pair.getRight(), product)))
+            .toList();
     }
 
     FuzzyQuery fizzyQuery(String text) {

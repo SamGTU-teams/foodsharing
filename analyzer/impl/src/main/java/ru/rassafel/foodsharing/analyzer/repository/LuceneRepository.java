@@ -1,8 +1,8 @@
 package ru.rassafel.foodsharing.analyzer.repository;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.lucene.search.Query;
 import org.springframework.data.repository.NoRepositoryBean;
-import org.springframework.data.util.Pair;
 import ru.rassafel.foodsharing.analyzer.model.LuceneIndexedString;
 
 import java.util.List;

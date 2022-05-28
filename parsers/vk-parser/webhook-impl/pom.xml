@@ -48,6 +48,11 @@
             <artifactId>sdk</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>

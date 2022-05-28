@@ -11,13 +11,12 @@ import ru.rassafel.foodsharing.parser.model.dto.RawPostDto;
 import ru.rassafel.foodsharing.vkparser.model.entity.VkGroup;
 import ru.rassafel.foodsharing.vkparser.model.mapper.RawPostMapper;
 import ru.rassafel.foodsharing.vkparser.model.vk.Wallpost;
+import ru.rassafel.foodsharing.vkparser.model.vk.group.validator.SecretKeyValidator;
 import ru.rassafel.foodsharing.vkparser.repository.GroupRepository;
 import ru.rassafel.foodsharing.vkparser.service.CallbackService;
 
 import java.util.List;
 import java.util.Optional;
-
-import static ru.rassafel.foodsharing.vkparser.util.GroupUtil.throwIfSecretKeyNotMatch;
 
 /**
  * @author rassafel
@@ -27,9 +26,10 @@ import static ru.rassafel.foodsharing.vkparser.util.GroupUtil.throwIfSecretKeyNo
 @Service
 public class CallbackServiceImpl implements CallbackService {
     private final GroupRepository repository;
-    private final RabbitTemplate template;
+    private final RabbitTemplate rawRabbitTemplate;
     private final RawPostMapper rawPostMapper;
     private final RegionMapper regionMapper;
+    private final SecretKeyValidator validator;
 
     @Override
     public RawPostDto wallpostNew(Integer groupId, Wallpost wallpost, String secret) {
@@ -39,8 +39,7 @@ public class CallbackServiceImpl implements CallbackService {
         List<RegionDto> regions = regionMapper.entitiesToDtos(vkGroup.getRegions());
         postDto.getContext().setRegions(regions);
 
-        template.convertAndSend(postDto);
-
+        rawRabbitTemplate.convertAndSend(postDto);
         return postDto;
     }
 
@@ -67,7 +66,7 @@ public class CallbackServiceImpl implements CallbackService {
 
     private VkGroup findGroup(Integer groupId, String secret) {
         VkGroup group = findGroup(groupId);
-        throwIfSecretKeyNotMatch(group, secret);
+        validator.validate(group, secret);
         return group;
     }
 }

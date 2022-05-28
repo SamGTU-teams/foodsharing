@@ -10,12 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.rassafel.foodsharing.vkparser.config.VkParserProperties;
 import ru.rassafel.foodsharing.vkparser.model.entity.VkGroup;
+import ru.rassafel.foodsharing.vkparser.model.vk.group.validator.SecretKeyValidator;
 import ru.rassafel.foodsharing.vkparser.repository.GroupRepository;
 import ru.rassafel.foodsharing.vkparser.service.GroupService;
 
 import java.util.Optional;
-
-import static ru.rassafel.foodsharing.vkparser.util.GroupUtil.throwIfSecretKeyNotMatch;
 
 /**
  * @author rassafel
@@ -27,6 +26,7 @@ public class GroupServiceImpl implements GroupService {
     private final VkApiClient api;
     private final GroupRepository repository;
     private final VkParserProperties properties;
+    private final SecretKeyValidator validator;
 
     @Override
     @Transactional
@@ -93,7 +93,7 @@ public class GroupServiceImpl implements GroupService {
         if (optionalGroup.isPresent()) {
             log.debug("Group with id = {} exists in DB.", group.getGroupId());
             VkGroup vkGroup = optionalGroup.get();
-            throwIfSecretKeyNotMatch(group, vkGroup.getSecretKey());
+            validator.validate(group, vkGroup.getSecretKey());
             vkGroup.setServerId(null);
             vkGroup.setAccessToken(group.getAccessToken());
             vkGroup.setConfirmationCode(group.getConfirmationCode());

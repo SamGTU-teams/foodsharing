@@ -30,7 +30,7 @@ public class DtoMapperTest {
             new VkUpdate(
                 Type.CONFIRMATION,
                 new VkUpdateObject(
-                    new VkMessage(12345, "Привет Я новый пользователЬ", null)
+                    new VkMessage(1, 12345, "Привет Я новый пользователЬ", null)
                 )
             ),
             new VkUpdate(
@@ -56,7 +56,7 @@ public class DtoMapperTest {
         Geo geo = dto.getObject().getMessage().getGeo();
         assertThat(request)
             .hasFieldOrPropertyWithValue("message", dto.getObject().getMessage().getText().toLowerCase(Locale.ROOT))
-            .hasFieldOrPropertyWithValue("from.id", (long) dto.getObject().getMessage().getFrom_id());
+            .hasFieldOrPropertyWithValue("from.id", (long) dto.getObject().getMessage().getFromId());
 
         if (geo == null || geo.getCoordinates() == null) {
             assertThat(request.getLocation())
