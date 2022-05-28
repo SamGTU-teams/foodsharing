@@ -7,8 +7,11 @@ import com.vk.api.sdk.httpclient.HttpTransportClient;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import ru.rassafel.foodsharing.analyzer.controller.ProductAnalyzerController;
+import ru.rassafel.foodsharing.ibot.controller.IBotController;
 import ru.rassafel.foodsharing.vkbot.model.mapper.VkBotDtoMapper;
 
 /**
@@ -18,6 +21,7 @@ import ru.rassafel.foodsharing.vkbot.model.mapper.VkBotDtoMapper;
 @EnableConfigurationProperties(VkBotProperties.class)
 @AllArgsConstructor
 @EntityScan(basePackages = "ru.rassafel.foodsharing.vkbot.model.domain")
+@EnableFeignClients(basePackageClasses = {ProductAnalyzerController.class, IBotController.class})
 public class VkBotConfiguration {
     public VkBotProperties properties;
 

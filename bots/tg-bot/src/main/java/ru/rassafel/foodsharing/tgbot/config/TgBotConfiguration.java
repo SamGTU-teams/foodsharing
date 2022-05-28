@@ -2,16 +2,20 @@ package ru.rassafel.foodsharing.tgbot.config;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.telegram.telegrambots.bots.TelegramWebhookBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import ru.rassafel.foodsharing.analyzer.controller.ProductAnalyzerController;
+import ru.rassafel.foodsharing.ibot.controller.IBotController;
 import ru.rassafel.foodsharing.tgbot.model.mapper.TgBotDtoMapper;
 
 @Configuration
 @EnableConfigurationProperties(TgBotProperties.class)
 @EntityScan(basePackages = "ru.rassafel.foodsharing.tgbot.model.domain")
+@EnableFeignClients(basePackageClasses = {ProductAnalyzerController.class, IBotController.class})
 public class TgBotConfiguration {
     @Bean
     TgBotDtoMapper tgBotDtoMapper() {
