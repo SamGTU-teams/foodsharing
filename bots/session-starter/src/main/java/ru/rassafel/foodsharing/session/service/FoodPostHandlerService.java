@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class FoodPostHandlerService {
     private final UserService userService;
     private final TemplateEngine templateEngine;
-    private BlockingQueue<SessionResponse> queue;
+    private final BlockingQueue<SessionResponse> queue;
 
     public void handleFoodPostReceived(FoodPostDto foodPostDto) {
         userService.findByFoodPost(foodPostDto).forEach(result -> {

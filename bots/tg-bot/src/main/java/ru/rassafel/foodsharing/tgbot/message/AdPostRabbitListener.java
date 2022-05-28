@@ -7,7 +7,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
-import ru.rassafel.foodsharing.ad.model.AdPostDto;
+import ru.rassafel.foodsharing.ad.model.dto.AdPostDto;
 import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
 import ru.rassafel.foodsharing.session.model.dto.To;
 import ru.rassafel.foodsharing.tgbot.repository.TgUserRepository;
