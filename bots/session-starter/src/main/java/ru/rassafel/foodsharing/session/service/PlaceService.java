@@ -36,19 +36,4 @@ public interface PlaceService {
                 o -> o
             ));
     }
-
-    // ToDo: remove if not in use
-    default String getUsersPlaceMapMessage(User user, String additionalMessage) {
-        return getUsersPlacesNamesMap(user)
-            .entrySet()
-            .stream()
-            .map(entry -> entry.getKey() + "." + entry.getValue())
-            .collect(Collectors.joining("\n", "",
-                "\n\n" + additionalMessage));
-    }
-
-    // ToDo: remove if not in use
-    default String getUsersPlaceMapMessage(User user) {
-        return getUsersPlaceMapMessage(user, "");
-    }
 }
