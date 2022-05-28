@@ -14,6 +14,13 @@ spring:
       dlx: post-ad-dlx
       dlq-storage: post.ad.dlq.storage
       dlq: post.ad.dlq.tg
+    tg-bot-callback:
+      exchange: callback-tg-bot-exchange
+      storage: callback.tg.bot.storage
+      queue: callback.tg.bot.current
+      dlx: callback-tg-bot-dlx
+      dlq-storage: callback.tg.bot.dlq.storage
+      dlq: callback.tg.bot.dlq.current
   liquibase:
     change-log: classpath:/db/changelog/master-changelog.xml
     contexts: tg-bot,data,test

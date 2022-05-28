@@ -14,6 +14,13 @@ spring:
       dlx: post-ad-dlx
       dlq-storage: post.ad.dlq.storage
       dlq: post.ad.dlq.vk
+    vk-bot-callback:
+      exchange: callback-vk-bot-exchange
+      storage: callback.vk.bot.storage
+      queue: callback.vk.bot.current
+      dlx: callback-vk-bot-dlx
+      dlq-storage: callback.vk.bot.dlq.storage
+      dlq: callback.vk.bot.dlq.current
   liquibase:
     change-log: classpath:/db/changelog/master-changelog.xml
     contexts: vk-bot,data,test
