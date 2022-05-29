@@ -23,7 +23,7 @@ import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
 import ru.rassafel.foodsharing.session.model.entity.Place;
 import ru.rassafel.foodsharing.session.repository.CallbackLockRepository;
 import ru.rassafel.foodsharing.session.service.Messenger;
-import ru.rassafel.foodsharing.session.service.impl.BatchMessenger;
+import ru.rassafel.foodsharing.session.service.messenger.BatchMessenger;
 
 import java.util.concurrent.ArrayBlockingQueue;
 

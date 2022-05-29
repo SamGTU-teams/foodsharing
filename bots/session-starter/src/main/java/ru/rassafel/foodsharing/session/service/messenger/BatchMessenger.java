@@ -1,4 +1,4 @@
-package ru.rassafel.foodsharing.session.service.impl;
+package ru.rassafel.foodsharing.session.service.messenger;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
