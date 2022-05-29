@@ -1,15 +1,11 @@
 package ru.rassafel.foodsharing.analyzer.controller.stub;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.stereotype.Component;
 import ru.rassafel.foodsharing.analyzer.controller.ProductAnalyzerController;
 import ru.rassafel.foodsharing.analyzer.model.dto.ScoreProductDto;
 import ru.rassafel.foodsharing.common.model.dto.ProductDto;
 
 import java.util.List;
 
-@Component
-@ConditionalOnMissingBean(ProductAnalyzerController.class)
 public class ProductAnalyzerControllerStub implements ProductAnalyzerController {
     @Override
     public List<ScoreProductDto> parseProducts(ProductRequest request, Long count) {
