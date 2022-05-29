@@ -10,8 +10,8 @@ import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
 import ru.rassafel.foodsharing.session.model.dto.To;
 import ru.rassafel.foodsharing.session.service.Messenger;
 import ru.rassafel.foodsharing.session.service.message.TemplateEngine;
-import ru.rassafel.foodsharing.session.service.session.SessionService;
-import ru.rassafel.foodsharing.session.templates.MainTemplates;
+import ru.rassafel.foodsharing.session.service.SessionService;
+import ru.rassafel.foodsharing.session.service.message.templates.MainTemplates;
 import ru.rassafel.foodsharing.tgbot.model.mapper.TgBotDtoMapper;
 import ru.rassafel.foodsharing.tgbot.service.TgBotHandler;
 

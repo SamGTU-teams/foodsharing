@@ -13,11 +13,11 @@ import ru.rassafel.foodsharing.session.model.entity.Place;
 import ru.rassafel.foodsharing.session.model.entity.User;
 import ru.rassafel.foodsharing.session.service.UserService;
 import ru.rassafel.foodsharing.session.service.message.TemplateEngine;
-import ru.rassafel.foodsharing.session.templates.MainTemplates;
-import ru.rassafel.foodsharing.session.type.BotSession;
+import ru.rassafel.foodsharing.session.service.message.templates.MainTemplates;
+import ru.rassafel.foodsharing.session.service.session.type.BotSession;
 
-import static ru.rassafel.foodsharing.session.util.ButtonsUtil.BACK_TO_MAIN_MENU;
-import static ru.rassafel.foodsharing.session.util.ButtonsUtil.DEFAULT_BUTTONS;
+import static ru.rassafel.foodsharing.session.util.button.ButtonsUtil.BACK_TO_MAIN_MENU;
+import static ru.rassafel.foodsharing.session.util.button.ButtonsUtil.DEFAULT_BUTTONS;
 
 @Component
 @RequiredArgsConstructor

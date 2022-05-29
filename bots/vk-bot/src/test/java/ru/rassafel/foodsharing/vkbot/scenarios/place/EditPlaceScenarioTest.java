@@ -9,12 +9,12 @@ import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
 import ru.rassafel.foodsharing.session.model.entity.Place;
 import ru.rassafel.foodsharing.session.service.PlaceService;
 import ru.rassafel.foodsharing.session.service.session.SessionEnum;
-import ru.rassafel.foodsharing.session.step.geo.ChooseOperationGeoStep;
-import ru.rassafel.foodsharing.session.step.geo.EditGeoStep;
-import ru.rassafel.foodsharing.session.step.geo.SetNewRadiusGeoStep;
-import ru.rassafel.foodsharing.session.templates.PlaceTemplates;
-import ru.rassafel.foodsharing.session.util.ButtonsUtil;
-import ru.rassafel.foodsharing.session.util.GeoButtonsUtil;
+import ru.rassafel.foodsharing.session.service.session.step.geo.ChooseOperationGeoStep;
+import ru.rassafel.foodsharing.session.service.session.step.geo.EditGeoStep;
+import ru.rassafel.foodsharing.session.service.session.step.geo.SetNewRadiusGeoStep;
+import ru.rassafel.foodsharing.session.service.message.templates.PlaceTemplates;
+import ru.rassafel.foodsharing.session.util.button.ButtonsUtil;
+import ru.rassafel.foodsharing.session.util.button.GeoButtonsUtil;
 import ru.rassafel.foodsharing.vkbot.scenarios.SpringCucumberSuperTest;
 
 import java.util.ArrayList;

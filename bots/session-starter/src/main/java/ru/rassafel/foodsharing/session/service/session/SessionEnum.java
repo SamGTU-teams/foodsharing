@@ -2,9 +2,9 @@ package ru.rassafel.foodsharing.session.service.session;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import ru.rassafel.foodsharing.session.type.impl.GeoSession;
-import ru.rassafel.foodsharing.session.type.impl.ProductSession;
-import ru.rassafel.foodsharing.session.type.impl.WelcomeSession;
+import ru.rassafel.foodsharing.session.service.session.type.impl.GeoSession;
+import ru.rassafel.foodsharing.session.service.session.type.impl.ProductSession;
+import ru.rassafel.foodsharing.session.service.session.type.impl.WelcomeSession;
 
 import java.util.Arrays;
 

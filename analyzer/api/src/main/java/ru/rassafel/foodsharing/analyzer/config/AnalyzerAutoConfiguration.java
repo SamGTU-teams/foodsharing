@@ -13,7 +13,6 @@ import ru.rassafel.foodsharing.analyzer.controller.stub.ProductAnalyzerControlle
 @Configuration
 @ComponentScan("ru.rassafel.foodsharing.analyzer.controller")
 public class AnalyzerAutoConfiguration {
-
     @Bean
     @ConditionalOnMissingBean(ProductAnalyzerController.class)
     public ProductAnalyzerControllerStub productAnalyzerControllerStub(){

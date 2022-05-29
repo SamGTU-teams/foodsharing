@@ -1,6 +1,6 @@
 package ru.rassafel.foodsharing.session.service.message;
 
-import ru.rassafel.foodsharing.session.templates.Templates;
+import ru.rassafel.foodsharing.session.service.message.templates.Templates;
 
 /**
  * @author rassafel
