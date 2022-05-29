@@ -17,7 +17,3 @@ spring:
         format_sql: true
   liquibase:
     enabled: true
-  cloud:
-    config:
-      fail-fast: false
-      enabled: false

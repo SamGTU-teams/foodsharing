@@ -4,7 +4,7 @@ import io.cucumber.spring.CucumberContextConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.rassafel.foodsharing.session.service.message.TemplateEngine;
-import ru.rassafel.foodsharing.session.service.session.SessionService;
+import ru.rassafel.foodsharing.session.service.SessionService;
 import ru.rassafel.foodsharing.vkbot.model.domain.VkUser;
 import ru.rassafel.foodsharing.vkbot.repository.VkUserRepository;
 

@@ -2,20 +2,20 @@ package ru.rassafel.foodsharing.tgbot.config;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
-import ru.rassafel.foodsharing.session.service.message.TemplateEngine;
+import org.telegram.telegrambots.bots.TelegramWebhookBot;
+import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
+import org.telegram.telegrambots.meta.api.objects.Update;
+import ru.rassafel.foodsharing.analyzer.controller.ProductAnalyzerController;
+import ru.rassafel.foodsharing.ibot.controller.IBotController;
 import ru.rassafel.foodsharing.tgbot.model.mapper.TgBotDtoMapper;
-import ru.rassafel.foodsharing.tgbot.service.TgBotHandlerService;
-
-import java.util.concurrent.BlockingQueue;
 
 @Configuration
 @EnableConfigurationProperties(TgBotProperties.class)
 @EntityScan(basePackages = "ru.rassafel.foodsharing.tgbot.model.domain")
-@EnableScheduling
+@EnableFeignClients(basePackageClasses = {ProductAnalyzerController.class, IBotController.class})
 public class TgBotConfiguration {
     @Bean
     TgBotDtoMapper tgBotDtoMapper() {
@@ -23,11 +23,27 @@ public class TgBotConfiguration {
     }
 
     @Bean
-    public TgBotHandlerService foodSharingWebHookBot(TgBotProperties properties,
-                                                     BlockingQueue<SessionResponse> queue,
-                                                     TemplateEngine templateEngine) {
-        return new TgBotHandlerService(properties.getBotUsername(),
-            properties.getToken(),
-            properties.getWebHookPath(), queue, templateEngine);
+    TelegramWebhookBot foodSharingWebHookBot(TgBotProperties properties) {
+        return new TelegramWebhookBot() {
+            @Override
+            public String getBotToken() {
+                return properties.getToken();
+            }
+
+            @Override
+            public String getBotUsername() {
+                return properties.getBotUsername();
+            }
+
+            @Override
+            public String getBotPath() {
+                return properties.getWebHookPath();
+            }
+
+            @Override
+            public BotApiMethod onWebhookUpdateReceived(Update update) {
+                return null;
+            }
+        };
     }
 }

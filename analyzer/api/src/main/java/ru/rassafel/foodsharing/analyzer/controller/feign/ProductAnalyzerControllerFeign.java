@@ -8,6 +8,6 @@ import ru.rassafel.foodsharing.analyzer.controller.ProductAnalyzerController;
  * @author rassafel
  */
 @FeignClient(name = "AnalyzerService", url = "${feign.analyzer.url}")
-@ConditionalOnProperty(name = "product-analyzer.stub-mode", havingValue = "false")
+@ConditionalOnProperty(prefix = "feign.analyzer", name = "url")
 public interface ProductAnalyzerControllerFeign extends ProductAnalyzerController {
 }

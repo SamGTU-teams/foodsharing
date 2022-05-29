@@ -10,13 +10,13 @@ import org.springframework.stereotype.Component;
 import ru.rassafel.foodsharing.ad.model.dto.AdPostDto;
 import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
 import ru.rassafel.foodsharing.session.model.dto.To;
+import ru.rassafel.foodsharing.session.service.Messenger;
 import ru.rassafel.foodsharing.tgbot.repository.TgUserRepository;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 import java.util.Set;
-import java.util.concurrent.BlockingQueue;
 
 /**
  * @author rassafel
@@ -26,10 +26,10 @@ import java.util.concurrent.BlockingQueue;
 @Component
 @RabbitListener(queues = {"${spring.rabbitmq.ad-post.queue}"})
 public class AdPostRabbitListener {
-    private final Validator validator;
-    private final BlockingQueue<SessionResponse> queue;
-    private final TgUserRepository tgUserRepository;
     private static final int PAGE_SIZE = 50;
+    private final Validator validator;
+    private final Messenger messenger;
+    private final TgUserRepository tgUserRepository;
 
     @RabbitHandler
     public void receiveMessage(AdPostDto adPostDto) {
@@ -41,18 +41,13 @@ public class AdPostRabbitListener {
         int pageNum = 0;
         Page<Long> userIds;
         while ((userIds = tgUserRepository.findAllUserIds(PageRequest.of(pageNum++, PAGE_SIZE))).hasContent()) {
-            userIds.stream().map(id ->
+            userIds.stream()
+                .map(id ->
                     SessionResponse.builder()
                         .sendTo(new To(id))
                         .message(adPostDto.getMessage())
                         .build())
-                .forEach(sr -> {
-                    try {
-                        queue.put(sr);
-                    } catch (InterruptedException e) {
-                        log.error("Caught an exception while put ad message to queue");
-                    }
-                });
+                .forEach(messenger::send);
         }
     }
 }

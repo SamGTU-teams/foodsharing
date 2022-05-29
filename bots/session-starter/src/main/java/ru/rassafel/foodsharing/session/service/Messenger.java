@@ -5,5 +5,9 @@ import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
 import java.util.List;
 
 public interface Messenger {
-    void sendBatch(List<SessionResponse> responses);
+    default void send(List<SessionResponse> responses) {
+        responses.forEach(this::send);
+    }
+
+    void send(SessionResponse response);
 }

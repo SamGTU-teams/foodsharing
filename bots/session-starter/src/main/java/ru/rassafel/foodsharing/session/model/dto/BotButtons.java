@@ -1,7 +1,7 @@
 package ru.rassafel.foodsharing.session.model.dto;
 
 import lombok.Data;
-import ru.rassafel.foodsharing.session.util.ButtonsUtil;
+import ru.rassafel.foodsharing.session.util.button.ButtonsUtil;
 
 import java.util.ArrayList;
 import java.util.List;

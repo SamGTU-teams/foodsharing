@@ -14,5 +14,3 @@ spring:
 logging:
   level:
     ru.rassafel.foodsharing.vkbot: DEBUG
-product-analyzer:
-  stub-mode: true

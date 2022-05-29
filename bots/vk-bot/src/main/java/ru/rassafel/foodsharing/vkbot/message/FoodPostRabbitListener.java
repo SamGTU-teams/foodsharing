@@ -6,7 +6,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 import ru.rassafel.foodsharing.analyzer.model.dto.FoodPostDto;
-import ru.rassafel.foodsharing.session.service.FoodPostHandlerService;
+import ru.rassafel.foodsharing.session.service.FoodPostHandler;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -19,7 +19,7 @@ import java.util.Set;
 @RabbitListener(queues = {"${spring.rabbitmq.ready-post.queue}"})
 public class FoodPostRabbitListener {
     private final Validator validator;
-    private final FoodPostHandlerService foodPostHandlerService;
+    private final FoodPostHandler foodPostHandlerService;
 
     @RabbitHandler
     public void receiveMessage(FoodPostDto foodPostDto) {
@@ -28,6 +28,6 @@ public class FoodPostRabbitListener {
             log.debug("Validation exception", new ConstraintViolationException(violations));
             return;
         }
-        foodPostHandlerService.handleFoodPostReceived(foodPostDto);
+        foodPostHandlerService.handle(foodPostDto);
     }
 }

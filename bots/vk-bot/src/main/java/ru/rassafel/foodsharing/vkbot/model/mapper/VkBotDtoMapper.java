@@ -7,7 +7,7 @@ import ru.rassafel.foodsharing.common.model.GeoPoint;
 import ru.rassafel.foodsharing.session.model.dto.SessionRequest;
 import ru.rassafel.foodsharing.session.model.mapper.UserDtoMapper;
 import ru.rassafel.foodsharing.vkbot.model.domain.VkUser;
-import ru.rassafel.foodsharing.vkbot.model.dto.VkUpdate;
+import ru.rassafel.foodsharing.vkbot.model.vk.VkUpdate;
 
 @Mapper
 public abstract class VkBotDtoMapper implements UserDtoMapper {

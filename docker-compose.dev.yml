@@ -24,7 +24,6 @@ services:
     build:
       context: ./parsers/vk-parser/webhook-impl
       dockerfile: Dockerfile
-    restart: "no"
     ports:
       - "8000:80"
 
@@ -32,7 +31,6 @@ services:
     build:
       context: ./analyzer/impl
       dockerfile: Dockerfile
-    restart: "no"
     ports:
       - "8010:80"
 
@@ -40,7 +38,6 @@ services:
     build:
       context: ./bots/ibot/impl
       dockerfile: Dockerfile
-    restart: "no"
     ports:
       - "8020:80"
 
@@ -48,7 +45,6 @@ services:
     build:
       context: ./bots/tg-bot
       dockerfile: Dockerfile
-    restart: "no"
     ports:
       - "8030:80"
 
@@ -56,7 +52,6 @@ services:
     build:
       context: ./bots/vk-bot
       dockerfile: Dockerfile
-    restart: "no"
     ports:
       - "8040:80"
 
@@ -64,6 +59,5 @@ services:
     build:
       context: ./ad/impl
       dockerfile: Dockerfile
-    restart: "no"
     ports:
       - "8050:80"

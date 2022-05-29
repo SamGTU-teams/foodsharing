@@ -46,11 +46,5 @@ vk:
     confirm_code: test
     groupId: 12345
     accessToken: test
-
-product-analyzer:
-  stub-mode: true
-feign:
-  analyzer:
-    url: http://localhost:7971/stubbed
 open-street-map-service:
   stub: true

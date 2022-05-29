@@ -7,9 +7,11 @@ import com.vk.api.sdk.httpclient.HttpTransportClient;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableScheduling;
+import ru.rassafel.foodsharing.analyzer.controller.ProductAnalyzerController;
+import ru.rassafel.foodsharing.ibot.controller.IBotController;
 import ru.rassafel.foodsharing.vkbot.model.mapper.VkBotDtoMapper;
 
 /**
@@ -17,9 +19,9 @@ import ru.rassafel.foodsharing.vkbot.model.mapper.VkBotDtoMapper;
  */
 @Configuration
 @EnableConfigurationProperties(VkBotProperties.class)
-@EnableScheduling
 @AllArgsConstructor
 @EntityScan(basePackages = "ru.rassafel.foodsharing.vkbot.model.domain")
+@EnableFeignClients(basePackageClasses = {ProductAnalyzerController.class, IBotController.class})
 public class VkBotConfiguration {
     public VkBotProperties properties;
 
@@ -39,7 +41,7 @@ public class VkBotConfiguration {
     }
 
     @Bean
-    public GroupActor groupActor(VkBotProperties properties) {
+    GroupActor groupActor(VkBotProperties properties) {
         return new GroupActor(properties.getGroupId(), properties.getAccessToken());
     }
 }

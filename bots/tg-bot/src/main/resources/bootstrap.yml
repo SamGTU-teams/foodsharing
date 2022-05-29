@@ -10,6 +10,7 @@ spring:
     active: ${spring_profiles_active:default}
   liquibase:
     change-log: classpath:/db/changelog/master-changelog.xml
+    enabled: true
 
 server:
   port: ${SERVER_PORT:8030}

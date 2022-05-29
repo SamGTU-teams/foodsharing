@@ -5,8 +5,8 @@ import io.cucumber.java.en.When;
 import ru.rassafel.foodsharing.session.model.dto.From;
 import ru.rassafel.foodsharing.session.model.dto.SessionRequest;
 import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
-import ru.rassafel.foodsharing.session.templates.MainTemplates;
-import ru.rassafel.foodsharing.session.util.ButtonsUtil;
+import ru.rassafel.foodsharing.session.service.message.templates.MainTemplates;
+import ru.rassafel.foodsharing.session.util.button.ButtonsUtil;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static ru.rassafel.foodsharing.vkbot.Util.assertButtons;

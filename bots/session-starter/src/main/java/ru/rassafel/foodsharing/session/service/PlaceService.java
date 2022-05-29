@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public interface PlaceService {
-    Collection<Place> findByUserId(Long id);
+    Collection<? extends Place> findByUserId(Long id);
 
     void save(Place place);
 
@@ -23,11 +23,11 @@ public interface PlaceService {
     void deleteAllByUserId(Long userId);
 
     default Map<Integer, String> getUsersPlacesNamesMap(User user) {
-        Collection<Place> usersPlaces = findByUserId(user.getId());
+        Collection<? extends Place> usersPlaces = findByUserId(user.getId());
         return getUsersPlacesNamesMap(usersPlaces);
     }
 
-    default Map<Integer, String> getUsersPlacesNamesMap(Collection<Place> places) {
+    default Map<Integer, String> getUsersPlacesNamesMap(Collection<? extends Place> places) {
         AtomicInteger counter = new AtomicInteger(1);
         return places.stream()
             .map(Place::getName)

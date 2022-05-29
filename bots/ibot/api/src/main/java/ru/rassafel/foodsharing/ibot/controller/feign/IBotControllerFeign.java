@@ -7,7 +7,7 @@ import ru.rassafel.foodsharing.ibot.controller.IBotController;
 /**
  * @author rassafel
  */
-@FeignClient(name = "ibot", url = "${feign.ibot.url}")
-@ConditionalOnProperty(name = "ibot.stub-mode", havingValue = "false")
+@FeignClient(name = "IBotService", url = "${feign.ibot.url}")
+@ConditionalOnProperty(prefix = "feign.ibot", name = "url")
 public interface IBotControllerFeign extends IBotController {
 }

@@ -65,7 +65,7 @@ services:
 
   parser:
     image: rassafel/foodsharing-vk-parser
-    restart: on-failure
+    restart: unless-stopped
     environment:
       CALLBACK_URL: $CALLBACK_URL
     depends_on:
@@ -78,7 +78,7 @@ services:
 
   analyzer:
     image: rassafel/foodsharing-analyzer
-    restart: on-failure
+    restart: unless-stopped
     depends_on:
       config:
         condition: service_healthy
@@ -89,7 +89,7 @@ services:
 
   ibot:
     image: rassafel/foodsharing-ibot
-    restart: on-failure
+    restart: unless-stopped
     depends_on:
       config:
         condition: service_healthy
@@ -100,7 +100,7 @@ services:
 
   tg-bot:
     image: rassafel/foodsharing-tg-bot
-    restart: on-failure
+    restart: unless-stopped
     environment:
       TG_BOT_WEB_HOOK_PATH: $TG_BOT_WEB_HOOK_PATH
       TG_BOT_USERNAME: $TG_BOT_USERNAME
@@ -117,7 +117,7 @@ services:
 
   vk-bot:
     image: rassafel/foodsharing-vk-bot
-    restart: on-failure
+    restart: unless-stopped
     environment:
       VK_BOT_GROUP_ID: $VK_BOT_GROUP_ID
       VK_BOT_ACCESS_TOKEN: $VK_BOT_ACCESS_TOKEN
@@ -134,7 +134,7 @@ services:
 
   ad:
     image: rassafel/foodsharing-ad
-    restart: on-failure
+    restart: unless-stopped
     depends_on:
       config:
         condition: service_healthy

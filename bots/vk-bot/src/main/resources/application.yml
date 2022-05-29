@@ -1,9 +1,8 @@
 spring:
   rabbitmq:
-    enabled: false
-    host: 80.78.247.178
-    username: guest
-    password: guest
+    host: ${RABBITMQ_HOST:localhost}
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASS:guest}
     vk-bot-callback:
       exchange: callback-vk-bot-exchange
       storage: callback.vk.bot.storage
@@ -28,8 +27,7 @@ spring:
   liquibase:
     contexts: vk-bot,data
   jpa:
-    hibernate:
-      ddl-auto: validate
+    hibernate.ddl-auto: validate
 vk:
   bot:
     confirm_code: ${VK_CONFIRM_CODE}
@@ -43,6 +41,4 @@ vk:
       maxQuerySizeInBatch: 25
 feign:
   analyzer:
-    url: http://80.78.247.178:8010
-product-analyzer:
-  stub-mode: true
+    url: ${ANALYZER_URL:localhost}:8010

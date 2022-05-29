@@ -68,7 +68,7 @@ public abstract class TgBotDtoMapper implements UserDtoMapper {
     })
     public abstract SendMessage map(SessionResponse response);
 
-    public SendMessage mapToSendMessage(SessionResponse response){
+    public SendMessage mapToSendMessage(SessionResponse response) {
         SendMessage map = map(response);
         mapButtons(response, map);
         return map;
@@ -76,7 +76,7 @@ public abstract class TgBotDtoMapper implements UserDtoMapper {
 
     @AfterMapping
     protected void mapButtons(SessionResponse response, @MappingTarget SendMessage sendMessage) {
-        if(response.getButtons() != null) {
+        if (response.getButtons() != null) {
             BotButtons buttons = response.getButtons();
             ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
             keyboardMarkup.setKeyboard(buttons.getButtons().stream().map(o -> {

@@ -1,11 +1,9 @@
 package ru.rassafel.foodsharing.analyzer.config;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import ru.rassafel.foodsharing.analyzer.controller.ProductAnalyzerController;
 import ru.rassafel.foodsharing.analyzer.controller.stub.ProductAnalyzerControllerStub;
 
@@ -13,14 +11,11 @@ import ru.rassafel.foodsharing.analyzer.controller.stub.ProductAnalyzerControlle
  * @author rassafel
  */
 @Configuration
-@ConditionalOnProperty(name = {"feign.analyzer.url"})
-@EnableFeignClients(basePackageClasses = ProductAnalyzerController.class)
 @ComponentScan("ru.rassafel.foodsharing.analyzer.controller")
 public class AnalyzerAutoConfiguration {
     @Bean
-    @ConditionalOnProperty(value = "product-analyzer.stub-mode", havingValue = "true")
-    @Primary
-    public ProductAnalyzerControllerStub productAnalyzerControllerStub() {
+    @ConditionalOnMissingBean(ProductAnalyzerController.class)
+    public ProductAnalyzerControllerStub productAnalyzerControllerStub(){
         return new ProductAnalyzerControllerStub();
     }
 }

@@ -6,11 +6,11 @@ import ru.rassafel.foodsharing.session.model.dto.From;
 import ru.rassafel.foodsharing.session.model.dto.SessionRequest;
 import ru.rassafel.foodsharing.session.model.dto.SessionResponse;
 import ru.rassafel.foodsharing.session.service.session.SessionEnum;
-import ru.rassafel.foodsharing.session.step.product.ChooseOperationProductStep;
-import ru.rassafel.foodsharing.session.step.product.DeleteProductStep;
-import ru.rassafel.foodsharing.session.templates.ProductTemplates;
-import ru.rassafel.foodsharing.session.util.ButtonsUtil;
-import ru.rassafel.foodsharing.session.util.ProductButtonsUtil;
+import ru.rassafel.foodsharing.session.service.session.step.product.ChooseOperationProductStep;
+import ru.rassafel.foodsharing.session.service.session.step.product.DeleteProductStep;
+import ru.rassafel.foodsharing.session.service.message.templates.ProductTemplates;
+import ru.rassafel.foodsharing.session.util.button.ButtonsUtil;
+import ru.rassafel.foodsharing.session.util.button.ProductButtonsUtil;
 import ru.rassafel.foodsharing.tgbot.model.domain.TgUser;
 import ru.rassafel.foodsharing.tgbot.scenarios.SpringCucumberSuperTest;
 

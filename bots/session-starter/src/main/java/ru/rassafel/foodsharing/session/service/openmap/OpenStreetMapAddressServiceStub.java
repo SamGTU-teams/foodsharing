@@ -3,6 +3,7 @@ package ru.rassafel.foodsharing.session.service.openmap;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import ru.rassafel.foodsharing.session.service.AddressService;
 
 @Service
 @ConditionalOnProperty(value = "open-street-map-service.stub", havingValue = "true")
