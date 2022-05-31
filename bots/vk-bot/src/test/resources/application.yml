@@ -14,13 +14,37 @@ spring:
       dlx: post-ad-dlx
       dlq-storage: post.ad.dlq.storage
       dlq: post.ad.dlq.vk
+    vk-bot-callback:
+      exchange: callback-vk-bot-exchange
+      storage: callback.vk.bot.storage
+      queue: callback.vk.bot.current
+      dlx: callback-vk-bot-dlx
+      dlq-storage: callback.vk.bot.dlq.storage
+      dlq: callback.vk.bot.dlq.current
   liquibase:
     change-log: classpath:/db/changelog/master-changelog.xml
     contexts: vk-bot,data,test
-
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE;MODE=PostgreSQL
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
 vk:
-  server:
-    confirm_code: ${VK_CONFIRM_CODE:confirmCode}
   bot:
-    groupId: ${VK_BOT_GROUP_ID:1}
-    accessToken: ${VK_BOT_ACCESS_TOKEN:testAccessToken}
+    confirm_code: test
+    groupId: 12345
+    accessToken: test
+open-street-map-service:
+  stub: true

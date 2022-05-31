@@ -14,7 +14,7 @@ import static ru.rassafel.foodsharing.common.model.ModelFactory.*;
  * @author rassafel
  */
 class RegionMapperTest {
-    RegionMapper mapper = RegionMapper.INSTANCE;
+    final RegionMapper mapper = RegionMapper.INSTANCE;
 
     @Test
     void dtoToEntity() {

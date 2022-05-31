@@ -9,10 +9,12 @@ import org.mockito.*;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import ru.rassafel.foodsharing.common.model.mapper.RegionMapper;
 import ru.rassafel.foodsharing.parser.model.PostContext;
-import ru.rassafel.foodsharing.parser.model.RawPost;
+import ru.rassafel.foodsharing.parser.model.dto.RawPostDto;
 import ru.rassafel.foodsharing.vkparser.model.entity.VkGroup;
 import ru.rassafel.foodsharing.vkparser.model.mapper.RawPostMapper;
 import ru.rassafel.foodsharing.vkparser.model.vk.Wallpost;
+import ru.rassafel.foodsharing.vkparser.model.vk.group.validator.SecretKeyValidator;
+import ru.rassafel.foodsharing.vkparser.model.vk.group.validator.impl.SecretKeyValidatorImpl;
 import ru.rassafel.foodsharing.vkparser.repository.GroupRepository;
 
 import java.time.LocalDateTime;
@@ -32,16 +34,14 @@ import static org.mockito.Mockito.when;
 class CallbackServiceImplTest {
     @InjectMocks
     CallbackServiceImpl service;
-
     @Mock
     GroupRepository repository;
-
     @Mock
     RabbitTemplate template;
-
+    @Spy
+    SecretKeyValidator validator = new SecretKeyValidatorImpl();
     @Spy
     RawPostMapper rawPostMapper = RawPostMapper.INSTANCE;
-
     @Spy
     RegionMapper regionMapper = RegionMapper.INSTANCE;
 
@@ -64,7 +64,7 @@ class CallbackServiceImplTest {
             sourceWallpost.setId(2);
             sourceWallpost.setOwnerId(1);
 
-            RawPost expected = new RawPost();
+            RawPostDto expected = new RawPostDto();
             expected.setText("Test text");
             expected.setDate(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC));
             expected.setUrl("https://vk.com/wall-1_2");
@@ -74,11 +74,11 @@ class CallbackServiceImplTest {
             when(repository.findById(any()))
                 .thenReturn(Optional.of(fromDb));
 
-            RawPost actual = service.wallpostNew(1, sourceWallpost, acceptedSecret);
+            RawPostDto actual = service.wallpostNew(1, sourceWallpost, acceptedSecret);
 
-            ArgumentCaptor<RawPost> wallpostCapture = ArgumentCaptor.forClass(RawPost.class);
+            ArgumentCaptor<RawPostDto> wallpostCapture = ArgumentCaptor.forClass(RawPostDto.class);
             verify(template).convertAndSend(wallpostCapture.capture());
-            RawPost captured = wallpostCapture.getValue();
+            RawPostDto captured = wallpostCapture.getValue();
 
             assertThat(actual)
                 .isNotNull()

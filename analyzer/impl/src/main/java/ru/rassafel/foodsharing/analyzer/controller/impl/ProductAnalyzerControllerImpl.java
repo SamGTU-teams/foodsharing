@@ -26,8 +26,8 @@ public class ProductAnalyzerControllerImpl implements ProductAnalyzerController 
     private final ScoreProductMapper mapper;
 
     @Override
-    public List<ScoreProductDto> parseProducts(String text, Long count) {
-        return Streamable.of(service.parseProducts(text))
+    public List<ScoreProductDto> parseProducts(ProductRequest request, Long count) {
+        return Streamable.of(service.parseProducts(request.getText()))
             .stream()
             .sorted(comparator.reversed())
             .limit(count)

@@ -1,4 +1,8 @@
 spring:
+  rabbitmq:
+    vk-parser-callback:
+      queue: callback.vk.parser.current
+      dlq: callback.vk.parser.dlq.current
   liquibase:
     contexts: vk-parser,data
 

@@ -1,31 +1,47 @@
 package ru.rassafel.foodsharing.vkbot.config;
 
+import com.google.gson.GsonBuilder;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.GroupActor;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
-import lombok.Setter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import lombok.AllArgsConstructor;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableScheduling;
+import ru.rassafel.foodsharing.analyzer.controller.ProductAnalyzerController;
+import ru.rassafel.foodsharing.ibot.controller.IBotController;
+import ru.rassafel.foodsharing.vkbot.model.mapper.VkBotDtoMapper;
 
-@Setter
-@ConfigurationProperties(prefix = "vk.bot")
+/**
+ * @author rassafel
+ */
 @Configuration
-@EnableScheduling
+@EnableConfigurationProperties(VkBotProperties.class)
+@AllArgsConstructor
+@EntityScan(basePackages = "ru.rassafel.foodsharing.vkbot.model.domain")
+@EnableFeignClients(basePackageClasses = {ProductAnalyzerController.class, IBotController.class})
 public class VkBotConfiguration {
-
-    private int groupId;
-    private String accessToken;
+    public VkBotProperties properties;
 
     @Bean
-    public VkApiClient vkApiClient() {
-        HttpTransportClient httpClient = HttpTransportClient.getInstance();
-        return new VkApiClient(httpClient);
+    VkBotDtoMapper vkBotDtoMapper() {
+        return VkBotDtoMapper.INSTANCE;
     }
 
     @Bean
-    public GroupActor groupActor() {
-        return new GroupActor(groupId, accessToken);
+    VkApiClient vkApiClient(VkBotProperties properties) {
+        HttpTransportClient instance = new HttpTransportClient(
+            properties.getClient().getRetryAttemptsNetworkErrorCount(),
+            properties.getClient().getRetryAttemptsInvalidStatusCount());
+        return new VkApiClient(instance,
+            new GsonBuilder().disableHtmlEscaping().create(),
+            properties.getClient().getRetryAttemptsInternalServerErrorCount());
+    }
+
+    @Bean
+    GroupActor groupActor(VkBotProperties properties) {
+        return new GroupActor(properties.getGroupId(), properties.getAccessToken());
     }
 }

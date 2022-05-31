@@ -7,7 +7,7 @@ import ru.rassafel.foodsharing.analyzer.model.LuceneIndexedString;
 import ru.rassafel.foodsharing.analyzer.repository.LuceneRepository;
 import ru.rassafel.foodsharing.analyzer.service.GeoLuceneAnalyzerService;
 import ru.rassafel.foodsharing.common.model.GeoPoint;
-import ru.rassafel.foodsharing.parser.model.RawPost;
+import ru.rassafel.foodsharing.parser.model.dto.RawPostDto;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -22,7 +22,7 @@ public class GeoLuceneAnalyzerServiceImpl implements GeoLuceneAnalyzerService {
     private final LuceneRepository repository;
 
     @Override
-    public Optional<GeoPoint> parseGeoPoint(RawPost post) {
+    public Optional<GeoPoint> parseGeoPoint(RawPostDto post) {
         return Optional.ofNullable(post.getContext().getPoint());
     }
 
@@ -32,7 +32,7 @@ public class GeoLuceneAnalyzerServiceImpl implements GeoLuceneAnalyzerService {
     }
 
     @Override
-    public Optional<GeoPoint> parseGeoPoint(RawPost post, LuceneIndexedString... strings) {
+    public Optional<GeoPoint> parseGeoPoint(RawPostDto post, LuceneIndexedString... strings) {
         Optional<GeoPoint> geoPoint = parseGeoPoint(post);
         if (geoPoint.isPresent()) return geoPoint;
         return parseGeoPoint(strings);

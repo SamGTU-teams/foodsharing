@@ -10,7 +10,9 @@ feign:
     url: http://analyzer/
   ibot:
     url: http://ibot/
-  vk-bot:
-    url: http://vk-bot/
   tg-bot:
     url: http://tg-bot/
+  vk-bot:
+    url: http://vk-bot/
+  ad:
+    url: http://ad/

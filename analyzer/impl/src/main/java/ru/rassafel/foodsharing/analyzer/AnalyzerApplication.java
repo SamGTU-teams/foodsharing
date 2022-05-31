@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 public class AnalyzerApplication {
+    @SuppressWarnings("resource")
     public static void main(String[] args) {
         SpringApplication.run(AnalyzerApplication.class, args);
     }

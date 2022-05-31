@@ -1,6 +1,7 @@
 package ru.rassafel.foodsharing.vkparser.model.vk.group;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotNull;
 
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotNull;
  * @author rassafel
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class FullAccessGroup extends GroupParams {
     @NotNull
     private String accessToken;

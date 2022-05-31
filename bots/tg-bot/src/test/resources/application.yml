@@ -14,12 +14,37 @@ spring:
       dlx: post-ad-dlx
       dlq-storage: post.ad.dlq.storage
       dlq: post.ad.dlq.tg
+    tg-bot-callback:
+      exchange: callback-tg-bot-exchange
+      storage: callback.tg.bot.storage
+      queue: callback.tg.bot.current
+      dlx: callback-tg-bot-dlx
+      dlq-storage: callback.tg.bot.dlq.storage
+      dlq: callback.tg.bot.dlq.current
   liquibase:
     change-log: classpath:/db/changelog/master-changelog.xml
     contexts: tg-bot,data,test
-
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE;MODE=PostgreSQL
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+open-street-map-service:
+  stub: true
 tg:
   bot:
     webHookPath: localhost:${server.port:8080}/callback
-    username: GetFood
+    botUsername: GetFood
     token: TOKEN

@@ -41,6 +41,7 @@ class ProductLuceneAnalyzerServiceImplTest {
     ProductLuceneAnalyzerServiceImpl service;
 
     @BeforeEach
+    @SuppressWarnings("deprecation")
     void setUp() throws IOException {
         luceneProperties = new LuceneProperties();
         Directory directory = new RAMDirectory();
@@ -73,7 +74,40 @@ class ProductLuceneAnalyzerServiceImplTest {
         when(productRepository.findAll())
             .thenReturn(Streamable.of(product1, product2, product3));
 
-        List<ScoreProduct> actual = service.parseProducts("Test post contains products like: banana, orenge, peach");
+        List<ScoreProduct> actual = service.parseProducts("Test post contains products like: banana, peach, orenge");
+
+        System.out.println(actual);
+
+        assertThat(actual.stream()
+            .map(ScoreProduct::getProduct)
+            .collect(Collectors.toList()))
+            .contains(product2)
+            .contains(product3)
+            .doesNotContain(product1);
+    }
+
+    @Test
+    void parseProduct() {
+        luceneRepository.registerAll(List.of(
+            new LuceneIndexedString("sync1", "Test string with Молоко"),
+            new LuceneIndexedString("sync2", "Test string with Кефир")));
+
+        Product product1 = new Product();
+        product1.setId(1L);
+        product1.setName("молоко");
+
+        Product product2 = new Product();
+        product2.setId(2L);
+        product2.setName("кефир");
+
+        Product product3 = new Product();
+        product3.setId(3L);
+        product3.setName("зефир");
+
+        when(productRepository.findAll())
+            .thenReturn(Streamable.of(product1, product2, product3));
+
+        List<ScoreProduct> actual = service.parseProducts("зефир");
 
         System.out.println(actual);
 
