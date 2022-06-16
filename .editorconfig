@@ -13,6 +13,5 @@ tab_width = 4
 [*.mustache]
 insert_final_newline = false
 
-[{*.yml,*.json}]
-indent_style = space
+[{*.yml,*.json,*.yaml}]
 indent_size = 2
