@@ -41,4 +41,4 @@ vk:
       maxQuerySizeInBatch: 25
 feign:
   analyzer:
-    url: ${ANALYZER_URL:localhost}:8010
+    url: ${ANALYZER_URL:http://localhost:8010/}

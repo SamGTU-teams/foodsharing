@@ -16,5 +16,5 @@ spring:
 tg:
   bot:
     webHookPath: ${TG_BOT_WEB_HOOK_PATH}
-    username: ${TG_BOT_USERNAME}
+    username: ${TG_BOT_USERNAME:GetFoodBot}
     token: ${TG_BOT_TOKEN}

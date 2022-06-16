@@ -9,4 +9,4 @@ spring:
 vk:
   parser:
     callbackUrl: ${CALLBACK_URL}
-    serverTitle: GetFoodWall
+    serverTitle: ${PARSER_USERNAME:GetFoodWall}

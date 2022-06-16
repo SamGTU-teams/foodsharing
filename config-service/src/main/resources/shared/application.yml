@@ -2,8 +2,20 @@ spring:
   rabbitmq:
     host: ${RABBITMQ_HOST:localhost}
     port: 5672
-    username: guest
-    password: guest
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASS:guest}
+
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:5432/${POSTGRES_DB:foodsharing}
+    driverClassName: org.postgresql.Driver
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASS:postgres}
+    jpa:
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+      hibernate.ddl-auto: validate
+    liquibase:
+      contexts: none
+      liquibase-schema: liquibase
 
     raw-post:
       exchange: post-raw-exchange
@@ -37,17 +49,9 @@ spring:
       dlx: callback-tg-bot-dlx
       dlq-storage: callback.tg.bot.dlq.storage
 
-  datasource:
-    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:5432/foodsharing
-    driverClassName: org.postgresql.Driver
-    username: postgres
-    password: postgres
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    hibernate.ddl-auto: validate
-  liquibase:
-    contexts: none
-    liquibase-schema: liquibase
+feign:
+  analyzer:
+    url: ${ANALYZER_URL:http://localhost:8010/}
 
 server:
   use-forward-headers: true
