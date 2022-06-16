@@ -3,6 +3,10 @@ set -eu
 
 ./env
 
+echo 'Start load Google Sheets data'
+python3 storage/postgres/loadDataFromGoogleSheets.py
+echo 'Finish load Google Sheets data'
+
 echo 'Start maven build'
 ./mvnw package -DskipTests
 echo 'Finish maven build'

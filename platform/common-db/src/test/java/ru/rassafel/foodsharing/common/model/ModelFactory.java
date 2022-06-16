@@ -3,9 +3,10 @@ package ru.rassafel.foodsharing.common.model;
 import ru.rassafel.foodsharing.common.model.dto.CategoryDto;
 import ru.rassafel.foodsharing.common.model.dto.ProductDto;
 import ru.rassafel.foodsharing.common.model.dto.RegionDto;
-import ru.rassafel.foodsharing.common.model.entity.Category;
-import ru.rassafel.foodsharing.common.model.entity.Product;
-import ru.rassafel.foodsharing.common.model.entity.Region;
+import ru.rassafel.foodsharing.common.model.entity.geo.GeoPointEmbeddable;
+import ru.rassafel.foodsharing.common.model.entity.geo.Region;
+import ru.rassafel.foodsharing.common.model.entity.product.Category;
+import ru.rassafel.foodsharing.common.model.entity.product.Product;
 
 import java.util.Set;
 
@@ -13,12 +14,11 @@ import java.util.Set;
  * @author rassafel
  */
 public class ModelFactory {
+    public static final Long entityId = 1L;
+    public static final Long subEntityId = 2L;
 
-    public static Long entityId = 1L;
-    public static Long subEntityId = 2L;
-
-    public static String entityName = "Entity name";
-    public static String subEntityName = "SubEntity name";
+    public static final String entityName = "Entity name";
+    public static final String subEntityName = "SubEntity name";
 
     public static CategoryDto createCategoryDto(Long id, String name) {
         CategoryDto result = new CategoryDto();

@@ -13,19 +13,17 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class RabbitMqProperties {
     public static final String PREFIX = "spring.rabbitmq";
 
-    private final Consumer consumer = new Consumer();
-    private final Producer producer = new Producer();
+    private Declare rawPost;
+    private Declare readyPost;
 
     @Getter
     @Setter
-    public static class Consumer {
-        private String exchange = "post-raw-default-exchange";
-        private String queue = "post.raw.analyzer.default";
-    }
-
-    @Getter
-    @Setter
-    public static class Producer {
-        private String exchange = "post-ready-default-exchange";
+    public static class Declare {
+        private String exchange;
+        private String storage;
+        private String queue;
+        private String dlx;
+        private String dlq;
+        private String dlqStorage;
     }
 }

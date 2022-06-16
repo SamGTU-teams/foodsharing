@@ -10,6 +10,9 @@ trim_trailing_whitespace = true
 max_line_length = 80
 tab_width = 4
 
+[*.mustache]
+insert_final_newline = false
+
 [{*.yml,*.json}]
 indent_style = space
 indent_size = 2

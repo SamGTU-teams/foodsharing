@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="load-ibot-test-data-01" author="rassafel" context="test">
+        <insert schemaName="ibot"
+                tableName="food_post">
+            <column name="id" valueNumeric="1"/>
+            <column name="url" value="http://testurl.com"/>
+            <column name="date" valueDate="2022-05-02 12:00:00"/>
+            <column name="text"
+                    value="СамГТУ: Text text with region and test products like: яблако, зефир, хлеб и греча"/>
+            <column name="lat" valueNumeric="53.207442"/>
+            <column name="lon" valueNumeric="50.1238752"/>
+        </insert>
+
+        <insert schemaName="ibot"
+                tableName="food_post_regions">
+            <column name="food_post_id" valueNumeric="1"/>
+            <column name="region_id" valueNumeric="1"/>
+        </insert>
+
+        <insert schemaName="ibot"
+                tableName="food_post_products">
+            <column name="food_post_id" valueNumeric="1"/>
+            <column name="product_id" valueNumeric="12"/>
+        </insert>
+        <insert schemaName="ibot"
+                tableName="food_post_products">
+            <column name="food_post_id" valueNumeric="1"/>
+            <column name="product_id" valueNumeric="13"/>
+        </insert>
+        <insert schemaName="ibot"
+                tableName="food_post_products">
+            <column name="food_post_id" valueNumeric="1"/>
+            <column name="product_id" valueNumeric="6"/>
+        </insert>
+        <insert schemaName="ibot"
+                tableName="food_post_products">
+            <column name="food_post_id" valueNumeric="1"/>
+            <column name="product_id" valueNumeric="1"/>
+        </insert>
+
+
+        <insert schemaName="ibot"
+                tableName="food_post">
+            <column name="id" valueNumeric="2"/>
+            <column name="url" value="http://testurl.com"/>
+            <column name="date" valueDate="2022-05-03 12:00:00"/>
+            <column name="text"
+                    value="СамГТУ АСУ: Text text with test products like: яблако, кефир и молоко"/>
+            <column name="lat" valueNumeric="53.1953243"/>
+            <column name="lon" valueNumeric="50.1058904"/>
+        </insert>
+
+        <insert schemaName="ibot"
+                tableName="food_post_products">
+            <column name="food_post_id" valueNumeric="2"/>
+            <column name="product_id" valueNumeric="12"/>
+        </insert>
+        <insert schemaName="ibot"
+                tableName="food_post_products">
+            <column name="food_post_id" valueNumeric="2"/>
+            <column name="product_id" valueNumeric="3"/>
+        </insert>
+        <insert schemaName="ibot"
+                tableName="food_post_products">
+            <column name="food_post_id" valueNumeric="2"/>
+            <column name="product_id" valueNumeric="4"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

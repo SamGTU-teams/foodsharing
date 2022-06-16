@@ -1,0 +1,5 @@
+spring:
+  application.name: ad
+  cloud.config.enabled: false
+embedded.postgresql.enabled: false
+embedded.rabbitmq.enabled: false

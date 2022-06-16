@@ -5,6 +5,38 @@ spring:
     username: guest
     password: guest
 
+    raw-post:
+      exchange: post-raw-exchange
+      storage: post.raw.storage
+      dlx: post-raw-dlx
+      dlq-storage: post.raw.dlq.storage
+    ready-post:
+      exchange: post-ready-exchange
+      storage: post.ready.storage
+      dlx: post-ready-dlx
+      dlq-storage: post.ready.dlq.storage
+    ad-post:
+      exchange: post-ad-exchange
+      storage: post.ad.storage
+      dlx: post-ad-dlx
+      dlq-storage: post.ad.dlq.storage
+
+    vk-parser-callback:
+      exchange: callback-vk-parser-exchange
+      storage: callback.vk.parser.storage
+      dlx: callback-vk-parser-dlx
+      dlq-storage: callback.vk.parser.dlq.storage
+    vk-bot-callback:
+      exchange: callback-vk-bot-exchange
+      storage: callback.vk.bot.storage
+      dlx: callback-vk-bot-dlx
+      dlq-storage: callback.vk.bot.dlq.storage
+    tg-bot-callback:
+      exchange: callback-tg-bot-exchange
+      storage: callback.tg.bot.storage
+      dlx: callback-tg-bot-dlx
+      dlq-storage: callback.tg.bot.dlq.storage
+
   datasource:
     url: jdbc:postgresql://${POSTGRES_HOST:localhost}:5432/foodsharing
     driverClassName: org.postgresql.Driver
@@ -13,6 +45,9 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate.ddl-auto: validate
+  liquibase:
+    contexts: none
+    liquibase-schema: liquibase
 
 server:
   use-forward-headers: true

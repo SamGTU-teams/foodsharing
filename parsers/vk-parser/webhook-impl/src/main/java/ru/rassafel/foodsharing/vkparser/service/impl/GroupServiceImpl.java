@@ -8,14 +8,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.rassafel.foodsharing.vkparser.config.ApplicationProperties;
+import ru.rassafel.foodsharing.vkparser.config.VkParserProperties;
 import ru.rassafel.foodsharing.vkparser.model.entity.VkGroup;
+import ru.rassafel.foodsharing.vkparser.model.vk.group.validator.SecretKeyValidator;
 import ru.rassafel.foodsharing.vkparser.repository.GroupRepository;
 import ru.rassafel.foodsharing.vkparser.service.GroupService;
 
 import java.util.Optional;
-
-import static ru.rassafel.foodsharing.vkparser.util.GroupUtil.throwIfSecretKeyNotMatch;
 
 /**
  * @author rassafel
@@ -26,11 +25,12 @@ import static ru.rassafel.foodsharing.vkparser.util.GroupUtil.throwIfSecretKeyNo
 public class GroupServiceImpl implements GroupService {
     private final VkApiClient api;
     private final GroupRepository repository;
-    private final ApplicationProperties properties;
+    private final VkParserProperties properties;
+    private final SecretKeyValidator validator;
 
     @Override
     @Transactional
-    public VkGroup registerWithAccess(VkGroup group) throws ClientException, ApiException {
+    public VkGroup registerWithAccess(VkGroup group) {
         Integer groupId = group.getGroupId();
 
         GroupActor actor = new GroupActor(groupId, group.getAccessToken());
@@ -44,9 +44,9 @@ public class GroupServiceImpl implements GroupService {
                 .getCallbackConfirmationCode(actor, groupId)
                 .execute()
                 .getCode();
-        } catch (ClientException | ApiException e) {
+        } catch (ClientException | ApiException ex) {
             log.warn("Fail query to confirmation code for group with id = {}.", groupId);
-            throw e;
+            throw new ru.rassafel.foodsharing.common.exception.ApiException(ex.getMessage());
         }
         group.setConfirmationCode(confirmationCode);
 
@@ -58,9 +58,9 @@ public class GroupServiceImpl implements GroupService {
                 .secretKey(group.getSecretKey())
                 .execute()
                 .getServerId();
-        } catch (ClientException | ApiException e) {
+        } catch (ClientException | ApiException ex) {
             log.warn("Fail query to add callback server for group with id = {}.", groupId);
-            throw e;
+            throw new ru.rassafel.foodsharing.common.exception.ApiException(ex.getMessage());
         }
         group.setServerId(serverId);
 
@@ -72,9 +72,9 @@ public class GroupServiceImpl implements GroupService {
                 .serverId(serverId)
                 .wallPostNew(true)
                 .execute();
-        } catch (ClientException | ApiException e) {
+        } catch (ClientException | ApiException ex) {
             log.warn("Fail query to edit configuration for group with id = {} and server id = {}.", groupId, serverId);
-            throw e;
+            throw new ru.rassafel.foodsharing.common.exception.ApiException(ex.getMessage());
         }
 
         repository.save(group);
@@ -93,7 +93,7 @@ public class GroupServiceImpl implements GroupService {
         if (optionalGroup.isPresent()) {
             log.debug("Group with id = {} exists in DB.", group.getGroupId());
             VkGroup vkGroup = optionalGroup.get();
-            throwIfSecretKeyNotMatch(group, vkGroup.getSecretKey());
+            validator.validate(group, vkGroup.getSecretKey());
             vkGroup.setServerId(null);
             vkGroup.setAccessToken(group.getAccessToken());
             vkGroup.setConfirmationCode(group.getConfirmationCode());

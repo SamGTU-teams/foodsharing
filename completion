@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-services='parser analyzer ibot tg-bot vk-bot config postgres rabbitmq nginx'
+services='parser analyzer ibot tg-bot vk-bot config postgres rabbitmq nginx ad'
 
 complete -W "$services" ./build
 complete -W "$services" ./dev

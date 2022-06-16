@@ -1,0 +1,10 @@
+spring:
+  rabbitmq:
+    ad-post:
+      exchange: post-ad-exchange
+      storage: post.ad.storage
+      dlx: post-ad-dlx
+      dlq-storage: post.ad.dlq.storage
+  liquibase:
+    change-log: classpath:/db/changelog/master-changelog.xml
+    contexts: ad,data,test

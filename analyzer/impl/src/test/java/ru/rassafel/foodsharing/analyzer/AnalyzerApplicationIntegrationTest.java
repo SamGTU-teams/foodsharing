@@ -12,5 +12,6 @@ import org.springframework.test.context.ActiveProfiles;
 class AnalyzerApplicationIntegrationTest {
     @Test
     void contextLoads() {
+        System.out.println("Context loaded.");
     }
 }

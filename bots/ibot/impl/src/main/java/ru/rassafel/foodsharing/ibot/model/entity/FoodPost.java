@@ -1,12 +1,13 @@
 package ru.rassafel.foodsharing.ibot.model.entity;
 
 import lombok.*;
-import ru.rassafel.foodsharing.common.model.GeoPointEmbeddable;
-import ru.rassafel.foodsharing.common.model.entity.Product;
-import ru.rassafel.foodsharing.common.model.entity.Region;
+import ru.rassafel.foodsharing.common.model.entity.geo.GeoPointEmbeddable;
+import ru.rassafel.foodsharing.common.model.entity.geo.Region;
+import ru.rassafel.foodsharing.common.model.entity.product.Product;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -14,18 +15,16 @@ import java.util.Set;
  */
 @Entity
 @Table(schema = "ibot", name = "food_post")
-@Getter
-@Setter
+@Data
 @RequiredArgsConstructor
-@EqualsAndHashCode
-@ToString
+@AllArgsConstructor
 public class FoodPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "url", nullable = false, length = 255)
+    @Column(name = "url", nullable = false)
     private String url;
 
     @Column(name = "date", nullable = false)
@@ -41,7 +40,7 @@ public class FoodPost {
     })
     private GeoPointEmbeddable point;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(schema = "ibot", name = "food_post_regions",
         joinColumns = @JoinColumn(name = "food_post_id", nullable = false,
             foreignKey = @ForeignKey(name = "FK_IBOT_FOOD_POST_REGIONS_FOOD_POST_ID")),
@@ -49,9 +48,9 @@ public class FoodPost {
             foreignKey = @ForeignKey(name = "FK_IBOT_FOOD_POST_REGIONS_REGION_ID")))
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Set<Region> regions;
+    private Set<Region> regions = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(schema = "ibot", name = "food_post_products",
         joinColumns = @JoinColumn(name = "food_post_id", nullable = false,
             foreignKey = @ForeignKey(name = "FK_IBOT_FOOD_POST_PRODUCTS_FOOD_POST_ID")),
@@ -59,5 +58,5 @@ public class FoodPost {
             foreignKey = @ForeignKey(name = "FK_IBOT_FOOD_POST_PRODUCTS_PRODUCT_ID")))
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Set<Product> products;
+    private Set<Product> products = new HashSet<>();
 }

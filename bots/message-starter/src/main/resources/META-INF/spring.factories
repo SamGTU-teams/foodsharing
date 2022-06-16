@@ -1,1 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=ru.rassafel.foodsharing.bot.config.BotRabbitMqAutoConfiguration

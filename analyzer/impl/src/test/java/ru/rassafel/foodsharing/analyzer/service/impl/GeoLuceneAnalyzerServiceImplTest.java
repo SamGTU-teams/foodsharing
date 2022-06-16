@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.rassafel.foodsharing.common.model.GeoPoint;
 import ru.rassafel.foodsharing.parser.model.PostContext;
-import ru.rassafel.foodsharing.parser.model.RawPost;
+import ru.rassafel.foodsharing.parser.model.dto.RawPostDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,7 +35,7 @@ class GeoLuceneAnalyzerServiceImplTest {
         context.setAttachments(List.of());
         context.setPoint(geoPoint);
 
-        RawPost post = new RawPost();
+        RawPostDto post = new RawPostDto();
         post.setDate(LocalDateTime.now());
         post.setText("Test string");
         post.setUrl("test.url");

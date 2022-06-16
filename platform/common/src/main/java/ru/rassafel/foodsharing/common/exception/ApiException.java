@@ -1,11 +1,11 @@
 package ru.rassafel.foodsharing.common.exception;
 
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 /**
  * @author rassafel
  */
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class ApiException extends RuntimeException {
     public ApiException(String message) {
         super(message);

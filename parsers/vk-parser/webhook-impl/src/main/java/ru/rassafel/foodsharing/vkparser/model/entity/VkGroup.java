@@ -1,7 +1,7 @@
 package ru.rassafel.foodsharing.vkparser.model.entity;
 
 import lombok.*;
-import ru.rassafel.foodsharing.common.model.entity.Region;
+import ru.rassafel.foodsharing.common.model.entity.geo.Region;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
  * @author rassafel
  */
 @Entity
-@Table(schema = "vk_parser", name = "group")
+@Table(schema = "vk_parser", name = "registered_group")
 @Getter
 @Setter
 @RequiredArgsConstructor

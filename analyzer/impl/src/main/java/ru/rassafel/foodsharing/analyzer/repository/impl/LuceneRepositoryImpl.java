@@ -3,6 +3,7 @@ package ru.rassafel.foodsharing.analyzer.repository.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.StringField;
@@ -10,7 +11,6 @@ import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.*;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Repository;
 import ru.rassafel.foodsharing.analyzer.model.LuceneIndexedString;
 import ru.rassafel.foodsharing.analyzer.repository.LuceneRepository;
@@ -85,7 +85,7 @@ public class LuceneRepositoryImpl implements LuceneRepository {
         MatchAllDocsQuery query = new MatchAllDocsQuery();
         return search(query, count)
             .stream()
-            .map(Pair::getFirst)
+            .map(Pair::getLeft)
             .collect(Collectors.toList());
     }
 
@@ -98,7 +98,7 @@ public class LuceneRepositoryImpl implements LuceneRepository {
         return new LuceneIndexedString(hash, string);
     }
 
-    List<Pair<LuceneIndexedString, Float>> map(IndexSearcher searcher, TopDocs topDocs) throws IOException {
+    List<Pair<LuceneIndexedString, Float>> map(IndexSearcher searcher, TopDocs topDocs) {
         return Arrays.stream(topDocs.scoreDocs)
             .map(scoreDoc -> {
                 try {

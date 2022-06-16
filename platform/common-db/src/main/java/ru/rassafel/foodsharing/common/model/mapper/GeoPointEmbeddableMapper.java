@@ -3,7 +3,7 @@ package ru.rassafel.foodsharing.common.model.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import ru.rassafel.foodsharing.common.model.GeoPoint;
-import ru.rassafel.foodsharing.common.model.GeoPointEmbeddable;
+import ru.rassafel.foodsharing.common.model.entity.geo.GeoPointEmbeddable;
 
 /**
  * @author rassafel

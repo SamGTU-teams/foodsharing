@@ -5,13 +5,14 @@ import com.vk.api.sdk.objects.wall.WallpostAttachment;
 import com.vk.api.sdk.objects.wall.WallpostAttachmentType;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
-import ru.rassafel.foodsharing.parser.model.RawPost;
+import ru.rassafel.foodsharing.parser.model.dto.RawPostDto;
 import ru.rassafel.foodsharing.vkparser.model.vk.Wallpost;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -32,23 +33,21 @@ public abstract class RawPostMapper {
     public static final String PHOTO_PATTERN = "https://vk.com/photo-%d_%d";
 
     @AfterMapping
-    protected void afterMapApiToDto(Wallpost source, @MappingTarget RawPost target) {
+    protected void afterMapApiToDto(Wallpost source, @MappingTarget RawPostDto target) {
         int absOwnerId = Math.abs(source.getOwnerId());
 
         String wallpostUrl = String.format(WALLPOST_PATTERN, absOwnerId, source.getId());
         target.setUrl(wallpostUrl);
 
-        List<WallpostAttachment> wallpostAttachments = source.getAttachments();
-        if (Objects.nonNull(wallpostAttachments) && !wallpostAttachments.isEmpty()) {
-            List<String> attachments = wallpostAttachments
-                .stream()
-                .filter(attachment -> WallpostAttachmentType.PHOTO.equals(attachment.getType()))
-                .map(WallpostAttachment::getPhoto)
-                .map(Photo::getId)
-                .map(id -> String.format(PHOTO_PATTERN, absOwnerId, id))
-                .collect(Collectors.toList());
-            target.getContext().setAttachments(attachments);
-        }
+        List<String> attachments = Optional.ofNullable(source.getAttachments())
+            .stream()
+            .flatMap(Collection::stream)
+            .filter(attachment -> WallpostAttachmentType.PHOTO.equals(attachment.getType()))
+            .map(WallpostAttachment::getPhoto)
+            .map(Photo::getId)
+            .map(id -> String.format(PHOTO_PATTERN, absOwnerId, id))
+            .collect(Collectors.toList());
+        target.getContext().setAttachments(attachments);
 
         LocalDateTime date = LocalDateTime.ofEpochSecond(source.getDate().longValue(),
             0, ZoneOffset.UTC);
@@ -62,5 +61,5 @@ public abstract class RawPostMapper {
         @Mapping(target = "url", ignore = true),
         @Mapping(target = "context", ignore = true),
     })
-    public abstract RawPost map(Wallpost source);
+    public abstract RawPostDto map(Wallpost source);
 }

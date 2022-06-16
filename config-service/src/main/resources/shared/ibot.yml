@@ -1,6 +1,7 @@
 spring:
   rabbitmq:
-    exchangeName: post-ready-exchange
-    queueName: post.ready.main
-  jpa:
-    database-platform: org.hibernate.spatial.dialect.postgis.PostgisPG10Dialect
+    ready-post:
+      queue: post.ready.ibot
+      dlq: post.ready.dlq.ibot
+  liquibase:
+    contexts: ibot,data

@@ -11,12 +11,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.mockito.Answers;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import ru.rassafel.foodsharing.vkparser.config.ApplicationProperties;
+import org.mockito.*;
+import ru.rassafel.foodsharing.vkparser.config.VkParserProperties;
 import ru.rassafel.foodsharing.vkparser.model.entity.VkGroup;
+import ru.rassafel.foodsharing.vkparser.model.vk.group.validator.SecretKeyValidator;
+import ru.rassafel.foodsharing.vkparser.model.vk.group.validator.impl.SecretKeyValidatorImpl;
 import ru.rassafel.foodsharing.vkparser.repository.GroupRepository;
 
 import java.util.Optional;
@@ -24,7 +23,6 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.AdditionalMatchers.or;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 /**
@@ -33,18 +31,16 @@ import static org.mockito.Mockito.*;
 class GroupServiceImplTest {
     @InjectMocks
     GroupServiceImpl service;
-
     @Mock
     GroupRepository repository;
-
     @Mock(answer = Answers.RETURNS_DEEP_STUBS)
     VkApiClient client;
-
     @Mock
-    ApplicationProperties properties;
+    VkParserProperties properties;
+    @Spy
+    SecretKeyValidator validator = new SecretKeyValidatorImpl();
 
     VkGroup accepted;
-
     VkGroup fromDb;
 
     @BeforeEach

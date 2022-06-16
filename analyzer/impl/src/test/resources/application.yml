@@ -1,7 +1,19 @@
 spring:
   rabbitmq:
-    consumer:
+    raw-post:
       exchange: post-raw-exchange
+      storage: post.raw.storage
       queue: post.raw.analyzer
+      dlx: post-raw-dlx
+      dlq-storage: post.raw.dlq.storage
+      dlq: post.raw.dlq.analyzer
+    ready-post:
+      exchange: post-ready-exchange
+      storage: post.ready.storage
+      dlx: post-ready-dlx
+      dlq-storage: post.ready.dlq.storage
     producer:
       exchange: post-ready-exchange
+  liquibase:
+    change-log: classpath:/db/changelog/master-changelog.xml
+    contexts: none,data,test

@@ -1,7 +1,23 @@
 spring:
   rabbitmq:
-    exchangeName: post-raw-exchange
+    raw-post:
+      exchange: post-raw-exchange
+      storage: post.raw.storage
+      dlx: post-raw-dlx
+      dlq-storage: post.raw.dlq.storage
 
-application:
-  callbackUrl: localhost:${server.port:8080}/callback
-  serverTitle: GetFood_Parser
+    vk-parser-callback:
+      exchange: callback-vk-parser-exchange
+      storage: callback.vk.parser.storage
+      queue: callback.vk.bot.current
+      dlx: callback-vk-parser-dlx
+      dlq-storage: callback.vk.parser.dlq.storage
+      dlq: callback.vk.bot.dlq.current
+  liquibase:
+    change-log: classpath:/db/changelog/master-changelog.xml
+    contexts: vk-parser,data,test
+
+vk:
+  parser:
+    callbackUrl: localhost:${server.port:8080}/callback
+    serverTitle: GetFoodWall

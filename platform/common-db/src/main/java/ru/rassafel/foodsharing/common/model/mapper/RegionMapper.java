@@ -3,7 +3,7 @@ package ru.rassafel.foodsharing.common.model.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import ru.rassafel.foodsharing.common.model.dto.RegionDto;
-import ru.rassafel.foodsharing.common.model.entity.Region;
+import ru.rassafel.foodsharing.common.model.entity.geo.Region;
 
 import java.util.List;
 import java.util.Set;

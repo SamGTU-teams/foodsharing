@@ -12,13 +12,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
-import org.springframework.data.util.Pair;
 import org.springframework.data.util.Streamable;
 import ru.rassafel.foodsharing.analyzer.config.LuceneProperties;
 import ru.rassafel.foodsharing.analyzer.model.LuceneIndexedString;
+import ru.rassafel.foodsharing.analyzer.model.ScoreProduct;
 import ru.rassafel.foodsharing.analyzer.repository.ProductRepository;
 import ru.rassafel.foodsharing.analyzer.repository.impl.LuceneRepositoryImpl;
-import ru.rassafel.foodsharing.common.model.entity.Product;
+import ru.rassafel.foodsharing.common.model.entity.product.Product;
 
 import java.io.IOException;
 import java.util.List;
@@ -41,6 +41,7 @@ class ProductLuceneAnalyzerServiceImplTest {
     ProductLuceneAnalyzerServiceImpl service;
 
     @BeforeEach
+    @SuppressWarnings("deprecation")
     void setUp() throws IOException {
         luceneProperties = new LuceneProperties();
         Directory directory = new RAMDirectory();
@@ -73,12 +74,45 @@ class ProductLuceneAnalyzerServiceImplTest {
         when(productRepository.findAll())
             .thenReturn(Streamable.of(product1, product2, product3));
 
-        List<Pair<Product, Float>> actual = service.parseProducts("Test post contains products like: banana, orenge, peach");
+        List<ScoreProduct> actual = service.parseProducts("Test post contains products like: banana, peach, orenge");
 
         System.out.println(actual);
 
         assertThat(actual.stream()
-            .map(Pair::getFirst)
+            .map(ScoreProduct::getProduct)
+            .collect(Collectors.toList()))
+            .contains(product2)
+            .contains(product3)
+            .doesNotContain(product1);
+    }
+
+    @Test
+    void parseProduct() {
+        luceneRepository.registerAll(List.of(
+            new LuceneIndexedString("sync1", "Test string with Молоко"),
+            new LuceneIndexedString("sync2", "Test string with Кефир")));
+
+        Product product1 = new Product();
+        product1.setId(1L);
+        product1.setName("молоко");
+
+        Product product2 = new Product();
+        product2.setId(2L);
+        product2.setName("кефир");
+
+        Product product3 = new Product();
+        product3.setId(3L);
+        product3.setName("зефир");
+
+        when(productRepository.findAll())
+            .thenReturn(Streamable.of(product1, product2, product3));
+
+        List<ScoreProduct> actual = service.parseProducts("зефир");
+
+        System.out.println(actual);
+
+        assertThat(actual.stream()
+            .map(ScoreProduct::getProduct)
             .collect(Collectors.toList()))
             .contains(product2)
             .contains(product3)

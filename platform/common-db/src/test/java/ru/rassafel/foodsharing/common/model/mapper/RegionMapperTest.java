@@ -2,7 +2,7 @@ package ru.rassafel.foodsharing.common.model.mapper;
 
 import org.junit.jupiter.api.Test;
 import ru.rassafel.foodsharing.common.model.dto.RegionDto;
-import ru.rassafel.foodsharing.common.model.entity.Region;
+import ru.rassafel.foodsharing.common.model.entity.geo.Region;
 
 import java.util.List;
 import java.util.Set;
@@ -14,7 +14,7 @@ import static ru.rassafel.foodsharing.common.model.ModelFactory.*;
  * @author rassafel
  */
 class RegionMapperTest {
-    RegionMapper mapper = RegionMapper.INSTANCE;
+    final RegionMapper mapper = RegionMapper.INSTANCE;
 
     @Test
     void dtoToEntity() {
